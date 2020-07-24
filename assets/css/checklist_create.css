@@ -1,0 +1,114 @@
+/* Show it is fixed to the top */
+
+body {
+    padding-top: 4.5rem;
+}
+
+.progress.fixed-top {
+    top: 50px;
+}
+
+.table td, .table th {
+    padding: 0.3rem 0.3rem;
+    border: 1px solid #dee2e6;
+    vertical-align: middle;
+    min-width: fit-content;
+}
+
+.table {
+    text-align: center;
+}
+
+select.review {
+    max-width: fit-content;
+    float: right;
+}
+
+.description {
+    text-align: start;
+}
+
+input[type=checkbox] {
+    /* Double-sized Checkboxes */
+    transform: scale(2);
+    -ms-transform: scale(2);
+    /* IE */
+    -moz-transform: scale(2);
+    /* FF */
+    -webkit-transform: scale(2);
+    /* Safari and Chrome */
+    -o-transform: scale(2);
+    /* Opera */
+    padding: 10px;
+}
+
+.video-frame {
+    position: fixed;
+    display: none;
+    z-index: 9999;
+}
+
+.respondCanvas {
+    width: inherit;
+    object-fit: scale-down;
+}
+
+.delete-photo {
+    position: relative;
+    top: 2.4rem;
+}
+
+video#video {
+    position: relative;
+    max-width: 90%;
+}
+select#select {
+    max-width: 90%;
+}
+
+nav.navbar.checklist {
+    top: 55px;
+    z-index: 1;
+}
+
+.name_badges {
+    display: flex;
+}
+
+h4, .h4 {
+    padding-right: 1rem;
+}
+
+
+.badge.badge-secondary.check-lable {
+    display: block;
+    color: #565656;
+    background-color: transparent;
+}
+.review {
+    display: block;
+    width: 100%;
+    height: calc(1.5em + 0.75rem + 2px);
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    min-width: max-content;
+}
+
+.pull-right {
+    float: initial;
+}
+
+li.nav-item {
+    display: flex;
+}
+button#snap1 {
+    margin-right: 25px;
+}
