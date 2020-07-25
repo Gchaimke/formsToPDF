@@ -5,8 +5,8 @@ if (isset($this->session->userdata['logged_in'])) {
   $role = ($this->session->userdata['logged_in']['role']);
 }
 ?>
-<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark main-menu">
-  <a class="navbar-brand" href="/">Online Forms 3</a>
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark main-menu"> 
+  <a class="navbar-brand" href="/">Online Forms 4</a>
   <ul class="navbar-nav mr-auto">
     <?php
     if (isset($project)) {
