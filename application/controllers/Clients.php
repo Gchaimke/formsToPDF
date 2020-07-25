@@ -115,9 +115,6 @@ class Clients extends CI_Controller
         }
         $file = UPLOAD_DIR . $file_name . ".$ext";
         $success = file_put_contents($file, $img);
-        if (!file_exists("C:\Program Files\Ampps\www\assets\exec\pngquanti.exe")) {
-            //shell_exec('"C:\Program Files\Ampps\www\assets\exec\pngquanti.exe" --ext .png --speed 5 --nofs --force ' . escapeshellarg($file));
-        }
         print $success ? $file : 'Unable to save the file.';
     }
 
