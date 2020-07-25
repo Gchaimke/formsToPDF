@@ -7,7 +7,7 @@ class Users_model extends CI_Model
 		$response = array();
 		// Select record
 		$this->db->select('*');
-		$this->db->from('Users');
+		$this->db->from('users');
 		$q = $this->db->get();
 		$response = $q->result_array();
 		return $response;
@@ -39,7 +39,7 @@ class Users_model extends CI_Model
 		// Query to check whether name already exist or not
 		$condition = "name =" . "'" . $data['name'] . "'";
 		$this->db->select('*');
-		$this->db->from('Users');
+		$this->db->from('users');
 		$this->db->where($condition);
 		$this->db->limit(1);
 		$query = $this->db->get();
@@ -59,7 +59,7 @@ class Users_model extends CI_Model
 	{
 		$condition = "name ='" . $data['name'] . "'";
 		$this->db->select('*');
-		$this->db->from('Users');
+		$this->db->from('users');
 		$this->db->where($condition);
 		$this->db->limit(1);
 		$query = $this->db->get();
@@ -77,7 +77,7 @@ class Users_model extends CI_Model
 	public function read_user_information($name)
 	{
 		$this->db->select('*');
-		$this->db->from('Users');
+		$this->db->from('users');
 		$condition = "name =" . "'" . $name . "'";
 		$this->db->where($condition);
 		$this->db->limit(1);

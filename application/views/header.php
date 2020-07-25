@@ -13,7 +13,7 @@ if (isset($this->session->userdata['logged_in'])) {
   <meta charset="UTF-8">
   <meta http-equiv="Content-Language" content="en">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="Checklist online">
+  <meta name="description" content="Online Forms">
   <meta name="author" content="Chaim Gorbov">
   <link rel="icon" href="<?php echo base_url('assets/favicon.ico'); ?>">
   <title>
@@ -21,7 +21,7 @@ if (isset($this->session->userdata['logged_in'])) {
     if (isset($_GET['sn'])) {
       echo $_GET['sn'];
     } else {
-      echo "WorkflowTag - " . pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME);
+      echo "Online Forms - " . trim($_SERVER['REQUEST_URI'],"/");
     }
     ?></title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">

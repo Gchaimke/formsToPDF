@@ -12,8 +12,11 @@ if (isset($this->session->userdata['logged_in'])) {
             <center>
                 <h2 class="display-3">File Manager</h2>
             </center>
+            <button class="btn btn-info" onclick="RemoveEmptySubFolders()">Remove empty folders from uploads</button>
         </div>
     </div>
+    
+    
     <div class="container">
         <?php
         if (isset($message_display)) {
@@ -25,4 +28,16 @@ if (isset($this->session->userdata['logged_in'])) {
         }       
         ?>
     </div>
+    
 </main>
+<script>
+    function RemoveEmptySubFolders(){
+        $.post("/admin/RemoveEmptySubFolders", {
+        }).done(function(o) {
+            // Make sure that the formMessages div has the 'success' class.
+            $('#form-messages').addClass('alert-success');
+            // Set the message text.
+            $('#form-messages').html(o).fadeIn(1000).delay(3000).fadeOut(1000);
+        });
+    }
+</script>

@@ -57,23 +57,12 @@ if (isset($this->session->userdata['logged_in'])) {
         ?>
         </br>
         <button class="btn btn-info" onclick="createDB(0)">Create DB</button>
-        <button class="btn btn-info" onclick="RemoveEmptySubFolders()">Remove empty folders from uploads</button>
     </div>
 </main>
 
 <script>
     function createDB() {
         $.post("/admin/create", {
-        }).done(function(o) {
-            // Make sure that the formMessages div has the 'success' class.
-            $('#form-messages').addClass('alert-success');
-            // Set the message text.
-            $('#form-messages').html(o).fadeIn(1000).delay(3000).fadeOut(1000);
-        });
-    }
-
-    function RemoveEmptySubFolders(){
-        $.post("/admin/RemoveEmptySubFolders", {
         }).done(function(o) {
             // Make sure that the formMessages div has the 'success' class.
             $('#form-messages').addClass('alert-success');

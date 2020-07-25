@@ -8,13 +8,13 @@ class Production_model extends CI_Model
 		// Query to check whether serial already exist or not
 		$condition = "serial ='" . $data['serial'] . "' AND project='" . $data['project'] . "'";
 		$this->db->select('*');
-		$this->db->from('Checklists');
+		$this->db->from('checklists');
 		$this->db->where($condition);
 		$this->db->limit(1);
 		$query = $this->db->get();
 		if ($query->num_rows() == 0) {
 			// Query to insert data in database
-			$this->db->insert('Checklists', $data);
+			$this->db->insert('checklists', $data);
 			if ($this->db->affected_rows() > 0) {
 				return true;
 			}

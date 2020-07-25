@@ -6,7 +6,7 @@ if (isset($this->session->userdata['logged_in'])) {
 }
 ?>
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark main-menu">
-  <a class="navbar-brand" href="/">Workflow Tag</a>
+  <a class="navbar-brand" href="/">Online Forms 3</a>
   <ul class="navbar-nav mr-auto">
     <?php
     if (isset($project)) {
@@ -33,7 +33,7 @@ if (isset($this->session->userdata['logged_in'])) {
         </div>
       </li>
       <?php if ($role == 'Admin') {?>
-        <li class="nav-item"><a class="nav-link" href="/clients">Clients</a></li>
+        <li class="nav-item"><a class="nav-link" href="/clients">Company</a></li>
         <li class="nav-item"><a class="nav-link" href="/templates">Templates</a></li>
         <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -41,7 +41,6 @@ if (isset($this->session->userdata['logged_in'])) {
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
         <a class="dropdown-item" href="/users">Users</a>
-        <a class="dropdown-item" href="/admin/mange_uploads">Uploads</a>
         <a class="dropdown-item" href="/admin/manage_trash">Trash</a>
         <a class="dropdown-item" href="/admin/view_log">System Log</a>
         <a class="dropdown-item" href="/admin/settings">Settings</a>
