@@ -1,6 +1,6 @@
     <footer class="container">
       <p>
-        <center>Workflow Tag&copy; <?php echo date('Y');?></center>
+        <center>Online Forms&copy; <?php echo date('Y');?></center>
       </p>
     </footer>
 
