@@ -26,7 +26,7 @@ if (isset($this->session->userdata['logged_in'])) {
                   ?>
 
                   <?php echo form_open('clients/create', 'class=client-create'); ?>
-                  <label>Client Name</label><input id='client_name' type='text' class="form-control" name='name' value="" onchange="updateClient(this.value)">
+                  <label>Company Name</label><input id='client_name' type='text' class="form-control" name='name' value="" onchange="updateClient(this.value)">
                   <label>Logo</label>
 			<div class="input-group mb-3">
 				<input id="logo_path" type='text' class="form-control" name='logo' value="">
@@ -38,13 +38,13 @@ if (isset($this->session->userdata['logged_in'])) {
                   <input id="browse" style="display:none;" type="file" onchange="snapLogo()" >
 
                   <label>Document Header</label>
-                  <textarea class="form-control" name='header' rows="10" cols="100">Company name</textarea>
+                  <textarea class="form-control" name='header' rows="5" cols="100">Company name in header</textarea>
 
                   <label>Form Filds</label>
-                  <textarea class="form-control" name='filds' rows="10" cols="100">תאריך,שעת התחלה,שעת סיום,מספר לקוח,מספר פנייה\תקלה,סוג תקלה\התקנה,שם לקוח,מיקום,אחראי,איש קשר,תיאורתקלה\התקנה,תוצאות הבדיקה,</textarea>
+                  <textarea class="form-control" name='filds' rows="5" cols="100">תאריך, שעת התחלה, שעת סיום, מספר לקוח, מספר פנייה\תקלה, סוג תקלה\התקנה, שם לקוח, מיקום, אחראי, איש קשר, תיאורתקלה\התקנה, תוצאות הבדיקה, סיכום, הערות, המלצות, שעת נסיעה הלוך, שעתנסיעה חזור</textarea>
 
                   <label>Document Footer</label>
-                  <textarea class="form-control" name='footer' rows="10" cols="100">Project 1, Project 2, Project 3</textarea>
+                  <textarea class="form-control" name='footer' rows="5" cols="100">Company footer</textarea>
 
                   <input type='submit' class="btn btn-info btn-block" name='submit' value='Submit'>
                   <?php echo form_close(); ?>
