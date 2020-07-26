@@ -2,7 +2,7 @@
 	<div class="jumbotron">
 		<div class="container">
 			<center>
-				<h2 class="display-4">Clients</h2>
+				<h2 class="display-4">Companies</h2>
 			</center>
 		</div>
 	</div>
@@ -23,13 +23,13 @@
 		</form>
 			<?php
 			echo '<div class="card-columns">';
-			foreach ($clients as $client) {
-				echo '<div id="' . $client['name'] . '" class="card"><center><div class="card-body"><h5 class="card-title">';
-				echo $client['name'];
+			foreach ($companies as $company) {
+				echo '<div id="' . $company['name'] . '" class="card"><center><div class="card-body"><h5 class="card-title">';
+				echo $company['name'];
 				echo '</h5><p class="card-text">Select Project:</p></div>';
 				echo '<div class="card-footer">';
-				if ($client['projects'] != "") {
-					$arr = explode(',', $client['projects']);
+				if ($company['projects'] != "") {
+					$arr = explode(',', $company['projects']);
 					foreach ($arr as $project) {
 						echo  "<a href='/production/checklists/$project' class='btn btn-primary  btn-block'>$project</a>";
 					}

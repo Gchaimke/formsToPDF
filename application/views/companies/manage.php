@@ -9,7 +9,7 @@ if (isset($this->session->userdata['logged_in'])) {
 	<div class="jumbotron">
 		<div class="container">
 			<center>
-				<h2 class="display-4">Clients</h2>
+				<h2 class="display-4">Companies</h2>
 			</center>
 		</div>
 	</div>
@@ -20,7 +20,7 @@ if (isset($this->session->userdata['logged_in'])) {
 			echo $message_display. '</div>';
 		}
 		?>
-		<a class="btn btn-success" href="/clients/create"><i class="fa fa-user-plus"></i></a>
+		<a class="btn btn-success" href="/Companies/create"><i class="fa fa-user-plus"></i></a>
 		<table class="table">
 			<thead class="thead-dark">
 				<tr>
@@ -30,11 +30,11 @@ if (isset($this->session->userdata['logged_in'])) {
 				</tr>
 			</thead>
 			<tbody>
-				<?php if (isset($clients)) {
-					foreach ($clients as $client) {
+				<?php if (isset($Companies)) {
+					foreach ($Companies as $client) {
 						echo '<tr id="' . $client['id'] . '">';
 						echo  '<td>' . $client['name'] . '</td>';
-						echo "<td><a href='/clients/edit/" . $client['id'] .
+						echo "<td><a href='/Companies/edit/" . $client['id'] .
 							"' class='btn btn-info'><i class='fa fa-edit'></i></a></td>";
 						echo "<td><button id='" . $client['id'] .
 							"' class='btn btn-danger' onclick='deleteClient(this.id)'><i class='fa fa-trash'></i></button></td>";
@@ -49,7 +49,7 @@ if (isset($this->session->userdata['logged_in'])) {
 	function deleteClient(id) {
 		var r = confirm("Delete Client with id: " + id + "?");
 		if (r == true) {
-			$.post("/clients/delete", {
+			$.post("/Companies/delete", {
 				id: id
 			}).done(function(o) {
 				console.log('Client deleted.');

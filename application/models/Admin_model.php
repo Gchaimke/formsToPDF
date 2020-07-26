@@ -45,7 +45,7 @@ class Admin_model extends CI_Model
         $this->db->insert('users', $admin);
     }
 
-    function createClientsDb()
+    function createCompaniesDb()
     {
         $this->load->dbforge();
         $client = array(
@@ -60,148 +60,139 @@ class Admin_model extends CI_Model
                 'constraint' => 60,
                 'unique' => TRUE
             ),
-            'projects' => array(
-                'type' => 'VARCHAR',
-                'constraint' => 500
-            ),
             'logo' =>array(
                 'type' => 'VARCHAR',
                 'constraint' => 500
-            )
+            ),
+            'form_header' => array(
+                'type' => 'VARCHAR',
+                'constraint' => 500
+            ),
+            'form_extra_filds' => array(
+                'type' => 'VARCHAR',
+                'constraint' => 500
+            ),
+            'form_footer' => array(
+                'type' => 'VARCHAR',
+                'constraint' => 500
+            )            
         );
 
         $this->dbforge->add_field($client);
         // define primary key
         $this->dbforge->add_key('id', TRUE);
         // create table
-        $this->dbforge->create_table('clients');
+        $this->dbforge->create_table('companies');
 
         $cl = array(
             "name" => 'Avdor-HLT',
-            "projects" => 'Project1,Project 2',
-            "logo"=> '/assets/img/logo.png'
+            "logo"=> '/assets/img/logo.png',
+            "form_header" => 'Company Header',
+            "form_extra_filds" => 'extra',
+            "form_footer" => 'Company Footer',
+            
         );
-        $this->db->insert('clients', $cl);
+        $this->db->insert('companies', $cl);
     }
 
-    function createChecklistDb()
+    function createFormsDb()
     {
         $this->load->dbforge();
-        $checklist = array(
+        $company = array(
             'id' => array(
                 'type' => 'INT',
                 'constraint' => 9,
                 'unsigned' => TRUE,
                 'auto_increment' => TRUE
-            ),
-            'serial' => array(
-                'type' => 'VARCHAR',
-                'constraint' => 30,
-            ),
-            'client' => array(
-                'type' => 'VARCHAR',
-                'constraint' => 30
-            ),
-            'project' => array(
-                'type' => 'VARCHAR',
-                'constraint' => 60
-            ),
-            'data' => array(
-                'type' => 'VARCHAR',
-                'constraint' => 500
-            ),
-            'progress' => array(
-                'type' => 'INT',
-                'constraint' => 5,
-                'unsigned' => TRUE
-            ),
-            'assembler' => array(
-                'type' => 'VARCHAR',
-                'constraint' => 50
-            ),
-            'qc' => array(
-                'type' => 'VARCHAR',
-                'constraint' => 50
             ),
             'date' => array(
                 'type' => 'DATE',
                 'null' => FALSE
             ),
-            'log' => array(
-                'type' => 'TEXT'
+            'client_num' => array(
+                'type' => 'VARCHAR',
+                'constraint' => 50,
             ),
-            'scans' => array(
-                'type' => 'TEXT'
-            )
-        );
-        $this->dbforge->add_field($checklist);
-        $this->dbforge->add_key('id', TRUE);
-        $this->dbforge->create_table('checklists');
-
-        $demoChecklist = array(
-            "serial" => 'P001-07-20',
-            "client" => 'Avdor-HLT',
-            "project" => 'Project1',
-            "data" => '',
-            "progress" => '0',
-            "assembler" => 'User',
-            "qc" => 'Admin',
-            "date" => '2020-04-30',
-            "log" => 'New checklist creatin in project Project1 for client Avdor-HLT',
-        );
-        $this->db->insert('checklists', $demoChecklist);
-    }
-
-    function createProjectsDb()
-    {
-        $this->load->dbforge();
-        $project = array(
-            'id' => array(
-                'type' => 'INT',
-                'constraint' => 9,
-                'unsigned' => TRUE,
-                'auto_increment' => TRUE
+            'issue_num' => array(
+                'type' => 'VARCHAR',
+                'constraint' => 50
             ),
-            'client' => array(
+            'client_name' => array(
                 'type' => 'VARCHAR',
                 'constraint' => 60
             ),
-            'project' => array(
+            'issue_kind' => array(
                 'type' => 'VARCHAR',
-                'constraint' => 100,
-                'unique' => TRUE
+                'constraint' => 500
             ),
-            'data' => array(
+            'place' => array(
+                'type' => 'INT',
+                'constraint' => 5,
+                'unsigned' => TRUE
+            ),
+            'start_time' => array(
+                'type' => 'DATE'
+            ),
+            'end_time' => array(
+                'type' => 'DATE'
+            ),
+            'manager' => array(
+                'type' => 'VARCHAR',
+                'constraint' => 100
+            ),
+            'contact_name' => array(
+                'type' => 'VARCHAR',
+                'constraint' => 100
+            ),
+            'activity_text' => array(
                 'type' => 'TEXT'
             ),
-            'template' => array(
-                'type' => 'VARCHAR',
-                'constraint' => 100,
-            ),
-            'scans' => array(
+            'checking_text' => array(
                 'type' => 'TEXT'
+            ),
+            'summary_text' => array(
+                'type' => 'TEXT'
+            ),
+            'remarks_text' => array(
+                'type' => 'TEXT'
+            ),
+            'trip_start_time' => array(
+                'type' => 'DATE'
+            ),
+            'trip_end_time' => array(
+                'type' => 'DATE'
             )
         );
-
-        $this->dbforge->add_field($project);
-        // define primary key
+        $this->dbforge->add_field($company);
         $this->dbforge->add_key('id', TRUE);
-        // create table
-        $this->dbforge->create_table('projects');
+        $this->dbforge->create_table('forms');
 
-        $tp = array(
-            "client" => 'Avdor-HLT',
-            "project" => 'Project1',
-            "data" => 'header;HD',
-            "template" => 'Pxxx,mm,yy,-'
+        $demoForm = array(
+            "date" => '2020-04-30',
+            "client_num" => '123456',
+            "issue_num" => '#1225544',
+            "client_name" => 'Client',
+            "issue_kind" => 'issue',
+            "place" => 'Tel-Aviv',
+            "start_time" => '',
+            "end_time" => '',
+            "manager" => '',
+            "contact_name" => '',
+            "activity_text" => '',
+            "checking_text" => '',
+            "summary_text" => '',
+            "remarks_text" => '',
+            "trip_start_time" => '',
+            "trip_end_time" => '',
         );
-        $this->db->insert('projects', $tp);
+        $this->db->insert('forms', $demoForm);
     }
+
 
     function createSettingsDb()
     {
         $this->load->dbforge();
-        $project = array(
+        $settings = array(
             'id' => array(
                 'type' => 'INT',
                 'constraint' => 9,
@@ -216,7 +207,7 @@ class Admin_model extends CI_Model
             )
         );
 
-        $this->dbforge->add_field($project);
+        $this->dbforge->add_field($settings);
         // define primary key
         $this->dbforge->add_key('id', TRUE);
         // create table
@@ -256,27 +247,27 @@ class Admin_model extends CI_Model
         if ($this->db->table_exists('users')) {
             $response['users']  = $this->db->count_all("users");
         }
-        //get clients number
-        if ($this->db->table_exists('clients')) {
-            $response['clients'] = $this->db->count_all("clients");
+        //get companies number
+        if ($this->db->table_exists('companies')) {
+            $response['companies'] = $this->db->count_all("companies");
         }
-        //get checklists number
-        if ($this->db->table_exists('checklists')) {
-            $response['checklists'] = $this->db->count_all("checklists");
+        //get forms number
+        if ($this->db->table_exists('forms')) {
+            $response['forms'] = $this->db->count_all("forms");
         }
         return $response;
     }
 
-    public function get_current_checklists_records($limit, $start, $project)
+    public function get_current_forms_records($limit, $start, $form)
 	{
 		$this->db->limit($limit, $start);
-		if ($project != '') {
-			$project = urldecode($project);
-			$condition = "project LIKE \"$project%\"";
+		if ($form != '') {
+			$form = urldecode($form);
+			$condition = "form LIKE \"$form%\"";
 			$this->db->where($condition);
 		}
 		$this->db->order_by('id', 'DESC');
-		$query = $this->db->get("checklists");
+		$query = $this->db->get("forms");
 
 		if ($query->num_rows() > 0) {
 			foreach ($query->result() as $row) {
@@ -289,29 +280,29 @@ class Admin_model extends CI_Model
 		return false;
 	}
 
-    public function get_total($project = '')
+    public function get_total($form = '')
 	{
-		if ($project != '') {
-			$this->db->from('checklists');
-            $project = urldecode($project);
-            $condition = "project LIKE '$project%'";
+		if ($form != '') {
+			$this->db->from('forms');
+            $form = urldecode($form);
+            $condition = "form LIKE '$form%'";
 			$this->db->where($condition);
 		}
 		return $this->db->count_all_results();
     }
     
-    function deleteChecklist($id)
+    function deleteForm($id)
 	{
-		$this->db->delete('wft_checklists', array('id' => $id));
+		$this->db->delete('wft_forms', array('id' => $id));
     }
     
     function restore_from_trash($data)
 	{
         $where = "id =" . $data['id'];
-        $project = str_replace('Trash ','',$data['project']);
+        $form = str_replace('Trash ','',$data['form']);
 		$data = array(
-			'project' => $project
+			'form' => $form
 		);
-		return $this->db->update('checklists', $data, $where);
+		return $this->db->update('forms', $data, $where);
 	}
 }

@@ -8,7 +8,7 @@ class Production extends CI_Controller
         parent::__construct();
         // Load model
         $this->load->model('Production_model');
-        $this->load->model('Clients_model');
+        $this->load->model('Companies_model');
         $this->load->model('Templates_model');
         $this->load->library('pagination');
     }
@@ -17,61 +17,10 @@ class Production extends CI_Controller
     {
         $data = array();
         // get data from model
-        $data['clients'] = $this->Clients_model->getClients();
+        $data['companies'] = $this->Companies_model->getCompanies();
         $this->load->view('header');
         $this->load->view('main_menu');
-        $this->load->view('production/view_clients', $data);
-        $this->load->view('footer');
-    }
-
-    public function checklists($project = '')
-    {
-        $this->load->database();
-        // init params
-        $params = array();
-        $config = array();
-        $limit_per_page = 20;
-        $start_index = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
-        $total_records = $this->Production_model->get_total($project);
-        if ($total_records > 0) {
-            $params["results"] = $this->Production_model->get_current_checklists_records($limit_per_page, $start_index, $project);
-
-            $config['base_url'] = base_url() . 'production/checklists/' . $project;
-            $config['total_rows'] = $total_records;
-            $config['per_page'] = $limit_per_page;
-            $config["uri_segment"] = 4;
-
-            $config['full_tag_open'] = '<ul class="pagination right">';
-            $config['full_tag_close'] = '</ul>';
-
-            $config['cur_tag_open'] = '<li class="page-item active "><a class="page-link">';
-            $config['cur_tag_close'] = '</a></li>';
-
-            $config['num_tag_open'] = '<li class="page-item num-link">';
-            $config['num_tag_close'] = '</li>';
-
-            $config['first_tag_open'] = '<li class="page-item num-link">';
-            $config['first_tag_close'] = '</li>';
-
-            $config['last_tag_open'] = '<li class="page-item num-link">';
-            $config['last_tag_close'] = '</li>';
-
-            $config['next_tag_open'] = '<li class="page-item num-link">';
-            $config['next_tag_close'] = '</li>';
-
-            $config['prev_tag_open'] = '<li class="page-item num-link">';
-            $config['prev_tag_close'] = '</li>';
-
-            $this->pagination->initialize($config);
-
-            // build paging links
-            $params["links"] = $this->pagination->create_links();
-        }
-        $params['project'] = urldecode($project);
-        $params['client'] = $this->Clients_model->getClients('', urldecode($project));
-        $this->load->view('header');
-        $this->load->view('main_menu', $params);
-        $this->load->view('production/manage_checklists', $params);
+        $this->load->view('production/view_companies', $data);
         $this->load->view('footer');
     }
 
@@ -85,7 +34,7 @@ class Production extends CI_Controller
             if (strpos($result["project"], 'Trash') !== false) {
                 $str .= "<div class='badge badge-danger' >" . urldecode($result["project"]) . ": " . $result["serial"] . "</div>";
             } else {
-                $str .= "<a class='badge badge-info' href='/production/edit_checklist/" . $result["id"] . "?sn=" . $result["serial"] . "'>" . urldecode($result["project"]) . ": " . $result["serial"] . "</a>";
+                $str .= "<a class='badge badge-info' href='/production/edit_form/" . $result["id"] . "?sn=" . $result["serial"] . "'>" . urldecode($result["project"]) . ": " . $result["serial"] . "</a>";
             }
 
             $count++;
@@ -94,8 +43,8 @@ class Production extends CI_Controller
     }
 
 
-    // Validate and store checklist data in database
-    public function add_checklist($project = '', $data = '')
+    // Validate and store form data in database
+    public function add_form($project = '', $data = '')
     {
         $data = array();
         // Check validation for user input in SignUp form
@@ -105,7 +54,7 @@ class Production extends CI_Controller
         $this->form_validation->set_rules('serial', 'Serial', 'trim|required|xss_clean');
         $this->form_validation->set_rules('date', 'Date', 'trim|required|xss_clean');
         if ($this->form_validation->run() == FALSE) {
-            $data['client'] = $this->Clients_model->getClients('', $project);
+            $data['client'] = $this->Companies_model->getCompanies('', $project);
             $data['project'] = urldecode($project);
             if (isset($this->Templates_model->getTemplate('', $project)[0]['template'])) {
                 $data['template'] = $this->Templates_model->getTemplate('', $project)[0]['template'];
@@ -114,7 +63,7 @@ class Production extends CI_Controller
             }
             $this->load->view('header');
             $this->load->view('main_menu', $data);
-            $this->load->view('production/add_checklist', $data);
+            $this->load->view('production/add_form', $data);
             $this->load->view('footer');
         } else {
             $serial = trim($this->input->post('serial'));
@@ -127,8 +76,8 @@ class Production extends CI_Controller
             );
             $result = $this->Production_model->addChecklist($data);
             if ($result == TRUE) {
-                $this->log_data("created '$project' checklist with serial '$serial'",1);
-                header("location: /production/checklists/" . $project);
+                $this->log_data("created '$project' form with serial '$serial'",1);
+                header("location: /production/forms/" . $project);
             } else {
                 if (isset($this->Templates_model->getTemplate('', $project)[0]['template'])) {
                     $data['template'] = $this->Templates_model->getTemplate('', $project)[0]['template'];
@@ -136,7 +85,7 @@ class Production extends CI_Controller
                     $data['template'] = " - not set!";
                 }
                 $data['message_display'] = 'Checklist ' . $this->input->post('serial') . ' already exist!';
-                $data['client'] = $this->Clients_model->getClients('', $project);
+                $data['client'] = $this->Companies_model->getCompanies('', $project);
                 $data['project'] = urldecode($this->input->post('project'));
                 if (isset($this->Templates_model->getTemplate('', $project)[0]['template'])) {
                     $data['template'] = $this->Templates_model->getTemplate('', $project)[0]['template'];
@@ -145,14 +94,14 @@ class Production extends CI_Controller
                 }
                 $this->load->view('header');
                 $this->load->view('main_menu', $data);
-                $this->load->view('production/add_checklist', $data);
+                $this->load->view('production/add_form', $data);
                 $this->load->view('footer');
             }
         }
     }
 
-    // Validate and store checklist data in database 
-    public function gen_checklists()
+    // Validate and store form data in database 
+    public function gen_forms()
     {
         $result = 'Serial template not set!';
         $dfend_month = array('01' => '1', '02' => '2', '03' => '3', '04' => '4', '05' => '5', '06' => '6', '07' => '7', '08' => '8', '09' => '9', '10' => 'A', '11' => 'B', '12' => 'C');
@@ -190,7 +139,7 @@ class Production extends CI_Controller
                     return;
                 }
                 if ($result == TRUE) {
-                    $this->log_data("created '$project' checklist with serial '$current_serial'",1);
+                    $this->log_data("created '$project' form with serial '$current_serial'",1);
                 }
             }
         }
@@ -230,21 +179,21 @@ class Production extends CI_Controller
         return 0;
     }
 
-    public function edit_checklist($id = '')
+    public function edit_form($id = '')
     {
         $data = array();
-        $data['js_to_load'] = array("edit_checklist.js?" . filemtime('assets/js/edit_checklist.js'));
-        $data['checklist'] =  $this->Production_model->getChecklists($id);
-        if ($data['checklist']) {
-            $data['project'] =  urldecode($data['checklist'][0]['project']);
-            $data['checklist_rows'] = $this->build_checklist($data);
+        $data['js_to_load'] = array("edit_form.js?" . filemtime('assets/js/edit_form.js'));
+        $data['form'] =  $this->Production_model->getChecklists($id);
+        if ($data['form']) {
+            $data['project'] =  urldecode($data['form'][0]['project']);
+            $data['form_rows'] = $this->build_form($data);
             $data['scans_rows'] = $this->build_scans($data);
-            $data['client'] = $this->Clients_model->getClients('', $data['project']);
+            $data['client'] = $this->Companies_model->getCompanies('', $data['project']);
         }
         $this->load->view('header');
         $this->load->view('main_menu', $data);
-        if ($data['checklist']) {
-            $this->load->view('production/edit_checklist');
+        if ($data['form']) {
+            $this->load->view('production/edit_form');
         }
         $this->load->view('footer');
     }
@@ -256,22 +205,22 @@ class Production extends CI_Controller
             $data['message_display'] = $msg;
         }
         $data['ids'] = $ids;
-        $data['js_to_load'] = array("edit_checklist.js?" . filemtime('assets/js/edit_checklist.js'));
-        $data['checklists'] =  $this->Production_model->getChecklists($ids);
-        if ($data['checklists']) {
-            $data['checklist'] = $data['checklists'];
-            $data['project'] =  urldecode($data['checklists'][0]['project']);
-            $data['checklist_rows'] = $this->build_checklist($data);
+        $data['js_to_load'] = array("edit_form.js?" . filemtime('assets/js/edit_form.js'));
+        $data['forms'] =  $this->Production_model->getChecklists($ids);
+        if ($data['forms']) {
+            $data['form'] = $data['forms'];
+            $data['project'] =  urldecode($data['forms'][0]['project']);
+            $data['form_rows'] = $this->build_form($data);
         }
         $this->load->view('header');
         $this->load->view('main_menu', $data);
-        if ($data['checklists']) {
+        if ($data['forms']) {
             $this->load->view('production/edit_batch');
         }
         $this->load->view('footer');
     }
 
-    private function build_checklist($data)
+    private function build_form($data)
     {
         $this->load->model('Users_model');
         $users = $this->Users_model->getUsers();
@@ -279,13 +228,13 @@ class Production extends CI_Controller
         $checked = "";
         $table = '';
         $options = '';
-        $project = $data['checklist'][0]['project'];
-        $checklist_data = $data['checklist'][0]['data'];
+        $project = $data['form'][0]['project'];
+        $form_data = $data['form'][0]['data'];
         if (count($this->Templates_model->getTemplate('', $project)) > 0) {
             $project_data = $this->Templates_model->getTemplate('', $project)[0]['data'];
             $rows = explode(PHP_EOL, $project_data);
-            $status = explode(",", $checklist_data);
-            //$table .= $checklist_data;
+            $status = explode(",", $form_data);
+            //$table .= $form_data;
             $index = 0;
             $id = 0;
             foreach ($users as $user) {
@@ -305,7 +254,7 @@ class Production extends CI_Controller
                 $col = explode(";", $rows[$i]);
                 if (count($col) > 1) {
                     if (end($col) == "HD") {
-                        $tr = '<table id="checklist" class="table"><thead class="thead-dark">' . '<tr><th scope="col">#</th><th id="result" scope="col">' . $col[0] . '</th>';
+                        $tr = '<table id="form" class="table"><thead class="thead-dark">' . '<tr><th scope="col">#</th><th id="result" scope="col">' . $col[0] . '</th>';
                         for ($j = 1; $j < count($col) - 1; $j++) {
                             $tr .= '<th scope="col">' . $col[$j] . '</th>';
                         }
@@ -346,7 +295,7 @@ class Production extends CI_Controller
         $tr = '';
         $columns = 0;
         $id = 0;
-        $project = $data['checklist'][0]['project'];
+        $project = $data['form'][0]['project'];
         if (count($this->Templates_model->getTemplate('', $project)) > 0) {
             $project_scans = $this->Templates_model->getTemplate('', $project)[0]['scans'];
             $rows = explode(PHP_EOL, $project_scans);
@@ -378,7 +327,7 @@ class Production extends CI_Controller
         return $table;
     }
 
-    public function save_checklist($id = '')
+    public function save_form($id = '')
     {
         // Check validation for user input in SignUp form
         $this->form_validation->set_rules('data', 'Data', 'trim|xss_clean');
@@ -388,7 +337,7 @@ class Production extends CI_Controller
         $this->form_validation->set_rules('qc', 'Qc', 'trim|xss_clean');
         $this->form_validation->set_rules('scans', 'Scans', 'trim|xss_clean');
         if ($this->form_validation->run() == FALSE) {
-            $this->edit_checklist($id);
+            $this->edit_form($id);
         } else {
             $data = array(
                 'id' =>  $id,
@@ -404,7 +353,7 @@ class Production extends CI_Controller
         }
     }
 
-    public function save_batch_checklists($ids = '')
+    public function save_batch_forms($ids = '')
     {
         // Check validation for user input in SignUp form
         $this->form_validation->set_rules('data', 'Data', 'trim|xss_clean');
@@ -444,7 +393,7 @@ class Production extends CI_Controller
             'project' => $project
         );
         $this->Production_model->move_to_trash($data);
-        $this->log_data("trashed '$project' checklist with serial '$serial'",2);
+        $this->log_data("trashed '$project' form with serial '$serial'",2);
     }
 
     public function save_photo()

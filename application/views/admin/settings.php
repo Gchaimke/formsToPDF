@@ -17,16 +17,16 @@ if (isset($this->session->userdata['logged_in'])) {
     <div class="container">
         <?php
         $users_count = 0;
-        $clients_count = 0;
+        $Companies_count = 0;
         $checklists_count = 0;
         if (isset($message_display)) {
             echo "<div class='alert alert-success' role='alert'>";
             echo $message_display . '</div>';
         }
 
-        if (isset($users) and isset($clients) and isset($checklists)) {
+        if (isset($users) and isset($Companies) and isset($checklists)) {
             $users_count = $users;
-            $clients_count = $clients;
+            $Companies_count = $Companies;
             $checklists_count = $checklists;
         }
         ?>
@@ -36,8 +36,8 @@ if (isset($this->session->userdata['logged_in'])) {
                 <span class="badge badge-primary badge-pill"><?php echo $users_count ?></span>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
-                Clients
-                <span class="badge badge-primary badge-pill"><?php echo $clients_count ?></span>
+                Companies
+                <span class="badge badge-primary badge-pill"><?php echo $Companies_count ?></span>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 Checklists

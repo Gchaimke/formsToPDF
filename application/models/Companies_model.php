@@ -1,21 +1,21 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class Clients_model extends CI_Model
+class Companies_model extends CI_Model
 {
 
-    public function addClient($data)
+    public function addCompany($data)
     {
-        if ($this->db->table_exists('clients')) {
+        if ($this->db->table_exists('companies')) {
             // Query to check whether username already exist or not
             $condition = "name ='" . $data['name'] . "'";
             $this->db->select('*');
-            $this->db->from('clients');
+            $this->db->from('companies');
             $this->db->where($condition);
             $this->db->limit(1);
             $query = $this->db->get();
             if ($query->num_rows() == 0) {
                 // Query to insert data in database
-                $this->db->insert('clients', $data);
+                $this->db->insert('companies', $data);
                 if ($this->db->affected_rows() > 0) {
                     return true;
                 }
@@ -25,13 +25,13 @@ class Clients_model extends CI_Model
         }
     }
 
-    function getClients($id = '', $projects = '')
+    function getCompanies($id = '', $projects = '')
     {
         $response = array();
-        if ($this->db->table_exists('clients')) {
+        if ($this->db->table_exists('companies')) {
             // Select record
             $this->db->select('*');
-            $this->db->from('clients');
+            $this->db->from('companies');
             if ($id != '') {
                 $condition = "id ='$id'";
                 $this->db->where($condition);
@@ -48,18 +48,18 @@ class Clients_model extends CI_Model
         return $response;
     }
 
-    public function editClient($data)
+    public function editCompany($data)
     {
         $where = "id ='" . $data['id'] . "'";
         $data = array(
             'projects' => $data['projects'],
             'logo' => $data['logo']
 		);
-        return $this->db->update('clients', $data, $where);
+        return $this->db->update('companies', $data, $where);
     }
 
-    function deleteClient($id)
+    function deleteCompany($id)
     {
-        $this->db->delete('wft_clients', array('id' => $id));
+        $this->db->delete('wft_companies', array('id' => $id));
     }
 }

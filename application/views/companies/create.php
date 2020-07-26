@@ -25,7 +25,7 @@ if (isset($this->session->userdata['logged_in'])) {
                   }
                   ?>
 
-                  <?php echo form_open('clients/create', 'class=client-create'); ?>
+                  <?php echo form_open('Companies/create', 'class=client-create'); ?>
                   <label>Company Name</label><input id='client_name' type='text' class="form-control" name='name' value="" onchange="updateClient(this.value)">
                   <label>Logo</label>
 			<div class="input-group mb-3">
@@ -41,7 +41,7 @@ if (isset($this->session->userdata['logged_in'])) {
                   <textarea class="form-control" name='header' rows="5" cols="100">Company name in header</textarea>
 
                   <label>Form Filds</label>
-                  <textarea class="form-control" name='filds' rows="5" cols="100">תאריך, שעת התחלה, שעת סיום, מספר לקוח, מספר פנייה\תקלה, סוג תקלה\התקנה, שם לקוח, מיקום, אחראי, איש קשר, תיאורתקלה\התקנה, תוצאות הבדיקה, סיכום, הערות, המלצות, שעת נסיעה הלוך, שעתנסיעה חזור</textarea>
+                  <textarea class="form-control" name='filds' rows="5" cols="100"> סוג תקלה\התקנה, שם לקוח, מיקום, אחראי, איש קשר, תיאור תקלה\התקנה, תוצאות הבדיקה, סיכום, הערות, המלצות, שעת נסיעה הלוך, שעתנסיעה חזור</textarea>
 
                   <label>Document Footer</label>
                   <textarea class="form-control" name='footer' rows="5" cols="100">Company footer</textarea>

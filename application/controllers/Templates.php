@@ -9,7 +9,7 @@ class Templates extends CI_Controller
         parent::__construct();
         // Load model
         $this->load->model('Templates_model');
-        $this->load->model('Clients_model');
+        $this->load->model('Companies_model');
     }
 
     public function index($data = '')
@@ -35,7 +35,7 @@ class Templates extends CI_Controller
         $this->form_validation->set_rules('scans', 'Scans', 'trim|xss_clean');
         if ($this->form_validation->run() == FALSE) {
             $data['js_to_load'] = array("add_template.js");
-            $data['clients'] = $this->Clients_model->getClients();
+            $data['companies'] = $this->Companies_model->getCompanies();
             $this->load->view('header');
             $this->load->view('main_menu');
             $this->load->view('templates/add_template', $data);
@@ -55,7 +55,7 @@ class Templates extends CI_Controller
             } else {
                 $data['js_to_load'] = array("add_template.js");
                 $data['message_display'] = 'Template already exist!';
-                $data['clients'] = $this->Clients_model->getClients();
+                $data['companies'] = $this->Companies_model->getCompanies();
                 $this->load->view('header');
                 $this->load->view('main_menu');
                 $this->load->view('templates/add_template', $data);
@@ -75,7 +75,7 @@ class Templates extends CI_Controller
         $this->form_validation->set_rules('template', 'Template', 'trim|xss_clean');
         $this->form_validation->set_rules('scans', 'Scans', 'trim|xss_clean');
         if ($this->form_validation->run() == FALSE) {
-            $data['clients'] = $this->Clients_model->getClients();
+            $data['companies'] = $this->Companies_model->getCompanies();
             $data['project'] =  $this->Templates_model->getTemplate($id);
             $this->load->view('header');
             $this->load->view('main_menu');

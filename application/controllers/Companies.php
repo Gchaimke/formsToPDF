@@ -1,14 +1,14 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Clients extends CI_Controller
+class Companies extends CI_Controller
 {
 
     public function __construct()
     {
         parent::__construct();
         // Load model
-        $this->load->model('Clients_model');
+        $this->load->model('Companies_model');
     }
 
     public function index($msg = '')
@@ -18,10 +18,10 @@ class Clients extends CI_Controller
             $data['message_display'] = $msg;
         }
         // get data from model
-        $data['clients'] = $this->Clients_model->getClients();
+        $data['companies'] = $this->Companies_model->getCompanies();
         $this->load->view('header');
         $this->load->view('main_menu');
-        $this->load->view('clients/manage', $data);
+        $this->load->view('Companies/manage', $data);
         $this->load->view('footer');
     }
 
@@ -37,7 +37,7 @@ class Clients extends CI_Controller
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('header');
             $this->load->view('main_menu');
-            $this->load->view('clients/create');
+            $this->load->view('Companies/create');
             $this->load->view('footer');
         } else {
             $data = array(
@@ -45,7 +45,7 @@ class Clients extends CI_Controller
                 'logo' => $this->input->post('logo'),
                 'projects' => $this->input->post('projects')
             );
-            $result = $this->Clients_model->addClient($data);
+            $result = $this->Companies_model->addClient($data);
             if ($result == TRUE) {
                 $msg = 'Client added Successfully !';
                 $this->index($msg);
@@ -53,7 +53,7 @@ class Clients extends CI_Controller
                 $msg['message_display'] = 'Client already exist!';
                 $this->load->view('header');
                 $this->load->view('main_menu');
-                $this->load->view('clients/create', $msg);
+                $this->load->view('Companies/create', $msg);
                 $this->load->view('footer');
             }
         }
@@ -77,20 +77,20 @@ class Clients extends CI_Controller
                 'name' => $this->input->post('name'),
                 'projects' => $this->input->post('projects')
             );
-            $this->Clients_model->editClient($sql);
+            $this->Companies_model->editClient($sql);
             $data['message_display'] = ' Client updated Successfully !';
         }
-        $data['clients'] = $this->Clients_model->getClients($id);
+        $data['companies'] = $this->Companies_model->getCompanies($id);
         $this->load->view('header');
         $this->load->view('main_menu');
-        $this->load->view('clients/edit', $data);
+        $this->load->view('Companies/edit', $data);
         $this->load->view('footer');
     }
 
     public function logo_upload()
     {
         // requires php5
-        define('UPLOAD_DIR', 'Uploads/Clients/');
+        define('UPLOAD_DIR', 'Uploads/Companies/');
         $file_name = $_POST['client'] . "_logo";
         $img = $_POST['data'];
         $ext = $_POST['ext'];
@@ -123,7 +123,7 @@ class Clients extends CI_Controller
         $role = ($this->session->userdata['logged_in']['role']);
         if ($role == "Admin") {
             $id = $_POST['id'];
-            $this->Clients_model->deleteClient($id);
+            $this->Companies_model->deleteClient($id);
         }
     }
 }

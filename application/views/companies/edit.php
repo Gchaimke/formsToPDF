@@ -26,15 +26,15 @@ if (isset($this->session->userdata['logged_in'])) {
 				echo "<div class='alert alert-danger' role='alert'>" . validation_errors() . "</div>";
 			}
 
-			if (isset($clients)) {
-				//print_r($clients);
-				$id = $clients[0]['id'];
-				$client = $clients[0]['name'];
-				$projects = $clients[0]['projects'];
-				$logo = $clients[0]['logo'];
+			if (isset($Companies)) {
+				//print_r($Companies);
+				$id = $Companies[0]['id'];
+				$client = $Companies[0]['name'];
+				$projects = $Companies[0]['projects'];
+				$logo = $Companies[0]['logo'];
 			}
 			?>
-			<?php echo form_open("clients/edit/$id", 'class=user-create'); ?>
+			<?php echo form_open("Companies/edit/$id", 'class=user-create'); ?>
 			<input type='hidden' name='id' value="<?php echo $id ?>">
 			<label>Client</label><input id='client_name' type='text' class="form-control" name='name' value="<?php echo $client ?>" disabled></hr>
 			<label>Logo</label>

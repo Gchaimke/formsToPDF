@@ -3,18 +3,18 @@
 class Production_model extends CI_Model
 {
 
-	public function addChecklist($data)
+	public function addForm($data)
 	{
 		// Query to check whether serial already exist or not
 		$condition = "serial ='" . $data['serial'] . "' AND project='" . $data['project'] . "'";
 		$this->db->select('*');
-		$this->db->from('checklists');
+		$this->db->from('forms');
 		$this->db->where($condition);
 		$this->db->limit(1);
 		$query = $this->db->get();
 		if ($query->num_rows() == 0) {
 			// Query to insert data in database
-			$this->db->insert('checklists', $data);
+			$this->db->insert('forms', $data);
 			if ($this->db->affected_rows() > 0) {
 				return true;
 			}
@@ -23,13 +23,13 @@ class Production_model extends CI_Model
 		}
 	}
 
-	function getChecklists($id = '', $project = '')
+	function getForms($id = '', $project = '')
 	{
 		$response = array();
-		if ($this->db->table_exists('checklists')) {
+		if ($this->db->table_exists('forms')) {
 			// Select record
 			$this->db->select('*');
-			$this->db->from('checklists');
+			$this->db->from('forms');
 			if ($id != '') {
 				if (strpos($id, ':') == false) {
 					$condition = "id ='$id'";
@@ -52,7 +52,7 @@ class Production_model extends CI_Model
 		return $response;
 	}
 
-	public function editChecklist($data)
+	public function editForm($data)
 	{
 		$where = "id =" . $data['id'];
 		$data = array(
@@ -63,10 +63,10 @@ class Production_model extends CI_Model
 			'qc' => $data['qc'],
 			'scans' => $data['scans']
 		);
-		return $this->db->update('checklists', $data, $where);
+		return $this->db->update('forms', $data, $where);
 	}
 
-	public function batchEditChecklist($data)
+	public function batchEditForm($data)
 	{
 		$where = "id =" . $data['id'];
 		$data = array(
@@ -76,7 +76,7 @@ class Production_model extends CI_Model
 			'assembler' => $data['assembler'],
 			'qc' => $data['qc'],
 		);
-		return $this->db->update('checklists', $data, $where);
+		return $this->db->update('forms', $data, $where);
 	}
 
 	function move_to_trash($data)
@@ -85,17 +85,17 @@ class Production_model extends CI_Model
 		$data = array(
 			'project' => 'Trash '. $data['project']
 		);
-		return $this->db->update('checklists', $data, $where);
+		return $this->db->update('forms', $data, $where);
 	}
 
-	function getLastChecklist($project)
+	function getLastForm($project)
 	{
 		$response = array();
-		if ($this->db->table_exists('checklists')) {
+		if ($this->db->table_exists('forms')) {
 			$project = urldecode($project);
 			$condition = "project =\"$project\"";
 			$this->db->select('*');
-			$this->db->from('checklists');
+			$this->db->from('forms');
 			$this->db->where($condition);
 			$this->db->order_by('id', 'DESC');
 			$this->db->limit(1);
@@ -109,14 +109,14 @@ class Production_model extends CI_Model
 		}
 	}
 
-	function searchChecklist($sn = '')
+	function searchForm($sn = '')
 	{
-		if ($this->db->table_exists('checklists')) {
+		if ($this->db->table_exists('forms')) {
 			if ($sn != "") {
 				$sn = urldecode($sn);
 				$condition = "serial LIKE '%$sn%'";
 				$this->db->select('*');
-				$this->db->from('checklists');
+				$this->db->from('forms');
 				$this->db->where($condition);
 				$this->db->order_by('project');
 				$q = $this->db->get();
@@ -126,7 +126,7 @@ class Production_model extends CI_Model
 		}
 	}
 
-	public function get_current_checklists_records($limit, $start, $project)
+	public function get_current_forms_records($limit, $start, $project)
 	{
 		$this->db->limit($limit, $start);
 		if ($project != '') {
@@ -135,7 +135,7 @@ class Production_model extends CI_Model
 			$this->db->where($condition);
 		}
 		$this->db->order_by('id', 'DESC');
-		$query = $this->db->get("checklists");
+		$query = $this->db->get("forms");
 
 		if ($query->num_rows() > 0) {
 			foreach ($query->result() as $row) {
@@ -151,7 +151,7 @@ class Production_model extends CI_Model
 	public function get_total($project = '')
 	{
 		if ($project != '') {
-			$this->db->from('checklists');
+			$this->db->from('forms');
 			$project = urldecode($project);
 			$this->db->where('project', $project);
 		}
