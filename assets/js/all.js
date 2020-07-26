@@ -105,7 +105,7 @@ function snapLogo() {
         if (/\.(jpe?g|png|gif)$/i.test(file.name)) {
             var reader = new FileReader();
             reader.addEventListener("load", function () {
-                saveLogoToServer(this.result);
+                saveLogoToServer(this.result,company);
                 sleep(2000);
                 var image = new Image();
                 image.title = file.name;
@@ -121,11 +121,10 @@ function snapLogo() {
     }
 }
 
-function saveLogoToServer(file) {
+function saveLogoToServer(file,company) {
     $.post("/companies/logo_upload", {
         data: file,
-        company: company,
-        ext: ext
+        company: company
     }).done(function (o) {
         console.log('photo saved to server.');
         console.log(o);

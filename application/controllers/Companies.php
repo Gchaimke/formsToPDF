@@ -30,10 +30,11 @@ class Companies extends CI_Controller
     {
         $msg = array();
         // Check validation for user input in SignUp form
-        $this->form_validation->set_rules('id', 'Id', 'trim|xss_clean');
         $this->form_validation->set_rules('name', 'Name', 'trim|required|xss_clean');
         $this->form_validation->set_rules('logo', 'Logo', 'trim|xss_clean');
-        $this->form_validation->set_rules('projects', 'Projects', 'trim|xss_clean');
+        $this->form_validation->set_rules('form_header', 'form_header', 'trim|xss_clean');
+        $this->form_validation->set_rules('form_extra_filds', 'form_extra_filds', 'trim|xss_clean');
+        $this->form_validation->set_rules('form_footer', 'form_footer', 'trim|xss_clean');
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('header');
             $this->load->view('main_menu');
@@ -43,11 +44,13 @@ class Companies extends CI_Controller
             $data = array(
                 'name' => $this->input->post('name'),
                 'logo' => $this->input->post('logo'),
-                'projects' => $this->input->post('projects')
+                'form_header' => $this->input->post('form_header'),
+                'form_extra_filds' => $this->input->post('form_extra_filds'),
+                'form_footer' => $this->input->post('form_footer')
             );
-            $result = $this->Companies_model->addClient($data);
+            $result = $this->Companies_model->addCompany($data);
             if ($result == TRUE) {
-                $msg = 'Client added Successfully !';
+                $msg = 'Company added Successfully !';
                 $this->index($msg);
             } else {
                 $msg['message_display'] = 'Client already exist!';
@@ -74,9 +77,9 @@ class Companies extends CI_Controller
         $this->form_validation->set_rules('form_footer', 'Form_footer', 'trim|xss_clean');
         if ($this->form_validation->run() == TRUE) {
             $sql = array(
-                'id' => $this->input->post('id'),
-                'logo' => $this->input->post('logo'),
+                'id' => $this->input->post('id'),                
                 'name' => $this->input->post('name'),
+                'logo' => $this->input->post('logo'),
                 'form_header' => $this->input->post('form_header'),
                 'form_extra_filds' => $this->input->post('form_extra_filds'),
                 'form_footer' => $this->input->post('form_footer')
@@ -97,7 +100,6 @@ class Companies extends CI_Controller
         define('UPLOAD_DIR', 'Uploads/Companies/');
         $file_name = $_POST['company'] . "_logo";
         $img = $_POST['data'];
-        $ext = $_POST['ext'];
         if (preg_match('/^data:image\/(\w+);base64,/', $img, $type)) {
             $img = substr($img, strpos($img, ',') + 1);
             $type = strtolower($type[1]); // jpg, png, gif
@@ -117,7 +119,7 @@ class Companies extends CI_Controller
         if (!file_exists(UPLOAD_DIR)) {
             mkdir(UPLOAD_DIR, 0770, true);
         }
-        $file = UPLOAD_DIR . $file_name . ".$ext";
+        $file = UPLOAD_DIR . $file_name . ".$type";
         $success = file_put_contents($file, $img);
         print $success ? $file : 'Unable to save the file.';
     }

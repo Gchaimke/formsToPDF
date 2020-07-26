@@ -25,8 +25,8 @@ if (isset($this->session->userdata['logged_in'])) {
                   }
                   ?>
 
-                  <?php echo form_open('Companies/create', 'class=client-create'); ?>
-                  <label>Company Name</label><input id='client_name' type='text' class="form-control" name='name' value="" onchange="updateClient(this.value)">
+                  <?php echo form_open('companies/create', 'class=client-create'); ?>
+                  <label>Company Name</label><input id='company_name' type='text' class="form-control" name='name' value="" onchange="updateClient(this.value)">
                   <label>Logo</label>
 			<div class="input-group mb-3">
 				<input id="logo_path" type='text' class="form-control" name='logo' value="">
@@ -38,13 +38,13 @@ if (isset($this->session->userdata['logged_in'])) {
                   <input id="browse" style="display:none;" type="file" onchange="snapLogo()" >
 
                   <label>Document Header</label>
-                  <textarea class="form-control" name='header' rows="5" cols="100">Company name in header</textarea>
+                  <textarea class="form-control" name='form_header' rows="5" cols="100">Company name in header</textarea>
 
                   <label>Form Filds</label>
-                  <textarea class="form-control" name='filds' rows="5" cols="100"> סוג תקלה\התקנה, שם לקוח, מיקום, אחראי, איש קשר, תיאור תקלה\התקנה, תוצאות הבדיקה, סיכום, הערות, המלצות, שעת נסיעה הלוך, שעתנסיעה חזור</textarea>
+                  <textarea class="form-control" name='form_extra_filds' rows="5" cols="100"> סוג תקלה\התקנה, שם לקוח, מיקום, אחראי, איש קשר, תיאור תקלה\התקנה, תוצאות הבדיקה, סיכום, הערות, המלצות, שעת נסיעה הלוך, שעתנסיעה חזור</textarea>
 
                   <label>Document Footer</label>
-                  <textarea class="form-control" name='footer' rows="5" cols="100">Company footer</textarea>
+                  <textarea class="form-control" name='form_footer' rows="5" cols="100">Company footer</textarea>
 
                   <input type='submit' class="btn btn-info btn-block" name='submit' value='Submit'>
                   <?php echo form_close(); ?>
@@ -52,9 +52,8 @@ if (isset($this->session->userdata['logged_in'])) {
       </div>
 </main>
 <script>
-	var client = document.getElementById("client_name").value;
+      var company = document.getElementById("company_name").value;
 	function updateClient(value){
-            client = value;
+            company = value;
       }
-	var ext = '';
 </script>
