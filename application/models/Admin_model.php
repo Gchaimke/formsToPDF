@@ -25,6 +25,14 @@ class Admin_model extends CI_Model
                 'type' => 'VARCHAR',
                 'constraint' => 500
             ),
+            'email' => array(
+                'type' => 'VARCHAR',
+                'constraint' => 100
+            ),
+            'email_to' => array(
+                'type' => 'VARCHAR',
+                'constraint' => 500
+            ),
             'log' => array(
                 'type' => 'TEXT'
             )
@@ -106,8 +114,7 @@ class Admin_model extends CI_Model
                 'auto_increment' => TRUE
             ),
             'date' => array(
-                'type' => 'DATE',
-                'null' => FALSE
+                'type' => 'DATE'
             ),
             'client_num' => array(
                 'type' => 'VARCHAR',
@@ -126,15 +133,14 @@ class Admin_model extends CI_Model
                 'constraint' => 500
             ),
             'place' => array(
-                'type' => 'INT',
-                'constraint' => 5,
-                'unsigned' => TRUE
+                'type' => 'VARCHAR',
+                'constraint' => 100
             ),
             'start_time' => array(
-                'type' => 'DATE'
+                'type' => 'TIME'
             ),
             'end_time' => array(
-                'type' => 'DATE'
+                'type' => 'TIME'
             ),
             'manager' => array(
                 'type' => 'VARCHAR',
@@ -157,10 +163,10 @@ class Admin_model extends CI_Model
                 'type' => 'TEXT'
             ),
             'trip_start_time' => array(
-                'type' => 'DATE'
+                'type' => 'TIME'
             ),
             'trip_end_time' => array(
-                'type' => 'DATE'
+                'type' => 'TIME'
             )
         );
         $this->dbforge->add_field($company);
