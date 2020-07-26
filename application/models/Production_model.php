@@ -3,10 +3,10 @@
 class Production_model extends CI_Model
 {
 
-	public function addForm($data)
+	public function save_form($data)
 	{
 		// Query to check whether serial already exist or not
-		$condition = "serial ='" . $data['serial'] . "' AND company='" . $data['company'] . "'";
+		$condition = "issue_num ='" . $data['issue_num'] . "'";
 		$this->db->select('*');
 		$this->db->from('forms');
 		$this->db->where($condition);

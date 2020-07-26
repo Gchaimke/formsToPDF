@@ -26,6 +26,10 @@ img#logo_img {
     max-height: 200px;
 }
 
+img#logo_img {
+    height: 100px;
+}
+
 img.img-thumbnail.checklist-logo {
     display: none;
 }

@@ -26,9 +26,9 @@ class Production extends CI_Controller
 
     public function new_form()
     {
-        $data = array();
         $this->load->view('header');
-        $this->load->view('main_menu', $data);
+        $this->load->view('main_menu');
+        $this->load->view('production/new_form');
         $this->load->view('footer');
     }
 
@@ -36,23 +36,50 @@ class Production extends CI_Controller
     public function save_form()
     {
         // Check validation for user input in SignUp form
-        $this->form_validation->set_rules('data', 'Data', 'trim|xss_clean');
-        $this->form_validation->set_rules('log', 'Log', 'trim|xss_clean');
-        $this->form_validation->set_rules('progress', 'Progress', 'trim|xss_clean');
-        $this->form_validation->set_rules('assembler', 'assembler', 'trim|xss_clean');
-        $this->form_validation->set_rules('qc', 'Qc', 'trim|xss_clean');
-        $this->form_validation->set_rules('scans', 'Scans', 'trim|xss_clean');
+        $this->form_validation->set_rules('date', 'date', 'trim|xss_clean');
+        $this->form_validation->set_rules('client_num', 'client_num', 'trim|xss_clean');
+        $this->form_validation->set_rules('issue_num', 'issue_num', 'trim|xss_clean');
+        $this->form_validation->set_rules('client_name', 'client_name', 'trim|xss_clean');
+        $this->form_validation->set_rules('issue_kind', 'issue_kind', 'trim|xss_clean');
+        $this->form_validation->set_rules('place', 'place', 'trim|xss_clean');
+        $this->form_validation->set_rules('start_time', 'start_time', 'trim|xss_clean');
+        $this->form_validation->set_rules('end_time', 'end_time', 'trim|xss_clean');
+        $this->form_validation->set_rules('manager', 'manager', 'trim|xss_clean');
+        $this->form_validation->set_rules('contact_name', 'contact_name', 'trim|xss_clean');
+        $this->form_validation->set_rules('activity_text', 'activity_text', 'trim|xss_clean');
+        $this->form_validation->set_rules('checking_text', 'checking_text', 'trim|xss_clean');
+        $this->form_validation->set_rules('summary_text', 'summary_text', 'trim|xss_clean');
+        $this->form_validation->set_rules('remarks_text', 'remarks_text', 'trim|xss_clean');
+        $this->form_validation->set_rules('trip_start_time', 'trip_start_time', 'trim|xss_clean');
+        $this->form_validation->set_rules('trip_end_time', 'trip_end_time', 'trim|xss_clean');
         if (!$this->form_validation->run() == FALSE) {
             $data = array(
-                'data' =>  $this->input->post('data'),
-                'log' =>  $this->input->post('log'),
-                'progress' => $this->input->post('progress'),
-                'assembler' => $this->input->post('assembler'),
-                'qc' => $this->input->post('qc'),
-                'scans' => $this->input->post('scans')
+                'date' =>  $this->input->post('date'),
+                'client_num' =>  $this->input->post('client_num'),
+                'issue_num' => $this->input->post('issue_num'),
+                'client_name' => $this->input->post('client_name'),
+                'issue_kind' => $this->input->post('issue_kind'),
+                'place' => $this->input->post('place'),
+                'start_time' => $this->input->post('start_time'),
+                'end_time' => $this->input->post('end_time'),
+                'manager' => $this->input->post('manager'),
+                'contact_name' => $this->input->post('contact_name'),
+                'activity_text' => $this->input->post('activity_text'),
+                'checking_text' => $this->input->post('checking_text'),
+                'summary_text' => $this->input->post('summary_text'),
+                'remarks_text' => $this->input->post('remarks_text'),
+                'trip_start_time' => $this->input->post('trip_start_time'),
+                'trip_end_time' => $this->input->post('trip_end_time')
             );
-            $this->Production_model->editForm($data);
-            echo 'Form saved successfully!';
+            $response =  $this->Production_model->save_form($data);
+            if($response){
+                echo "Form saved successfully!";
+            }else{
+                echo "Form Not saved! Issue Number exists!";
+            }
+            
+        }else{
+            echo "Form validation error!";
         }
     }
 
