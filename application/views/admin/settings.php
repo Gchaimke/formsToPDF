@@ -17,17 +17,17 @@ if (isset($this->session->userdata['logged_in'])) {
     <div class="container">
         <?php
         $users_count = 0;
-        $Companies_count = 0;
-        $checklists_count = 0;
+        $companies_count = 0;
+        $forms_count = 0;
         if (isset($message_display)) {
             echo "<div class='alert alert-success' role='alert'>";
             echo $message_display . '</div>';
         }
 
-        if (isset($users) and isset($Companies) and isset($checklists)) {
+        if (isset($users) and isset($companies) and isset($forms)) {
             $users_count = $users;
-            $Companies_count = $Companies;
-            $checklists_count = $checklists;
+            $companies_count = $companies;
+            $forms_count = $forms;
         }
         ?>
         <ul class="list-group">
@@ -37,11 +37,11 @@ if (isset($this->session->userdata['logged_in'])) {
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 Companies
-                <span class="badge badge-primary badge-pill"><?php echo $Companies_count ?></span>
+                <span class="badge badge-primary badge-pill"><?php echo $companies_count ?></span>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
-                Checklists
-                <span class="badge badge-primary badge-pill"><?php echo $checklists_count ?></span>
+                Forms
+                <span class="badge badge-primary badge-pill"><?php echo $forms_count ?></span>
             </li>
         </ul><br>
         <div id="form-messages" class='alert hidden' role='alert'></div>

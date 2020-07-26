@@ -20,9 +20,9 @@
 		</nav>
 		<form id="form">
 			<div class="input-group mb-3">
-				<input id='inputSearch' type="text" class="form-control" placeholder="Search for serial number" aria-label="Search for serial number" aria-describedby="basic-addon2" autofocus>
+				<input id='inputSearch' type="text" class="form-control" placeholder="Search in forms" aria-label="Search in forms" aria-describedby="basic-addon2" autofocus>
 				<div class="input-group-append">
-					<button class="btn btn-secondary" type="button" onclick="serialSearch()">Search</button>
+					<button class="btn btn-secondary" type="button" onclick="formSearch()">Search</button>
 				</div>
 			</div>
 			<div id='searchResult'></div>
@@ -33,11 +33,11 @@
 					<tr>
 						<th scope="col">*</th>
 						<th scope="col">Form Date</th>
+						<th scope="col" class="mobile-hide">Issue Number</th>
 						<th scope="col" class="mobile-hide">Client Number</th>
 						<th scope="col" class="mobile-hide">Client Name</th>
 						<th scope="col" class="mobile-hide">Place</th>
 						<th scope="col" class="mobile-hide">Issue</th>
-						<th scope="col" class="mobile-hide">Date</th>
 						<th scope="col">Save</th>
 						<th scope="col">Trash</th>
 					</tr>
@@ -54,11 +54,12 @@
 								} else {
 									echo "SN template not found!";
 								}  ?></td>
+							<td class="mobile-hide"><?php echo $data->issue_num ?></td>
 							<td class="mobile-hide"><?php echo $data->client_num ?></td>
 							<td class="mobile-hide"><?php echo $data->client_name ?></td>
 							<td class="mobile-hide"><?php echo $data->place ?></td>
 							<td class="mobile-hide"><?php echo $data->issue_kind ?></td>
-							<td class="mobile-hide"><?php echo $data->date ?></td>
+							
 							<td><a id='edit_checklist' target="_blank" href='/production/edit_checklist/<?php echo $data->id ?>?sn=<?php echo $data->issue_num ?>' class='btn btn-info'><i class="fa fa-edit"></i></a></td>
 							<td><button id='<?php echo $data->id ?>' class='btn btn-danger' onclick='trashChecklist(this.id,"<?php echo urldecode($project); ?>","<?php echo $data->issue_num; ?>")'><i class="fa fa-trash"></i></button></td>
 						</tr>
@@ -78,8 +79,6 @@
 	</div>
 </main>
 <script>
-	var client = '<?php echo $client[0]['name'] ?>';
-
 	function trashChecklist(id,project,issue_num) {
 		var r = confirm("Trash checklist " + issue_num + "?");
 		if (r == true) {
@@ -94,18 +93,18 @@
 		}
 	}
 
-	function serialSearch() {
-		var sn = document.getElementById("inputSearch").value;
-		if (sn.length >= 3) {
-			$.post("/production/serial_search", {
-				sn: sn
+	function formSearch() {
+		var search = document.getElementById("inputSearch").value;
+		if (search.length >= 3) {
+			$.post("/admin/form_search", {
+				search: search
 			}).done(function(e) {
 				if (e.length > 0) {
 					$('#searchResult').empty();
 					$('#searchResult').append( e );
 				} else {
 					$('#searchResult').empty();
-					$('#searchResult').append("<h2>Serial: "+sn+" not found!</h2>");
+					$('#searchResult').append("<h2>Form: "+search+" not found!</h2>");
 				}
 			});
 		} else {

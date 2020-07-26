@@ -33,7 +33,7 @@ if (isset($this->session->userdata['logged_in'])) {
         </div>
       </li>
       <?php if ($role == 'Admin') {?>
-        <li class="nav-item"><a class="nav-link" href="/companies">Company</a></li>
+        <li class="nav-item"><a class="nav-link" href="/companies">Companies</a></li>
         <li class="nav-item"><a class="nav-link" href="/users">Users</a></li>
         <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

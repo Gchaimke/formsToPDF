@@ -121,6 +121,25 @@ class Admin extends CI_Controller
         $this->load->view('main_menu', $params);
         $this->load->view('admin/manage_forms', $params);
         $this->load->view('footer');
+	}
+	
+	
+    public function form_search()
+    {
+        $this->form_validation->set_rules('search', 'Search', 'trim|xss_clean');
+        $data = $this->Admin_model->searchForm($this->input->post('search'));
+        $str = '';
+        $count = 0;
+        foreach ($data as $result) {
+            if (strpos($result["issue_num"], 'Trash') !== false) {
+                $str .= "<div class='badge badge-danger' >" . urldecode($result["client_name"]) . ": " . $result["issue_num"] . "</div>";
+            } else {
+                $str .= "<a class='badge badge-info' href='/production/edit_form/" . $result["id"] . "?sn=" . $result["issue_num"] . "'>" . urldecode($result["client_name"]) . ": " . $result["issue_num"] . "</a>";
+            }
+
+            $count++;
+        }
+        echo "<h2>Found " . $count . " serials.</h2>" . $str;
     }
 
 	function manage_trash()

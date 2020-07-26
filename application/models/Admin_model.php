@@ -115,74 +115,86 @@ class Admin_model extends CI_Model
             ),
             'date' => array(
                 'type' => 'DATE',
-                'DEFAULT' => '1234'
+                'default' => '2020-05-26',
+                'null' => TRUE
             ),
             'client_num' => array(
                 'type' => 'VARCHAR',
                 'constraint' => 50,
-                'DEFAULT' => '1234'
+                'default' => '1234',
+                'null' => TRUE
             ),
             'issue_num' => array(
                 'type' => 'VARCHAR',
                 'constraint' => 50,
-                'DEFAULT' => '1234'
+                'default' => '1234',
+                'null' => TRUE
             ),
             'client_name' => array(
                 'type' => 'VARCHAR',
                 'constraint' => 60,
-                'DEFAULT' => 'clinet'
+                'default' => 'clinet',
+                'null' => TRUE
             ),
             'issue_kind' => array(
                 'type' => 'VARCHAR',
                 'constraint' => 500,
-                'DEFAULT' => ''
+                'default' => 'issue',
+                'null' => TRUE
             ),
             'place' => array(
                 'type' => 'VARCHAR',
                 'constraint' => 100,
-                'DEFAULT' => ''
+                'default' => 'Tel-Aviv',
+                'null' => TRUE
             ),
             'start_time' => array(
                 'type' => 'TIME',
-                'DEFAULT' => '12:00:00'
+                'default' => '12:00:00'
             ),
             'end_time' => array(
                 'type' => 'TIME',
-                'DEFAULT' => '12:00:00'
+                'default' => '12:00:00'
             ),
             'manager' => array(
                 'type' => 'VARCHAR',
                 'constraint' => 100,
-                'DEFAULT' => ''
+                'default' => 'manager',
+                'null' => TRUE
             ),
             'contact_name' => array(
                 'type' => 'VARCHAR',
                 'constraint' => 100,
-                'DEFAULT' => ''
+                'default' => 'contact',
+                'null' => TRUE
             ),
             'activity_text' => array(
-                'type' => 'TEXT',
-                'DEFAULT' => ''
+                'type' => 'TEXT' ,
+                'default' => '',
+                'null' => TRUE
             ),
             'checking_text' => array(
                 'type' => 'TEXT',
-                'DEFAULT' => ''
+                'default' => 'test',
+                'null' => TRUE
             ),
             'summary_text' => array(
                 'type' => 'TEXT',
-                'DEFAULT' => ''
+                'default' => 'summary',
+                'null' => TRUE
             ),
             'remarks_text' => array(
                 'type' => 'TEXT',
-                'DEFAULT' => ''
+                'default' => 'remarks',
+                'null' => TRUE
             ),
             'trip_start_time' => array(
                 'type' => 'TIME',
-                'DEFAULT' => '12:00:00'
+                'default' => '12:00:00'
             ),
             'trip_end_time' => array(
                 'type' => 'TIME',
-                'DEFAULT' => '12:00:00'
+                'default' => '12:00:00'
             )
         );
         $this->dbforge->add_field($company);
@@ -190,7 +202,7 @@ class Admin_model extends CI_Model
         $this->dbforge->create_table('forms');
 
         $demoForm = array(
-            "date" => '2020-04-30',
+            "date" => '2020-05-26',
             "client_num" => '123456',
             "issue_num" => '#1225544',
             "client_name" => 'Client',
@@ -205,7 +217,7 @@ class Admin_model extends CI_Model
             "summary_text" => '',
             "remarks_text" => '',
             "trip_start_time" => '',
-            "trip_end_time" => '',
+            "trip_end_time" => ''
         );
         $this->db->insert('forms', $demoForm);
     }
@@ -236,7 +248,7 @@ class Admin_model extends CI_Model
         $this->dbforge->create_table('settings');
 
         $st = array(
-            'roles' => 'Admin,Assembler,QC',
+            'roles' => 'Admin,Manager,User',
             'log' =>'Database "settings created."'
         );
         $this->db->insert('settings', $st);
@@ -300,7 +312,25 @@ class Admin_model extends CI_Model
 		}
 
 		return false;
+    }
+    
+    function searchForm($num = '')
+	{
+		if ($this->db->table_exists('forms')) {
+			if ($num != "") {
+				$sn = urldecode($num);
+				$condition = "issue_num LIKE '%$num%'";
+				$this->db->select('*');
+				$this->db->from('forms');
+				$this->db->where($condition);
+				$this->db->order_by('date');
+				$q = $this->db->get();
+				$response = $q->result_array();
+				return $response;
+			}
+		}
 	}
+
 
     public function get_total($form = '')
 	{

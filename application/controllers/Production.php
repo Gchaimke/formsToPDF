@@ -24,25 +24,6 @@ class Production extends CI_Controller
         $this->load->view('footer');
     }
 
-    public function serial_search()
-    {
-        $this->form_validation->set_rules('sn', 'Sn', 'trim|xss_clean');
-        $data = $this->Production_model->searchChecklist($this->input->post('sn'));
-        $str = '';
-        $count = 0;
-        foreach ($data as $result) {
-            if (strpos($result["project"], 'Trash') !== false) {
-                $str .= "<div class='badge badge-danger' >" . urldecode($result["project"]) . ": " . $result["serial"] . "</div>";
-            } else {
-                $str .= "<a class='badge badge-info' href='/production/edit_form/" . $result["id"] . "?sn=" . $result["serial"] . "'>" . urldecode($result["project"]) . ": " . $result["serial"] . "</a>";
-            }
-
-            $count++;
-        }
-        echo "<h2>Found " . $count . " serials.</h2>" . $str;
-    }
-
-
     // Validate and store form data in database
     public function add_form($project = '', $data = '')
     {

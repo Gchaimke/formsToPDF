@@ -109,23 +109,6 @@ class Production_model extends CI_Model
 		}
 	}
 
-	function searchForm($sn = '')
-	{
-		if ($this->db->table_exists('forms')) {
-			if ($sn != "") {
-				$sn = urldecode($sn);
-				$condition = "serial LIKE '%$sn%'";
-				$this->db->select('*');
-				$this->db->from('forms');
-				$this->db->where($condition);
-				$this->db->order_by('company');
-				$q = $this->db->get();
-				$response = $q->result_array();
-				return $response;
-			}
-		}
-	}
-
 	public function get_current_forms_records($limit, $start)
 	{
 		$this->db->limit($limit, $start);
