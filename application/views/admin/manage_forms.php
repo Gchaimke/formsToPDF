@@ -70,13 +70,6 @@
 			<div>No checklist(s) found.</div>
 		<?php } ?>
 	</div>
-	<div id='show-log' style='display:none;'>
-		<div id="show-log-header">
-			<div id="issue_num-header"></div>Click here to move<button type="button" class="close" aria-label="Close"> <span aria-hidden="true">&times;</span></button>
-		</div>
-		<ul class="list-group list-group-flush">
-		</ul>
-	</div>
 </main>
 <script>
 	function deleteForm(id) {

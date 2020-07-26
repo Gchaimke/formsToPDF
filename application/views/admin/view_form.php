@@ -55,6 +55,7 @@
 
                         <input type='submit' class="btn btn-info btn-block" name='submit' value='Update'>
                         <?php echo form_close(); ?>
+                        <a href="/production/to_pdf/<?php echo $form_data['id']?>">test pdf</a>
                   <?php } else {
                         echo "No Data for this form.";
                   } ?>

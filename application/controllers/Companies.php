@@ -104,7 +104,7 @@ class Companies extends CI_Controller
             $img = substr($img, strpos($img, ',') + 1);
             $type = strtolower($type[1]); // jpg, png, gif
 
-            if (!in_array($type, ['jpg', 'jpeg', 'gif', 'png'])) {
+            if (!in_array($type, ['jpg', 'jpeg'])) {
                 throw new \Exception('invalid image type');
             }
             $img = base64_decode($img);
@@ -119,7 +119,7 @@ class Companies extends CI_Controller
         if (!file_exists(UPLOAD_DIR)) {
             mkdir(UPLOAD_DIR, 0770, true);
         }
-        $file = UPLOAD_DIR . $file_name . ".$type";
+        $file = UPLOAD_DIR . $file_name . ".jpeg";
         $success = file_put_contents($file, $img);
         print $success ? $file : 'Unable to save the file.';
     }

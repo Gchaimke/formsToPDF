@@ -102,7 +102,7 @@ function snapLogo() {
     function readAndPreview(file) {
         // Make sure `file.name` matches our extensions criteria
         ext = file.name.substr((file.name.lastIndexOf('.') + 1));
-        if (/\.(jpe?g|png|gif)$/i.test(file.name)) {
+        if (/\.(jpe?g|)$/i.test(file.name)) {
             var reader = new FileReader();
             reader.addEventListener("load", function () {
                 saveLogoToServer(this.result,company);
@@ -110,10 +110,12 @@ function snapLogo() {
                 var image = new Image();
                 image.title = file.name;
                 image.src = this.result;
-                logo_path.value = "/Uploads/Companies/" + company + "_logo." + ext;
+                logo_path.value = "/Uploads/Companies/" + company + "_logo.jpeg";
                 logo_img.src = logo_path.value;
             }, false);
             reader.readAsDataURL(file);
+        }else{
+            alert('JPEG, JPG only!')
         }
     }
     if (files) {
