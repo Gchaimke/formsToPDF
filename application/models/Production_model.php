@@ -6,7 +6,7 @@ class Production_model extends CI_Model
 	public function addForm($data)
 	{
 		// Query to check whether serial already exist or not
-		$condition = "serial ='" . $data['serial'] . "' AND project='" . $data['project'] . "'";
+		$condition = "serial ='" . $data['serial'] . "' AND company='" . $data['company'] . "'";
 		$this->db->select('*');
 		$this->db->from('forms');
 		$this->db->where($condition);
@@ -23,7 +23,7 @@ class Production_model extends CI_Model
 		}
 	}
 
-	function getForms($id = '', $project = '')
+	function getForms($id = '', $company = '')
 	{
 		$response = array();
 		if ($this->db->table_exists('forms')) {
@@ -41,9 +41,9 @@ class Production_model extends CI_Model
 					$this->db->where($condition);
 				}
 			}
-			if ($project != '') {
-				$project = urldecode($project);
-				$condition = "project =\"$project\"";
+			if ($company != '') {
+				$company = urldecode($company);
+				$condition = "company =\"$company\"";
 				$this->db->where($condition);
 			}
 			$q = $this->db->get();
@@ -83,17 +83,17 @@ class Production_model extends CI_Model
 	{
 		$where = "id =" . $data['id'];
 		$data = array(
-			'project' => 'Trash '. $data['project']
+			'company' => 'Trash '. $data['company']
 		);
 		return $this->db->update('forms', $data, $where);
 	}
 
-	function getLastForm($project)
+	function getLastForm($company)
 	{
 		$response = array();
 		if ($this->db->table_exists('forms')) {
-			$project = urldecode($project);
-			$condition = "project =\"$project\"";
+			$company = urldecode($company);
+			$condition = "company =\"$company\"";
 			$this->db->select('*');
 			$this->db->from('forms');
 			$this->db->where($condition);
@@ -118,7 +118,7 @@ class Production_model extends CI_Model
 				$this->db->select('*');
 				$this->db->from('forms');
 				$this->db->where($condition);
-				$this->db->order_by('project');
+				$this->db->order_by('company');
 				$q = $this->db->get();
 				$response = $q->result_array();
 				return $response;
@@ -126,14 +126,9 @@ class Production_model extends CI_Model
 		}
 	}
 
-	public function get_current_forms_records($limit, $start, $project)
+	public function get_current_forms_records($limit, $start)
 	{
 		$this->db->limit($limit, $start);
-		if ($project != '') {
-			$project = urldecode($project);
-			$condition = "project =\"$project\"";
-			$this->db->where($condition);
-		}
 		$this->db->order_by('id', 'DESC');
 		$query = $this->db->get("forms");
 
@@ -141,20 +136,14 @@ class Production_model extends CI_Model
 			foreach ($query->result() as $row) {
 				$data[] = $row;
 			}
-
 			return $data;
 		}
-
 		return false;
 	}
 
-	public function get_total($project = '')
+	public function get_total()
 	{
-		if ($project != '') {
-			$this->db->from('forms');
-			$project = urldecode($project);
-			$this->db->where('project', $project);
-		}
+		$this->db->from('forms');
 		return $this->db->count_all_results();
 	}
 }

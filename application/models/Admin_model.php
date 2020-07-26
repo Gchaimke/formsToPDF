@@ -56,7 +56,7 @@ class Admin_model extends CI_Model
     function createCompaniesDb()
     {
         $this->load->dbforge();
-        $client = array(
+        $company = array(
             'id' => array(
                 'type' => 'INT',
                 'constraint' => 9,
@@ -86,7 +86,7 @@ class Admin_model extends CI_Model
             )            
         );
 
-        $this->dbforge->add_field($client);
+        $this->dbforge->add_field($company);
         // define primary key
         $this->dbforge->add_key('id', TRUE);
         // create table
@@ -114,59 +114,75 @@ class Admin_model extends CI_Model
                 'auto_increment' => TRUE
             ),
             'date' => array(
-                'type' => 'DATE'
+                'type' => 'DATE',
+                'DEFAULT' => '1234'
             ),
             'client_num' => array(
                 'type' => 'VARCHAR',
                 'constraint' => 50,
+                'DEFAULT' => '1234'
             ),
             'issue_num' => array(
                 'type' => 'VARCHAR',
-                'constraint' => 50
+                'constraint' => 50,
+                'DEFAULT' => '1234'
             ),
             'client_name' => array(
                 'type' => 'VARCHAR',
-                'constraint' => 60
+                'constraint' => 60,
+                'DEFAULT' => 'clinet'
             ),
             'issue_kind' => array(
                 'type' => 'VARCHAR',
-                'constraint' => 500
+                'constraint' => 500,
+                'DEFAULT' => ''
             ),
             'place' => array(
                 'type' => 'VARCHAR',
-                'constraint' => 100
+                'constraint' => 100,
+                'DEFAULT' => ''
             ),
             'start_time' => array(
-                'type' => 'TIME'
+                'type' => 'TIME',
+                'DEFAULT' => '12:00:00'
             ),
             'end_time' => array(
-                'type' => 'TIME'
+                'type' => 'TIME',
+                'DEFAULT' => '12:00:00'
             ),
             'manager' => array(
                 'type' => 'VARCHAR',
-                'constraint' => 100
+                'constraint' => 100,
+                'DEFAULT' => ''
             ),
             'contact_name' => array(
                 'type' => 'VARCHAR',
-                'constraint' => 100
+                'constraint' => 100,
+                'DEFAULT' => ''
             ),
             'activity_text' => array(
-                'type' => 'TEXT'
+                'type' => 'TEXT',
+                'DEFAULT' => ''
             ),
             'checking_text' => array(
-                'type' => 'TEXT'
+                'type' => 'TEXT',
+                'DEFAULT' => ''
             ),
             'summary_text' => array(
-                'type' => 'TEXT'
+                'type' => 'TEXT',
+                'DEFAULT' => ''
             ),
             'remarks_text' => array(
-                'type' => 'TEXT'
+                'type' => 'TEXT',
+                'DEFAULT' => ''
             ),
             'trip_start_time' => array(
-                'type' => 'TIME'
+                'type' => 'TIME',
+                'DEFAULT' => '12:00:00'
             ),
             'trip_end_time' => array(
-                'type' => 'TIME'
+                'type' => 'TIME',
+                'DEFAULT' => '12:00:00'
             )
         );
         $this->dbforge->add_field($company);

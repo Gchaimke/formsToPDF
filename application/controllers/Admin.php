@@ -7,6 +7,7 @@ class Admin extends CI_Controller
 		// Load model
 		$this->load->model('Users_model');
 		$this->load->model('Admin_model');
+		$this->load->model('Production_model');
 		$this->load->library('pagination');
 	}
 
@@ -73,7 +74,7 @@ class Admin extends CI_Controller
 		echo $data['response'];
 	}
 
-	public function manage_forms($project = '')
+	public function manage_forms()
     {
         $this->load->database();
         // init params
@@ -81,11 +82,11 @@ class Admin extends CI_Controller
         $config = array();
         $limit_per_page = 20;
         $start_index = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
-        $total_records = $this->Production_model->get_total($project);
+        $total_records = $this->Production_model->get_total();
         if ($total_records > 0) {
-            $params["results"] = $this->Production_model->get_current_forms_records($limit_per_page, $start_index, $project);
+            $params["results"] = $this->Production_model->get_current_forms_records($limit_per_page, $start_index);
 
-            $config['base_url'] = base_url() . 'admin/forms/' . $project;
+            $config['base_url'] = base_url() . 'admin/forms/';
             $config['total_rows'] = $total_records;
             $config['per_page'] = $limit_per_page;
             $config["uri_segment"] = 4;
@@ -116,8 +117,6 @@ class Admin extends CI_Controller
             // build paging links
             $params["links"] = $this->pagination->create_links();
         }
-        $params['project'] = urldecode($project);
-        $params['client'] = $this->Companies_model->getCompanies('', urldecode($project));
         $this->load->view('header');
         $this->load->view('main_menu', $params);
         $this->load->view('admin/manage_forms', $params);

@@ -12,28 +12,15 @@
 			echo "<div class='alert alert-success' role='alert'>";
 			echo $message_display . '</div>';
 		} ?>
-		<form id="form">
-			<div class="input-group mb-3">
-				<input id='inputSearch' type="text" class="form-control" placeholder="Search for serial number" aria-label="Search for serial number" aria-describedby="basic-addon2" autofocus>
-				<div class="input-group-append">
-					<button class="btn btn-secondary" type="button" onclick="serialSearch()">Search</button>
-				</div>
-			</div>
-			<div id='searchResult'></div>
-		</form>
 			<?php
 			echo '<div class="card-columns">';
 			foreach ($companies as $company) {
-				echo '<div id="' . $company['name'] . '" class="card"><center><div class="card-body"><h5 class="card-title">';
-				echo $company['name'];
-				echo '</h5><p class="card-text">Select Project:</p></div>';
+				$company_name = $company['name'];
+				echo '<div id="' . $company_name . '" class="card"><center><div class="card-body">
+				<h5 class="card-title">'.$company_name.'</h5>';
+				echo '<p class="card-text"></p></div>';
 				echo '<div class="card-footer">';
-				if ($company['projects'] != "") {
-					$arr = explode(',', $company['projects']);
-					foreach ($arr as $project) {
-						echo  "<a href='/production/checklists/$project' class='btn btn-primary  btn-block'>$project</a>";
-					}
-				}
+				echo  "<a href='/production/checklists/$company_name' class='btn btn-primary  btn-block'>New Form</a>";
 				echo '</div></center></div>';
 			}
 
@@ -41,32 +28,3 @@
 	</div>
 	</div>
 </main>
-<script>
-	function serialSearch() {
-		var sn = document.getElementById("inputSearch").value;
-		if (sn.length >= 3) {
-			$.post("/production/serial_search", {
-				sn: sn
-			}).done(function(e) {
-				if (e.length > 0) {
-					$('#searchResult').empty();
-					$('#searchResult').append( e );
-				} else {
-					$('#searchResult').empty();
-					$('#searchResult').append("<h2>Serial: "+sn+" not found!</h2>");
-				}
-			});
-		} else {
-			$('#searchResult').empty();
-			$('#searchResult').append("<h2>Search must be munimum 3 simbols</h2>")
-		}
-	}
-
-	document.onkeydown = function(e) {
-		var pathname = window.location.pathname.split("/");
-		if (e.which == 13) { //enter
-			e.preventDefault();
-			serialSearch();
-		}
-	};
-</script>
