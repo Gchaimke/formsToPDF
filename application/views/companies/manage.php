@@ -24,19 +24,19 @@ if (isset($this->session->userdata['logged_in'])) {
 		<table class="table">
 			<thead class="thead-dark">
 				<tr>
-					<th scope="col">Client</th>
+					<th scope="col">Company Name</th>
 					<th scope="col">Edit</th>
 					<th scope="col">Delete</th>
 				</tr>
 			</thead>
 			<tbody>
-				<?php if (isset($Companies)) {
-					foreach ($Companies as $client) {
-						echo '<tr id="' . $client['id'] . '">';
-						echo  '<td>' . $client['name'] . '</td>';
-						echo "<td><a href='/Companies/edit/" . $client['id'] .
+				<?php if (isset($companies)) {
+					foreach ($companies as $company) {
+						echo '<tr id="' . $company['id'] . '">';
+						echo  '<td>' . $company['name'] . '</td>';
+						echo "<td><a href='/Companies/edit/" . $company['id'] .
 							"' class='btn btn-info'><i class='fa fa-edit'></i></a></td>";
-						echo "<td><button id='" . $client['id'] .
+						echo "<td><button id='" . $company['id'] .
 							"' class='btn btn-danger' onclick='deleteClient(this.id)'><i class='fa fa-trash'></i></button></td>";
 						echo '</tr>';
 					}
