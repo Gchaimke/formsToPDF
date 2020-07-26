@@ -68,7 +68,7 @@ class Admin_model extends CI_Model
                 'constraint' => 60,
                 'unique' => TRUE
             ),
-            'logo' =>array(
+            'logo' => array(
                 'type' => 'VARCHAR',
                 'constraint' => 500
             ),
@@ -83,7 +83,7 @@ class Admin_model extends CI_Model
             'form_footer' => array(
                 'type' => 'VARCHAR',
                 'constraint' => 500
-            )            
+            )
         );
 
         $this->dbforge->add_field($company);
@@ -94,11 +94,11 @@ class Admin_model extends CI_Model
 
         $cl = array(
             "name" => 'Avdor-HLT',
-            "logo"=> '/assets/img/logo.png',
+            "logo" => '/assets/img/logo.png',
             "form_header" => 'Company Header',
             "form_extra_filds" => 'extra',
             "form_footer" => 'Company Footer',
-            
+
         );
         $this->db->insert('companies', $cl);
     }
@@ -169,7 +169,7 @@ class Admin_model extends CI_Model
                 'null' => TRUE
             ),
             'activity_text' => array(
-                'type' => 'TEXT' ,
+                'type' => 'TEXT',
                 'default' => '',
                 'null' => TRUE
             ),
@@ -249,7 +249,7 @@ class Admin_model extends CI_Model
 
         $st = array(
             'roles' => 'Admin,Manager,User',
-            'log' =>'Database "settings created."'
+            'log' => 'Database "settings created."'
         );
         $this->db->insert('settings', $st);
     }
@@ -266,13 +266,13 @@ class Admin_model extends CI_Model
     }
 
     public function save_settings($data)
-	{
-		$where = "id =1";
-		$data = array(
-			'roles' => $data['roles']
-		);
-		return $this->db->update('settings', $data, $where);
-	}
+    {
+        $where = "id =1";
+        $data = array(
+            'roles' => $data['roles']
+        );
+        return $this->db->update('settings', $data, $where);
+    }
 
     function getStatistic()
     {
@@ -292,69 +292,75 @@ class Admin_model extends CI_Model
         return $response;
     }
 
-    public function get_current_forms_records($limit, $start, $form)
-	{
-		$this->db->limit($limit, $start);
-		if ($form != '') {
-			$form = urldecode($form);
-			$condition = "form LIKE \"$form%\"";
-			$this->db->where($condition);
-		}
-		$this->db->order_by('id', 'DESC');
-		$query = $this->db->get("forms");
+    public function get_current_forms_records($limit, $start)
+    {
+        $this->db->limit($limit, $start);
+        $this->db->order_by('id', 'DESC');
+        $query = $this->db->get("forms");
 
-		if ($query->num_rows() > 0) {
-			foreach ($query->result() as $row) {
-				$data[] = $row;
-			}
-
-			return $data;
-		}
-
-		return false;
+        if ($query->num_rows() > 0) {
+            foreach ($query->result() as $row) {
+                $data[] = $row;
+            }
+            return $data;
+        }
+        return false;
     }
-    
+
+    public function get_total()
+    {
+        $this->db->from('forms');
+        return $this->db->count_all_results();
+    }
+
     function searchForm($num = '')
-	{
-		if ($this->db->table_exists('forms')) {
-			if ($num != "") {
-				$sn = urldecode($num);
-				$condition = "issue_num LIKE '%$num%'";
-				$this->db->select('*');
-				$this->db->from('forms');
-				$this->db->where($condition);
-				$this->db->order_by('date');
-				$q = $this->db->get();
-				$response = $q->result_array();
-				return $response;
-			}
-		}
-	}
-
-
-    public function get_total($form = '')
-	{
-		if ($form != '') {
-			$this->db->from('forms');
-            $form = urldecode($form);
-            $condition = "form LIKE '$form%'";
-			$this->db->where($condition);
-		}
-		return $this->db->count_all_results();
+    {
+        if ($this->db->table_exists('forms')) {
+            if ($num != "") {
+                $num = urldecode($num);
+                $condition = "issue_num LIKE '%$num%'";
+                $this->db->select('*');
+                $this->db->from('forms');
+                $this->db->where($condition);
+                $this->db->order_by('date');
+                $q = $this->db->get();
+                $response = $q->result_array();
+                return $response;
+            }
+        }
     }
-    
+
+    function getForm($id)
+    {
+        // Select record
+        $this->db->select('*');
+        $this->db->from('forms');
+        $condition = "id ='" . $id . "'";
+        $this->db->where($condition);
+        $this->db->limit(1);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    public function update_form($data)
+    {
+        // Query to check whether id already exist or not
+        $where = "id ='" . $data['id'] . "'";
+        return $this->db->update('forms', $data, $where);
+    }
+
     function deleteForm($id)
-	{
-		$this->db->delete('wft_forms', array('id' => $id));
+    {
+        $this->db->delete('wft_forms', array('id' => $id));
     }
-    
+
     function restore_from_trash($data)
-	{
+    {
         $where = "id =" . $data['id'];
-        $form = str_replace('Trash ','',$data['form']);
-		$data = array(
-			'form' => $form
-		);
-		return $this->db->update('forms', $data, $where);
-	}
+        $form = str_replace('Trash ', '', $data['form']);
+        $data = array(
+            'form' => $form
+        );
+        return $this->db->update('forms', $data, $where);
+    }
 }

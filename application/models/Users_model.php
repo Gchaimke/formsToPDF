@@ -1,8 +1,8 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class Users_model extends CI_Model
+class users_model extends CI_Model
 {
-	function getUsers()
+	function getusers()
 	{
 		$response = array();
 		// Select record
@@ -30,7 +30,7 @@ class Users_model extends CI_Model
 
 	function deleteUser($id)
 	{
-		$this->db->delete('Users', array('id' => $id));
+		$this->db->delete('users', array('id' => $id));
 	}
 
 	// Insert registration data in database
@@ -45,7 +45,7 @@ class Users_model extends CI_Model
 		$query = $this->db->get();
 		if ($query->num_rows() == 0) {
 			// Query to insert data in database
-			$this->db->insert('Users', $data);
+			$this->db->insert('users', $data);
 			if ($this->db->affected_rows() > 0) {
 				return true;
 			}
@@ -91,7 +91,6 @@ class Users_model extends CI_Model
 
 	function getUser($id)
 	{
-		$response = array();
 		// Select record
 		$this->db->select('*');
 		$this->db->from('users');

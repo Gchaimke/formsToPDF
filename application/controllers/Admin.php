@@ -7,7 +7,6 @@ class Admin extends CI_Controller
 		// Load model
 		$this->load->model('Users_model');
 		$this->load->model('Admin_model');
-		$this->load->model('Production_model');
 		$this->load->library('pagination');
 	}
 
@@ -75,90 +74,21 @@ class Admin extends CI_Controller
 	}
 
 	public function manage_forms()
-    {
-        $this->load->database();
-        // init params
-        $params = array();
-        $config = array();
-        $limit_per_page = 20;
-        $start_index = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
-        $total_records = $this->Production_model->get_total();
-        if ($total_records > 0) {
-            $params["results"] = $this->Production_model->get_current_forms_records($limit_per_page, $start_index);
-
-            $config['base_url'] = base_url() . 'admin/forms/';
-            $config['total_rows'] = $total_records;
-            $config['per_page'] = $limit_per_page;
-            $config["uri_segment"] = 4;
-
-            $config['full_tag_open'] = '<ul class="pagination right">';
-            $config['full_tag_close'] = '</ul>';
-
-            $config['cur_tag_open'] = '<li class="page-item active "><a class="page-link">';
-            $config['cur_tag_close'] = '</a></li>';
-
-            $config['num_tag_open'] = '<li class="page-item num-link">';
-            $config['num_tag_close'] = '</li>';
-
-            $config['first_tag_open'] = '<li class="page-item num-link">';
-            $config['first_tag_close'] = '</li>';
-
-            $config['last_tag_open'] = '<li class="page-item num-link">';
-            $config['last_tag_close'] = '</li>';
-
-            $config['next_tag_open'] = '<li class="page-item num-link">';
-            $config['next_tag_close'] = '</li>';
-
-            $config['prev_tag_open'] = '<li class="page-item num-link">';
-            $config['prev_tag_close'] = '</li>';
-
-            $this->pagination->initialize($config);
-
-            // build paging links
-            $params["links"] = $this->pagination->create_links();
-        }
-        $this->load->view('header');
-        $this->load->view('main_menu', $params);
-        $this->load->view('admin/manage_forms', $params);
-        $this->load->view('footer');
-	}
-	
-	
-    public function form_search()
-    {
-        $this->form_validation->set_rules('search', 'Search', 'trim|xss_clean');
-        $data = $this->Admin_model->searchForm($this->input->post('search'));
-        $str = '';
-        $count = 0;
-        foreach ($data as $result) {
-            if (strpos($result["issue_num"], 'Trash') !== false) {
-                $str .= "<div class='badge badge-danger' >" . urldecode($result["client_name"]) . ": " . $result["issue_num"] . "</div>";
-            } else {
-                $str .= "<a class='badge badge-info' href='/production/edit_form/" . $result["id"] . "?sn=" . $result["issue_num"] . "'>" . urldecode($result["client_name"]) . ": " . $result["issue_num"] . "</a>";
-            }
-
-            $count++;
-        }
-        echo "<h2>Found " . $count . " serials.</h2>" . $str;
-    }
-
-	function manage_trash()
 	{
-		$form = 'Trash';
 		$this->load->database();
 		// init params
 		$params = array();
 		$config = array();
-		$limit_per_page = 10;
-		$start_index = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-		$total_records = $this->Admin_model->get_total($form);
+		$limit_per_page = 20;
+		$start_index = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
+		$total_records = $this->Admin_model->get_total();
 		if ($total_records > 0) {
-			$params["results"] = $this->Admin_model->get_current_forms_records($limit_per_page, $start_index, $form);
+			$params["results"] = $this->Admin_model->get_current_forms_records($limit_per_page, $start_index);
 
-			$config['base_url'] = base_url() . 'admin/manage_trash';
+			$config['base_url'] = base_url() . 'admin/forms/';
 			$config['total_rows'] = $total_records;
 			$config['per_page'] = $limit_per_page;
-			$config["uri_segment"] = 3;
+			$config["uri_segment"] = 4;
 
 			$config['full_tag_open'] = '<ul class="pagination right">';
 			$config['full_tag_close'] = '</ul>';
@@ -188,32 +118,90 @@ class Admin extends CI_Controller
 		}
 		$this->load->view('header');
 		$this->load->view('main_menu', $params);
-		$this->load->view('admin/manage_trash', $params);
+		$this->load->view('admin/manage_forms', $params);
 		$this->load->view('footer');
 	}
 
-	public function restoreForm()
+	public function view_form($id = '1')
 	{
-		$this->form_validation->set_rules('id', 'Id', 'trim|xss_clean');
-		$this->form_validation->set_rules('form', 'Project', 'trim|xss_clean');
-
-		$data = array(
-			'id' =>  $this->input->post('id'),
-			'form' => $this->input->post('form')
-		);
-		$this->Admin_model->restore_from_trash($data);
+		$data = array();
+		$data['form_data'] = $this->Admin_model->getForm($id);
+		$this->load->view('header');
+		$this->load->view('main_menu');
+		$this->load->view('admin/view_form', $data);
+		$this->load->view('footer');
 	}
 
-	public function delete_from_trash()
+	public function update_form()
+	{
+		// Check validation for user input in SignUp form
+		$this->form_validation->set_rules('id', 'id', 'trim|xss_clean');
+		$this->form_validation->set_rules('date', 'date', 'trim|xss_clean');
+		$this->form_validation->set_rules('client_num', 'client_num', 'trim|xss_clean');
+		$this->form_validation->set_rules('issue_num', 'issue_num', 'trim|xss_clean');
+		$this->form_validation->set_rules('client_name', 'client_name', 'trim|xss_clean');
+		$this->form_validation->set_rules('issue_kind', 'issue_kind', 'trim|xss_clean');
+		$this->form_validation->set_rules('place', 'place', 'trim|xss_clean');
+		$this->form_validation->set_rules('start_time', 'start_time', 'trim|xss_clean');
+		$this->form_validation->set_rules('end_time', 'end_time', 'trim|xss_clean');
+		$this->form_validation->set_rules('manager', 'manager', 'trim|xss_clean');
+		$this->form_validation->set_rules('contact_name', 'contact_name', 'trim|xss_clean');
+		$this->form_validation->set_rules('activity_text', 'activity_text', 'trim|xss_clean');
+		$this->form_validation->set_rules('checking_text', 'checking_text', 'trim|xss_clean');
+		$this->form_validation->set_rules('summary_text', 'summary_text', 'trim|xss_clean');
+		$this->form_validation->set_rules('remarks_text', 'remarks_text', 'trim|xss_clean');
+		$this->form_validation->set_rules('trip_start_time', 'trip_start_time', 'trim|xss_clean');
+		$this->form_validation->set_rules('trip_end_time', 'trip_end_time', 'trim|xss_clean');
+		if (!$this->form_validation->run() == FALSE) {
+			$data = array(
+				'id' =>  $this->input->post('id'),
+				'date' =>  $this->input->post('date'),
+				'client_num' =>  $this->input->post('client_num'),
+				'issue_num' => $this->input->post('issue_num'),
+				'client_name' => $this->input->post('client_name'),
+				'issue_kind' => $this->input->post('issue_kind'),
+				'place' => $this->input->post('place'),
+				'start_time' => $this->input->post('start_time'),
+				'end_time' => $this->input->post('end_time'),
+				'manager' => $this->input->post('manager'),
+				'contact_name' => $this->input->post('contact_name'),
+				'activity_text' => $this->input->post('activity_text'),
+				'checking_text' => $this->input->post('checking_text'),
+				'summary_text' => $this->input->post('summary_text'),
+				'remarks_text' => $this->input->post('remarks_text'),
+				'trip_start_time' => $this->input->post('trip_start_time'),
+				'trip_end_time' => $this->input->post('trip_end_time')
+			);
+			$response =  $this->Admin_model->update_form($data);
+			if ($response) {
+				echo "Form saved successfully!";
+			} else {
+				echo "Form Not saved! Issue Number exists!" . $this->input->post('id');
+			}
+		} else {
+			echo "Form validation error!";
+		}
+	}
+
+
+	public function form_search()
+	{
+		$this->form_validation->set_rules('search', 'Search', 'trim|xss_clean');
+		$data = $this->Admin_model->searchForm($this->input->post('search'));
+		$str = '';
+		$count = 0;
+		foreach ($data as $result) {
+			$str .= "<a class='badge badge-info' href='/admin/view_form/" . $result["id"] . "?issue=" . $result["issue_num"] . "'>" . urldecode($result["client_name"]) . ": " . $result["issue_num"] . "</a>";
+			$count++;
+		}
+		echo "<h2>Found " . $count . " serials.</h2>" . $str;
+	}
+
+	public function delete_form()
 	{
 		$this->form_validation->set_rules('id', 'Id', 'trim|xss_clean');
-		$this->form_validation->set_rules('form', 'Project', 'trim|xss_clean');
-		$this->form_validation->set_rules('serial', 'Serial', 'trim|xss_clean');
 		$id = $this->input->post('id');
-		$form = $this->input->post('form');
-		$serial = $this->input->post('serial');
 		$this->Admin_model->deleteForm($id);
-		$this->log_data("deleted from '$form' form '$serial'", 3);
 	}
 
 	public function view_log()
@@ -353,7 +341,7 @@ class Admin extends CI_Controller
 		$dir = explode('/', $dir);  //string to array
 		$last_dir = array_pop($dir);            //remove last element
 		$dir = implode('/', $dir);  //array to string
-		if($dir!=''){
+		if ($dir != '') {
 			$html_view .=  "<a href='?folder=$dir'>$dir/<a><b>" . $last_dir . "/</b><br>";
 		}
 		// output file list as HTML table

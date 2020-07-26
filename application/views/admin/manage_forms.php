@@ -60,8 +60,8 @@
 							<td class="mobile-hide"><?php echo $data->place ?></td>
 							<td class="mobile-hide"><?php echo $data->issue_kind ?></td>
 							
-							<td><a id='edit_checklist' target="_blank" href='/production/edit_checklist/<?php echo $data->id ?>?sn=<?php echo $data->issue_num ?>' class='btn btn-info'><i class="fa fa-edit"></i></a></td>
-							<td><button id='<?php echo $data->id ?>' class='btn btn-danger' onclick='trashChecklist(this.id,"<?php echo urldecode($project); ?>","<?php echo $data->issue_num; ?>")'><i class="fa fa-trash"></i></button></td>
+							<td><a target="_blank" href='/admin/view_form/<?php echo $data->id ?>?issue=<?php echo $data->issue_num ?>' class='btn btn-info'><i class="fa fa-edit"></i></a></td>
+							<td><button id='<?php echo $data->id ?>' class='btn btn-danger' onclick='deleteForm(this.id)'><i class="fa fa-trash"></i></button></td>
 						</tr>
 					<?php } ?>
 				</tbody>
@@ -79,15 +79,12 @@
 	</div>
 </main>
 <script>
-	function trashChecklist(id,project,issue_num) {
-		var r = confirm("Trash checklist " + issue_num + "?");
+	function deleteForm(id) {
+		var r = confirm("Delete this form: " + id + "?");
 		if (r == true) {
-			$.post("/production/trashChecklist", {
+			$.post("/admin/delete_form", {
 				id: id,
-				project : project,
-				issue_num : issue_num
 			}).done(function(o) {
-				//$('[id^=' + id + ']').remove();
 				location.reload();
 			});
 		}
@@ -117,7 +114,7 @@
 		var pathname = window.location.pathname.split("/");
 		if (e.which == 13) { //enter
 			e.preventDefault();
-			serialSearch();
+			formSearch();
 		}
 	};
 </script>

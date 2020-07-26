@@ -61,24 +61,4 @@ class Production_model extends CI_Model
 		return $this->db->update('forms', $data, $where);
 	}
 
-	public function get_current_forms_records($limit, $start)
-	{
-		$this->db->limit($limit, $start);
-		$this->db->order_by('id', 'DESC');
-		$query = $this->db->get("forms");
-
-		if ($query->num_rows() > 0) {
-			foreach ($query->result() as $row) {
-				$data[] = $row;
-			}
-			return $data;
-		}
-		return false;
-	}
-
-	public function get_total()
-	{
-		$this->db->from('forms');
-		return $this->db->count_all_results();
-	}
 }
