@@ -51,10 +51,6 @@ class Companies_model extends CI_Model
     public function editCompany($data)
     {
         $where = "id ='" . $data['id'] . "'";
-        $data = array(
-            'projects' => $data['projects'],
-            'logo' => $data['logo']
-		);
         return $this->db->update('companies', $data, $where);
     }
 

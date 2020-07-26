@@ -52,33 +52,6 @@ class Production_model extends CI_Model
 		return $response;
 	}
 
-	public function editForm($data)
-	{
-		$where = "id =" . $data['id'];
-		$data = array(
-			'data' => $data['data'],
-			'log' => $data['log'],
-			'progress' => $data['progress'],
-			'assembler' => $data['assembler'],
-			'qc' => $data['qc'],
-			'scans' => $data['scans']
-		);
-		return $this->db->update('forms', $data, $where);
-	}
-
-	public function batchEditForm($data)
-	{
-		$where = "id =" . $data['id'];
-		$data = array(
-			'data' => $data['data'],
-			'log' => $data['log'],
-			'progress' => $data['progress'],
-			'assembler' => $data['assembler'],
-			'qc' => $data['qc'],
-		);
-		return $this->db->update('forms', $data, $where);
-	}
-
 	function move_to_trash($data)
 	{
 		$where = "id =" . $data['id'];
@@ -86,27 +59,6 @@ class Production_model extends CI_Model
 			'company' => 'Trash '. $data['company']
 		);
 		return $this->db->update('forms', $data, $where);
-	}
-
-	function getLastForm($company)
-	{
-		$response = array();
-		if ($this->db->table_exists('forms')) {
-			$company = urldecode($company);
-			$condition = "company =\"$company\"";
-			$this->db->select('*');
-			$this->db->from('forms');
-			$this->db->where($condition);
-			$this->db->order_by('id', 'DESC');
-			$this->db->limit(1);
-			$q = $this->db->get();
-			if ($q->num_rows() > 0) {
-				$response = $q->result_array();
-				return $response[0]['serial'];
-			} else {
-				return '00000000000000000';
-			}
-		}
 	}
 
 	public function get_current_forms_records($limit, $start)

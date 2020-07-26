@@ -20,7 +20,7 @@
 				<h5 class="card-title">'.$company_name.'</h5>';
 				echo '<p class="card-text"></p></div>';
 				echo '<div class="card-footer">';
-				echo  "<a href='/production/checklists/$company_name' class='btn btn-primary  btn-block'>New Form</a>";
+				echo  "<a href='/production/new_form/$company_name' class='btn btn-primary  btn-block'>New Form</a>";
 				echo '</div></center></div>';
 			}
 

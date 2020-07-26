@@ -69,16 +69,20 @@ class Companies extends CI_Controller
         $this->form_validation->set_rules('id', 'Id', 'trim|xss_clean');
         $this->form_validation->set_rules('name', 'Name', 'trim|xss_clean');
         $this->form_validation->set_rules('logo', 'Logo', 'trim|xss_clean');
-        $this->form_validation->set_rules('projects', 'Projects', 'trim|xss_clean');
+        $this->form_validation->set_rules('form_header', 'Form_header', 'trim|xss_clean');
+        $this->form_validation->set_rules('form_extra_filds', 'Form_extra_filds', 'trim|xss_clean');
+        $this->form_validation->set_rules('form_footer', 'Form_footer', 'trim|xss_clean');
         if ($this->form_validation->run() == TRUE) {
             $sql = array(
                 'id' => $this->input->post('id'),
                 'logo' => $this->input->post('logo'),
                 'name' => $this->input->post('name'),
-                'projects' => $this->input->post('projects')
+                'form_header' => $this->input->post('form_header'),
+                'form_extra_filds' => $this->input->post('form_extra_filds'),
+                'form_footer' => $this->input->post('form_footer')
             );
-            $this->Companies_model->editClient($sql);
-            $data['message_display'] = ' Client updated Successfully !';
+            $this->Companies_model->editCompany($sql);
+            $data['message_display'] = 'Comapny updated Successfully !';
         }
         $data['companies'] = $this->Companies_model->getCompanies($id);
         $this->load->view('header');
@@ -91,7 +95,7 @@ class Companies extends CI_Controller
     {
         // requires php5
         define('UPLOAD_DIR', 'Uploads/Companies/');
-        $file_name = $_POST['client'] . "_logo";
+        $file_name = $_POST['company'] . "_logo";
         $img = $_POST['data'];
         $ext = $_POST['ext'];
         if (preg_match('/^data:image\/(\w+);base64,/', $img, $type)) {

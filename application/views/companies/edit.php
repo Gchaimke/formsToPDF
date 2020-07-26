@@ -9,7 +9,7 @@ if (isset($this->session->userdata['logged_in'])) {
 	<div class="jumbotron">
 		<div class="container">
 			<center>
-				<h2 class="display-3">Edit Client</h2>
+				<h2 class="display-3">Edit Company</h2>
 			</center>
 		</div>
 	</div>
@@ -17,7 +17,7 @@ if (isset($this->session->userdata['logged_in'])) {
 		<center>
 			<?php
 			$id = "";
-			$client = "";
+			$company = "";
 			if (isset($message_display)) {
 				echo "<div class='alert alert-success' role='alert'>";
 				echo $message_display . '</div>';
@@ -26,17 +26,19 @@ if (isset($this->session->userdata['logged_in'])) {
 				echo "<div class='alert alert-danger' role='alert'>" . validation_errors() . "</div>";
 			}
 
-			if (isset($Companies)) {
-				//print_r($Companies);
-				$id = $Companies[0]['id'];
-				$client = $Companies[0]['name'];
-				$projects = $Companies[0]['projects'];
-				$logo = $Companies[0]['logo'];
+			if (isset($companies)) {
+				//print_r($companies);
+				$id = $companies[0]['id'];
+				$company = $companies[0]['name'];
+				$form_header = $companies[0]['form_header'];
+				$form_extra_filds = $companies[0]['form_extra_filds'];
+				$form_footer = $companies[0]['form_footer'];
+				$logo = $companies[0]['logo'];
 			}
 			?>
 			<?php echo form_open("Companies/edit/$id", 'class=user-create'); ?>
 			<input type='hidden' name='id' value="<?php echo $id ?>">
-			<label>Client</label><input id='client_name' type='text' class="form-control" name='name' value="<?php echo $client ?>" disabled></hr>
+			<label>Company</label><input id='company_name' type='text' class="form-control" name='name' value="<?php echo $company ?>"></hr>
 			<label>Logo</label>
 			<div class="input-group mb-3">
 				<input id="logo_path" type='text' class="form-control" name='logo' value="<?php echo $logo ?>">
@@ -47,8 +49,14 @@ if (isset($this->session->userdata['logged_in'])) {
 			<img id="logo_img" class="img-thumbnail" src="<?php echo $logo ?>" onclick="document.getElementById('browse').click();">
 			<input id="browse" style="display:none;" type="file" onchange="snapLogo()" ></hr>
 
-			<div class="form-group"><label>Client Projects</label>
-				<textarea name="projects" class="form-control" cols="40" rows="5"><?php echo $projects ?></textarea>
+			<div class="form-group"><label>Form Head</label>
+				<textarea name="form_header" class="form-control" cols="40" rows="5"><?php echo $form_header ?></textarea>
+			</div>
+			<div class="form-group"><label>Form Extra</label>
+				<textarea name="form_extra_filds" class="form-control" cols="40" rows="5"><?php echo $form_extra_filds ?></textarea>
+			</div>
+			<div class="form-group"><label>Form Footer</label>
+				<textarea name="form_footer" class="form-control" cols="40" rows="5"><?php echo $form_footer ?></textarea>
 			</div>
 			<input type='submit' class="btn btn-info btn-block" name='submit' value='Update'>
 			<?php echo form_close(); ?>
@@ -56,6 +64,6 @@ if (isset($this->session->userdata['logged_in'])) {
 	</div>
 </main>
 <script>
-	var client = document.getElementById("client_name").value;
+	var company = document.getElementById("company_name").value;
 	var ext = '';
 </script>

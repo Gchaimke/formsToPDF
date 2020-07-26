@@ -38,8 +38,8 @@ function dragElement(elmnt) {
             e = e || window.event;
             e.preventDefault();
             // get the mouse cursor position at startup:
-            pos3 = e.clientX;
-            pos4 = e.clientY;
+            pos3 = e.companyX;
+            pos4 = e.companyY;
             document.onmouseup = closeDragElement;
             // call a function whenever the cursor moves:
             document.onmousemove = elementDrag;
@@ -49,10 +49,10 @@ function dragElement(elmnt) {
             e = e || window.event;
             e.preventDefault();
             // calculate the new cursor position:
-            pos1 = pos3 - e.clientX;
-            pos2 = pos4 - e.clientY;
-            pos3 = e.clientX;
-            pos4 = e.clientY;
+            pos1 = pos3 - e.companyX;
+            pos2 = pos4 - e.companyY;
+            pos3 = e.companyX;
+            pos4 = e.companyY;
             // set the element's new position:
             elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
             elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
@@ -110,7 +110,7 @@ function snapLogo() {
                 var image = new Image();
                 image.title = file.name;
                 image.src = this.result;
-                logo_path.value = "/Uploads/Clients/" + client + "_logo." + ext;
+                logo_path.value = "/Uploads/Companies/" + company + "_logo." + ext;
                 logo_img.src = logo_path.value;
             }, false);
             reader.readAsDataURL(file);
@@ -122,9 +122,9 @@ function snapLogo() {
 }
 
 function saveLogoToServer(file) {
-    $.post("/clients/logo_upload", {
+    $.post("/companies/logo_upload", {
         data: file,
-        client: client,
+        company: company,
         ext: ext
     }).done(function (o) {
         console.log('photo saved to server.');
