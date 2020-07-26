@@ -27,14 +27,17 @@ class Admin_model extends CI_Model
             ),
             'email' => array(
                 'type' => 'VARCHAR',
-                'constraint' => 100
+                'constraint' => 100,
+                'null' => TRUE
             ),
             'email_to' => array(
                 'type' => 'VARCHAR',
-                'constraint' => 500
+                'constraint' => 500,
+                'null' => TRUE
             ),
             'log' => array(
-                'type' => 'TEXT'
+                'type' => 'TEXT',
+                'null' => TRUE
             )
         );
 
@@ -70,19 +73,23 @@ class Admin_model extends CI_Model
             ),
             'logo' => array(
                 'type' => 'VARCHAR',
-                'constraint' => 500
+                'constraint' => 500,
+                'null' => TRUE
             ),
             'form_header' => array(
                 'type' => 'VARCHAR',
-                'constraint' => 500
+                'constraint' => 500,
+                'null' => TRUE
             ),
             'form_extra_filds' => array(
                 'type' => 'VARCHAR',
-                'constraint' => 500
+                'constraint' => 500,
+                'null' => TRUE
             ),
             'form_footer' => array(
                 'type' => 'VARCHAR',
-                'constraint' => 500
+                'constraint' => 500,
+                'null' => TRUE
             )
         );
 
@@ -150,11 +157,13 @@ class Admin_model extends CI_Model
             ),
             'start_time' => array(
                 'type' => 'TIME',
-                'default' => '12:00:00'
+                'default' => '12:00:00',
+                'null' => TRUE
             ),
             'end_time' => array(
                 'type' => 'TIME',
-                'default' => '12:00:00'
+                'default' => '12:00:00',
+                'null' => TRUE
             ),
             'manager' => array(
                 'type' => 'VARCHAR',
@@ -190,11 +199,13 @@ class Admin_model extends CI_Model
             ),
             'trip_start_time' => array(
                 'type' => 'TIME',
-                'default' => '12:00:00'
+                'default' => '12:00:00',
+                'null' => TRUE
             ),
             'trip_end_time' => array(
                 'type' => 'TIME',
-                'default' => '12:00:00'
+                'default' => '12:00:00',
+                'null' => TRUE
             )
         );
         $this->dbforge->add_field($company);
@@ -234,10 +245,12 @@ class Admin_model extends CI_Model
                 'auto_increment' => TRUE
             ),
             'roles' => array(
-                'type' => 'TEXT'
+                'type' => 'TEXT',
+                'null' => TRUE
             ),
             'log' => array(
-                'type' => 'LONGTEXT'
+                'type' => 'LONGTEXT',
+                'null' => TRUE
             )
         );
 
