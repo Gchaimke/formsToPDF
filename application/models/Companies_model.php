@@ -25,7 +25,7 @@ class Companies_model extends CI_Model
         }
     }
 
-    function getCompanies($id = '', $projects = '')
+    function getCompanies($id = '', $name = '')
     {
         $response = array();
         if ($this->db->table_exists('companies')) {
@@ -37,8 +37,8 @@ class Companies_model extends CI_Model
                 $this->db->where($condition);
                 $this->db->limit(1);
             }
-            if ($projects != '') {
-                $condition = "projects LIKE '%$projects%'";
+            if ($name != '') {
+                $condition = "name = '$name'";
                 $this->db->where($condition);
                 $this->db->limit(1);
             }

@@ -51,6 +51,19 @@
                                    
                   <input type='submit' class="btn btn-info btn-block" name='submit' value='Submit'>
                   <?php echo form_close(); ?>
+
+                  <a href="#" onclick="make_pdf()">test pdf</a>
             </center>
       </div>
 </main>
+<script>
+    function make_pdf() {
+        $.post("/production/to_pdf", {
+        }).done(function(o) {
+            // Make sure that the formMessages div has the 'success' class.
+            $('#form-messages').addClass('alert-success');
+            // Set the message text.
+            $('#form-messages').html(o).fadeIn(1000).delay(3000).fadeOut(1000);
+        });
+    }
+</script>
