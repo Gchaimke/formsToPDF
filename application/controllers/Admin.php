@@ -199,7 +199,7 @@ class Admin extends CI_Controller
 			$str .= "<a class='badge badge-info' href='/admin/view_form/" . $result["id"] . "?issue=" . $result["issue_num"] . "'>" . urldecode($result["client_name"]) . ": " . $result["issue_num"] . "</a>";
 			$count++;
 		}
-		echo "<h2>Found " . $count . " serials.</h2>" . $str;
+		echo "<h2>Found " . $count . " Froms.</h2>" . $str;
 	}
 
 	public function delete_form()

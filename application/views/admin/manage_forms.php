@@ -39,10 +39,10 @@ if (isset($this->session->userdata['logged_in'])) {
 				<thead class="thead-dark">
 					<tr>
 						<th scope="col">*</th>
-						<th scope="col">Form Date</th>
-						<th scope="col" class="mobile-hide">Issue Number</th>
+						<th scope="col" class="mobile-hide">Form Date</th>
+						<th scope="col" >Issue Number</th>
 						<th scope="col" class="mobile-hide">Client Number</th>
-						<th scope="col" class="mobile-hide">Client Name</th>
+						<th scope="col">Client Name</th>
 						<th scope="col" class="mobile-hide">Place</th>
 						<th scope="col" class="mobile-hide">Issue</th>
 						<th scope="col">Save</th>
@@ -56,14 +56,14 @@ if (isset($this->session->userdata['logged_in'])) {
 							<td>
 								<div class='checkbox'><input type='checkbox' class='select' id='<?php echo $data->id ?>' $checked></div>
 							</td>
-							<td><?php if ($data->date != '') {
+							<td class="mobile-hide"><?php if ($data->date != '') {
 									echo $data->date;
 								} else {
 									echo "SN template not found!";
 								}  ?></td>
-							<td class="mobile-hide"><?php echo $data->issue_num ?></td>
+							<td><?php echo $data->issue_num ?></td>
 							<td class="mobile-hide"><?php echo $data->client_num ?></td>
-							<td class="mobile-hide"><?php echo $data->client_name ?></td>
+							<td><?php echo $data->client_name ?></td>
 							<td class="mobile-hide"><?php echo $data->place ?></td>
 							<td class="mobile-hide"><?php echo $data->issue_kind ?></td>
 							
