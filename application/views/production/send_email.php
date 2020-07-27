@@ -34,7 +34,7 @@ if (isset($id)) {
             $('#form-messages').html(o).fadeIn(1000).delay(3000).fadeOut(1000);
             setTimeout(function() {
                 window.location.href = "/"; 
-            }, 2000); //will call the function after 2 secs.
+            }, 10000); //will call the function after 2 secs.
         }).fail(function(o) {
             $('#form-messages').removeClass('alert-info').addClass('alert-danger');
             // Set the message text.
