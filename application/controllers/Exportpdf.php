@@ -10,27 +10,27 @@ class Exportpdf extends CI_Controller
         parent::__construct();
         // Load model
         $this->load->model('Admin_model');
+        $this->load->model('Users_model');
         $this->load->model('Companies_model');
     }
 
     public function create($id = '1')
     {
         $send_email = false;
-        if(isset($_POST['email'])){
+        if (isset($_POST['email'])) {
             $send_email = $_POST['email'];
         }
-        
-        //$this->load->library('fpdf_master');
-        $data = array();
-        $data = $this->Admin_model->getForm($id)[0];
-        $data['company_name'] = $this->Companies_model->getCompanies('', $data['company'])[0];
-        //print_r($data['company']);
-        $company = $data['company_name'];
+
+        $form = array();
+        $form = $this->Admin_model->getForm($id)[0];
+        $form['company_name'] = $this->Companies_model->getCompanies('', $form['company'])[0];
+        //print_r($form['company']);
+        $company = $form['company_name'];
 
         $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
         // set document information
-        $file_name = $company['name'] . ' - ' . $data['date'] . ' - ' . $data['issue_num'] . ' ' . $data['client_name'];
+        $file_name = $company['name'] . ' - ' . $form['date'] . ' - ' . $form['issue_num'] . ' ' . $form['client_name'];
         $pdf->SetCreator(PDF_CREATOR);
         $pdf->SetTitle($file_name);
         $pdf->SetSubject('-פנימי-');
@@ -92,55 +92,55 @@ class Exportpdf extends CI_Controller
         $html = '<table style="width:950px" cellpadding="5" cellspacing="1" border="1">
         <tr>
         <td style="width:160px;">תאריך:</td>
-        <td>' . $data['date'] . '</td>
+        <td>' . $form['date'] . '</td>
         </tr><tr>
         <td style="width:160px;">מס. לקוח:</td>
-        <td>' . $data['client_num'] . '</td>
+        <td>' . $form['client_num'] . '</td>
         </tr><tr>
         <td style="width:160px;">מס. פניה\תקלה:</td>
-        <td>' . $data['issue_num'] . '</td>
+        <td>' . $form['issue_num'] . '</td>
         </tr><tr>
         <td style="width:160px;">שם לקוח: </td>
-        <td>' . $data['client_name'] . '</td>
+        <td>' . $form['client_name'] . '</td>
         </tr><tr>
         <td style="width:160px;">סוג תקלה\ התקנה: </td>
-        <td>' . $data['issue_kind'] . '</td>
+        <td>' . $form['issue_kind'] . '</td>
         </tr><tr>
         <td style="width:160px;">מיקום</td>
-        <td>' . $data['place'] . '</td>
+        <td>' . $form['place'] . '</td>
         </tr><tr>
         <td style="width:160px;">שעת התחלה: </td>
-        <td>' . date('G:i', strtotime($data['start_time'])) . '</td>
+        <td>' . date('G:i', strtotime($form['start_time'])) . '</td>
         </tr><tr>
         <td style="width:160px;">שעת סיום: </td>
-        <td>' . date('G:i', strtotime($data['end_time'])) . '</td>
+        <td>' . date('G:i', strtotime($form['end_time'])) . '</td>
         </tr><tr>
         <td style="width:160px;">אחראי</td>
-        <td>' . $data['manager'] . '</td>
+        <td>' . $form['manager'] . '</td>
         </tr><tr>
         <td style="width:160px;">איש קשר: </td>
-        <td>' . $data['contact_name'] . '</td>
+        <td>' . $form['contact_name'] . '</td>
         </tr><tr>
         <td style="width:160px;">תיאור תקלה\ התקנה: </td>
-        <td>' . $data['activity_text'] . '</td>
+        <td>' . $form['activity_text'] . '</td>
         </tr><tr>
         <td style="width:160px;">תוצאות הבדיקה: </td>
-        <td>' . $data['checking_text'] . '</td>
+        <td>' . $form['checking_text'] . '</td>
         </tr><tr>
         <td style="width:160px;">סיכום</td>
-        <td>' . $data['summary_text'] . '</td>
+        <td>' . $form['summary_text'] . '</td>
         </tr><tr>
         <td style="width:160px;">הערות: </td>
-        <td>' . $data['remarks_text'] . '</td>
+        <td>' . $form['remarks_text'] . '</td>
         </tr><tr>
         <td style="width:160px;">המלצות: </td>
-        <td>' . $data['recommendations_text'] . '</td>
+        <td>' . $form['recommendations_text'] . '</td>
         </tr><tr>
         <td style="width:160px;">שעת התחלה נסיעה הלוך: </td>
-        <td>' . date('G:i', strtotime($data['trip_start_time'])) . '</td>
+        <td>' . date('G:i', strtotime($form['trip_start_time'])) . '</td>
         </tr><tr>
         <td style="width:160px;">שעת סיום נסיעה חזור: </td>
-        <td>' . date('G:i', strtotime($data['trip_end_time'])) . '</td>
+        <td>' . date('G:i', strtotime($form['trip_end_time'])) . '</td>
         </tr></table>';
         $pdf->writeHTMLCell(0, 0, '', '', $html, 0, 0, 0, true, 'R', true);
 
@@ -160,8 +160,7 @@ class Exportpdf extends CI_Controller
             $pdf->Output($filePath, 'F');
             chmod($filePath, 0664);
             if (!empty($filePath)) {
-                $EmailAddress = 'gchaimke@gmail.com';
-                $this->SendEmail($EmailAddress, $filePath);
+                $this->SendEmail($filePath);
             } else {
                 print_r('Could not trace file path');
             }
@@ -170,21 +169,22 @@ class Exportpdf extends CI_Controller
         }
     }
 
-    function SendEmail($EmailAddress, $fileatt)
+    function SendEmail($fileatt)
     {
+        $user =  $this->Users_model->getUser($this->session->userdata['logged_in']['id'])[0];
         $this->load->library('email');
-        $Subject = 'Pdf test';
-        $Message = 'open pdf to test';
+        $Subject = 'Pdf Form from ' . $_SERVER['SERVER_NAME'];
+        $Message = 'pdf form from ' . $_SERVER['SERVER_NAME'];
 
         $this->email
-            ->from('admin@forms.garin.co.il', 'Online Forms')
-            ->to($EmailAddress)
+            ->from($user['email'], $user['name'])
+            ->to($user['email_to'])
             ->subject($Subject)
             ->message($Message)
             ->attach($fileatt);
 
         if ($this->email->send()) {
-            print_r('Email Sent to ' . $EmailAddress);
+            print_r('Email Sent to ' . $user['email_to']);
         } else {
             print_r($this->email->print_debugger());
         }
