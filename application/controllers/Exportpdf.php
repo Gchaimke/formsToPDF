@@ -84,58 +84,58 @@ class Exportpdf extends CI_Controller
         // Print text using writeHTMLCell()
         $pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, 'C', true);
 
-        $html = '<table style="width:1000px" cellpadding="5" cellspacing="1" border="0.2">
+        $html = '<table style="width:950px" cellpadding="5" cellspacing="1" border="0.2">
         <tr>
-        <td style="width:150px;">תאריך:</td>
+        <td style="width:160px;">תאריך:</td>
         <td>' . $data['date'] . '</td>
         </tr><tr>
-        <td style="width:150px;">מס. לקוח:</td>
+        <td style="width:160px;">מס. לקוח:</td>
         <td>' . $data['client_num'] . '</td>
         </tr><tr>
-        <td style="width:150px;">מס. פניה\תקלה:</td>
+        <td style="width:160px;">מס. פניה\תקלה:</td>
         <td>' . $data['issue_num'] . '</td>
         </tr><tr>
-        <td style="width:150px;">שם לקוח: </td>
+        <td style="width:160px;">שם לקוח: </td>
         <td>' . $data['client_name'] . '</td>
         </tr><tr>
-        <td style="width:150px;">סוג תקלה\ התקנה: </td>
+        <td style="width:160px;">סוג תקלה\ התקנה: </td>
         <td>' . $data['issue_kind'] . '</td>
         </tr><tr>
-        <td style="width:150px;">מיקום</td>
+        <td style="width:160px;">מיקום</td>
         <td>' . $data['place'] . '</td>
         </tr><tr>
-        <td style="width:150px;">שעת התחלה: </td>
-        <td>' . $data['start_time'] . '</td>
+        <td style="width:160px;">שעת התחלה: </td>
+        <td>' . date('G:i',strtotime($data['start_time'])). '</td>
         </tr><tr>
-        <td style="width:150px;">שעת סיום: </td>
-        <td>' . $data['end_time'] . '</td>
+        <td style="width:160px;">שעת סיום: </td>
+        <td>' . date('G:i',strtotime($data['end_time'])). '</td>
         </tr><tr>
-        <td style="width:150px;">אחראי</td>
+        <td style="width:160px;">אחראי</td>
         <td>' . $data['manager'] . '</td>
         </tr><tr>
-        <td style="width:150px;">איש קשר: </td>
+        <td style="width:160px;">איש קשר: </td>
         <td>' . $data['contact_name'] . '</td>
         </tr><tr>
-        <td style="width:150px;">תיאור תקלה\ התקנה: </td>
+        <td style="width:160px;">תיאור תקלה\ התקנה: </td>
         <td>' . $data['activity_text'] . '</td>
         </tr><tr>
-        <td style="width:150px;">תוצאות הבדיקה: </td>
+        <td style="width:160px;">תוצאות הבדיקה: </td>
         <td>' . $data['checking_text'] . '</td>
         </tr><tr>
-        <td style="width:150px;">סיכום</td>
+        <td style="width:160px;">סיכום</td>
         <td>' . $data['summary_text'] . '</td>
         </tr><tr>
-        <td style="width:150px;">הערות: </td>
+        <td style="width:160px;">הערות: </td>
         <td>' . $data['remarks_text'] . '</td>
         </tr><tr>
-        <td style="width:150px;">המלצות: </td>
+        <td style="width:160px;">המלצות: </td>
         <td>' . $data['recommendations_text'] . '</td>
         </tr><tr>
-        <td style="width:150px;">שעת נסיעה הלוך: </td>
-        <td>' . $data['trip_start_time'] . '</td>
+        <td style="width:160px;">שעת התחלה נסיעה הלוך: </td>
+        <td>' . date('G:i',strtotime($data['trip_start_time'])) . '</td>
         </tr><tr>
-        <td style="width:150px;">שעת נסיעה חזור: </td>
-        <td>' . $data['trip_end_time'] . '</td>
+        <td style="width:160px;">שעת סיום נסיעה חזור: </td>
+        <td>' . date('G:i',strtotime($data['trip_end_time'])) . '</td>
         </tr></table>';
         $pdf->writeHTMLCell(0, 0, '', '', $html, 0, 0, 0, true, 'R', true);
 
