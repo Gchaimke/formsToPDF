@@ -152,6 +152,7 @@ a.btn.btn-primary.folder {
 
 div#form-messages {
     width: 100%;
+    padding: 300px 0;
     left: 0;
     position: fixed;
     text-align: center;

@@ -20,14 +20,14 @@
 
                         <?php echo form_open("admin/update_form", 'id=ajax-form', 'class=user-create'); ?>
                         <input type='num' class="form-control" name='id' value="<?php echo $form_data['id'] ?>" hidden>
-                        <input type='text' class="form-control " name='company' placeholder="Company" value="<?php echo $form_data['company']?>">
+                        <input type='text' class="form-control " name='company' placeholder="Company" value="<?php echo $form_data['company'] ?>">
                         <label>date</label>
                         <input type='date' class="form-control" name='date' value="<?php echo $form_data['date'] ?>">
                         <label>start_time</label>
                         <input type='time' class="form-control" name='start_time' placeholder="start_time" value="<?php echo $form_data['start_time'] ?>">
                         <label>end_time</label>
                         <input type='time' class="form-control" name='end_time' placeholder="end_time" value="<?php echo $form_data['end_time'] ?>"></br>
-                        
+
                         <label>client_num</label>
                         <input type='text' class="form-control" name='client_num' placeholder="client_num" value="<?php echo $form_data['client_num'] ?>">
                         <label>issue_num</label>
@@ -60,10 +60,32 @@
 
                         <input type='submit' class="btn btn-info btn-block" name='submit' value='Update'>
                         <?php echo form_close(); ?>
-                        <a href="/exportpdf/create/<?php echo $form_data['id'] ?>">test pdf</a>
+                        <a href="/exportpdf/create/<?php echo $form_data['id'] ?>">View pdf</a><br />
+                        <a href="#" onclick="SendEmail()">Send pdf</a>
                   <?php } else {
                         echo "No Data for this form.";
                   } ?>
             </center>
       </div>
 </main>
+
+<script>
+      function SendEmail() {
+            // Make sure that the formMessages div has the 'success' class.
+            $('#form-messages').addClass('alert-info');
+            // Set the message text.
+            $('#form-messages').html("Please Wait, sending Email ...").fadeIn(1000);
+            $.post("/exportpdf/create/<?php echo $form_data['id'] ?>", {
+                  email: true
+            }).done(function(o) {
+                  // Make sure that the formMessages div has the 'success' class.
+                  $('#form-messages').removeClass('alert-info').addClass('alert-success');
+                  // Set the message text.
+                  $('#form-messages').html(o).fadeIn(1000).delay(3000).fadeOut(1000);
+            }).fail(function(o) {
+                  $('#form-messages').removeClass('alert-info').addClass('alert-danger');
+                  // Set the message text.
+                  $('#form-messages').html(o).fadeIn(1000).delay(3000).fadeOut(1000);
+            });
+      }
+</script>

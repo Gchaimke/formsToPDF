@@ -15,6 +15,11 @@ class Exportpdf extends CI_Controller
 
     public function create($id = '1')
     {
+        $send_email = false;
+        if(isset($_POST['email'])){
+            $send_email = $_POST['email'];
+        }
+        
         //$this->load->library('fpdf_master');
         $data = array();
         $data = $this->Admin_model->getForm($id)[0];
@@ -146,14 +151,23 @@ class Exportpdf extends CI_Controller
         //$pdf->Output($file_name.'.pdf', 'I');
 
         //the option E: return the document as base64 mime multi-part email attachment (RFC 2045)
-        $filePath = FCPATH ."/Uploads/PDF/". $file_name . '.pdf';
-        $pdf->Output($filePath, 'F');
-        if (!empty($filePath)) {
-            $EmailAddress = 'gchaimke@gmail.com';
-            $this->SendEmail($EmailAddress, $filePath);
-        }else{
-            print_r('Could not trace file path');
-        } 
+        if ($send_email) {
+            define('UPLOAD_DIR',  FCPATH . '/Uploads/PDF/');
+            $filePath = UPLOAD_DIR . $file_name . '.pdf';
+            if (!file_exists(UPLOAD_DIR)) {
+                mkdir(UPLOAD_DIR, 0770, true);
+            }
+            $pdf->Output($filePath, 'F');
+            chmod($filePath, 0664);
+            if (!empty($filePath)) {
+                $EmailAddress = 'gchaimke@gmail.com';
+                $this->SendEmail($EmailAddress, $filePath);
+            } else {
+                print_r('Could not trace file path');
+            }
+        } else {
+            $pdf->Output($file_name . '.pdf', 'I');
+        }
     }
 
     function SendEmail($EmailAddress, $fileatt)
