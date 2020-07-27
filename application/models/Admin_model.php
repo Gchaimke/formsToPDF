@@ -160,12 +160,12 @@ class Admin_model extends CI_Model
             'manager' => array(
                 'type' => 'VARCHAR',
                 'constraint' => 100,
-                'default' => 'manager'
+                'null' => TRUE
             ),
             'contact_name' => array(
                 'type' => 'VARCHAR',
                 'constraint' => 100,
-                'default' => 'contact'
+                'null' => TRUE
             ),
             'activity_text' => array(
                 'type' => 'TEXT',
