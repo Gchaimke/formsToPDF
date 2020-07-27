@@ -122,95 +122,78 @@ class Admin_model extends CI_Model
             ),
             'date' => array(
                 'type' => 'DATE',
-                'default' => '2020-05-26',
-                'null' => TRUE
+                'default' => '2020-05-26'
             ),
             'client_num' => array(
                 'type' => 'VARCHAR',
                 'constraint' => 50,
-                'default' => '1234',
-                'null' => TRUE
+                'default' => '1234'
             ),
             'issue_num' => array(
                 'type' => 'VARCHAR',
                 'constraint' => 50,
-                'default' => '1234',
-                'null' => TRUE
+                'default' => '1234'
             ),
             'client_name' => array(
                 'type' => 'VARCHAR',
                 'constraint' => 60,
-                'default' => 'clinet',
-                'null' => TRUE
+                'default' => 'company'
             ),
             'issue_kind' => array(
                 'type' => 'VARCHAR',
                 'constraint' => 500,
-                'default' => 'issue',
-                'null' => TRUE
+                'default' => 'issue'
             ),
             'place' => array(
                 'type' => 'VARCHAR',
                 'constraint' => 100,
-                'default' => 'Tel-Aviv',
-                'null' => TRUE
+                'default' => 'Tel-Aviv'
             ),
             'start_time' => array(
                 'type' => 'TIME',
-                'default' => '12:00:00',
-                'null' => TRUE
+                'default' => '12:00:00'
             ),
             'end_time' => array(
                 'type' => 'TIME',
-                'default' => '12:00:00',
-                'null' => TRUE
+                'default' => '12:00:00'
             ),
             'manager' => array(
                 'type' => 'VARCHAR',
                 'constraint' => 100,
-                'default' => 'manager',
-                'null' => TRUE
+                'default' => 'manager'
             ),
             'contact_name' => array(
                 'type' => 'VARCHAR',
                 'constraint' => 100,
-                'default' => 'contact',
-                'null' => TRUE
+                'default' => 'contact'
             ),
             'activity_text' => array(
                 'type' => 'TEXT',
-                'default' => '',
                 'null' => TRUE
             ),
             'checking_text' => array(
                 'type' => 'TEXT',
-                'default' => 'test',
-                'null' => TRUE
+                'default' => 'test'
             ),
             'summary_text' => array(
                 'type' => 'TEXT',
-                'default' => 'summary',
-                'null' => TRUE
+                'default' => 'summary'
             ),
             'remarks_text' => array(
                 'type' => 'TEXT',
-                'default' => 'remarks',
-                'null' => TRUE
+                'default' => 'remarks'
             ),
             'recommendations_text' => array(
                 'type' => 'TEXT',
-                'default' => 'recommendations',
-                'null' => TRUE
+                'default' => 'recommendations'
             ),
             'trip_start_time' => array(
                 'type' => 'TIME',
-                'default' => '12:00:00',
-                'null' => TRUE
+                'default' => '12:00:00'
             ),
             'trip_end_time' => array(
                 'type' => 'TIME',
-                'default' => '12:00:00',
-                'null' => TRUE
+                'default' => '12:00:00'
             )
         );
         $this->dbforge->add_field($company);
@@ -241,7 +224,7 @@ class Admin_model extends CI_Model
             ),
             'roles' => array(
                 'type' => 'TEXT',
-                'null' => TRUE
+                'default' => 'Admin,User'
             ),
             'log' => array(
                 'type' => 'LONGTEXT',
