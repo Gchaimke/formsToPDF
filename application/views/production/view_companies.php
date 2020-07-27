@@ -21,7 +21,7 @@
 				echo '<img id="logo_img" class="img-thumbnail" src="'. $company['logo'].'" height="100px">';
 				echo '<p class="card-text"></p></div>';
 				echo '<div class="card-footer">';
-				echo  "<a href='/production/new_form/$company_name' class='btn btn-primary  btn-block'>New Form</a>";
+				echo  "<a href='/production/new_form?company=$company_name' class='btn btn-primary  btn-block'>New Form</a>";
 				echo '</div></center></div>';
 			}
 

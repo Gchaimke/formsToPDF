@@ -18,9 +18,9 @@ class Exportpdf extends CI_Controller
         //$this->load->library('fpdf_master');
         $data = array();
         $data = $this->Admin_model->getForm($id)[0];
-        $data['company'] = $this->Companies_model->getCompanies('', $data['client_name'])[0];
+        $data['company_name'] = $this->Companies_model->getCompanies('', $data['company'])[0];
         //print_r($data['company']);
-        $company = $data['company'];
+        $company = $data['company_name'];
 
         $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 

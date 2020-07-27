@@ -16,6 +16,7 @@
                   ?>
                   
                   <?php echo form_open("production/save_form", 'id=ajax-form', 'class=user-create'); ?>
+                  <input type='text' class="form-control " name='company' placeholder="Company" value="<?php echo $_GET['company']?>" hidden>
                   <label>date</label>
                   <input type='date' class="form-control" name='date' value="<?php echo date("Y-m-d"); ?>"></br>
                   <label>client_num</label>

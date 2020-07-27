@@ -20,6 +20,7 @@
 
                         <?php echo form_open("admin/update_form", 'id=ajax-form', 'class=user-create'); ?>
                         <input type='num' class="form-control" name='id' value="<?php echo $form_data['id'] ?>" hidden>
+                        <input type='text' class="form-control " name='company' placeholder="Company" value="<?php echo $form_data['company']?>">
                         <label>date</label>
                         <input type='date' class="form-control" name='date' value="<?php echo $form_data['date'] ?>">
                         <label>start_time</label>

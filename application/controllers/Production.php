@@ -37,6 +37,7 @@ class Production extends CI_Controller
     {
         // Check validation for user input in SignUp form
         $this->form_validation->set_rules('date', 'date', 'trim|xss_clean');
+        $this->form_validation->set_rules('company', 'company', 'trim|xss_clean');
         $this->form_validation->set_rules('client_num', 'client_num', 'trim|xss_clean');
         $this->form_validation->set_rules('issue_num', 'issue_num', 'trim|xss_clean');
         $this->form_validation->set_rules('client_name', 'client_name', 'trim|xss_clean');
@@ -56,6 +57,7 @@ class Production extends CI_Controller
         if (!$this->form_validation->run() == FALSE) {
             $data = array(
                 'date' =>  $this->input->post('date'),
+                'company' =>  $this->input->post('company'),
                 'client_num' =>  $this->input->post('client_num'),
                 'issue_num' => $this->input->post('issue_num'),
                 'client_name' => $this->input->post('client_name'),
