@@ -25,8 +25,9 @@ class Exportpdf extends CI_Controller
         $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
         // set document information
+        $file_name = $company['name'].' - '.$data['date'].' - '.$data['issue_num'].' '.$data['client_name'];
         $pdf->SetCreator(PDF_CREATOR);
-        $pdf->SetTitle($company['name']);
+        $pdf->SetTitle($file_name);
         $pdf->SetSubject('-פנימי-');
         $pdf->setMyHeader($company['logo'], $company['form_header'], $company['form_footer']);
 
@@ -67,7 +68,7 @@ class Exportpdf extends CI_Controller
         // dejavusans is a UTF-8 Unicode font, if you only need to
         // print standard ASCII chars, you can use core fonts like
         // helvetica or times to reduce file size.
-        $pdf->SetFont('dejavusans', '', 11, '', true);
+        $pdf->SetFont('dejavusans', '', 10, '', true);
 
         // Add a page
         // This method has several options, check the source code documentation for more information.
@@ -142,7 +143,7 @@ class Exportpdf extends CI_Controller
 
         // Close and output PDF document
         // This method has several options, check the source code documentation for more information.
-        $pdf->Output('example_001.pdf', 'I');
+        $pdf->Output($file_name.'.pdf', 'I');
     }
 }
 
