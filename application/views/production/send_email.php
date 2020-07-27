@@ -16,9 +16,9 @@ if (isset($id)) {
 </main>
 
 <script>
-    window.onload = function(e) {
+    $(document).ready(function() {
         SendEmail();
-    }
+    });
 
     function SendEmail() {
         // Make sure that the formMessages div has the 'success' class.
@@ -33,7 +33,7 @@ if (isset($id)) {
             // Set the message text.
             $('#form-messages').html(o).fadeIn(1000).delay(3000).fadeOut(1000);
             setTimeout(function() {
-                window.location.href = "/"; 
+                window.location.href = "/";
             }, 10000); //will call the function after 2 secs.
         }).fail(function(o) {
             $('#form-messages').removeClass('alert-info').addClass('alert-danger');

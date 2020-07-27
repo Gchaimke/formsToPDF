@@ -16,6 +16,10 @@ class Exportpdf extends CI_Controller
 
     public function create($id = '1')
     {
+        
+        $this->load->view('header');
+        $this->load->view('main_menu');
+        
         $send_email = false;
         if (isset($_POST['email'])) {
             $send_email = $_POST['email'];
@@ -171,6 +175,8 @@ class Exportpdf extends CI_Controller
 
     function SendEmail($fileatt)
     {
+        $this->load->view('header');
+        $this->load->view('main_menu');
         $user =  $this->Users_model->getUser($this->session->userdata['logged_in']['id'])[0];
         $this->load->library('email');
         $Subject = 'Pdf Form from ' . $_SERVER['SERVER_NAME'];

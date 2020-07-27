@@ -79,7 +79,7 @@ class Production extends CI_Controller
             if ($response > 0 || $response) {
                 $data = array();
                 $data['id'] = $response;
-                $this-> send_email($data);
+                $this->send_email($data);
             } else {
                 echo "Form Not added!";
             }
@@ -88,12 +88,16 @@ class Production extends CI_Controller
         }
     }
 
-    public function send_email($data)
+    public function send_email($data='')
     {
-        $this->load->view('header');
-        $this->load->view('main_menu');
-        $this->load->view('production/send_email', $data);
-        $this->load->view('footer');
+        if ($data!='') {
+            $this->load->view('header');
+            $this->load->view('main_menu');
+            $this->load->view('production/send_email', $data);
+            $this->load->view('footer');
+        } else {
+            header("location: /users/login");
+        }
     }
 
     public function save_photo()

@@ -94,7 +94,7 @@
             }).fail(function(o) {
                   $('#form-messages').removeClass('alert-info').addClass('alert-danger');
                   // Set the message text.
-                  $('#form-messages').html(o).fadeIn(1000).delay(3000).fadeOut(1000);
+                  $('#form-messages').html(o).fadeIn(1000);
             });
       }
 </script>

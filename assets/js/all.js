@@ -199,25 +199,3 @@ function sleep(milliseconds) {
         currentDate = Date.now();
     } while (currentDate - date < milliseconds);
 }
-
-function centerLoginBox() {
-    var ua = navigator.userAgent.toLowerCase();
-    var isAndroid = ua.indexOf("android") > -1; // Detect Android devices
-    if (isAndroid) {
-        //window.orientation is different for iOS and Android
-        if (window.orientation == 0 || window.orientation == 180) { //Landscape Mode
-            $('#loginbox').css('margin-top', '20%');
-        }
-        else if (window.orientation == 90 || window.orientation == -90) { //Portrait Mode
-            $('#loginbox').css('margin-top', '40%');
-        }
-    }
-    else {
-        if (window.orientation == 90 || window.orientation == -90) { //Landscape Mode
-            $('#loginbox').css('margin-top', '20%');
-        }
-        else if (window.orientation == 0 || window.orientation == 180) { //Portrait Mode
-            $('#loginbox').css('margin-top', '40%');
-        }
-    }
-}
