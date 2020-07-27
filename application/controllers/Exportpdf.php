@@ -28,7 +28,7 @@ class Exportpdf extends CI_Controller
         $pdf->SetCreator(PDF_CREATOR);
         $pdf->SetTitle($company['name']);
         $pdf->SetSubject('-פנימי-');
-        $pdf->setMyHeader($company['logo'],$company['form_header']);
+        $pdf->setMyHeader($company['logo'], $company['form_header'], $company['form_footer']);
 
         // set default header data
         $pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE . ' 001', PDF_HEADER_STRING, array(0, 64, 255), array(0, 64, 128));
@@ -83,58 +83,58 @@ class Exportpdf extends CI_Controller
         // Print text using writeHTMLCell()
         $pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, 'C', true);
 
-        $html ='<table style="width:1000px" cellpadding="5" cellspacing="1" border="0.2">
+        $html = '<table style="width:1000px" cellpadding="5" cellspacing="1" border="0.2">
         <tr>
         <td style="width:150px;">תאריך:</td>
-        <td>'.$data['date'].'</td>
+        <td>' . $data['date'] . '</td>
         </tr><tr>
         <td style="width:150px;">מס. לקוח:</td>
-        <td>'.$data['client_num'].'</td>
+        <td>' . $data['client_num'] . '</td>
         </tr><tr>
         <td style="width:150px;">מס. פניה\תקלה:</td>
-        <td>'.$data['issue_num'].'</td>
+        <td>' . $data['issue_num'] . '</td>
         </tr><tr>
         <td style="width:150px;">שם לקוח: </td>
-        <td>'.$data['client_name'].'</td>
+        <td>' . $data['client_name'] . '</td>
         </tr><tr>
         <td style="width:150px;">סוג תקלה\ התקנה: </td>
-        <td>'.$data['issue_kind'].'</td>
+        <td>' . $data['issue_kind'] . '</td>
         </tr><tr>
         <td style="width:150px;">מיקום</td>
-        <td>'.$data['place'].'</td>
+        <td>' . $data['place'] . '</td>
         </tr><tr>
         <td style="width:150px;">שעת התחלה: </td>
-        <td>'.$data['start_time'].'</td>
+        <td>' . $data['start_time'] . '</td>
         </tr><tr>
         <td style="width:150px;">שעת סיום: </td>
-        <td>'.$data['end_time'].'</td>
+        <td>' . $data['end_time'] . '</td>
         </tr><tr>
         <td style="width:150px;">אחראי</td>
-        <td>'.$data['manager'].'</td>
+        <td>' . $data['manager'] . '</td>
         </tr><tr>
         <td style="width:150px;">איש קשר: </td>
-        <td>'.$data['contact_name'].'</td>
+        <td>' . $data['contact_name'] . '</td>
         </tr><tr>
         <td style="width:150px;">תיאור תקלה\ התקנה: </td>
-        <td>'.$data['activity_text'].'</td>
+        <td>' . $data['activity_text'] . '</td>
         </tr><tr>
         <td style="width:150px;">תוצאות הבדיקה: </td>
-        <td>'.$data['checking_text'].'</td>
+        <td>' . $data['checking_text'] . '</td>
         </tr><tr>
         <td style="width:150px;">סיכום</td>
-        <td>'.$data['summary_text'].'</td>
+        <td>' . $data['summary_text'] . '</td>
         </tr><tr>
         <td style="width:150px;">הערות: </td>
-        <td>'.$data['remarks_text'].'</td>
+        <td>' . $data['remarks_text'] . '</td>
         </tr><tr>
         <td style="width:150px;">המלצות: </td>
-        <td>'.$data['recommendations_text'].'</td>
+        <td>' . $data['recommendations_text'] . '</td>
         </tr><tr>
         <td style="width:150px;">שעת נסיעה הלוך: </td>
-        <td>'.$data['trip_start_time'].'</td>
+        <td>' . $data['trip_start_time'] . '</td>
         </tr><tr>
         <td style="width:150px;">שעת נסיעה חזור: </td>
-        <td>'.$data['trip_end_time'].'</td>
+        <td>' . $data['trip_end_time'] . '</td>
         </tr></table>';
         $pdf->writeHTMLCell(0, 0, '', '', $html, 0, 0, 0, true, 'R', true);
 
@@ -150,10 +150,11 @@ class Exportpdf extends CI_Controller
 // Extend the TCPDF class to create custom Header and Footer
 class MYPDF extends TCPDF
 {
-    public function setMyHeader($logo,$header)
+    public function setMyHeader($logo, $header, $footer)
     {
         $this->logo = '.' . $logo;
         $this->header = $header;
+        $this->footer = $footer;
     }
     //Page header
     public function Header()
@@ -167,6 +168,35 @@ class MYPDF extends TCPDF
         $this->SetFont('dejavusans', '', 14, '', true);
         // Title
         $this->SetY(13);
-        $this->Cell(0, 0, $this->header , 0, false, 'R', 0, '', 0, false, 'M', 'M');        
+        $this->Cell(0, 0, $this->header, 0, false, 'R', 0, '', 0, false, 'M', 'M');
+    }
+
+    // Page footer
+    public function Footer()
+    {
+        $cur_y = $this->y-15;
+        $this->footer_line_color = array(0, 0, 0);
+        $this->footer_text_color = array(0, 0, 0);
+        // footer text
+
+        //set style for cell border
+        $this->SetY($cur_y);
+        $line_width = (0.85 / $this->k);
+        $this->SetLineStyle(array('width' => $line_width, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => $this->footer_line_color));
+        $this->SetFont('dejavusans', '', 10, '', true);
+
+        $this->SetTextColorArray($this->footer_text_color);
+        $w_page = isset($this->l['w_page']) ? $this->l['w_page'] . ' ' : '';
+        if (empty($this->pagegroups)) {
+            $pagenumtxt =" דף ". $w_page . $this->getAliasNumPage() . ' / ' . $this->getAliasNbPages();
+        } else {
+            $pagenumtxt =" דף ". $w_page . $this->getPageNumGroupAlias() . ' / ' . $this->getPageGroupAlias();
+        }
+        $this->SetY($cur_y-5);
+        //Print page number
+        $this->SetX($this->original_rMargin);
+        $this->MultiCell(180, 20, $this->footer, 'T', 'C', 0, 1, '', '', true);
+        $this->SetX($this->k/2);
+        $this->Cell(0, 0, $pagenumtxt, 0, 0, 'C');
     }
 }
