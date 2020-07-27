@@ -173,7 +173,7 @@ class Admin_model extends CI_Model
             ),
             'checking_text' => array(
                 'type' => 'TEXT',
-                'default' => 'test'
+                'null' => TRUE
             ),
             'summary_text' => array(
                 'type' => 'TEXT',
