@@ -177,15 +177,15 @@ class Admin_model extends CI_Model
             ),
             'summary_text' => array(
                 'type' => 'TEXT',
-                'default' => 'summary'
+                'null' => TRUE
             ),
             'remarks_text' => array(
                 'type' => 'TEXT',
-                'default' => 'remarks'
+                'null' => TRUE
             ),
             'recommendations_text' => array(
                 'type' => 'TEXT',
-                'default' => 'recommendations'
+                'null' => TRUE
             ),
             'trip_start_time' => array(
                 'type' => 'TIME',
