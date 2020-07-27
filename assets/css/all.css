@@ -75,13 +75,17 @@ a#batchLink {
 }
 
 form.user-create {
-    max-width: fit-content;
+    max-width: fit-content ;
 }
 
 .form-control {
     direction: rtl;
     width: max-content;
     min-width: 250px;
+}
+
+.btn-block {
+    width: max-content !important;
 }
 
 table {
