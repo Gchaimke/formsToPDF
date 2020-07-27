@@ -38,6 +38,8 @@ class Users extends CI_Controller
             $this->form_validation->set_rules('name', 'Name', 'trim|required|xss_clean');
             $this->form_validation->set_rules('role', 'Role', 'trim|required|xss_clean');
             $this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean');
+            $this->form_validation->set_rules('email', 'email', 'trim|xss_clean');
+            $this->form_validation->set_rules('email_to', 'email_to', 'trim|xss_clean');
             if ($this->form_validation->run() == FALSE) {
                 $data['settings'] = $this->Admin_model->getSettings();
                 $this->load->view('header');
@@ -48,7 +50,9 @@ class Users extends CI_Controller
                 $data = array(
                     'name' => $this->input->post('name'),
                     'role' => $this->input->post('role'),
-                    'password' =>password_hash($this->input->post('password'), PASSWORD_DEFAULT) 
+                    'password' => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
+                    'email' => $this->input->post('email'),
+                    'email_to' => $this->input->post('email_to')
                 );
                 $result = $this->Users_model->registration_insert($data);
                 if ($result == TRUE) {
@@ -90,6 +94,8 @@ class Users extends CI_Controller
         $this->form_validation->set_rules('name', 'Name', 'trim|xss_clean');
         $this->form_validation->set_rules('role', 'Role', 'trim|xss_clean');
         $this->form_validation->set_rules('password', 'Password', 'trim|xss_clean');
+        $this->form_validation->set_rules('email', 'email', 'trim|xss_clean');
+        $this->form_validation->set_rules('email_to', 'email_to', 'trim|xss_clean');
         if ($this->form_validation->run() == FALSE) {
             $data['user'] =  $this->Users_model->getUser($id);
             $data['settings'] = $this->Admin_model->getSettings();
@@ -102,9 +108,11 @@ class Users extends CI_Controller
                 $sql = array(
                     'id' => $this->input->post('id'),
                     'name' => $this->input->post('name'),
-                    'role' => $this->input->post('role')
+                    'role' => $this->input->post('role'),
+                    'email' => $this->input->post('email'),
+                    'email_to' => $this->input->post('email_to')
                 );
-                if($this->input->post('password')!=''){
+                if ($this->input->post('password') != '') {
                     $sql += array('password' => $this->input->post('password'));
                 }
                 $data['message_display'] = $this->Users_model->editUser($sql);
@@ -114,11 +122,13 @@ class Users extends CI_Controller
                 $this->load->view('main_menu');
                 $this->load->view('users/manage', $data);
             } else {
-                if($this->input->post('password')!=''){
+                if ($this->input->post('password') != '') {
                     $sql = array(
                         'id' => $this->input->post('id'),
                         'name' => $this->input->post('name'),
-                        'password' => $this->input->post('password')
+                        'password' => $this->input->post('password'),
+                        'email' => $this->input->post('email'),
+                        'email_to' => $this->input->post('email_to')
                     );
                     $this->Users_model->editUser($sql);
                 }
@@ -205,7 +215,7 @@ class Users extends CI_Controller
         $this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean');
         $data = array(
             'name' => $this->input->post('name'),
-            'password' =>$this->input->post('password')  
+            'password' => $this->input->post('password')
         );
         $result = $this->Users_model->login($data);
         if ($result == TRUE) {

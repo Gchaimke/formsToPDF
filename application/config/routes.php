@@ -53,7 +53,6 @@ $route['default_controller'] = 'production';
 $route['users'] = 'users';
 $route['companies'] = 'companies';
 $route['exportpdf'] = 'exportpdf';
-$route['templates'] = 'templates';
 $route['(:any)'] = 'pages/view/$1';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

@@ -34,10 +34,15 @@ if (isset($this->session->userdata['logged_in'])) {
                         }
                         ?>
                   </select></br>
-                  <?php
-                  echo form_input('name', '', 'class=form-control') . '<br/>';
-                  echo form_password('password', '', 'class=form-control'); ?><br />
-                  <input type='submit' class="btn btn-info btn-block" name='submit' value='Submit'>
+                  <label>Name</label>
+                  <input type='text' class="form-control" placeholder="name" name='name'>
+                  <label>password</label>
+                  <input type='text' class="form-control" placeholder="password" name='password'>
+                  <label>email</label>
+                  <input type='text' class="form-control" placeholder="email" name='email'>
+                  <label>email_to</label>
+                  <input type='text' class="form-control" placeholder="email_to" name='email_to'><br/>
+                  <input type='submit' class="btn btn-info btn-block" name='submit' value='Add User'>
                   <?php echo form_close(); ?>
             </center>
       </div>
