@@ -36,7 +36,7 @@ if (isset($this->session->userdata['logged_in'])) {
 				$logo = $companies[0]['logo'];
 			}
 			?>
-			<?php echo form_open("Companies/edit/$id", 'class=user-create'); ?>
+			<?php echo form_open("companies/edit/$id", 'class=user-create'); ?>
 			<input type='hidden' name='id' value="<?php echo $id ?>">
 			<label>Company</label><input id='company_name' type='text' class="form-control" name='name' value="<?php echo $company ?>"></hr>
 			<label>Logo</label>
