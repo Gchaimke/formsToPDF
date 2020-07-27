@@ -5,21 +5,11 @@ class Production_model extends CI_Model
 
 	public function add_form($data)
 	{
-		// Query to check whether serial already exist or not
-		$condition = "issue_num ='" . $data['issue_num'] . "'";
-		$this->db->select('*');
-		$this->db->from('forms');
-		$this->db->where($condition);
-		$this->db->limit(1);
-		$query = $this->db->get();
-		if ($query->num_rows() == 0) {
-			// Query to insert data in database
-			$this->db->insert('forms', $data);
-			$insert_id = $this->db->insert_id();
-			if ($this->db->affected_rows() > 0) {
-				return $insert_id;
-			}
-		} else {
+		$this->db->insert('forms', $data);
+		$insert_id = $this->db->insert_id();
+		if ($this->db->affected_rows() > 0) {
+			return $insert_id;
+		}else{
 			return false;
 		}
 	}
@@ -36,8 +26,8 @@ class Production_model extends CI_Model
 					$condition = "id ='$id'";
 					$this->db->where($condition);
 					$this->db->limit(1);
-				}else{
-					$id = str_replace(':',',',$id);
+				} else {
+					$id = str_replace(':', ',', $id);
 					$condition = "id IN ($id)";
 					$this->db->where($condition);
 				}
@@ -57,9 +47,8 @@ class Production_model extends CI_Model
 	{
 		$where = "id =" . $data['id'];
 		$data = array(
-			'company' => 'Trash '. $data['company']
+			'company' => 'Trash ' . $data['company']
 		);
 		return $this->db->update('forms', $data, $where);
 	}
-
 }
