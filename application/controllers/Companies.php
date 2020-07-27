@@ -121,6 +121,7 @@ class Companies extends CI_Controller
         }
         $file = UPLOAD_DIR . $file_name . ".jpeg";
         $success = file_put_contents($file, $img);
+        chmod($file, 0664);
         print $success ? $file : 'Unable to save the file.';
     }
 
