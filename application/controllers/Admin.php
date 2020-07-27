@@ -136,6 +136,7 @@ class Admin extends CI_Controller
 	{
 		// Check validation for user input in SignUp form
 		$this->form_validation->set_rules('id', 'id', 'trim|xss_clean');
+		$this->form_validation->set_rules('company', 'company', 'trim|xss_clean');
 		$this->form_validation->set_rules('date', 'date', 'trim|xss_clean');
 		$this->form_validation->set_rules('client_num', 'client_num', 'trim|xss_clean');
 		$this->form_validation->set_rules('issue_num', 'issue_num', 'trim|xss_clean');
@@ -156,6 +157,7 @@ class Admin extends CI_Controller
 		if (!$this->form_validation->run() == FALSE) {
 			$data = array(
 				'id' =>  $this->input->post('id'),
+				'company' =>  $this->input->post('company'),
 				'date' =>  $this->input->post('date'),
 				'client_num' =>  $this->input->post('client_num'),
 				'issue_num' => $this->input->post('issue_num'),
