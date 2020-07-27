@@ -167,7 +167,7 @@ class Exportpdf extends CI_Controller
     
         $this->email->attach($fileatt);
         if($this->email->send()){
-            print_r('Email Sent');
+            print_r('Email Sent to '.$EmailAddress);
     
         }else{
             print_r($this->email->print_debugger());
