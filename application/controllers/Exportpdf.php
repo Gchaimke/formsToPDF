@@ -25,7 +25,7 @@ class Exportpdf extends CI_Controller
         $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
         // set document information
-        $file_name = $company['name'].' - '.$data['date'].' - '.$data['issue_num'].' '.$data['client_name'];
+        $file_name = $company['name'] . ' - ' . $data['date'] . ' - ' . $data['issue_num'] . ' ' . $data['client_name'];
         $pdf->SetCreator(PDF_CREATOR);
         $pdf->SetTitle($file_name);
         $pdf->SetSubject('-פנימי-');
@@ -105,10 +105,10 @@ class Exportpdf extends CI_Controller
         <td>' . $data['place'] . '</td>
         </tr><tr>
         <td style="width:160px;">שעת התחלה: </td>
-        <td>' . date('G:i',strtotime($data['start_time'])). '</td>
+        <td>' . date('G:i', strtotime($data['start_time'])) . '</td>
         </tr><tr>
         <td style="width:160px;">שעת סיום: </td>
-        <td>' . date('G:i',strtotime($data['end_time'])). '</td>
+        <td>' . date('G:i', strtotime($data['end_time'])) . '</td>
         </tr><tr>
         <td style="width:160px;">אחראי</td>
         <td>' . $data['manager'] . '</td>
@@ -132,10 +132,10 @@ class Exportpdf extends CI_Controller
         <td>' . $data['recommendations_text'] . '</td>
         </tr><tr>
         <td style="width:160px;">שעת התחלה נסיעה הלוך: </td>
-        <td>' . date('G:i',strtotime($data['trip_start_time'])) . '</td>
+        <td>' . date('G:i', strtotime($data['trip_start_time'])) . '</td>
         </tr><tr>
         <td style="width:160px;">שעת סיום נסיעה חזור: </td>
-        <td>' . date('G:i',strtotime($data['trip_end_time'])) . '</td>
+        <td>' . date('G:i', strtotime($data['trip_end_time'])) . '</td>
         </tr></table>';
         $pdf->writeHTMLCell(0, 0, '', '', $html, 0, 0, 0, true, 'R', true);
 
@@ -146,33 +146,34 @@ class Exportpdf extends CI_Controller
         //$pdf->Output($file_name.'.pdf', 'I');
 
         //the option E: return the document as base64 mime multi-part email attachment (RFC 2045)
-        $fileatt = $pdf->Output($file_name.'.pdf', 'E');
-        if($fileatt!=''){
+        $filePath = FCPATH ."/Uploads/PDF/". $file_name . '.pdf';
+        $pdf->Output($filePath, 'F');
+        if (!empty($filePath)) {
             $EmailAddress = 'gchaimke@gmail.com';
-            $this->SendEmail($EmailAddress,$fileatt);
-        }
-        
+            $this->SendEmail($EmailAddress, $filePath);
+        }else{
+            print_r('Could not trace file path');
+        } 
     }
 
-    function SendEmail($EmailAddress,$fileatt){
+    function SendEmail($EmailAddress, $fileatt)
+    {
         $this->load->library('email');
         $Subject = 'Pdf test';
         $Message = 'open pdf to test';
-    
+
         $this->email
-            ->from('gchaim@avdor.com', 'Pdf from chaim')    
-            ->to($EmailAddress) 
+            ->from('gchaim@avdor.com', 'Pdf from chaim')
+            ->to($EmailAddress)
             ->subject($Subject)
-            ->message($Message);
-    
-        $this->email->attach($fileatt);
-        if($this->email->send()){
-            print_r('Email Sent to '.$EmailAddress);
-    
-        }else{
+            ->message($Message)
+            ->attach($fileatt);
+
+        if ($this->email->send()) {
+            print_r('Email Sent to ' . $EmailAddress);
+        } else {
             print_r($this->email->print_debugger());
         }
-    
     }
 }
 
@@ -204,7 +205,7 @@ class MYPDF extends TCPDF
     // Page footer
     public function Footer()
     {
-        $cur_y = $this->y-15;
+        $cur_y = $this->y - 15;
         $this->footer_line_color = array(0, 0, 0);
         $this->footer_text_color = array(0, 0, 0);
         // footer text
@@ -218,15 +219,15 @@ class MYPDF extends TCPDF
         $this->SetTextColorArray($this->footer_text_color);
         $w_page = isset($this->l['w_page']) ? $this->l['w_page'] . ' ' : '';
         if (empty($this->pagegroups)) {
-            $pagenumtxt =" דף ". $w_page . $this->getAliasNumPage() . ' / ' . $this->getAliasNbPages();
+            $pagenumtxt = " דף " . $w_page . $this->getAliasNumPage() . ' / ' . $this->getAliasNbPages();
         } else {
-            $pagenumtxt =" דף ". $w_page . $this->getPageNumGroupAlias() . ' / ' . $this->getPageGroupAlias();
+            $pagenumtxt = " דף " . $w_page . $this->getPageNumGroupAlias() . ' / ' . $this->getPageGroupAlias();
         }
-        $this->SetY($cur_y-5);
+        $this->SetY($cur_y - 5);
         //Print page number
         $this->SetX($this->original_rMargin);
         $this->MultiCell(180, 20, $this->footer, 'T', 'C', 0, 1, '', '', true);
-        $this->SetX($this->k/2);
+        $this->SetX($this->k / 2);
         $this->Cell(0, 0, $pagenumtxt, 0, 0, 'C');
     }
 }
