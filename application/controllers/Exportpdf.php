@@ -84,7 +84,7 @@ class Exportpdf extends CI_Controller
         // Print text using writeHTMLCell()
         $pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, 'C', true);
 
-        $html = '<table style="width:950px" cellpadding="5" cellspacing="1" border="0.2">
+        $html = '<table style="width:950px" cellpadding="5" cellspacing="1" border="1">
         <tr>
         <td style="width:160px;">תאריך:</td>
         <td>' . $data['date'] . '</td>
