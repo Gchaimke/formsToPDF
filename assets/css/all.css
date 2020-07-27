@@ -78,6 +78,12 @@ form.user-create {
     max-width: fit-content;
 }
 
+.form-control {
+    direction: rtl;
+    width: max-content;
+    min-width: 250px;
+}
+
 table {
     text-align: center;
 }

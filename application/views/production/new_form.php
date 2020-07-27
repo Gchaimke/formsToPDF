@@ -44,6 +44,8 @@
                   <textarea class="form-control" name="summary_text" cols="40" rows="5"></textarea>
                   <label>remarks_text</label>
                   <textarea class="form-control" name="remarks_text" cols="40" rows="5"></textarea>
+                  <label>recommendations_text</label>
+                  <textarea class="form-control" name="recommendations_text" cols="40" rows="5"></textarea>
                   <label>trip_start_time</label>
                   <input type='time' class="form-control " name='trip_start_time' placeholder="trip_start_time"></br>
                   <label>trip_end_time</label>

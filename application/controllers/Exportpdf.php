@@ -1,4 +1,6 @@
 <?php
+require_once APPPATH . 'third_party/tcPDF/tcpdf.php';
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 class Exportpdf extends CI_Controller
@@ -26,7 +28,7 @@ class Exportpdf extends CI_Controller
         $pdf->SetCreator(PDF_CREATOR);
         $pdf->SetTitle($company['name']);
         $pdf->SetSubject('-פנימי-');
-        $pdf->setHeaderImage($company['logo']);
+        $pdf->setMyHeader($company['logo'],$company['form_header']);
 
         // set default header data
         $pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE . ' 001', PDF_HEADER_STRING, array(0, 64, 255), array(0, 64, 128));
@@ -65,26 +67,76 @@ class Exportpdf extends CI_Controller
         // dejavusans is a UTF-8 Unicode font, if you only need to
         // print standard ASCII chars, you can use core fonts like
         // helvetica or times to reduce file size.
-        $pdf->SetFont('dejavusans', '', 14, '', true);
+        $pdf->SetFont('dejavusans', '', 11, '', true);
 
         // Add a page
         // This method has several options, check the source code documentation for more information.
         $pdf->AddPage();
 
         // set text shadow effect
-        $pdf->setTextShadow(array('enabled' => true, 'depth_w' => 0.2, 'depth_h' => 0.2, 'color' => array(196, 196, 196), 'opacity' => 1, 'blend_mode' => 'Normal'));
+        //$pdf->setTextShadow(array('enabled' => true, 'depth_w' => 0.2, 'depth_h' => 0.2, 'color' => array(196, 196, 196), 'opacity' => 1, 'blend_mode' => 'Normal'));
         $pdf->setRTL(true);
+        $pdf->SetY(45);
         // Set some content to print
-        $html = <<<EOD
-<h1 >שלום to <a href="http://www.tcpdf.org" style="text-decoration:none;background-color:#CC0000;color:black;">&nbsp;<span style="color:black;">TC</span><span style="color:white;">PDF</span>&nbsp;</a>!</h1>
-<i>This is the first example of TCPDF library.</i>
-<p>This text is printed using the <i>writeHTMLCell()</i> method but you can also use: <i>Multicell(), writeHTML(), Write(), Cell() and Text()</i>.</p>
-<p>Please check the source code documentation and other examples for further information.</p>
-<p style="color:#CC0000;">TO IMPROVE AND EXPAND TCPDF I NEED YOUR SUPPORT, PLEASE <a href="http://sourceforge.net/donate/index.php?group_id=128076">MAKE A DONATION!</a></p>
-EOD;
+        $html = '<h1>דו"ח סיכום פעילות</h1>';
 
         // Print text using writeHTMLCell()
-        $pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
+        $pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, 'C', true);
+
+        $html ='<table style="width:1000px" cellpadding="5" cellspacing="1" border="0.2">
+        <tr>
+        <td style="width:150px;">תאריך:</td>
+        <td>'.$data['date'].'</td>
+        </tr><tr>
+        <td style="width:150px;">מס. לקוח:</td>
+        <td>'.$data['client_num'].'</td>
+        </tr><tr>
+        <td style="width:150px;">מס. פניה\תקלה:</td>
+        <td>'.$data['issue_num'].'</td>
+        </tr><tr>
+        <td style="width:150px;">שם לקוח: </td>
+        <td>'.$data['client_name'].'</td>
+        </tr><tr>
+        <td style="width:150px;">סוג תקלה\ התקנה: </td>
+        <td>'.$data['issue_kind'].'</td>
+        </tr><tr>
+        <td style="width:150px;">מיקום</td>
+        <td>'.$data['place'].'</td>
+        </tr><tr>
+        <td style="width:150px;">שעת התחלה: </td>
+        <td>'.$data['start_time'].'</td>
+        </tr><tr>
+        <td style="width:150px;">שעת סיום: </td>
+        <td>'.$data['end_time'].'</td>
+        </tr><tr>
+        <td style="width:150px;">אחראי</td>
+        <td>'.$data['manager'].'</td>
+        </tr><tr>
+        <td style="width:150px;">איש קשר: </td>
+        <td>'.$data['contact_name'].'</td>
+        </tr><tr>
+        <td style="width:150px;">תיאור תקלה\ התקנה: </td>
+        <td>'.$data['activity_text'].'</td>
+        </tr><tr>
+        <td style="width:150px;">תוצאות הבדיקה: </td>
+        <td>'.$data['checking_text'].'</td>
+        </tr><tr>
+        <td style="width:150px;">סיכום</td>
+        <td>'.$data['summary_text'].'</td>
+        </tr><tr>
+        <td style="width:150px;">הערות: </td>
+        <td>'.$data['remarks_text'].'</td>
+        </tr><tr>
+        <td style="width:150px;">המלצות: </td>
+        <td>'.$data['recommendations_text'].'</td>
+        </tr><tr>
+        <td style="width:150px;">שעת נסיעה הלוך: </td>
+        <td>'.$data['trip_start_time'].'</td>
+        </tr><tr>
+        <td style="width:150px;">שעת נסיעה חזור: </td>
+        <td>'.$data['trip_end_time'].'</td>
+        </tr></table>';
+        $pdf->writeHTMLCell(0, 0, '', '', $html, 0, 0, 0, true, 'R', true);
 
         // ---------------------------------------------------------
 
@@ -96,34 +148,25 @@ EOD;
 
 
 // Extend the TCPDF class to create custom Header and Footer
-require_once APPPATH . 'third_party/tcPDF/tcpdf.php';
 class MYPDF extends TCPDF
 {
-    private $logo = '';
-    public function setHeaderImage($logo)
+    public function setMyHeader($logo,$header)
     {
         $this->logo = '.' . $logo;
+        $this->header = $header;
     }
     //Page header
     public function Header()
     {
         // Logo
         $image_file = $this->logo;
-        $this->Image($image_file, 10, 10, 15, '', 'JPG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+        $style = array('width' => 0.2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0));
+        $this->Line(10, 10, 200, 10, $style);
+        $this->Image($image_file, 10, 10.5, 30, '', 'JPG', '', 'T', false, 300, '', false, false, 0, false, false, false);
         // Set font
-        $this->SetFont('helvetica', 'B', 20);
+        $this->SetFont('dejavusans', '', 14, '', true);
         // Title
-        $this->Cell(0, 15, '<< TCPDF Example 003 >>', 0, false, 'C', 0, '', 0, false, 'M', 'M');
-    }
-
-    // Page footer
-    public function Footer()
-    {
-        // Position at 15 mm from bottom
-        $this->SetY(-15);
-        // Set font
-        $this->SetFont('helvetica', 'I', 8);
-        // Page number
-        $this->Cell(0, 10, 'Page ' . $this->getAliasNumPage() . '/' . $this->getAliasNbPages(), 0, false, 'C', 0, '', 0, false, 'T', 'M');
+        $this->SetY(13);
+        $this->Cell(0, 0, $this->header , 0, false, 'R', 0, '', 0, false, 'M', 'M');        
     }
 }

@@ -197,6 +197,11 @@ class Admin_model extends CI_Model
                 'default' => 'remarks',
                 'null' => TRUE
             ),
+            'recommendations_text' => array(
+                'type' => 'TEXT',
+                'default' => 'recommendations',
+                'null' => TRUE
+            ),
             'trip_start_time' => array(
                 'type' => 'TIME',
                 'default' => '12:00:00',
@@ -215,20 +220,10 @@ class Admin_model extends CI_Model
         $demoForm = array(
             "date" => '2020-05-26',
             "client_num" => '123456',
-            "issue_num" => '#1225544',
+            "issue_num" => '1225544',
             "client_name" => 'Client',
             "issue_kind" => 'issue',
-            "place" => 'Tel-Aviv',
-            "start_time" => '',
-            "end_time" => '',
-            "manager" => '',
-            "contact_name" => '',
-            "activity_text" => '',
-            "checking_text" => '',
-            "summary_text" => '',
-            "remarks_text" => '',
-            "trip_start_time" => '',
-            "trip_end_time" => ''
+            "place" => 'Tel-Aviv'
         );
         $this->db->insert('forms', $demoForm);
     }
