@@ -177,7 +177,7 @@ class Exportpdf extends CI_Controller
         $Message = 'open pdf to test';
 
         $this->email
-            ->from('gchaim@avdor.com', 'Pdf from chaim')
+            ->from('admin@forms.garin.co.il', 'Online Forms')
             ->to($EmailAddress)
             ->subject($Subject)
             ->message($Message)

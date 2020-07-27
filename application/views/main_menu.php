@@ -6,7 +6,7 @@ if (isset($this->session->userdata['logged_in'])) {
 }
 ?>
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark main-menu"> 
-  <a class="navbar-brand" href="/">Online Forms v1.3 - <?php echo $_SERVER['SERVER_NAME']; ?></a>
+  <a class="navbar-brand" href="/"><?php echo $_SERVER['SERVER_NAME']; ?> - Online Forms v1.3</a>
   <ul class="navbar-nav mr-auto">
     <?php
     if (isset($project)) {
