@@ -3,7 +3,7 @@
 class Production_model extends CI_Model
 {
 
-	public function save_form($data)
+	public function add_form($data)
 	{
 		// Query to check whether serial already exist or not
 		$condition = "issue_num ='" . $data['issue_num'] . "'";
@@ -15,8 +15,9 @@ class Production_model extends CI_Model
 		if ($query->num_rows() == 0) {
 			// Query to insert data in database
 			$this->db->insert('forms', $data);
+			$insert_id = $this->db->insert_id();
 			if ($this->db->affected_rows() > 0) {
-				return true;
+				return $insert_id;
 			}
 		} else {
 			return false;

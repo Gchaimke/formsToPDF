@@ -15,7 +15,7 @@
                   }
                   ?>
                   
-                  <?php echo form_open("production/save_form", 'id=ajax-form', 'class=user-create'); ?>
+                  <?php echo form_open("production/add_form", 'class=user-create'); ?>
                   <input type='text' class="form-control " name='company' placeholder="Company" value="<?php echo $_GET['company']?>" hidden>
                   <label>date</label>
                   <input type='date' class="form-control" name='date' value="<?php echo date("Y-m-d"); ?>"></br>
@@ -54,19 +54,6 @@
                                    
                   <input type='submit' class="btn btn-info btn-block" name='submit' value='Submit'>
                   <?php echo form_close(); ?>
-
-                  <a href="#" onclick="make_pdf()">test pdf</a>
             </center>
       </div>
 </main>
-<script>
-    function make_pdf() {
-        $.post("/production/to_pdf", {
-        }).done(function(o) {
-            // Make sure that the formMessages div has the 'success' class.
-            $('#form-messages').addClass('alert-success');
-            // Set the message text.
-            $('#form-messages').html(o).fadeIn(1000).delay(3000).fadeOut(1000);
-        });
-    }
-</script>

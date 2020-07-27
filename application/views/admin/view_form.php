@@ -2,7 +2,7 @@
       <div class="jumbotron">
             <div class="container">
                   <center>
-                        <h2 class="display-3">Form <?php echo $_GET['issue']; ?> </h2>
+                        <h2 class="display-3">Form <?php if(isset($_GET['issue'])){echo $_GET['issue'];} ?> </h2>
                   </center>
             </div>
       </div>

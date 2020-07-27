@@ -33,7 +33,7 @@ class Production extends CI_Controller
     }
 
 
-    public function save_form()
+    public function add_form()
     {
         // Check validation for user input in SignUp form
         $this->form_validation->set_rules('date', 'date', 'trim|xss_clean');
@@ -75,15 +75,25 @@ class Production extends CI_Controller
                 'trip_start_time' => $this->input->post('trip_start_time'),
                 'trip_end_time' => $this->input->post('trip_end_time')
             );
-            $response =  $this->Production_model->save_form($data);
-            if ($response) {
-                echo "Form saved successfully!";
+            $response =  $this->Production_model->add_form($data);
+            if ($response > 0 || $response) {
+                $data = array();
+                $data['id'] = $response;
+                $this-> send_email($data);
             } else {
-                echo "Form Not saved! Issue Number exists!";
+                echo "Form Not added!";
             }
         } else {
             echo "Form validation error!";
         }
+    }
+
+    public function send_email($data)
+    {
+        $this->load->view('header');
+        $this->load->view('main_menu');
+        $this->load->view('production/send_email', $data);
+        $this->load->view('footer');
     }
 
     public function save_photo()
@@ -160,5 +170,3 @@ class Production extends CI_Controller
         fclose($fp);
     }
 }
-
-
