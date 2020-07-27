@@ -66,7 +66,7 @@ if (isset($this->session->userdata['logged_in']) && isset($user)) {
 			<label>email</label>
 			<input type='text' class="form-control" placeholder="email" name='email' value="<?php echo $email ?>">
 			<label>email_to</label>
-			<input type='text' class="form-control" placeholder="email_to" name='email_to' value="<?php echo $email_to ?>"><br />
+			<textarea class="form-control" name="email_to" cols="10" rows="3"><?php echo $email_to ?></textarea><br />
 			<input type='submit' class="btn btn-info btn-block" name='submit' value='update'>
 			<?php echo form_close(); ?>
 		</center>

@@ -1,3 +1,10 @@
+<style>
+      .form-control {
+            direction: rtl;
+            width: max-content;
+            min-width: 250px;
+      }
+</style>
 <main role="main">
       <div class="jumbotron">
             <div class="container">

@@ -1,8 +1,17 @@
+<style>
+      .form-control {
+            direction: rtl;
+            width: max-content;
+            min-width: 250px;
+      }
+</style>
 <main role="main">
       <div class="jumbotron">
             <div class="container">
                   <center>
-                        <h2 class="display-3">Form <?php if(isset($_GET['issue'])){echo $_GET['issue'];} ?> </h2>
+                        <h2 class="display-3">Form <?php if (isset($_GET['issue'])) {
+                                                            echo $_GET['issue'];
+                                                      } ?> </h2>
                   </center>
             </div>
       </div>

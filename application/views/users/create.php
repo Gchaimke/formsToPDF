@@ -41,7 +41,7 @@ if (isset($this->session->userdata['logged_in'])) {
                   <label>email</label>
                   <input type='text' class="form-control" placeholder="email" name='email'>
                   <label>email_to</label>
-                  <input type='text' class="form-control" placeholder="email_to" name='email_to'><br/>
+                  <textarea class="form-control" name="email_to" placeholder="email_to" cols="10" rows="3"></textarea><br />
                   <input type='submit' class="btn btn-info btn-block" name='submit' value='Add User'>
                   <?php echo form_close(); ?>
             </center>
