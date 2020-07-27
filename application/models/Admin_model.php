@@ -120,6 +120,11 @@ class Admin_model extends CI_Model
                 'unsigned' => TRUE,
                 'auto_increment' => TRUE
             ),
+            'company' => array(
+                'type' => 'VARCHAR',
+                'constraint' => 500,
+                'default' => 'Cellcom'
+            ),
             'date' => array(
                 'type' => 'DATE',
                 'default' => '2020-05-26'
