@@ -21,7 +21,7 @@ class Companies extends CI_Controller
         $data['companies'] = $this->Companies_model->getCompanies();
         $this->load->view('header');
         $this->load->view('main_menu');
-        $this->load->view('Companies/manage', $data);
+        $this->load->view('companies/manage', $data);
         $this->load->view('footer');
     }
 
@@ -38,7 +38,7 @@ class Companies extends CI_Controller
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('header');
             $this->load->view('main_menu');
-            $this->load->view('Companies/create');
+            $this->load->view('companies/create');
             $this->load->view('footer');
         } else {
             $data = array(
@@ -56,7 +56,7 @@ class Companies extends CI_Controller
                 $msg['message_display'] = 'Client already exist!';
                 $this->load->view('header');
                 $this->load->view('main_menu');
-                $this->load->view('Companies/create', $msg);
+                $this->load->view('companies/create', $msg);
                 $this->load->view('footer');
             }
         }
@@ -90,7 +90,7 @@ class Companies extends CI_Controller
         $data['companies'] = $this->Companies_model->getCompanies($id);
         $this->load->view('header');
         $this->load->view('main_menu');
-        $this->load->view('Companies/edit', $data);
+        $this->load->view('companies/edit', $data);
         $this->load->view('footer');
     }
 
