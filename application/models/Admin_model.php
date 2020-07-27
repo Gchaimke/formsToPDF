@@ -199,6 +199,14 @@ class Admin_model extends CI_Model
             'trip_end_time' => array(
                 'type' => 'TIME',
                 'default' => '12:00:00'
+            ),
+            'back_start_time' => array(
+                'type' => 'TIME',
+                'default' => '12:00:00'
+            ),
+            'back_end_time' => array(
+                'type' => 'TIME',
+                'default' => '12:00:00'
             )
         );
         $this->dbforge->add_field($company);

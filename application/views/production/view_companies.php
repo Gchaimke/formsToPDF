@@ -2,7 +2,7 @@
 	<div class="jumbotron">
 		<div class="container">
 			<center>
-				<h2 class="display-4">Companies</h2>
+				<h2 class="display-4">חברות</h2>
 			</center>
 		</div>
 	</div>
@@ -21,7 +21,7 @@
 				echo '<img id="logo_img" class="img-thumbnail" src="'. $company['logo'].'" height="100px">';
 				echo '<p class="card-text"></p></div>';
 				echo '<div class="card-footer">';
-				echo  "<a href='/production/new_form?company=$company_name' class='btn btn-primary  btn-block'>New Form</a>";
+				echo  "<a href='/production/new_form?company=$company_name' class='btn btn-primary  btn-block'>תופס חדש</a>";
 				echo '</div></center></div>';
 			}
 
