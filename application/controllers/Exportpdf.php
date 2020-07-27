@@ -143,7 +143,36 @@ class Exportpdf extends CI_Controller
 
         // Close and output PDF document
         // This method has several options, check the source code documentation for more information.
-        $pdf->Output($file_name.'.pdf', 'I');
+        //$pdf->Output($file_name.'.pdf', 'I');
+
+        //the option E: return the document as base64 mime multi-part email attachment (RFC 2045)
+        $fileatt = $pdf->Output($file_name.'.pdf', 'E');
+        if($fileatt!=''){
+            $EmailAddress = 'gchaimke@gmail.com';
+            $this->SendEmail($EmailAddress,$fileatt);
+        }
+        
+    }
+
+    function SendEmail($EmailAddress,$fileatt){
+        $this->load->library('email');
+        $Subject = 'Pdf test';
+        $Message = 'open pdf to test';
+    
+        $this->email
+            ->from('gchaim@avdor.com', 'Pdf from chaim')    
+            ->to($EmailAddress) 
+            ->subject($Subject)
+            ->message($Message);
+    
+        $this->email->attach($fileatt);
+        if($this->email->send()){
+            print_r('Email Sent');
+    
+        }else{
+            print_r($this->email->print_debugger());
+        }
+    
     }
 }
 
