@@ -57,6 +57,7 @@ if (isset($this->session->userdata['logged_in'])) {
         ?>
         </br>
         <button class="btn btn-info" onclick="createDB(0)">Create DB</button>
+        <a class="btn btn-info" href="/admin/view_log">System Log</a>
     </div>
 </main>
 

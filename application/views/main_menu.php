@@ -36,15 +36,7 @@ if (isset($this->session->userdata['logged_in'])) {
         <li class="nav-item"><a class="nav-link" href="/admin/manage_forms">Forms List</a></li>
         <li class="nav-item"><a class="nav-link" href="/companies">Companies</a></li>
         <li class="nav-item"><a class="nav-link" href="/users">Users</a></li>
-        <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Admin
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-        <a class="dropdown-item" href="/admin/view_log">System Log</a>
-        <a class="dropdown-item" href="/admin/settings">Settings</a>
-
-        
+        <li class="nav-item"><a class="nav-link" href="/admin/settings">Settings</a>       
         </div>
       </li>
       <?php }?>
