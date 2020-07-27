@@ -28,11 +28,12 @@ if (isset($this->session->userdata['logged_in'])) {
           Hello <?php echo $username; ?>
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="/users/edit/<?php echo $id ?>">Password</a>
+          <a class="dropdown-item" href="/users/edit/<?php echo $id ?>">Edit My Profile</a>
           <a class="dropdown-item" href="/users/logout">Logout</a>
         </div>
       </li>
       <?php if ($role == 'Admin') {?>
+        <li class="nav-item"><a class="nav-link" href="/admin/manage_forms">Forms List</a></li>
         <li class="nav-item"><a class="nav-link" href="/companies">Companies</a></li>
         <li class="nav-item"><a class="nav-link" href="/users">Users</a></li>
         <li class="nav-item dropdown">
@@ -40,7 +41,6 @@ if (isset($this->session->userdata['logged_in'])) {
           Admin
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-        <a class="dropdown-item" href="/admin/manage_forms">Forms List</a>
         <a class="dropdown-item" href="/admin/view_log">System Log</a>
         <a class="dropdown-item" href="/admin/settings">Settings</a>
 

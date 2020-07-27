@@ -1,5 +1,9 @@
 <?php
-$project =  'Trash';
+if (isset($this->session->userdata['logged_in'])) {
+    if ($this->session->userdata['logged_in']['role'] != "Admin") {
+        header("location: /");
+    }
+}
 ?>
 <main role="main">
 	<div class="jumbotron">
