@@ -123,44 +123,44 @@ class Admin_model extends CI_Model
             'company' => array(
                 'type' => 'VARCHAR',
                 'constraint' => 500,
-                'default' => 'Cellcom'
+                'null' => TRUE
             ),
             'date' => array(
                 'type' => 'DATE',
-                'default' => '2020-05-26'
+                'null' => TRUE
             ),
             'client_num' => array(
                 'type' => 'VARCHAR',
                 'constraint' => 50,
-                'default' => '1234'
+                'null' => TRUE
             ),
             'issue_num' => array(
                 'type' => 'VARCHAR',
                 'constraint' => 50,
-                'default' => '1234'
+                'null' => TRUE
             ),
             'client_name' => array(
                 'type' => 'VARCHAR',
                 'constraint' => 60,
-                'default' => 'company'
+                'null' => TRUE
             ),
             'issue_kind' => array(
                 'type' => 'VARCHAR',
                 'constraint' => 500,
-                'default' => 'issue'
+                'null' => TRUE
             ),
             'place' => array(
                 'type' => 'VARCHAR',
                 'constraint' => 100,
-                'default' => 'Tel-Aviv'
+                'null' => TRUE
             ),
             'start_time' => array(
                 'type' => 'TIME',
-                'default' => '12:00:00'
+                'null' => TRUE
             ),
             'end_time' => array(
                 'type' => 'TIME',
-                'default' => '12:00:00'
+                'null' => TRUE
             ),
             'manager' => array(
                 'type' => 'VARCHAR',
@@ -194,19 +194,19 @@ class Admin_model extends CI_Model
             ),
             'trip_start_time' => array(
                 'type' => 'TIME',
-                'default' => '12:00:00'
+                'null' => TRUE
             ),
             'trip_end_time' => array(
                 'type' => 'TIME',
-                'default' => '12:00:00'
+                'null' => TRUE
             ),
             'back_start_time' => array(
                 'type' => 'TIME',
-                'default' => '12:00:00'
+                'null' => TRUE
             ),
             'back_end_time' => array(
                 'type' => 'TIME',
-                'default' => '12:00:00'
+                'null' => TRUE
             )
         );
         $this->dbforge->add_field($company);
