@@ -30,62 +30,104 @@ if (isset($this->session->userdata['logged_in'])) {
                         echo form_open("admin/update_form", $attributes); ?>
                         <input type='num' class="form-control" name='id' value="<?php echo $form_data['id'] ?>" hidden>
 
-                        <div class="form-group row">
-                              <label for="company" class="col-sm-2 col-form-label ">תופס שייך לחברה</label>
-                              <div class="col-sm-10">
+                        <div class="form-group row col-md-6">
+                              <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                          <div class="input-group-text">תופס שייך לחברה</div>
+                                    </div>
                                     <input type='text' class="form-control " name='company' value="<?php echo $form_data['company'] ?>">
                               </div>
                         </div>
                         <div class="form-row">
                               <div class="form-group col-md-4">
-                                    <label for="date" class=" col-form-label ">תאריך</label>
-                                    <input type='date' class="form-control" name='date' value="<?php echo $form_data['date'] ?>">
+                                    <div class="input-group mb-2">
+                                          <div class="input-group-prepend">
+                                                <div class="input-group-text">תאריך</div>
+                                          </div>
+                                          <input type='date' class="form-control" name='date' value="<?php echo $form_data['date'] ?>">
 
+                                    </div>
                               </div>
                               <div class="form-group col-md-4">
-                                    <label for="start_time" class="col-form-label ">שעת התחלה</label>
-                                    <input type='time' class="form-control" name='start_time' value="<?php echo $form_data['start_time'] ?>">
+                                    <div class="input-group mb-2">
+                                          <div class="input-group-prepend">
+                                                <div class="input-group-text">שעת התחלה</div>
+                                          </div>
+                                          <input type='time' class="form-control" name='start_time' value="<?php echo $form_data['start_time'] ?>">
+                                    </div>
                               </div>
                               <div class="form-group col-md-4">
-                                    <label for="end_time" class=" col-form-label ">שעת סיום</label>
-                                    <input type='time' class="form-control" name='end_time' value="<?php echo $form_data['end_time'] ?>">
+                                    <div class="input-group mb-2">
+                                          <div class="input-group-prepend">
+                                                <div class="input-group-text">שעת סיום</div>
+                                          </div>
+                                          <input type='time' class="form-control" name='end_time' value="<?php echo $form_data['end_time'] ?>">
+                                    </div>
                               </div>
                         </div>
 
                         <div class="form-row">
                               <div class="form-group col-md-4">
-                                    <label for="client_num" class=" col-form-label ">מספר לקוח</label>
-                                    <input type='text' class="form-control" name='client_num' value="<?php echo $form_data['client_num'] ?>">
+                                    <div class="input-group mb-2">
+                                          <div class="input-group-prepend">
+                                                <div class="input-group-text">מספר לקוח</div>
+                                          </div>
+                                          <input type='text' class="form-control" name='client_num' value="<?php echo $form_data['client_num'] ?>">
+                                    </div>
                               </div>
                               <div class="form-group col-md-4">
-                                    <label for="issue_num" class="col-form-label ">מספר פניה \ תקלה</label>
-                                    <input type='text' class="form-control" name='issue_num' value="<?php echo $form_data['issue_num'] ?>">
+                                    <div class="input-group mb-2">
+                                          <div class="input-group-prepend">
+                                                <div class="input-group-text">מספר פניה \ תקלה</div>
+                                          </div>
+                                          <input type='text' class="form-control" name='issue_num' value="<?php echo $form_data['issue_num'] ?>">
+                                    </div>
                               </div>
                               <div class="form-group col-md-4">
-                                    <label for="issue_kind" class=" col-form-label ">סוג תקלה \ התקנה</label>
-                                    <input type='text' class="form-control" name='issue_kind' value="<?php echo $form_data['issue_kind'] ?>">
+                                    <div class="input-group mb-2">
+                                          <div class="input-group-prepend">
+                                                <div class="input-group-text">סוג תקלה \ התקנה</div>
+                                          </div>
+                                          <input type='text' class="form-control" name='issue_kind' value="<?php echo $form_data['issue_kind'] ?>">
+                                    </div>
                               </div>
                         </div>
 
                         <div class="form-row">
                               <div class="form-group col-md-6">
-                                    <label for="client_name" class=" col-form-label ">שם לקוח</label>
-                                    <input type='text' class="form-control" name='client_name' value="<?php echo $form_data['client_name'] ?>">
+                                    <div class="input-group mb-2">
+                                          <div class="input-group-prepend">
+                                                <div class="input-group-text">שם לקוח</div>
+                                          </div>
+                                          <input type='text' class="form-control" name='client_name' value="<?php echo $form_data['client_name'] ?>">
+                                    </div>
                               </div>
                               <div class="form-group col-md-6">
-                                    <label for="place" class="col-form-label ">מיקום</label>
-                                    <input type='text' class="form-control" name='place' value="<?php echo $form_data['place'] ?>">
+                                    <div class="input-group mb-2">
+                                          <div class="input-group-prepend">
+                                                <div class="input-group-text">מיקום</div>
+                                          </div>
+                                          <input type='text' class="form-control" name='place' value="<?php echo $form_data['place'] ?>">
+                                    </div>
                               </div>
                         </div>
 
                         <div class="form-row">
-                              <div class="form-group col-md-4">
-                                    <label for="manager" class=" col-form-label ">אחראי</label>
-                                    <input type='text' class="form-control" name='manager' value="<?php echo $form_data['manager'] ?>">
+                              <div class="form-group col-md-6">
+                                    <div class="input-group mb-2">
+                                          <div class="input-group-prepend">
+                                                <div class="input-group-text">אחראי</div>
+                                          </div>
+                                          <input type='text' class="form-control" name='manager' value="<?php echo $form_data['manager'] ?>">
+                                    </div>
                               </div>
-                              <div class="form-group col-md-4">
-                                    <label for="contact_name" class="col-form-label ">איש קשר</label>
-                                    <input type='text' class="form-control" name='contact_name' value="<?php echo $form_data['contact_name'] ?>">
+                              <div class="form-group col-md-6">
+                                    <div class="input-group mb-2">
+                                          <div class="input-group-prepend">
+                                                <div class="input-group-text">איש קשר</div>
+                                          </div>
+                                          <input type='text' class="form-control" name='contact_name' value="<?php echo $form_data['contact_name'] ?>">
+                                    </div>
                               </div>
                         </div>
 
@@ -99,28 +141,28 @@ if (isset($this->session->userdata['logged_in'])) {
                         <div class="form-group row">
                               <label for="checking_text" class="col-sm-2 col-form-label ">תוצאות הבדיקה</label>
                               <div class="col-sm-10">
-                              <textarea class="form-control" name="checking_text" cols="10" rows="3" placeholder="תוצאות הבדיקה"><?php echo $form_data['checking_text'] ?></textarea>
+                                    <textarea class="form-control" name="checking_text" cols="10" rows="3" placeholder="תוצאות הבדיקה"><?php echo $form_data['checking_text'] ?></textarea>
                               </div>
                         </div>
 
                         <div class="form-group row">
                               <label for="summary_text" class="col-sm-2 col-form-label ">סיכום</label>
                               <div class="col-sm-10">
-                              <textarea class="form-control" name="summary_text" cols="10" rows="3" placeholder="סיכום"><?php echo $form_data['summary_text'] ?></textarea>
+                                    <textarea class="form-control" name="summary_text" cols="10" rows="3" placeholder="סיכום"><?php echo $form_data['summary_text'] ?></textarea>
                               </div>
                         </div>
 
                         <div class="form-group row">
                               <label for="remarks_text" class="col-sm-2 col-form-label ">הערות</label>
                               <div class="col-sm-10">
-                              <textarea class="form-control" name="remarks_text" cols="10" rows="3" placeholder="הערות"><?php echo $form_data['remarks_text'] ?></textarea>
+                                    <textarea class="form-control" name="remarks_text" cols="10" rows="3" placeholder="הערות"><?php echo $form_data['remarks_text'] ?></textarea>
                               </div>
                         </div>
 
                         <div class="form-group row">
                               <label for="recommendations_text" class="col-sm-2 col-form-label ">המלצות</label>
                               <div class="col-sm-10">
-                              <textarea class="form-control" name="recommendations_text" cols="10" rows="3" placeholder="המלצות"><?php echo $form_data['recommendations_text'] ?></textarea>
+                                    <textarea class="form-control" name="recommendations_text" cols="10" rows="3" placeholder="המלצות"><?php echo $form_data['recommendations_text'] ?></textarea>
                               </div>
                         </div>
 
@@ -142,12 +184,12 @@ if (isset($this->session->userdata['logged_in'])) {
                                     <input type='time' class="form-control" name='back_end_time' value="<?php echo $form_data['back_end_time'] ?>">
                               </div>
                         </div>
-                        
+
                         <input type='submit' class="btn btn-info" name='submit' value='עדכן תופס'>
                         <a class="btn btn-info" href="/exportpdf/create/<?php echo $form_data['id'] ?>">הצג PDF</a>
                         <a class="btn btn-info" href="#" onclick="SendEmail()">שלח PDF</a>
                         <?php echo form_close(); ?>
-                        
+
                   <?php } else {
                         echo "No Data for this form.";
                   } ?>

@@ -16,60 +16,99 @@
                   ?>
                   
                   <?php echo form_open("production/add_form", 'class=rtl'); ?>
-                  <input type='text' class="form-control " name='company' value="<?php echo $_GET['company']?>"  hidden>
+                  <input type='text' class="form-control " name='company'  value="<?php echo $_GET['company']?>" hidden>
                   <div class="form-row">
                               <div class="form-group col-md-4">
-                                    <label for="date" class=" col-form-label ">תאריך</label>
-                                    <input type='date' class="form-control" name='date'>
+                                    <div class="input-group mb-2">
+                                          <div class="input-group-prepend">
+                                                <div class="input-group-text">תאריך</div>
+                                          </div>
+                                          <input type='date' class="form-control" name='date' >
 
+                                    </div>
                               </div>
                               <div class="form-group col-md-4">
-                                    <label for="start_time" class="col-form-label ">שעת התחלה</label>
-                                    <input type='time' class="form-control" name='start_time'  >
+                                    <div class="input-group mb-2">
+                                          <div class="input-group-prepend">
+                                                <div class="input-group-text">שעת התחלה</div>
+                                          </div>
+                                          <input type='time' class="form-control" name='start_time' >
+                                    </div>
                               </div>
                               <div class="form-group col-md-4">
-                                    <label for="end_time" class=" col-form-label ">שעת סיום</label>
-                                    <input type='time' class="form-control" name='end_time'  >
+                                    <div class="input-group mb-2">
+                                          <div class="input-group-prepend">
+                                                <div class="input-group-text">שעת סיום</div>
+                                          </div>
+                                          <input type='time' class="form-control" name='end_time' >
+                                    </div>
                               </div>
                         </div>
 
                         <div class="form-row">
                               <div class="form-group col-md-4">
-                                    <label for="client_num" class=" col-form-label ">מספר לקוח</label>
-                                    <input type='text' class="form-control" name='client_num'  >
+                                    <div class="input-group mb-2">
+                                          <div class="input-group-prepend">
+                                                <div class="input-group-text">מספר לקוח</div>
+                                          </div>
+                                          <input type='text' class="form-control" name='client_num' >
+                                    </div>
                               </div>
                               <div class="form-group col-md-4">
-                                    <label for="issue_num" class="col-form-label ">מספר פניה \ תקלה</label>
-                                    <input type='text' class="form-control" name='issue_num'  >
+                                    <div class="input-group mb-2">
+                                          <div class="input-group-prepend">
+                                                <div class="input-group-text">מספר פניה \ תקלה</div>
+                                          </div>
+                                          <input type='text' class="form-control" name='issue_num' >
+                                    </div>
                               </div>
                               <div class="form-group col-md-4">
-                                    <label for="issue_kind" class=" col-form-label ">סוג תקלה \ התקנה</label>
-                                    <input type='text' class="form-control" name='issue_kind'  >
+                                    <div class="input-group mb-2">
+                                          <div class="input-group-prepend">
+                                                <div class="input-group-text">סוג תקלה \ התקנה</div>
+                                          </div>
+                                          <input type='text' class="form-control" name='issue_kind' >
+                                    </div>
                               </div>
                         </div>
 
                         <div class="form-row">
                               <div class="form-group col-md-6">
-                                    <label for="client_name" class=" col-form-label ">שם לקוח</label>
-                                    <input type='text' class="form-control" name='client_name'  >
+                                    <div class="input-group mb-2">
+                                          <div class="input-group-prepend">
+                                                <div class="input-group-text">שם לקוח</div>
+                                          </div>
+                                          <input type='text' class="form-control" name='client_name' >
+                                    </div>
                               </div>
                               <div class="form-group col-md-6">
-                                    <label for="place" class="col-form-label ">מיקום</label>
-                                    <input type='text' class="form-control" name='place'  >
+                                    <div class="input-group mb-2">
+                                          <div class="input-group-prepend">
+                                                <div class="input-group-text">מיקום</div>
+                                          </div>
+                                          <input type='text' class="form-control" name='place' >
+                                    </div>
                               </div>
                         </div>
 
                         <div class="form-row">
                               <div class="form-group col-md-6">
-                                    <label for="manager" class=" col-form-label ">אחראי</label>
-                                    <input type='text' class="form-control" name='manager'  >
+                                    <div class="input-group mb-2">
+                                          <div class="input-group-prepend">
+                                                <div class="input-group-text">אחראי</div>
+                                          </div>
+                                          <input type='text' class="form-control" name='manager' >
+                                    </div>
                               </div>
                               <div class="form-group col-md-6">
-                                    <label for="contact_name" class="col-form-label ">איש קשר</label>
-                                    <input type='text' class="form-control" name='contact_name'  >
+                                    <div class="input-group mb-2">
+                                          <div class="input-group-prepend">
+                                                <div class="input-group-text">איש קשר</div>
+                                          </div>
+                                          <input type='text' class="form-control" name='contact_name' >
+                                    </div>
                               </div>
                         </div>
-
                         <div class="form-group row">
                               <label for="activity_text" class="col-sm-2 col-form-label ">תיאור תקלה \ פניה</label>
                               <div class="col-sm-10">

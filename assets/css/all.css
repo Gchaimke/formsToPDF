@@ -18,6 +18,10 @@ body, .dropdown-item {
 input.form-control {
     text-align: center;
 }
+
+.list-group {
+    padding-right: 0;
+}
 /* RTL END*/
 
 .hidden {
