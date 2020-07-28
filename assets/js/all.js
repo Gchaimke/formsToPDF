@@ -187,7 +187,7 @@ $('#ajax-form').submit(function (event) {
         // Make sure that the formMessages div has the 'error' class.
         $('#form-messages').addClass('alert-danger');
         // Set the message text.
-        $('#form-messages').text('Oops! An error occured and your message could not be sent.').fadeIn(1000).delay(3000).fadeOut(1000);
+        $('#form-messages').text('אין אפשרות לשמור שינוים' + response).fadeIn(1000).delay(3000).fadeOut(1000);
     });
 
 });

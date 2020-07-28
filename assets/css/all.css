@@ -169,6 +169,7 @@ div#form-messages {
     position: fixed;
     text-align: center;
     z-index: 1;
+    font-size: 2em;
 }
 
 @media (min-width: 320px){

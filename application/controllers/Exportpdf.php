@@ -191,10 +191,12 @@ class Exportpdf extends CI_Controller
                 ->attach($fileatt);
 
             if ($this->email->send()) {
-                print_r('Email Sent to ' . $user['email_to']);
+                print_r('מייל נשלח ל:  ' . $user['email_to'] ." בהצלחה!");
             } else {
                 print_r($this->email->print_debugger());
             }
+        }else{
+            print_r('לא יכול לשלוח מייל, דואר משתמש לא מוגדר או אין רשימת תפוצה. ');
         }
     }
 }

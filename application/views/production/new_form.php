@@ -6,8 +6,8 @@
                   </center>
             </div>
       </div>
-      <div class="container">
       <div id="form-messages" class='alert hidden' role='alert'></div>
+      <div class="container">
             <center>
                   <?php
                   if (validation_errors()) {

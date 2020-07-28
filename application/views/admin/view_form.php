@@ -15,8 +15,8 @@ if (isset($this->session->userdata['logged_in'])) {
                   </center>
             </div>
       </div>
+      <div id="form-messages" class='alert hidden' role='alert'></div>
       <div class="container">
-            <div id="form-messages" class='alert hidden' role='alert'></div>
             <center>
                   <?php
                   if (validation_errors()) {
@@ -162,7 +162,7 @@ if (isset($this->session->userdata['logged_in'])) {
             // Make sure that the formMessages div has the 'success' class.
             $('#form-messages').addClass('alert-info');
             // Set the message text.
-            $('#form-messages').html("Please Wait, sending Email ...").fadeIn(1000);
+            $('#form-messages').html("שולח מייל, נא להמתין...").fadeIn(1000);
             $.post("/exportpdf/create/<?php echo $form_data['id'] ?>", {
                   email: true
             }).done(function(o) {

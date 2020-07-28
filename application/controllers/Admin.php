@@ -14,7 +14,6 @@ class Admin extends CI_Controller
 	{
 		$data = array();
 		$data['settings'] = '';
-		$data['response'] = '';
 		$this->load->view('header');
 		$this->load->view('main_menu');
 		$data = $this->Admin_model->getStatistic();
@@ -36,7 +35,7 @@ class Admin extends CI_Controller
 				'roles' => $this->input->post('roles')
 			);
 			$this->Admin_model->save_settings($data);
-			echo 'Settings saved successfully!';
+			echo 'הגדרות נשמרו בהצלחה!';
 		}
 	}
 
@@ -183,12 +182,12 @@ class Admin extends CI_Controller
 			);
 			$response =  $this->Admin_model->update_form($data);
 			if ($response) {
-				echo "Form saved successfully!";
+				echo "דוח נשמר בהצלחה!";
 			} else {
-				echo "Form Not saved! Issue Number exists!" . $this->input->post('id');
+				echo "אין אפשרות לשמור דוח! " . $this->input->post('id');
 			}
 		} else {
-			echo "Form validation error!";
+			echo "יש בעיה בפרטים שצריך למאלות!";
 		}
 	}
 
@@ -203,7 +202,7 @@ class Admin extends CI_Controller
 			$str .= "<a class='badge badge-info' href='/admin/view_form/" . $result["id"] . "?issue=" . $result["issue_num"] . "'>" . urldecode($result["client_name"]) . ": " . $result["issue_num"] . "</a>";
 			$count++;
 		}
-		echo "<h2>Found " . $count . " Froms.</h2>" . $str;
+		echo "<h2>מצאתי " . $count . " דוחות.</h2>" . $str;
 	}
 
 	public function delete_form()

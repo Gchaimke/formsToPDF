@@ -14,16 +14,12 @@ if (isset($this->session->userdata['logged_in'])) {
             </center>
         </div>
     </div>
+    <div id="form-messages" class='alert hidden' role='alert'></div>
     <div class="container">
         <?php
         $users_count = 0;
         $companies_count = 0;
         $forms_count = 0;
-        if (isset($message_display)) {
-            echo "<div class='alert alert-success' role='alert'>";
-            echo $message_display . '</div>';
-        }
-
         if (isset($users) and isset($companies) and isset($forms)) {
             $users_count = $users;
             $companies_count = $companies;
@@ -44,7 +40,6 @@ if (isset($this->session->userdata['logged_in'])) {
                 <span class="badge badge-primary badge-pill"><?php echo $forms_count ?></span>
             </li>
         </ul><br>
-        <div id="form-messages" class='alert hidden' role='alert'></div>
         <?php
         echo form_open('admin/save_settings', 'id=ajax-form', 'class=user-create');
         echo '<div class="form-group"><label>תפקידים</label><textarea name="roles" class="form-control" rows="2" cols="30">';
@@ -56,7 +51,7 @@ if (isset($this->session->userdata['logged_in'])) {
         echo form_close();
         ?>
         </br>
-        <button class="btn btn-info" onclick="createDB(0)">ליצר בסיס נתונים</button>
+        <button class="btn btn-info" onclick="createDB(0)">לייצר בסיס נתונים</button>
         <a class="btn btn-info" href="/admin/view_log">דוחות מערכת</a>
     </div>
 </main>
