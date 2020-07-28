@@ -15,10 +15,9 @@
                         <div class="form-group col-md-4">
                               <div class="input-group mb-2">
                                     <div class="input-group-prepend">
-                                          <div class="input-group-text">תאריך</div>
+                                          <div class="input-group-text"><span class="red">*</span>תאריך</div>
                                     </div>
-                                    <input type='date' class="form-control" name='date'>
-
+                                    <input type='date' class="form-control" name='date' required>
                               </div>
                         </div>
                         <div class="form-group col-md-4">
@@ -43,17 +42,17 @@
                         <div class="form-group col-md-4">
                               <div class="input-group mb-2">
                                     <div class="input-group-prepend">
-                                          <div class="input-group-text">מספר לקוח</div>
+                                          <div class="input-group-text"><span class="red">*</span>מספר לקוח</div>
                                     </div>
-                                    <input type='text' class="form-control" name='client_num'>
+                                    <input type='text' class="form-control" name='client_num' required>
                               </div>
                         </div>
                         <div class="form-group col-md-4">
                               <div class="input-group mb-2">
                                     <div class="input-group-prepend">
-                                          <div class="input-group-text">מספר פניה \ תקלה</div>
+                                          <div class="input-group-text"><span class="red">*</span>מספר פניה \ תקלה</div>
                                     </div>
-                                    <input type='text' class="form-control" name='issue_num'>
+                                    <input type='text' class="form-control" name='issue_num' required>
                               </div>
                         </div>
                         <div class="form-group col-md-4">

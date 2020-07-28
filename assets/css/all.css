@@ -14,6 +14,10 @@ main {
     margin-top: 35px;
 }
 
+.red {
+    color: red;
+}
+
 /* RTL START*/
 .rtl {
     direction: rtl;
