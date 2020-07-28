@@ -177,7 +177,7 @@ class Exportpdf extends CI_Controller
     function SendEmail($fileatt,$file_name)
     {
         $user =  $this->Users_model->getUser($this->session->userdata['logged_in']['id'])[0];
-        if ($user['email'] != '' && $user['email_to'] != '') {
+        if ($user['email'] != '') {
             $this->load->view('header');
             $this->load->view('main_menu');
             $this->load->library('email');
@@ -185,7 +185,7 @@ class Exportpdf extends CI_Controller
             $Message = 'pdf form from ' . $_SERVER['SERVER_NAME'];
             $this->email
                 ->from($user['email'], 'Online Forms - ' . $user['name'])
-                ->to($user['email_to'])
+                ->to($user['email_to'].','.$user['email'])
                 ->subject($Subject)
                 ->message($Message)
                 ->attach($fileatt);
