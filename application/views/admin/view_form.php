@@ -137,7 +137,7 @@ if (isset($this->session->userdata['logged_in'])) {
                               </div>
                               <div class="form-group col-md-3">
                                     <label for="back_start_time" class=" col-form-label ">נסיעה חזור התחלה</label>
-                                    <input type='text' class="form-control" name='back_start_time' placeholder="נסיעה חזור התחלה" value="<?php echo $form_data['back_start_time'] ?>">
+                                    <input type='time' class="form-control" name='back_start_time' placeholder="נסיעה חזור התחלה" value="<?php echo $form_data['back_start_time'] ?>">
                               </div>
                               <div class="form-group col-md-3">
                                     <label for="back_end_time" class=" col-form-label ">נסיעה חזור סיום</label>
@@ -147,7 +147,7 @@ if (isset($this->session->userdata['logged_in'])) {
                         
                         <input type='submit' class="btn btn-info" name='submit' value='עדכן תופס'>
                         <a class="btn btn-info" href="/exportpdf/create/<?php echo $form_data['id'] ?>">הצג PDF</a>
-                        <a class="btn btn-info" href="#" onclick="SendEmail()">שלך PDF</a>
+                        <a class="btn btn-info" href="#" onclick="SendEmail()">שלח PDF</a>
                         <?php echo form_close(); ?>
                         
                   <?php } else {

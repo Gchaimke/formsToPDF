@@ -11,7 +11,7 @@ if (isset($this->session->userdata['logged_in']) && isset($user)) {
 	<div class="jumbotron">
 		<div class="container">
 			<center>
-				<h2 class="display-3">Edit User</h2>
+				<h2 class="display-3">ערוך פרטים</h2>
 			</center>
 		</div>
 	</div>
@@ -38,37 +38,65 @@ if (isset($this->session->userdata['logged_in']) && isset($user)) {
 				$email_to =  $user['email_to'];
 			}
 			?>
-
-			<?php echo form_open('users/edit', 'class=user-create'); ?>
+			<div  class="col-sm-6">
+			<?php echo form_open('users/edit'); ?>
 			<input type='hidden' name='id' value="<?php echo $id ?>">
-			<?php
-			$current_role = ($this->session->userdata['logged_in']['role']);
-			if ($current_role == "Admin") {
-				echo "<select class='form-control' name='role'>";
-				if (isset($settings)) {
-					$arr = explode(",", $settings[0]['roles']);
-					foreach ($arr as $crole) {
-						if ($crole == $role) {
-							echo '<option selected>' . $crole . '</option>';
-						} else {
-							echo '<option>' . $crole . '</option>';
-						}
-					}
-				}
-				echo "</select></br>";
-			}
-			?>
 
-			<label>Name</label>
-			<input type='text' class="form-control" placeholder="name" name='name' value="<?php echo $name ?>">
-			<label>password</label>
-			<input type='text' class="form-control" placeholder="password" name='password'>
-			<label>email</label>
-			<input type='text' class="form-control" placeholder="email" name='email' value="<?php echo $email ?>">
-			<label>email_to</label>
-			<textarea class="form-control" name="email_to" cols="10" rows="3"><?php echo $email_to ?></textarea><br />
-			<input type='submit' class="btn btn-info btn-block" name='submit' value='update'>
+
+			<div class="form-group row">
+				<label for="role" class="col-sm-2 col-form-label ">תפקיד</label>
+				<div class="col-sm-8">
+					<?php
+					$current_role = ($this->session->userdata['logged_in']['role']);
+					if ($current_role == "Admin") {
+						echo "<select class='form-control' name='role'>";
+						if (isset($settings)) {
+							$arr = explode(",", $settings[0]['roles']);
+							foreach ($arr as $crole) {
+								if ($crole == $role) {
+									echo '<option selected>' . $crole . '</option>';
+								} else {
+									echo '<option>' . $crole . '</option>';
+								}
+							}
+						}
+						echo "</select>";
+					}
+					?>
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<label for="name" class="col-sm-2 col-form-label ">שם משתמש</label>
+				<div class="col-sm-8">
+					<input type='text' class="form-control" placeholder="name" name='name' value="<?php echo $name ?>">
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<label for="password" class="col-sm-2 col-form-label ">סיסמה</label>
+				<div class="col-sm-8">
+					<input type='text' class="form-control" placeholder="password" name='password'>
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<label for="email" class="col-sm-2 col-form-label ">מייל</label>
+				<div class="col-sm-8">
+					<input type='text' class="form-control ltr" placeholder="email" name='email' value="<?php echo $email ?>">
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<label for="email_to" class="col-sm-2 col-form-label ">רשימת תפוצה</label>
+				<div class="col-sm-8">
+					<textarea class="form-control ltr" name="email_to" cols="10" rows="3"><?php echo $email_to ?></textarea>
+				</div>
+			</div>
+
+			<input type='submit' class="btn btn-info btn-block" name='submit' value='עדכן'>
 			<?php echo form_close(); ?>
+			</div>
 		</center>
 	</div>
 </main>

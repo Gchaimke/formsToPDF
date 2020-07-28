@@ -18,13 +18,14 @@ if (isset($this->session->userdata['logged_in'])) {
     </ul>
 
     <ul class="navbar-nav  pull-right">
+    <li class="nav-item"><a class="nav-link" href="/admin/manage_forms">דוחות</a></li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           שלום <?php echo $username; ?>
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <?php if ($role == 'Admin') { ?>
-            <a class="dropdown-item" href="/admin/manage_forms">דוחות</a>
+            
             <a class="dropdown-item" href="/companies">חברות</a>
             <a class="dropdown-item" href="/users">משתמשים</a>
             <a class="dropdown-item" href="/admin/settings">הגדרות</a>

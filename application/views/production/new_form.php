@@ -2,7 +2,7 @@
       <div class="jumbotron">
             <div class="container">
                   <center>
-                        <h2 class="display-3">תופס חדש</h2>
+                        <h2 class="display-3">דוח חדש</h2>
                   </center>
             </div>
       </div>
@@ -60,11 +60,11 @@
                         </div>
 
                         <div class="form-row">
-                              <div class="form-group col-md-4">
+                              <div class="form-group col-md-6">
                                     <label for="manager" class=" col-form-label ">אחראי</label>
                                     <input type='text' class="form-control" name='manager' placeholder="אחראי" >
                               </div>
-                              <div class="form-group col-md-4">
+                              <div class="form-group col-md-6">
                                     <label for="contact_name" class="col-form-label ">איש קשר</label>
                                     <input type='text' class="form-control" name='contact_name' placeholder="איש קשר" >
                               </div>
@@ -116,7 +116,7 @@
                               </div>
                               <div class="form-group col-md-3">
                                     <label for="back_start_time" class=" col-form-label ">נסיעה חזור התחלה</label>
-                                    <input type='text' class="form-control" name='back_start_time' placeholder="נסיעה חזור התחלה" >
+                                    <input type='time' class="form-control" name='back_start_time' placeholder="נסיעה חזור התחלה" >
                               </div>
                               <div class="form-group col-md-3">
                                     <label for="back_end_time" class=" col-form-label ">נסיעה חזור סיום</label>
