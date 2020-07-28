@@ -38,7 +38,7 @@ if (isset($this->session->userdata['logged_in'])) {
 					<tr>
 						<th scope="col">*</th>
 						<th scope="col">תאריך</th>
-						<th scope="col" class="mobile-hide">מספר תקלה</th>
+						<th scope="col" >מספר תקלה</th>
 						<th scope="col" class="mobile-hide">מספר לקוח</th>
 						<th scope="col" class="mobile-hide">שם הלקוח</th>
 						<th scope="col" class="mobile-hide">מיקום</th>
@@ -57,14 +57,10 @@ if (isset($this->session->userdata['logged_in'])) {
 							<td>
 								<div class='checkbox'><input type='checkbox' class='select' id='<?php echo $data->id ?>' $checked></div>
 							</td>
-							<td class="mobile-hide"><?php if ($data->date != '') {
-														echo $data->date;
-													} else {
-														echo "SN template not found!";
-													}  ?></td>
+							<td><?php echo $data->date ?></td>
 							<td><?php echo $data->issue_num ?></td>
 							<td class="mobile-hide"><?php echo $data->client_num ?></td>
-							<td><?php echo $data->client_name ?></td>
+							<td class="mobile-hide"><?php echo $data->client_name ?></td>
 							<td class="mobile-hide"><?php echo $data->place ?></td>
 							<td class="mobile-hide"><?php echo $data->issue_kind ?></td>
 
