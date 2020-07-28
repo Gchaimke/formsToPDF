@@ -1,12 +1,3 @@
-<?php
-if (isset($this->session->userdata['logged_in']) && isset($user)) {
-	if ($this->session->userdata['logged_in']['id'] != $user[0]['id']) {
-		if ($this->session->userdata['logged_in']['role'] != "Admin") {
-			header("location: /");
-		}
-	}
-}
-?>
 <main role="main">
 	<div class="jumbotron">
 		<div class="container">
@@ -38,17 +29,15 @@ if (isset($this->session->userdata['logged_in']) && isset($user)) {
 				$email_to =  $user['email_to'];
 			}
 			?>
-			<div  class="col-sm-6">
-			<?php echo form_open('users/edit'); ?>
-			<input type='hidden' name='id' value="<?php echo $id ?>">
-
-
-			<div class="form-group row">
-				<label for="role" class="col-sm-2 col-form-label ">תפקיד</label>
-				<div class="col-sm-8">
+			<div class="col-sm-8">
+				<?php echo form_open('users/edit'); ?>
+				<input type='hidden' name='id' value="<?php echo $id ?>">
+				<div class="form-group row">
 					<?php
 					$current_role = ($this->session->userdata['logged_in']['role']);
 					if ($current_role == "Admin") {
+						echo '<label for="role" class="col-sm-2 col-form-label ">תפקיד</label>
+								<div class="col-sm-8">';
 						echo "<select class='form-control' name='role'>";
 						if (isset($settings)) {
 							$arr = explode(",", $settings[0]['roles']);
@@ -67,9 +56,9 @@ if (isset($this->session->userdata['logged_in']) && isset($user)) {
 			</div>
 
 			<div class="form-group row">
-				<label for="name" class="col-sm-2 col-form-label ">שם משתמש</label>
+				<label for="name" class="col-sm-2 col-form-label">שם משתמש</label>
 				<div class="col-sm-8">
-					<input type='text' class="form-control" placeholder="name" name='name' value="<?php echo $name ?>">
+					<input type='text' class="form-control" placeholder="name" name='name' value="<?php echo $name ?>" <?php if ($current_role != "Admin"){ echo 'disabled';}?>>
 				</div>
 			</div>
 
@@ -96,7 +85,7 @@ if (isset($this->session->userdata['logged_in']) && isset($user)) {
 
 			<input type='submit' class="btn btn-info btn-block" name='submit' value='עדכן'>
 			<?php echo form_close(); ?>
-			</div>
-		</center>
+	</div>
+	</center>
 	</div>
 </main>
