@@ -115,14 +115,6 @@ ul.pagination.left>a {
     font-weight: 700;
 }
 
-a#batchLink {
-    margin-left: 50px;
-}
-
-form.user-create {
-    max-width: fit-content ;
-}
-
 .btn-block {
     width: max-content !important;
 }
