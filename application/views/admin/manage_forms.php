@@ -13,7 +13,7 @@ if (isset($this->session->userdata['logged_in'])) {
 			</center>
 		</div>
 	</div>
-	<div class="container">
+	<div class="container rtl">
 		<?php
 		if (isset($message_display)) {
 			echo "<div class='alert alert-success' role='alert'>";
@@ -27,9 +27,9 @@ if (isset($this->session->userdata['logged_in'])) {
 		</nav>
 		<form id="form">
 			<div class="input-group mb-3">
-				<input id='inputSearch' type="text" class="form-control" placeholder="Search in forms" aria-label="Search in forms" aria-describedby="basic-addon2" autofocus>
+				<input id='inputSearch' type="text" class="form-control" placeholder="חפש בתפסים" aria-label="Search in forms" aria-describedby="basic-addon2" autofocus>
 				<div class="input-group-append">
-					<button class="btn btn-secondary" type="button" onclick="formSearch()">Search</button>
+					<button class="btn btn-secondary" type="button" onclick="formSearch()">חפש</button>
 				</div>
 			</div>
 			<div id='searchResult'></div>
@@ -39,14 +39,14 @@ if (isset($this->session->userdata['logged_in'])) {
 				<thead class="thead-dark">
 					<tr>
 						<th scope="col">*</th>
-						<th scope="col" class="mobile-hide">Form Date</th>
-						<th scope="col" >Issue Number</th>
-						<th scope="col" class="mobile-hide">Client Number</th>
-						<th scope="col">Client Name</th>
-						<th scope="col" class="mobile-hide">Place</th>
-						<th scope="col" class="mobile-hide">Issue</th>
-						<th scope="col">Save</th>
-						<th scope="col">Trash</th>
+						<th scope="col">תאריך</th>
+						<th scope="col" class="mobile-hide">מספר תקלה</th>
+						<th scope="col" class="mobile-hide">מספר לקוח</th>
+						<th scope="col" class="mobile-hide">שם הלקוח</th>
+						<th scope="col" class="mobile-hide">מיקום</th>
+						<th scope="col" class="mobile-hide">סוג תקלה</th>
+						<th scope="col">ערוך</th>
+						<th scope="col">מחק</th>
 					</tr>
 				</thead>
 				<tbody>

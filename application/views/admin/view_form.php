@@ -1,22 +1,15 @@
 <?php
 if (isset($this->session->userdata['logged_in'])) {
-    if ($this->session->userdata['logged_in']['role'] != "Admin") {
-        header("location: /");
-    }
+      if ($this->session->userdata['logged_in']['role'] != "Admin") {
+            header("location: /");
+      }
 }
 ?>
-<style>
-      .form-control {
-            direction: rtl;
-            width: max-content;
-            min-width: 250px;
-      }
-</style>
 <main role="main">
       <div class="jumbotron">
             <div class="container">
                   <center>
-                        <h2 class="display-3">Form <?php if (isset($_GET['issue'])) {
+                        <h2 class="display-3">תופס <?php if (isset($_GET['issue'])) {
                                                             echo $_GET['issue'];
                                                       } ?> </h2>
                   </center>
@@ -34,50 +27,129 @@ if (isset($this->session->userdata['logged_in'])) {
                         $form_data = $form_data[0];
                   ?>
 
-                        <?php echo form_open("admin/update_form", 'id=ajax-form', 'class=user-create'); ?>
+                        <?php
+                        $attributes = ['class' => 'rtl', 'id' => 'ajax-form'];
+                        echo form_open("admin/update_form", $attributes); ?>
                         <input type='num' class="form-control" name='id' value="<?php echo $form_data['id'] ?>" hidden>
-                        <input type='text' class="form-control " name='company' placeholder="Company" value="<?php echo $form_data['company'] ?>">
-                        <label>date</label>
-                        <input type='date' class="form-control" name='date' value="<?php echo $form_data['date'] ?>">
-                        <label>start_time</label>
-                        <input type='time' class="form-control" name='start_time' placeholder="start_time" value="<?php echo $form_data['start_time'] ?>">
-                        <label>end_time</label>
-                        <input type='time' class="form-control" name='end_time' placeholder="end_time" value="<?php echo $form_data['end_time'] ?>"></br>
 
-                        <label>client_num</label>
-                        <input type='text' class="form-control" name='client_num' placeholder="client_num" value="<?php echo $form_data['client_num'] ?>">
-                        <label>issue_num</label>
-                        <input type='text' class="form-control" name='issue_num' placeholder="issue_num" value="<?php echo $form_data['issue_num'] ?>">
-                        <label>client_name</label>
-                        <input type='text' class="form-control" name='client_name' placeholder="client_name" value="<?php echo $form_data['client_name'] ?>"></br>
+                        <div class="form-group row">
+                              <label for="company" class="col-sm-2 col-form-label ">תופס שייך לחברה</label>
+                              <div class="col-sm-10">
+                                    <input type='text' class="form-control " name='company' placeholder="תופס שייך לחברה" value="<?php echo $form_data['company'] ?>">
+                              </div>
+                        </div>
+                        <div class="form-row">
+                              <div class="form-group col-md-4">
+                                    <label for="date" class=" col-form-label ">תאריך</label>
+                                    <input type='date' class="form-control" name='date' value="<?php echo $form_data['date'] ?>">
 
-                        <label>issue_kind</label>
-                        <input type='text' class="form-control" name='issue_kind' placeholder="issue_kind" value="<?php echo $form_data['issue_kind'] ?>">
-                        <label>place</label>
-                        <input type='text' class="form-control" name='place' placeholder="place" value="<?php echo $form_data['place'] ?>"></br>
-                        <label>manager</label>
-                        <input type='text' class="form-control" name='manager' placeholder="manager" value="<?php echo $form_data['manager'] ?>"></br>
-                        <label>contact_name</label>
-                        <input type='text' class="form-control" name='contact_name' placeholder="contact_name" value="<?php echo $form_data['contact_name'] ?>"></br>
-                        <label>activity_text</label>
-                        <textarea class="form-control" name="activity_text" cols="10" rows="3"><?php echo $form_data['activity_text'] ?></textarea>
-                        <label>checking_text</label>
-                        <textarea class="form-control" name="checking_text" cols="10" rows="3"><?php echo $form_data['checking_text'] ?></textarea>
-                        <label>summary_text</label>
-                        <textarea class="form-control" name="summary_text" cols="10" rows="3"><?php echo $form_data['summary_text'] ?></textarea>
-                        <label>remarks_text</label>
-                        <textarea class="form-control" name="remarks_text" cols="10" rows="3"><?php echo $form_data['remarks_text'] ?></textarea>
-                        <label>recommendations_text</label>
-                        <textarea class="form-control" name="recommendations_text" cols="10" rows="3"><?php echo $form_data['recommendations_text'] ?></textarea>
-                        <label>trip_start_time</label>
-                        <input type='time' class="form-control" name='trip_start_time' placeholder="trip_start_time" value="<?php echo $form_data['trip_start_time'] ?>"></br>
-                        <label>trip_end_time</label>
-                        <input type='time' class="form-control" name='trip_end_time' placeholder="trip_end_time" value="<?php echo $form_data['trip_end_time'] ?>"></br>
+                              </div>
+                              <div class="form-group col-md-4">
+                                    <label for="start_time" class="col-form-label ">שעת התחלה</label>
+                                    <input type='time' class="form-control" name='start_time' placeholder="שעת התחלה" value="<?php echo $form_data['start_time'] ?>">
+                              </div>
+                              <div class="form-group col-md-4">
+                                    <label for="end_time" class=" col-form-label ">שעת סיום</label>
+                                    <input type='time' class="form-control" name='end_time' placeholder="שעת סיום" value="<?php echo $form_data['end_time'] ?>">
+                              </div>
+                        </div>
 
-                        <input type='submit' class="btn btn-info btn-block" name='submit' value='Update'>
+                        <div class="form-row">
+                              <div class="form-group col-md-4">
+                                    <label for="client_num" class=" col-form-label ">מספר לקוח</label>
+                                    <input type='text' class="form-control" name='client_num' placeholder="מספר לקוח" value="<?php echo $form_data['client_num'] ?>">
+                              </div>
+                              <div class="form-group col-md-4">
+                                    <label for="issue_num" class="col-form-label ">מספר פניה \ תקלה</label>
+                                    <input type='text' class="form-control" name='issue_num' placeholder="מספר פניה \ תקלה" value="<?php echo $form_data['issue_num'] ?>">
+                              </div>
+                              <div class="form-group col-md-4">
+                                    <label for="issue_kind" class=" col-form-label ">סוג תקלה \ התקנה</label>
+                                    <input type='text' class="form-control" name='issue_kind' placeholder="סוג תקלה \ התקנה" value="<?php echo $form_data['issue_kind'] ?>">
+                              </div>
+                        </div>
+
+                        <div class="form-row">
+                              <div class="form-group col-md-6">
+                                    <label for="client_name" class=" col-form-label ">שם לקוח</label>
+                                    <input type='text' class="form-control" name='client_name' placeholder="שם לקוח" value="<?php echo $form_data['client_name'] ?>">
+                              </div>
+                              <div class="form-group col-md-6">
+                                    <label for="place" class="col-form-label ">מיקום</label>
+                                    <input type='text' class="form-control" name='place' placeholder="מיקום" value="<?php echo $form_data['place'] ?>">
+                              </div>
+                        </div>
+
+                        <div class="form-row">
+                              <div class="form-group col-md-4">
+                                    <label for="manager" class=" col-form-label ">אחראי</label>
+                                    <input type='text' class="form-control" name='manager' placeholder="אחראי" value="<?php echo $form_data['manager'] ?>">
+                              </div>
+                              <div class="form-group col-md-4">
+                                    <label for="contact_name" class="col-form-label ">איש קשר</label>
+                                    <input type='text' class="form-control" name='contact_name' placeholder="איש קשר" value="<?php echo $form_data['contact_name'] ?>">
+                              </div>
+                        </div>
+
+                        <div class="form-group row">
+                              <label for="activity_text" class="col-sm-2 col-form-label ">תיאור תקלה \ פניה</label>
+                              <div class="col-sm-10">
+                                    <textarea class="form-control" name="activity_text" cols="10" rows="3" placeholder="תיאור תקלה \ פניה"><?php echo $form_data['activity_text'] ?></textarea>
+                              </div>
+                        </div>
+
+                        <div class="form-group row">
+                              <label for="checking_text" class="col-sm-2 col-form-label ">תוצאות הבדיקה</label>
+                              <div class="col-sm-10">
+                              <textarea class="form-control" name="checking_text" cols="10" rows="3" placeholder="תוצאות הבדיקה"><?php echo $form_data['checking_text'] ?></textarea>
+                              </div>
+                        </div>
+
+                        <div class="form-group row">
+                              <label for="summary_text" class="col-sm-2 col-form-label ">סיכום</label>
+                              <div class="col-sm-10">
+                              <textarea class="form-control" name="summary_text" cols="10" rows="3" placeholder="סיכום"><?php echo $form_data['summary_text'] ?></textarea>
+                              </div>
+                        </div>
+
+                        <div class="form-group row">
+                              <label for="remarks_text" class="col-sm-2 col-form-label ">הערות</label>
+                              <div class="col-sm-10">
+                              <textarea class="form-control" name="remarks_text" cols="10" rows="3" placeholder="הערות"><?php echo $form_data['remarks_text'] ?></textarea>
+                              </div>
+                        </div>
+
+                        <div class="form-group row">
+                              <label for="recommendations_text" class="col-sm-2 col-form-label ">המלצות</label>
+                              <div class="col-sm-10">
+                              <textarea class="form-control" name="recommendations_text" cols="10" rows="3" placeholder="המלצות"><?php echo $form_data['recommendations_text'] ?></textarea>
+                              </div>
+                        </div>
+
+                        <div class="form-row">
+                              <div class="form-group col-md-3">
+                                    <label for="trip_start_time" class=" col-form-label ">נסיעה הלוך התחלה</label>
+                                    <input type='time' class="form-control" name='trip_start_time' placeholder="נסיעה הלוך התחלה" value="<?php echo $form_data['trip_start_time'] ?>">
+                              </div>
+                              <div class="form-group col-md-3">
+                                    <label for="trip_end_time" class="col-form-label ">נסיעה הלוך סיום</label>
+                                    <input type='time' class="form-control" name='trip_end_time' placeholder="נסיעה הלוך סיום" value="<?php echo $form_data['trip_end_time'] ?>">
+                              </div>
+                              <div class="form-group col-md-3">
+                                    <label for="back_start_time" class=" col-form-label ">נסיעה חזור התחלה</label>
+                                    <input type='text' class="form-control" name='back_start_time' placeholder="נסיעה חזור התחלה" value="<?php echo $form_data['back_start_time'] ?>">
+                              </div>
+                              <div class="form-group col-md-3">
+                                    <label for="back_end_time" class=" col-form-label ">נסיעה חזור סיום</label>
+                                    <input type='time' class="form-control" name='back_end_time' placeholder="נסיעה חזור סיום" value="<?php echo $form_data['back_end_time'] ?>">
+                              </div>
+                        </div>
+                        
+                        <input type='submit' class="btn btn-info" name='submit' value='עדכן תופס'>
+                        <a class="btn btn-info" href="/exportpdf/create/<?php echo $form_data['id'] ?>">הצג PDF</a>
+                        <a class="btn btn-info" href="#" onclick="SendEmail()">שלך PDF</a>
                         <?php echo form_close(); ?>
-                        <a href="/exportpdf/create/<?php echo $form_data['id'] ?>">View pdf</a><br />
-                        <a href="#" onclick="SendEmail()">Send pdf</a>
+                        
                   <?php } else {
                         echo "No Data for this form.";
                   } ?>
