@@ -11,7 +11,7 @@
             <center>
                   <?php
                   if (validation_errors()) {
-                        echo "<div class='alert alert-danger' role='alert'>" . validation_errors() . "</div>";
+                        echo "<div id='form-messages' class='alert alert-danger' role='alert'>" . validation_errors() . "</div>";
                   }
                   ?>
 
