@@ -2,9 +2,19 @@ main {
     margin-top: 35px;
 }
 
+/* RTL START*/
 .rtl {
     direction: rtl;
 }
+
+.ltr {
+    direction: ltr;
+}
+
+.dropdown-item {
+    text-align: right;
+}
+/* RTL END*/
 
 .hidden {
     display: none;
