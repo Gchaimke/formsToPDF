@@ -21,6 +21,10 @@ $(".close").click(function () {
     $("#show-log").hide();
 });
 
+$('#form-messages').click(function() {
+    $('#form-messages').fadeOut(1000);
+});
+
 dragElement(document.getElementById("show-log"));
 
 function dragElement(elmnt) {

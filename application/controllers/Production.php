@@ -86,7 +86,7 @@ class Production extends CI_Controller
                 echo "דוח לא נשמר";
             }
         } else {
-            echo "יש בעיה בנתונים שהזנתה!";
+            echo "יש בעיה בנתונים שהזנתה, או שלא הזנתה כל הנתונים הנדרשים!";
         }
     }
 

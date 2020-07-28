@@ -1,3 +1,4 @@
+<div id="form-messages" class='alert hidden test' role='alert'></div>
 <main role="main">
       <div class="jumbotron">
             <div class="container">
@@ -6,15 +7,8 @@
                   </center>
             </div>
       </div>
-      <div id="form-messages" class='alert hidden' role='alert'></div>
       <div class="container">
             <center>
-                  <?php
-                  if (validation_errors()) {
-                        echo "<div id='form-messages' class='alert alert-danger' role='alert'>" . validation_errors() . "</div>";
-                  }
-                  ?>
-
                   <?php echo form_open("production/add_form", 'id=new-form'); ?>
                   <input type='text' class="form-control " name='company' value="<?php echo $_GET['company'] ?>" hidden>
                   <div class="form-row">
@@ -178,20 +172,24 @@
                   url: $('#new-form').attr('action'),
                   data: formData
             }).done(function(response) {
-                  // Make sure that the formMessages div has the 'success' class.
-                  SendEmail(response)
+                  if ($.isNumeric(response)) {
+                        SendEmail(response);
+                  } else {
+                        $('#form-messages').addClass('alert-danger');
+                        // Set the message text.
+                        $('#form-messages').html('אין אפשרות לשמור את השינוים ' + response).fadeIn(1000);
+                  }
             }).fail(function() {
-                  // Make sure that the formMessages div has the 'error' class.
                   $('#form-messages').addClass('alert-danger');
                   // Set the message text.
-                  $('#form-messages').text('אין אפשרות לשמור שינוים' + response).fadeIn(1000).delay(3000).fadeOut(1000);
+                  $('#form-messages').html('אין אפשרות לשמור שינוים' + response).fadeIn(1000);
             });
 
       });
 
       function SendEmail(id) {
             // Make sure that the formMessages div has the 'success' class.
-            $('#form-messages').addClass('alert-info');
+            $('#form-messages').removeClass('alert-danger').addClass('alert-info');
             // Set the message text.
             $('#form-messages').html("שולח מייל, נא להמתין...").fadeIn(1000);
             $.post("/exportpdf/create/" + id, {
