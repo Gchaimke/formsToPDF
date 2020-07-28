@@ -237,7 +237,7 @@ class Admin_model extends CI_Model
             ),
             'roles' => array(
                 'type' => 'TEXT',
-                'default' => 'Admin,User'
+                'null' => TRUE
             ),
             'log' => array(
                 'type' => 'LONGTEXT',
