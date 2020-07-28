@@ -54,6 +54,8 @@ class Production extends CI_Controller
         $this->form_validation->set_rules('recommendations_text', 'recommendations_text', 'trim|xss_clean');
         $this->form_validation->set_rules('trip_start_time', 'trip_start_time', 'trim|xss_clean');
         $this->form_validation->set_rules('trip_end_time', 'trip_end_time', 'trim|xss_clean');
+        $this->form_validation->set_rules('back_start_time', 'trip_start_time', 'trim|xss_clean');
+		$this->form_validation->set_rules('back_end_time', 'trip_end_time', 'trim|xss_clean');
         if (!$this->form_validation->run() == FALSE) {
             $data = array(
                 'date' =>  $this->input->post('date'),
@@ -73,7 +75,9 @@ class Production extends CI_Controller
                 'remarks_text' => $this->input->post('remarks_text'),
                 'recommendations_text' => $this->input->post('recommendations_text'),
                 'trip_start_time' => $this->input->post('trip_start_time'),
-                'trip_end_time' => $this->input->post('trip_end_time')
+                'trip_end_time' => $this->input->post('trip_end_time'),
+				'back_start_time' => $this->input->post('back_start_time'),
+				'back_end_time' => $this->input->post('back_end_time')
             );
             $response =  $this->Production_model->add_form($data);
             if ($response > 0 || $response) {

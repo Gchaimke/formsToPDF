@@ -299,7 +299,7 @@ class Admin_model extends CI_Model
     public function get_current_forms_records($limit, $start)
     {
         $this->db->limit($limit, $start);
-        $this->db->order_by('id', 'DESC');
+        $this->db->order_by('date', 'DESC');
         $query = $this->db->get("forms");
 
         if ($query->num_rows() > 0) {

@@ -16,20 +16,27 @@ class Exportpdf extends CI_Controller
 
     public function create($id = '1')
     {
-        
+
         $this->load->view('header');
         $this->load->view('main_menu');
-        
+
         $send_email = false;
         if (isset($_POST['email'])) {
             $send_email = $_POST['email'];
         }
 
+        //fix for new line in forms
+        $needles = array("<br>", "&#13;", "<br/>", "\n"); 
+        $replacement = "<br />";
+
         $form = array();
         $form = $this->Admin_model->getForm($id)[0];
         $form['company_data'] = $this->Companies_model->getCompanies('', $form['company'])[0];
-        //print_r($form['company']);
         $company = $form['company_data'];
+
+        $add_trip ="<br/> נסיעה:";
+        $add_trip .="<br/> הלוך: ".date('G:i', strtotime($form['trip_start_time']))." - ".date('G:i', strtotime($form['trip_end_time'])) ;
+        $add_trip .="<br/> חזור: ".date('G:i', strtotime($form['back_start_time']))." - ".date('G:i', strtotime($form['back_end_time'])) ;
 
         $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
@@ -86,65 +93,59 @@ class Exportpdf extends CI_Controller
         // set text shadow effect
         //$pdf->setTextShadow(array('enabled' => true, 'depth_w' => 0.2, 'depth_h' => 0.2, 'color' => array(196, 196, 196), 'opacity' => 1, 'blend_mode' => 'Normal'));
         $pdf->setRTL(true);
-        $pdf->SetY(45);
+        $pdf->SetY(30);
         // Set some content to print
         $html = '<h1>דו"ח סיכום פעילות</h1>';
-
         // Print text using writeHTMLCell()
         $pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, 'C', true);
 
+        $pdf->SetY(40);
         $html = '<table style="width:950px" cellpadding="5" cellspacing="1" border="1">
         <tr>
-        <td style="width:160px;">תאריך:</td>
+        <td style="width:160px;font-weight:bolder;font-size:11;">תאריך:</td>
         <td>' . $form['date'] . '</td>
         </tr><tr>
-        <td style="width:160px;">מס. לקוח:</td>
+        <td style="width:160px;font-weight:bolder;font-size:11;">מס. לקוח:</td>
         <td>' . $form['client_num'] . '</td>
         </tr><tr>
-        <td style="width:160px;">מס. פניה\תקלה:</td>
+        <td style="width:160px;font-weight:bolder;font-size:11;">מס. פניה\תקלה:</td>
         <td>' . $form['issue_num'] . '</td>
         </tr><tr>
-        <td style="width:160px;">שם לקוח: </td>
+        <td style="width:160px;font-weight:bolder;font-size:11;">שם לקוח: </td>
         <td>' . $form['client_name'] . '</td>
         </tr><tr>
-        <td style="width:160px;">סוג תקלה\ התקנה: </td>
+        <td style="width:160px;font-weight:bolder;font-size:11;">סוג תקלה\ התקנה: </td>
         <td>' . $form['issue_kind'] . '</td>
         </tr><tr>
-        <td style="width:160px;">מיקום</td>
+        <td style="width:160px;font-weight:bolder;font-size:11;">מיקום</td>
         <td>' . $form['place'] . '</td>
         </tr><tr>
-        <td style="width:160px;">שעת התחלה: </td>
+        <td style="width:160px;font-weight:bolder;font-size:11;">שעת התחלה: </td>
         <td>' . date('G:i', strtotime($form['start_time'])) . '</td>
         </tr><tr>
-        <td style="width:160px;">שעת סיום: </td>
+        <td style="width:160px;font-weight:bolder;font-size:11;">שעת סיום: </td>
         <td>' . date('G:i', strtotime($form['end_time'])) . '</td>
         </tr><tr>
-        <td style="width:160px;">אחראי</td>
+        <td style="width:160px;font-weight:bolder;font-size:11;">אחראי</td>
         <td>' . $form['manager'] . '</td>
         </tr><tr>
-        <td style="width:160px;">איש קשר: </td>
+        <td style="width:160px;font-weight:bolder;font-size:11;">איש קשר: </td>
         <td>' . $form['contact_name'] . '</td>
         </tr><tr>
-        <td style="width:160px;">תיאור תקלה\ התקנה: </td>
-        <td>' . $form['activity_text'] . '</td>
+        <td style="width:160px;font-weight:bolder;font-size:11;">תיאור תקלה\ התקנה: </td>
+        <td>' . str_replace($needles, $replacement, $form['activity_text']) . '</td>
         </tr><tr>
-        <td style="width:160px;">תוצאות הבדיקה: </td>
-        <td>' . $form['checking_text'] . '</td>
+        <td style="width:160px;font-weight:bolder;font-size:11;">תוצאות הבדיקה: </td>
+        <td>' . str_replace($needles, $replacement, $form['checking_text']) . '</td>
         </tr><tr>
-        <td style="width:160px;">סיכום</td>
-        <td>' . $form['summary_text'] . '</td>
+        <td style="width:160px;font-weight:bolder;font-size:11;">סיכום</td>
+        <td>' . str_replace($needles, $replacement, $form['summary_text']) . '</td>
         </tr><tr>
-        <td style="width:160px;">הערות: </td>
-        <td>' . $form['remarks_text'] . '</td>
+        <td style="width:160px;font-weight:bolder;font-size:11;">הערות: </td>
+        <td>' . str_replace($needles, $replacement, $form['remarks_text']). '</td>
         </tr><tr>
-        <td style="width:160px;">המלצות: </td>
-        <td>' . $form['recommendations_text'] . '</td>
-        </tr><tr>
-        <td style="width:160px;">שעת התחלה נסיעה הלוך: </td>
-        <td>' . date('G:i', strtotime($form['trip_start_time'])) . '</td>
-        </tr><tr>
-        <td style="width:160px;">שעת סיום נסיעה חזור: </td>
-        <td>' . date('G:i', strtotime($form['trip_end_time'])) . '</td>
+        <td style="width:160px;font-weight:bolder;font-size:11;">המלצות: </td>
+        <td>' . str_replace($needles, $replacement, $form['recommendations_text']) . $add_trip .'</td>
         </tr></table>';
         $pdf->writeHTMLCell(0, 0, '', '', $html, 0, 0, 0, true, 'R', true);
 
@@ -175,24 +176,25 @@ class Exportpdf extends CI_Controller
 
     function SendEmail($fileatt)
     {
-        $this->load->view('header');
-        $this->load->view('main_menu');
         $user =  $this->Users_model->getUser($this->session->userdata['logged_in']['id'])[0];
-        $this->load->library('email');
-        $Subject = 'Pdf Form from ' . $_SERVER['SERVER_NAME'];
-        $Message = 'pdf form from ' . $_SERVER['SERVER_NAME'];
+        if ($user['email'] != '' && $user['email_to'] != '') {
+            $this->load->view('header');
+            $this->load->view('main_menu');
+            $this->load->library('email');
+            $Subject = 'Pdf Form from ' . $_SERVER['SERVER_NAME'];
+            $Message = 'pdf form from ' . $_SERVER['SERVER_NAME'];
+            $this->email
+                ->from($user['email'], 'Online Forms - ' . $user['name'])
+                ->to($user['email_to'])
+                ->subject($Subject)
+                ->message($Message)
+                ->attach($fileatt);
 
-        $this->email
-            ->from($user['email'], 'Online Forms - '.$user['name'])
-            ->to($user['email_to'])
-            ->subject($Subject)
-            ->message($Message)
-            ->attach($fileatt);
-
-        if ($this->email->send()) {
-            print_r('Email Sent to ' . $user['email_to']);
-        } else {
-            print_r($this->email->print_debugger());
+            if ($this->email->send()) {
+                print_r('Email Sent to ' . $user['email_to']);
+            } else {
+                print_r($this->email->print_debugger());
+            }
         }
     }
 }
@@ -216,7 +218,7 @@ class MYPDF extends TCPDF
         $this->Line(10, 10, 200, 10, $style);
         $this->Image($image_file, 10, 10.5, 30, '', 'JPG', '', 'T', false, 300, '', false, false, 0, false, false, false);
         // Set font
-        $this->SetFont('dejavusans', '', 14, '', true);
+        $this->SetFont('dejavusans', '', 12, '', true);
         // Title
         $this->SetY(13);
         $this->Cell(0, 0, $this->header, 0, false, 'R', 0, '', 0, false, 'M', 'M');
