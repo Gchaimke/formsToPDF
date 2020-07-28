@@ -48,14 +48,15 @@ input.form-control {
     border-top-right-radius:0;
     border-bottom-right-radius:0;
 }
+
+.navbar-nav {
+    padding-left: initial;
+    padding-right: 0;
+}
 /* RTL END*/
 
 .hidden {
     display: none;
-}
-
-ul.navbar-nav.pull-right {
-    margin-right: 50px;
 }
 
 div#preview {
@@ -87,10 +88,6 @@ a.fa {
 
 a#edit_checklist {
     margin: 0 25px;
-}
-
-.pull-right {
-    float: inherit;
 }
 
 ul.pagination.right {

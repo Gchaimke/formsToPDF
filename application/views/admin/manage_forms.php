@@ -36,7 +36,7 @@ if (isset($this->session->userdata['logged_in'])) {
 			<table class="table">
 				<thead class="thead-dark">
 					<tr>
-						<th scope="col">*</th>
+						<th scope="col" class="mobile-hide">*</th>
 						<th scope="col">תאריך</th>
 						<th scope="col" >מספר תקלה</th>
 						<th scope="col" class="mobile-hide">מספר לקוח</th>
@@ -54,7 +54,7 @@ if (isset($this->session->userdata['logged_in'])) {
 
 					<?php foreach ($results as $data) { ?>
 						<tr id='<?php echo $data->id ?>'>
-							<td>
+							<td class="mobile-hide">
 								<div class='checkbox'><input type='checkbox' class='select' id='<?php echo $data->id ?>' $checked></div>
 							</td>
 							<td><?php echo $data->date ?></td>
