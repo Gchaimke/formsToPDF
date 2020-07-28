@@ -243,9 +243,9 @@ class MYPDF extends TCPDF
         $this->SetTextColorArray($this->footer_text_color);
         $w_page = isset($this->l['w_page']) ? $this->l['w_page'] . ' ' : '';
         if (empty($this->pagegroups)) {
-            $pagenumtxt = " דף " . $w_page . $this->getAliasNumPage() . ' / ' . $this->getAliasNbPages();
+            $pagenumtxt = "עמוד " . $w_page . $this->getAliasNumPage() . ' מתוך ' . $this->getAliasNbPages();
         } else {
-            $pagenumtxt = " דף " . $w_page . $this->getPageNumGroupAlias() . ' / ' . $this->getPageGroupAlias();
+            $pagenumtxt = "עמוד " . $w_page . $this->getPageNumGroupAlias() . ' מתוך ' . $this->getPageGroupAlias();
         }
         $this->SetY($cur_y - 5);
         //Print page number
