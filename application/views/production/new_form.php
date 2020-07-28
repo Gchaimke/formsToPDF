@@ -155,13 +155,30 @@
                               <input type='time' class="form-control" name='back_end_time'>
                         </div>
                   </div>
+                  <div class="form-row">
+                        <div class="form-group col-md-12">
+                        <label for="back_start_time" class=" col-form-label ">חתימת לקוח</label>
+                              <div id="sketchpadapp">
+                                    <canvas id="sign-canvas" style="border: 1px solid red;"></canvas>
+                              </div>
+                        </div>
+                  </div>
 
                   <input type='submit' class="btn btn-info btn-block" name='submit' value='שמור ושלח לרשימת תפוצה'>
                   <?php echo form_close(); ?>
+
             </center>
       </div>
 </main>
 <script>
+      $(document).ready(function() {
+            //startup scripts here
+            $("#sign-canvas").jqScribble();
+            $("#sign-canvas").data('jqScribble').update({
+                  width: 300,
+                  height: 100
+            })
+      });
       $('#new-form').submit(function(event) {
             // Stop the browser from submitting the form.
             event.preventDefault();

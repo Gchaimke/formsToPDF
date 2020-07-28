@@ -21,7 +21,7 @@ $(".close").click(function () {
     $("#show-log").hide();
 });
 
-$('#form-messages').click(function() {
+$('#form-messages').click(function () {
     $('#form-messages').fadeOut(1000);
 });
 
@@ -109,7 +109,7 @@ function snapLogo() {
         if (/\.(jpe?g|)$/i.test(file.name)) {
             var reader = new FileReader();
             reader.addEventListener("load", function () {
-                saveLogoToServer(this.result,company);
+                saveLogoToServer(this.result, company);
                 sleep(2000);
                 var image = new Image();
                 image.title = file.name;
@@ -118,7 +118,7 @@ function snapLogo() {
                 logo_img.src = logo_path.value;
             }, false);
             reader.readAsDataURL(file);
-        }else{
+        } else {
             alert('JPEG, JPG only!')
         }
     }
@@ -127,7 +127,7 @@ function snapLogo() {
     }
 }
 
-function saveLogoToServer(file,company) {
+function saveLogoToServer(file, company) {
     $.post("/companies/logo_upload", {
         data: file,
         company: company

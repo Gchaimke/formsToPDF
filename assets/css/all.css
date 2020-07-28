@@ -6,6 +6,7 @@ body {
     background-color: #d0eaff;
     font-weight: 500;
 }
+
 .col-form-label {
     font-weight: 500;
 }
@@ -19,6 +20,7 @@ main {
 }
 
 /* RTL START*/
+
 .rtl {
     direction: rtl;
 }
@@ -39,24 +41,25 @@ input.form-control {
     padding-right: 0;
 }
 
-.input-group > .input-group-prepend > .btn, .input-group > .input-group-prepend > .input-group-text, .input-group > .input-group-append:not(:last-child) > .btn, .input-group > .input-group-append:not(:last-child) > .input-group-text, .input-group > .input-group-append:last-child > .btn:not(:last-child):not(.dropdown-toggle), .input-group > .input-group-append:last-child > .input-group-text:not(:last-child){
-    border-top-left-radius:0;
+.input-group>.input-group-prepend>.btn, .input-group>.input-group-prepend>.input-group-text, .input-group>.input-group-append:not(:last-child)>.btn, .input-group>.input-group-append:not(:last-child)>.input-group-text, .input-group>.input-group-append:last-child>.btn:not(:last-child):not(.dropdown-toggle), .input-group>.input-group-append:last-child>.input-group-text:not(:last-child) {
+    border-top-left-radius: 0;
     border-bottom-left-radius: 0;
-    border-top-right-radius:0.25rem;
-    border-bottom-right-radius:0.25rem;
+    border-top-right-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
 }
 
-.input-group > .form-control:not(:first-child), .input-group > .custom-select:not(:first-child) {
+.input-group>.form-control:not(:first-child), .input-group>.custom-select:not(:first-child) {
     border-top-left-radius: 0.25rem;
     border-bottom-left-radius: 0.25rem;
-    border-top-right-radius:0;
-    border-bottom-right-radius:0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
 }
 
 .navbar-nav {
     padding-left: initial;
     padding-right: 0;
 }
+
 /* RTL END*/
 
 .hidden {
@@ -70,7 +73,7 @@ div#preview {
 div#preview img {
     width: 100%;
 }
- 
+
 td.td_file_manager {
     max-width: 150px;
 }
@@ -86,6 +89,7 @@ img#logo_img {
 img.img-thumbnail.checklist-logo {
     display: none;
 }
+
 a.fa {
     font-weight: 100 !important;
 }
@@ -102,7 +106,7 @@ ul.pagination.left {
     float: left;
 }
 
-.num-link>a{
+.num-link>a {
     position: relative;
     display: block;
     padding: 0.5rem 0.75rem;
@@ -136,26 +140,25 @@ footer.container {
     margin-top: 100px;
 }
 
-
 div#show-log {
     max-width: max-content;
     position: absolute;
     left: 45%;
     top: 30%;
     background: #e6e6e6;
-    padding: 5px 5px;    
+    padding: 5px 5px;
     z-index: 3;
 }
 
 #show-log-header {
     padding: 10px;
-  cursor: move;
-  z-index: 10;
-  background-color: #2196F3;
-  color: #fff;
+    cursor: move;
+    z-index: 10;
+    background-color: #2196F3;
+    color: #fff;
 }
 
-div#show-log ul{
+div#show-log ul {
     overflow-y: auto;
     max-height: 400px;
 }
@@ -167,7 +170,7 @@ button.close {
     padding: 10px;
 }
 
-.fa-user-plus, .fa-file-text{
+.fa-user-plus, .fa-file-text {
     font-size: 30px;
 }
 
@@ -196,21 +199,17 @@ div#form-messages {
     font-size: 2em;
 }
 
-@media (min-width: 320px){
-    
+@media (min-width: 320px) {
     .badge-info, .badge-danger {
         font-size: 12px;
     }
-
     .mobile-hide {
         display: none;
     }
-
     .table th, .table td {
         padding: 0.45rem;
     }
-    
-    .display-4,.display-3 {
+    .display-4, .display-3 {
         font-size: 2.5rem;
     }
     .th_serial {
@@ -218,37 +217,42 @@ div#form-messages {
     }
 }
 
-@media (min-width: 991.98px){
+@media (min-width: 991.98px) {
     .mobile-hide {
         display: table-cell;
     }
     .table th, .table td {
         padding: 0.45rem;
     }
-
-    .display-4,.display-3 {
+    .display-4, .display-3 {
         font-size: 2.5rem;
     }
     .th_serial {
         min-width: max-content;
     }
-
     .card-columns .card {
         margin-bottom: 50px;
     }
 }
 
+@media (max-width: 1199.98px) {}
 
-@media (max-width: 1199.98px){
-    
-}
+@media screen and (orientation:portrait) {}
 
-
-@media screen and (orientation:portrait) { 
-    
- }
-@media screen and (orientation:landscape) { 
+@media screen and (orientation:landscape) {
     .video-frame {
         top: 0;
     }
- }
+}
+
+/* DRAW ON CANVAS*/
+
+#sketchpadapp {
+    /* Prevent nearby text being highlighted when accidentally dragging mouse outside confines of the canvas */
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}

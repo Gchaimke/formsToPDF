@@ -6,7 +6,7 @@ if (isset($this->session->userdata['logged_in'])) {
 }
 ?>
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark main-menu rtl">
-  <a class="navbar-brand" href="/">דוחות v1.6</a>
+  <a class="navbar-brand" href="/">דוחות v1.7</a>
   <div class="navbar-brand"><?php echo $_SERVER['SERVER_NAME']; ?></div>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarDefault" aria-controls="navbarDefault" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
