@@ -12,7 +12,7 @@ if (isset($this->session->userdata['logged_in'])) {
     <div class="jumbotron">
         <div class="container">
             <center>
-                <h2 class="display-3">Users</h2>
+                <h2 class="display-3">משתמשים</h2>
             </center>
         </div>
     </div>
@@ -28,10 +28,10 @@ if (isset($this->session->userdata['logged_in'])) {
             <thead class="thead-dark">
                 <tr>
                     <th scope="col" class="mobile-hide">#</th>
-                    <th scope="col">Username</th>
-                    <th scope="col">User Role</th>
-                    <th scope="col">Edit</th>
-                    <th scope="col">Delete</th>
+                    <th scope="col">שם משתמש</th>
+                    <th scope="col">תפקיד</th>
+                    <th scope="col">ערוך</th>
+                    <th scope="col">מחק</th>
                 </tr>
             </thead>
             <tbody>

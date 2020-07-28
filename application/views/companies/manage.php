@@ -9,7 +9,7 @@ if (isset($this->session->userdata['logged_in'])) {
 	<div class="jumbotron">
 		<div class="container">
 			<center>
-				<h2 class="display-4">Companies</h2>
+				<h2 class="display-4">חברות</h2>
 			</center>
 		</div>
 	</div>
@@ -24,9 +24,9 @@ if (isset($this->session->userdata['logged_in'])) {
 		<table class="table">
 			<thead class="thead-dark">
 				<tr>
-					<th scope="col">Company Name</th>
-					<th scope="col">Edit</th>
-					<th scope="col">Delete</th>
+					<th scope="col">שם החברה</th>
+					<th scope="col">ערוך</th>
+					<th scope="col">מחק</th>
 				</tr>
 			</thead>
 			<tbody>
