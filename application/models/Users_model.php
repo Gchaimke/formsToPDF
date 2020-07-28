@@ -19,13 +19,11 @@ class users_model extends CI_Model
 			$data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
 		}
 		$where = "id =" . $data['id'];
-		if ($data['name'] != '') {
-			$this->db->update('users', $data, $where);
-			if ($this->db->affected_rows() > 0) {
-				return 'User data updated!';
-			}	
+		$this->db->update('users', $data, $where);
+		if ($this->db->affected_rows() > 0) {
+			return 'פרטי משתמש עודכנו בעצלחה!';
 		}
-		return 'User data not updated!';
+		return 'אין פרטים חדשים לעדכן!';
 	}
 
 	function deleteUser($id)

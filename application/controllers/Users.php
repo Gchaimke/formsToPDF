@@ -115,26 +115,18 @@ class Users extends CI_Controller
                 if ($this->input->post('password') != '') {
                     $sql += array('password' => $this->input->post('password'));
                 }
-                $data['message_display'] = $this->Users_model->editUser($sql);
-                // get data from model
-                $data['users'] = $this->Users_model->getUsers();
-                $this->load->view('header');
-                $this->load->view('main_menu');
-                $this->load->view('users/manage', $data);
+                print_r($this->Users_model->editUser($sql));
             } else {
+                $sql = array(
+                    'id' => $this->input->post('id'),
+                    'email' => $this->input->post('email'),
+                    'email_to' => $this->input->post('email_to')
+                );
                 if ($this->input->post('password') != '') {
-                    $sql = array(
-                        'id' => $this->input->post('id'),
-                        'name' => $this->input->post('name'),
-                        'password' => $this->input->post('password'),
-                        'email' => $this->input->post('email'),
-                        'email_to' => $this->input->post('email_to')
-                    );
-                    $this->Users_model->editUser($sql);
+                    $sql += array('password' => $this->input->post('password'));
                 }
-                header("location: /");
+                print_r($this->Users_model->editUser($sql));
             }
-            $this->load->view('footer');
         }
     }
 
