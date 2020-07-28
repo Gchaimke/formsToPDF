@@ -41,7 +41,7 @@ class Exportpdf extends CI_Controller
         $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
         // set document information
-        $file_name = $company['name'] . ' - ' . $form['date'] . ' - ' . $form['issue_num'] . ' ' . $form['client_name'];
+        $file_name = $form['date'] . ' ' . $form['issue_num'] . ' ' . $form['client_name'];
         $pdf->SetCreator(PDF_CREATOR);
         $pdf->SetTitle($file_name);
         $pdf->SetSubject('-פנימי-');

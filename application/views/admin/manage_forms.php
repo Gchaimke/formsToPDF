@@ -27,7 +27,7 @@ if (isset($this->session->userdata['logged_in'])) {
 		</nav>
 		<form id="form">
 			<div class="input-group mb-3">
-				<input id='inputSearch' type="text" class="form-control" placeholder="חפש בתפסים" aria-label="Search in forms" aria-describedby="basic-addon2" autofocus>
+				<input id='inputSearch' type="text" class="form-control" placeholder="חפש דוחות לפי מספר תקלה" aria-label="Search in forms" aria-describedby="basic-addon2" autofocus>
 				<div class="input-group-append">
 					<button class="btn btn-secondary" type="button" onclick="formSearch()">חפש</button>
 				</div>
