@@ -1,8 +1,6 @@
 <?php
 if (isset($this->session->userdata['logged_in'])) {
-      if ($this->session->userdata['logged_in']['role'] != "Admin") {
-            header("location: /");
-      }
+      $user_role = $this->session->userdata['logged_in']['role'];
 }
 ?>
 <main role="main">
@@ -185,7 +183,11 @@ if (isset($this->session->userdata['logged_in'])) {
                               </div>
                         </div>
 
-                        <input type='submit' class="btn btn-info" name='submit' value='עדכן תופס'>
+                        <?php if ($user_role == "Admin") {
+                              echo "<input type='submit' class='btn btn-info' name='submit' value='עדכן תופס'>";
+                        }
+                        ?>
+
                         <a class="btn btn-info" href="/exportpdf/create/<?php echo $form_data['id'] ?>">הצג PDF</a>
                         <a class="btn btn-info" href="#" onclick="SendEmail()">שלח PDF</a>
                         <?php echo form_close(); ?>

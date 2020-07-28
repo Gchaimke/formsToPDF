@@ -1,8 +1,6 @@
 <?php
 if (isset($this->session->userdata['logged_in'])) {
-    if ($this->session->userdata['logged_in']['role'] != "Admin") {
-        header("location: /");
-    }
+	$user_role = $this->session->userdata['logged_in']['role'];
 }
 ?>
 <main role="main">
@@ -46,7 +44,10 @@ if (isset($this->session->userdata['logged_in'])) {
 						<th scope="col" class="mobile-hide">מיקום</th>
 						<th scope="col" class="mobile-hide">סוג תקלה</th>
 						<th scope="col">ערוך</th>
-						<th scope="col">מחק</th>
+						<?php if ($user_role == "Admin") {
+							echo '<th scope="col">מחק</th>';
+						}
+						?>
 					</tr>
 				</thead>
 				<tbody>
@@ -57,18 +58,22 @@ if (isset($this->session->userdata['logged_in'])) {
 								<div class='checkbox'><input type='checkbox' class='select' id='<?php echo $data->id ?>' $checked></div>
 							</td>
 							<td class="mobile-hide"><?php if ($data->date != '') {
-									echo $data->date;
-								} else {
-									echo "SN template not found!";
-								}  ?></td>
+														echo $data->date;
+													} else {
+														echo "SN template not found!";
+													}  ?></td>
 							<td><?php echo $data->issue_num ?></td>
 							<td class="mobile-hide"><?php echo $data->client_num ?></td>
 							<td><?php echo $data->client_name ?></td>
 							<td class="mobile-hide"><?php echo $data->place ?></td>
 							<td class="mobile-hide"><?php echo $data->issue_kind ?></td>
-							
+
 							<td><a href='/admin/view_form/<?php echo $data->id ?>' class='btn btn-info'><i class="fa fa-edit"></i></a></td>
-							<td><button id='<?php echo $data->id ?>' class='btn btn-danger' onclick='deleteForm(this.id)'><i class="fa fa-trash"></i></button></td>
+							<?php if ($user_role == "Admin") {
+								echo "<td><button id='".$data->id ."' class='btn btn-danger' onclick='deleteForm(this.id)'><i class='fa fa-trash'></i></button></td>";
+							}
+							?>
+							
 						</tr>
 					<?php } ?>
 				</tbody>
@@ -98,10 +103,10 @@ if (isset($this->session->userdata['logged_in'])) {
 			}).done(function(e) {
 				if (e.length > 0) {
 					$('#searchResult').empty();
-					$('#searchResult').append( e );
+					$('#searchResult').append(e);
 				} else {
 					$('#searchResult').empty();
-					$('#searchResult').append("<h2>Form: "+search+" not found!</h2>");
+					$('#searchResult').append("<h2>Form: " + search + " not found!</h2>");
 				}
 			});
 		} else {
