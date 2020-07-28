@@ -9,7 +9,7 @@ if (isset($this->session->userdata['logged_in'])) {
 	<div class="jumbotron">
 		<div class="container">
 			<center>
-				<h2 class="display-3">Forms</h2>
+				<h2 class="display-3">דוחות</h2>
 			</center>
 		</div>
 	</div>
@@ -67,7 +67,7 @@ if (isset($this->session->userdata['logged_in'])) {
 							<td class="mobile-hide"><?php echo $data->place ?></td>
 							<td class="mobile-hide"><?php echo $data->issue_kind ?></td>
 							
-							<td><a target="_blank" href='/admin/view_form/<?php echo $data->id ?>?issue=<?php echo $data->issue_num ?>' class='btn btn-info'><i class="fa fa-edit"></i></a></td>
+							<td><a target="_blank" href='/admin/view_form/<?php echo $data->id ?>' class='btn btn-info'><i class="fa fa-edit"></i></a></td>
 							<td><button id='<?php echo $data->id ?>' class='btn btn-danger' onclick='deleteForm(this.id)'><i class="fa fa-trash"></i></button></td>
 						</tr>
 					<?php } ?>

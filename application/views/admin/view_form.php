@@ -9,9 +9,7 @@ if (isset($this->session->userdata['logged_in'])) {
       <div class="jumbotron">
             <div class="container">
                   <center>
-                        <h2 class="display-3">תופס <?php if (isset($_GET['issue'])) {
-                                                            echo $_GET['issue'];
-                                                      } ?> </h2>
+                        <h2 class="display-3">עדכון דוח </h2>
                   </center>
             </div>
       </div>

@@ -165,7 +165,7 @@ class Exportpdf extends CI_Controller
             $pdf->Output($filePath, 'F');
             chmod($filePath, 0664);
             if (!empty($filePath)) {
-                $this->SendEmail($filePath);
+                $this->SendEmail($filePath,$file_name);
             } else {
                 print_r('Could not trace file path');
             }
@@ -174,14 +174,14 @@ class Exportpdf extends CI_Controller
         }
     }
 
-    function SendEmail($fileatt)
+    function SendEmail($fileatt,$file_name)
     {
         $user =  $this->Users_model->getUser($this->session->userdata['logged_in']['id'])[0];
         if ($user['email'] != '' && $user['email_to'] != '') {
             $this->load->view('header');
             $this->load->view('main_menu');
             $this->load->library('email');
-            $Subject = 'Pdf Form from ' . $_SERVER['SERVER_NAME'];
+            $Subject = $file_name;
             $Message = 'pdf form from ' . $_SERVER['SERVER_NAME'];
             $this->email
                 ->from($user['email'], 'Online Forms - ' . $user['name'])

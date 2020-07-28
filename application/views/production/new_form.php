@@ -16,7 +16,7 @@
                   ?>
                   
                   <?php echo form_open("production/add_form", 'class=rtl'); ?>
-                  <input type='text' class="form-control " name='company'   hidden>
+                  <input type='text' class="form-control " name='company' value="<?php echo $_GET['company']?>"  hidden>
                   <div class="form-row">
                               <div class="form-group col-md-4">
                                     <label for="date" class=" col-form-label ">תאריך</label>
