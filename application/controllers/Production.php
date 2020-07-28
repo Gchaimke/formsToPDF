@@ -81,26 +81,12 @@ class Production extends CI_Controller
             );
             $response =  $this->Production_model->add_form($data);
             if ($response > 0 || $response) {
-                $data = array();
-                $data['id'] = $response;
-                $this->send_email($data);
+                echo $response;
             } else {
-                echo "Form Not added!";
+                echo "דוח לא נשמר";
             }
         } else {
-            echo "Form validation error!";
-        }
-    }
-
-    public function send_email($data='')
-    {
-        if ($data!='') {
-            $this->load->view('header');
-            $this->load->view('main_menu');
-            $this->load->view('production/send_email', $data);
-            $this->load->view('footer');
-        } else {
-            header("location: /users/login");
+            echo "יש בעיה בנתונים שהזנתה!";
         }
     }
 
