@@ -3,6 +3,7 @@ if (isset($this->session->userdata['logged_in'])) {
       $user_role = $this->session->userdata['logged_in']['role'];
 }
 ?>
+<div id="form-messages" class='alert hidden' role='alert'></div>
 <main role="main">
       <div class="jumbotron">
             <div class="container">
@@ -11,7 +12,6 @@ if (isset($this->session->userdata['logged_in'])) {
                   </center>
             </div>
       </div>
-      <div id="form-messages" class='alert hidden' role='alert'></div>
       <div class="container">
             <center>
                   <?php
