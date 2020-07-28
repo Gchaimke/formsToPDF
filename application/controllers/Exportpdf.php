@@ -182,7 +182,7 @@ class Exportpdf extends CI_Controller
             $this->load->view('main_menu');
             $this->load->library('email');
             $Subject = $file_name;
-            $Message = 'pdf form from ' . $_SERVER['SERVER_NAME'];
+            $Message = 'Form sent from server ' . $_SERVER['SERVER_NAME'];
             $this->email
                 ->from($user['email'], 'Online Forms - ' . $user['name'])
                 ->to($user['email_to'].','.$user['email'])
@@ -191,7 +191,7 @@ class Exportpdf extends CI_Controller
                 ->attach($fileatt);
 
             if ($this->email->send()) {
-                print_r('מייל נשלח ל:  ' . $user['email_to'] ." בהצלחה!");
+                print_r('מייל נשלח ל:  ' . $user['email_to'].','.$user['email'] ." בהצלחה!");
             } else {
                 print_r($this->email->print_debugger());
             }
