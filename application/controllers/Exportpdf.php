@@ -84,7 +84,7 @@ class Exportpdf extends CI_Controller
         // dejavusans is a UTF-8 Unicode font, if you only need to
         // print standard ASCII chars, you can use core fonts like
         // helvetica or times to reduce file size.
-        $pdf->SetFont('dejavusans', '', 10, '', true);
+        $pdf->SetFont('dejavusans', '', 12, '', true);
 
         // Add a page
         // This method has several options, check the source code documentation for more information.
@@ -99,62 +99,67 @@ class Exportpdf extends CI_Controller
         // Print text using writeHTMLCell()
         $pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, 'C', true);
 
-        $pdf->SetY(40);
+        $pdf->SetY(50);
         $html = '<table style="width:950px" cellpadding="5" cellspacing="1" border="1">
         <tr>
-        <td style="width:160px;font-weight:bolder;font-size:11;">תאריך:</td>
+        <td style="width:160px;font-weight:bolder;font-size:13;">תאריך:</td>
         <td>' . $form['date'] . '</td>
         </tr><tr>
-        <td style="width:160px;font-weight:bolder;font-size:11;">מס. לקוח:</td>
+        <td style="width:160px;font-weight:bolder;font-size:13;">מס. לקוח:</td>
         <td>' . $form['client_num'] . '</td>
         </tr><tr>
-        <td style="width:160px;font-weight:bolder;font-size:11;">מס. פניה\תקלה:</td>
+        <td style="width:160px;font-weight:bolder;font-size:13;">מס. פניה\תקלה:</td>
         <td>' . $form['issue_num'] . '</td>
         </tr><tr>
-        <td style="width:160px;font-weight:bolder;font-size:11;">שם לקוח: </td>
+        <td style="width:160px;font-weight:bolder;font-size:13;">שם לקוח: </td>
         <td>' . $form['client_name'] . '</td>
         </tr><tr>
-        <td style="width:160px;font-weight:bolder;font-size:11;">סוג תקלה\ התקנה: </td>
+        <td style="width:160px;font-weight:bolder;font-size:13;">סוג תקלה\ התקנה: </td>
         <td>' . $form['issue_kind'] . '</td>
         </tr><tr>
-        <td style="width:160px;font-weight:bolder;font-size:11;">מיקום</td>
+        <td style="width:160px;font-weight:bolder;font-size:13;">מיקום</td>
         <td>' . $form['place'] . '</td>
         </tr><tr>
-        <td style="width:160px;font-weight:bolder;font-size:11;">שעת התחלה: </td>
+        <td style="width:160px;font-weight:bolder;font-size:13;">שעת התחלה: </td>
         <td>' . date('G:i', strtotime($form['start_time'])) . '</td>
         </tr><tr>
-        <td style="width:160px;font-weight:bolder;font-size:11;">שעת סיום: </td>
+        <td style="width:160px;font-weight:bolder;font-size:13;">שעת סיום: </td>
         <td>' . date('G:i', strtotime($form['end_time'])) . '</td>
         </tr><tr>
-        <td style="width:160px;font-weight:bolder;font-size:11;">אחראי</td>
+        <td style="width:160px;font-weight:bolder;font-size:13;">אחראי</td>
         <td>' . $form['manager'] . '</td>
         </tr><tr>
-        <td style="width:160px;font-weight:bolder;font-size:11;">איש קשר: </td>
+        <td style="width:160px;font-weight:bolder;font-size:13;">איש קשר: </td>
         <td>' . $form['contact_name'] . '</td>
         </tr><tr>
-        <td style="width:160px;font-weight:bolder;font-size:11;">תיאור תקלה\ התקנה: </td>
+        <td style="width:160px;font-weight:bolder;font-size:13;">תיאור תקלה\ התקנה: </td>
         <td>' . str_replace($needles, $replacement, $form['activity_text']) . '</td>
         </tr><tr>
-        <td style="width:160px;font-weight:bolder;font-size:11;">תוצאות הבדיקה: </td>
+        <td style="width:160px;font-weight:bolder;font-size:13;">תוצאות הבדיקה: </td>
         <td>' . str_replace($needles, $replacement, $form['checking_text']) . '</td>
         </tr><tr>
-        <td style="width:160px;font-weight:bolder;font-size:11;">סיכום</td>
+        <td style="width:160px;font-weight:bolder;font-size:13;">סיכום</td>
         <td>' . str_replace($needles, $replacement, $form['summary_text']) . '</td>
         </tr><tr>
-        <td style="width:160px;font-weight:bolder;font-size:11;">הערות: </td>
+        <td style="width:160px;font-weight:bolder;font-size:13;">הערות: </td>
         <td>' . str_replace($needles, $replacement, $form['remarks_text']) . '</td>
         </tr><tr>
-        <td style="width:160px;font-weight:bolder;font-size:11;">המלצות: </td>
+        <td style="width:160px;font-weight:bolder;font-size:13;">המלצות: </td>
         <td>' . str_replace($needles, $replacement, $form['recommendations_text']) . $add_trip . '</td>
         </tr></table>';
         $pdf->writeHTMLCell(0, 0, '', '', $html, 0, 0, 0, true, 'R', true);
 
-        $html ='<b>חתימת לקוח:</b>';
+        $html = '<b>חתימת לקוח:</b>';
+        $pdf->writeHTMLCell('', '', 20, 240, $html, 0, 0, 0, true, 'R', true);
+
+        //write sign border
+        $pdf->writeHTMLCell('80', '30', 60, 230, '', 1 , 0, 0, true, 'R', true);
+
+        $pdf->SetXY(135, 235);
         $imgdata = base64_decode($form['client_sign']);
-        $pdf->writeHTMLCell('','', 100, 225, $html, 0, 0, 0, true, 'R', true);
-        $pdf->SetXY(160, 230);
-        
-        $pdf->Image('@' . $imgdata, '','', '', '', '', '', 'T', false, 150, '', false, false, 1, false, false, false);
+        if ($imgdata != '') {
+            $pdf->Image('@' . $imgdata, '', '', 70, '', '', '', 'T', false, 150, '', false, false, 0, false, false, false);
+        }
         // ---------------------------------------------------------
 
         // Close and output PDF document
@@ -223,10 +228,12 @@ class MYPDF extends TCPDF
         // Logo
         $image_file = $this->logo;
         $style = array('width' => 0.2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0));
+        $this->SetAlpha(0.6);
         $this->Line(10, 10, 200, 10, $style);
         $this->Image($image_file, 10, 10.5, 30, '', '', '', 'T', false, 300, '', false, false, 0, false, false, false);
         // Set font
         $this->SetFont('dejavusans', '', 12, '', true);
+        $this->SetTextColor(0, 0, 0);
         // Title
         $this->SetY(13);
         $this->Cell(0, 0, $this->header, 0, false, 'R', 0, '', 0, false, 'M', 'M');
@@ -241,6 +248,7 @@ class MYPDF extends TCPDF
         // footer text
 
         //set style for cell border
+        $this->SetAlpha(0.6);
         $this->SetY($cur_y);
         $line_width = (0.85 / $this->k);
         $this->SetLineStyle(array('width' => $line_width, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => $this->footer_line_color));
@@ -258,6 +266,7 @@ class MYPDF extends TCPDF
         $this->SetX($this->original_rMargin);
         $this->MultiCell(180, 20, $this->footer, 'T', 'C', 0, 1, '', '', true);
         $this->SetX($this->k / 2);
+        $this->SetAlpha(1);
         $this->Cell(0, 0, $pagenumtxt, 0, 0, 'C');
     }
 }

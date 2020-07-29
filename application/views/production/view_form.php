@@ -224,7 +224,7 @@ if (isset($this->session->userdata['logged_in'])) {
                         }
                         ?>
 
-                        <a class="btn btn-info" href="/exportpdf/create/<?php echo $form_data['id'] ?>">הצג PDF</a>
+                        <a target="_blank" class="btn btn-info" href="/exportpdf/create/<?php echo $form_data['id'] ?>">הצג PDF</a>
                         <a class="btn btn-info" href="#" onclick="SendEmail()">שלח PDF</a>
                         <?php echo form_close(); ?>
 

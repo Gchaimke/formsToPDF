@@ -40,7 +40,7 @@ if (isset($this->session->userdata['logged_in'])) {
 			<input type='hidden' name='id' value="<?php echo $id ?>">
 			<label>Company</label><input id='company_name' type='text' class="form-control" name='name' value="<?php echo $company ?>" onchange="updateClient(this.value)"></hr>
 			<label>Logo</label>
-			<div class="input-group mb-3">
+			<div class="input-group mb-3 ltr">
 				<input id="logo_path" type='text' class="form-control" name='logo' value="<?php echo $logo ?>">
 				<div class="input-group-append">
 					<button class="btn btn-outline-secondary" type="button" onclick="document.getElementById('browse').click();">Upload</button>

@@ -114,6 +114,9 @@ function snapLogo() {
                 var image = new Image();
                 image.title = file.name;
                 image.src = this.result;
+                if(ext =='jpg'){
+                    ext='jpeg';
+                }
                 logo_path.value = "/Uploads/Companies/" + company + "_logo." + ext;
                 logo_img.src = logo_path.value;
             }, false);
