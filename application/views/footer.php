@@ -1,6 +1,6 @@
 <footer class="container">
   <p>
-    <center>Online Forms&copy; <?php echo date('Y'); ?>
+    <center><div>גרין מערכות&copy; <?php echo date('Y'); ?> |  נוצר על ידי חיים גורבוב</div>
     </center>
   </p>
 </footer>

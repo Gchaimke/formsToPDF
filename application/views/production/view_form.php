@@ -8,7 +8,7 @@ if (isset($this->session->userdata['logged_in'])) {
       <div class="jumbotron">
             <div class="container">
                   <center>
-                        <h2 class="display-3">עדכון דוח </h2>
+                        <h5>עדכון דוח </h5>
                   </center>
             </div>
       </div>

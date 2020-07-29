@@ -62,6 +62,10 @@ input.form-control {
 
 /* RTL END*/
 
+.jumbotron {
+    padding-bottom: 1rem;
+}
+
 .hidden {
     display: none;
 }

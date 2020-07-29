@@ -3,7 +3,7 @@
       <div class="jumbotron">
             <div class="container">
                   <center>
-                        <h2 class="display-3">דוח חדש</h2>
+                        <h5>דוח חדש</h5>
                   </center>
             </div>
       </div>

@@ -2,7 +2,7 @@
 	<div class="jumbotron">
 		<div class="container">
 			<center>
-				<h2 class="display-4">חברות</h2>
+				<h5>חברות</h5>
 			</center>
 		</div>
 	</div>

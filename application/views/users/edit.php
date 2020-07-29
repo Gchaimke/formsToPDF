@@ -11,7 +11,7 @@ if (isset($this->session->userdata['logged_in']) && isset($user)) {
 	<div class="jumbotron">
 		<div class="container">
 			<center>
-				<h2 class="display-3">ערוך פרטים</h2>
+				<h5>ערוך פרטים</h5>
 				<div id="form-messages" class='alert hidden' role='alert'></div>
 			</center>
 		</div>

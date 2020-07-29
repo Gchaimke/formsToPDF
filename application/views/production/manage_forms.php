@@ -7,7 +7,7 @@ if (isset($this->session->userdata['logged_in'])) {
 	<div class="jumbotron">
 		<div class="container">
 			<center>
-				<h2 class="display-3">דוחות</h2>
+				<h5>דוחות</h5>
 			</center>
 		</div>
 	</div>
@@ -23,14 +23,14 @@ if (isset($this->session->userdata['logged_in'])) {
 				echo $links;
 			} ?>
 		</nav>
-		<form id="form">
+		<form id="form" class='ltr'>
 			<div class="input-group mb-3">
 				<input id='inputSearch' type="text" class="form-control" placeholder="חפש דוחות לפי מספר תקלה" aria-label="Search in forms" aria-describedby="basic-addon2" autofocus>
 				<div class="input-group-append">
 					<button class="btn btn-secondary" type="button" onclick="formSearch()">חפש</button>
 				</div>
 			</div>
-			<div id='searchResult'></div>
+			<div id='searchResult' class='rtl text-center'></div>
 		</form>
 		<?php if (isset($results)) { ?>
 			<table class="table">
@@ -43,7 +43,7 @@ if (isset($this->session->userdata['logged_in'])) {
 						<th scope="col" class="mobile-hide">שם הלקוח</th>
 						<th scope="col" class="mobile-hide">מיקום</th>
 						<th scope="col" class="mobile-hide">סוג תקלה</th>
-						<th scope="col">חברה נותנת שירות</th>
+						<th scope="col" class="mobile-hide">חברה נותנת שירות</th>
 						<th scope="col">ערוך</th>
 						<?php if ($user_role == "Admin") {
 							echo '<th scope="col">מחק</th>';
@@ -64,7 +64,7 @@ if (isset($this->session->userdata['logged_in'])) {
 							<td class="mobile-hide"><?php echo $data->client_name ?></td>
 							<td class="mobile-hide"><?php echo $data->place ?></td>
 							<td class="mobile-hide"><?php echo $data->issue_kind ?></td>
-							<td><?php echo $data->company ?></td>
+							<td class="mobile-hide"><?php echo $data->company ?></td>
 							<td><a href='/production/view_form/<?php echo $data->id ?>' class='btn btn-info'><i class="fa fa-edit"></i></a></td>
 							<?php if ($user_role == "Admin") {
 								echo "<td><button id='".$data->id ."' class='btn btn-danger' onclick='deleteForm(this.id)'><i class='fa fa-trash'></i></button></td>";

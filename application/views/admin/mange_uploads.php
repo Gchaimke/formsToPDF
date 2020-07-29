@@ -10,7 +10,7 @@ if (isset($this->session->userdata['logged_in'])) {
     <div class="jumbotron">
         <div class="container">
             <center>
-                <h2 class="display-3">File Manager</h2>
+                <h5>File Manager</h5>
             </center>
             <button class="btn btn-info" onclick="RemoveEmptySubFolders()">Remove empty folders from uploads</button>
         </div>
