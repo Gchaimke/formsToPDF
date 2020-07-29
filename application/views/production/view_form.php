@@ -25,7 +25,7 @@ if (isset($this->session->userdata['logged_in'])) {
 
                         <?php
                         $attributes = ['id' => 'ajax-form'];
-                        echo form_open("admin/update_form", $attributes); ?>
+                        echo form_open("production/update_form", $attributes); ?>
                         <input type='num' class="form-control" name='id' value="<?php echo $form_data['id'] ?>" hidden>
                         <div class="form-row">
                               <div class="form-group col-md-6">

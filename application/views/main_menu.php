@@ -18,7 +18,7 @@ if (isset($this->session->userdata['logged_in'])) {
     </ul>
 
     <ul class="navbar-nav  pull-right">
-    <li class="nav-item"><a class="nav-link" href="/admin/manage_forms">דוחות</a></li>
+    <li class="nav-item"><a class="nav-link" href="/production/manage_forms">דוחות</a></li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           שלום <?php echo $username; ?>

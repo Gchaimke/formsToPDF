@@ -35,8 +35,7 @@ if (isset($this->session->userdata['logged_in']) && isset($user)) {
 						<?php
 						$current_role = ($this->session->userdata['logged_in']['role']);
 						if ($current_role == "Admin") {
-							echo '<label for="role" class="col-sm-2 col-form-label ">תפקיד</label>
-								<div class="col-sm-8">';
+							echo '<label for="role" class="col-sm-2 col-form-label ">תפקיד</label><div class="col-sm-8">';
 							echo "<select class='form-control' name='role'>";
 							if (isset($settings)) {
 								$arr = explode(",", $settings[0]['roles']);

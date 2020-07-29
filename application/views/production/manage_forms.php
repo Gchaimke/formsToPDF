@@ -64,7 +64,7 @@ if (isset($this->session->userdata['logged_in'])) {
 							<td class="mobile-hide"><?php echo $data->place ?></td>
 							<td class="mobile-hide"><?php echo $data->issue_kind ?></td>
 
-							<td><a href='/admin/view_form/<?php echo $data->id ?>' class='btn btn-info'><i class="fa fa-edit"></i></a></td>
+							<td><a href='/production/view_form/<?php echo $data->id ?>' class='btn btn-info'><i class="fa fa-edit"></i></a></td>
 							<?php if ($user_role == "Admin") {
 								echo "<td><button id='".$data->id ."' class='btn btn-danger' onclick='deleteForm(this.id)'><i class='fa fa-trash'></i></button></td>";
 							}
@@ -83,7 +83,7 @@ if (isset($this->session->userdata['logged_in'])) {
 	function deleteForm(id) {
 		var r = confirm("Delete this form: " + id + "?");
 		if (r == true) {
-			$.post("/admin/delete_form", {
+			$.post("/production/delete_form", {
 				id: id,
 			}).done(function(o) {
 				location.reload();
@@ -94,7 +94,7 @@ if (isset($this->session->userdata['logged_in'])) {
 	function formSearch() {
 		var search = document.getElementById("inputSearch").value;
 		if (search.length >= 3) {
-			$.post("/admin/form_search", {
+			$.post("/production/form_search", {
 				search: search
 			}).done(function(e) {
 				if (e.length > 0) {
