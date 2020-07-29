@@ -6,11 +6,18 @@ if (isset($this->session->userdata['logged_in'])) {
 }
 ?>
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark main-menu rtl">
-  <a class="navbar-brand" href="/">דוחות v1.8</a>
-  <div class="navbar-brand"><?php echo $_SERVER['SERVER_NAME']; ?></div>
+  <a class="navbar-brand" href="/">דוחות v1.7</a>
+  <span class="navbar-text mx-2"><?php echo $_SERVER['SERVER_NAME']; ?></span>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarDefault" aria-controls="navbarDefault" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
+
+  <div class="collapse navbar-collapse" id="navbarDefault">
+  <ul class="navbar-nav  mx-4">
+  <li class="nav-item mx-1"><a class="nav-link btn btn-sm btn-outline-secondary" href="/"> דוח חדש</a></li>
+  <li class="nav-item mx-1"><a class="nav-link btn btn-sm btn-outline-secondary" href="/production/manage_forms"> רשימת דוחות</a></li>
+  </ul>
+  </div>
 
   <div class="collapse navbar-collapse" id="navbarDefault">
     <ul class="navbar-nav mr-auto">
@@ -18,8 +25,6 @@ if (isset($this->session->userdata['logged_in'])) {
     </ul>
 
     <ul class="navbar-nav  pull-right">
-    <li class="nav-item"><a class="nav-link" href="/">דוח חדש</a></li>
-    <li class="nav-item"><a class="nav-link" href="/production/manage_forms"> רשימת דוחות</a></li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           שלום <?php echo $username; ?>
