@@ -106,7 +106,7 @@ function snapLogo() {
     function readAndPreview(file) {
         // Make sure `file.name` matches our extensions criteria
         ext = file.name.substr((file.name.lastIndexOf('.') + 1));
-        if (/\.(jpe?g|)$/i.test(file.name)) {
+        if (/\.(jpe?g|png)$/i.test(file.name)) {
             var reader = new FileReader();
             reader.addEventListener("load", function () {
                 saveLogoToServer(this.result, company);
@@ -114,7 +114,7 @@ function snapLogo() {
                 var image = new Image();
                 image.title = file.name;
                 image.src = this.result;
-                logo_path.value = "/Uploads/Companies/" + company + "_logo.jpeg";
+                logo_path.value = "/Uploads/Companies/" + company + "_logo." + ext;
                 logo_img.src = logo_path.value;
             }, false);
             reader.readAsDataURL(file);
@@ -142,7 +142,7 @@ function snapPhoto() {
     var files = document.querySelector('input[type=file]').files;
     function readAndPreview(file) {
         // Make sure `file.name` matches our extensions criteria
-        if (/\.(jpe?g|jpeg|gif)$/i.test(file.name)) {
+        if (/\.(jpe?g|jpeg|gif|png)$/i.test(file.name)) {
             var reader = new FileReader();
             reader.addEventListener("load", function () {
                 savePhotoToServer(this.result);
@@ -174,7 +174,17 @@ function delFile(file) {
     }
 }
 
+function saveSign() {
+    $("#sign-canvas").data("jqScribble").save(function (imageData) {
+        $("#client_sign").val(imageData.replace(/^data:image\/(png|jpg);base64,/, ""));
+    });
+}
+
 $('#ajax-form').submit(function (event) {
+    //Check if sign canvas exists on page
+    if ($("#sign-canvas").length && $("#client_sign").length) {
+        saveSign();
+    }
     // Stop the browser from submitting the form.
     event.preventDefault();
     var formData = $('#ajax-form').serialize();
@@ -187,6 +197,9 @@ $('#ajax-form').submit(function (event) {
         $('#form-messages').addClass('alert-success');
         // Set the message text.
         $('#form-messages').text(response).fadeIn(1000).delay(3000).fadeOut(1000); //show message
+        setTimeout(function () {
+            location.reload();
+        }, 3000); //will call the function after 2 secs.
     }).fail(function () {
         // Make sure that the formMessages div has the 'error' class.
         $('#form-messages').addClass('alert-danger');

@@ -157,10 +157,12 @@
                   </div>
                   <div class="form-row">
                         <div class="form-group col-md-12">
-                        <label for="back_start_time" class=" col-form-label ">חתימת לקוח</label>
+                              <label for="back_start_time" class=" col-form-label ">חתימת לקוח</label>
                               <div id="sketchpadapp">
                                     <canvas id="sign-canvas" style="border: 1px solid red;"></canvas>
                               </div>
+                              <input type='text' id="client_sign" name='client_sign' hidden>
+                              <a href="#sign-canvas" class="btn btn-info btn-block" onclick='$("#sign-canvas").data("jqScribble").clear();'>נקה חתימה</a>
                         </div>
                   </div>
 
@@ -179,9 +181,11 @@
                   height: 100
             })
       });
+
       $('#new-form').submit(function(event) {
             // Stop the browser from submitting the form.
             event.preventDefault();
+            saveSign();
             var formData = $('#new-form').serialize();
             $.ajax({
                   type: 'POST',

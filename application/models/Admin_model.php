@@ -120,6 +120,11 @@ class Admin_model extends CI_Model
                 'unsigned' => TRUE,
                 'auto_increment' => TRUE
             ),
+            'creator' => array(
+                'type' => 'VARCHAR',
+                'constraint' => 500,
+                'null' => TRUE
+            ),
             'company' => array(
                 'type' => 'VARCHAR',
                 'constraint' => 500,
@@ -189,6 +194,10 @@ class Admin_model extends CI_Model
                 'null' => TRUE
             ),
             'recommendations_text' => array(
+                'type' => 'TEXT',
+                'null' => TRUE
+            ),
+            'client_sign' => array(
                 'type' => 'TEXT',
                 'null' => TRUE
             ),

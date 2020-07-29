@@ -24,18 +24,29 @@ if (isset($this->session->userdata['logged_in'])) {
                   ?>
 
                         <?php
-                        $attributes = ['class' => 'rtl', 'id' => 'ajax-form'];
+                        $attributes = ['id' => 'ajax-form'];
                         echo form_open("admin/update_form", $attributes); ?>
                         <input type='num' class="form-control" name='id' value="<?php echo $form_data['id'] ?>" hidden>
-
-                        <div class="form-group row col-md-6">
-                              <div class="input-group mb-2">
-                                    <div class="input-group-prepend">
-                                          <div class="input-group-text">תופס שייך לחברה</div>
+                        <div class="form-row">
+                              <div class="form-group col-md-6">
+                                    <div class="input-group mb-2">
+                                          <div class="input-group-prepend">
+                                                <div class="input-group-text">תופס שייך לחברת</div>
+                                          </div>
+                                          <input type='text' class="form-control " name='company' value="<?php echo $form_data['company'] ?>">
                                     </div>
-                                    <input type='text' class="form-control " name='company' value="<?php echo $form_data['company'] ?>">
                               </div>
+                              <div class="form-group col-md-6">
+                                    <div class="input-group mb-2">
+                                          <div class="input-group-prepend">
+                                                <div class="input-group-text">יוצר</div>
+                                          </div>
+                                          <input type='text' class="form-control " name='creator' value="<?php echo $form_data['creator'] ?>">
+                                    </div>
+                              </div>
+
                         </div>
+
                         <div class="form-row">
                               <div class="form-group col-md-4">
                                     <div class="input-group mb-2">
@@ -183,6 +194,21 @@ if (isset($this->session->userdata['logged_in'])) {
                               </div>
                         </div>
 
+                        <div class="form-group row">
+                              <label for="recommendations_text" class="col-sm-2 col-form-label "> חתימת לקוח שמורה:</label>
+                              <div class="col-sm-4">
+                                    <img src="data:image/png;base64, <?php echo $form_data['client_sign'] ?>" />
+                              </div>
+                              <label for="recommendations_text" class="col-sm-2 col-form-label ">חתימת לקוח חדשה:</label>
+                              <div class="col-sm-4">
+                                    <div id="sketchpadapp">
+                                          <canvas id="sign-canvas" style="border: 1px solid red;"></canvas>
+                                    </div>
+                                    <input type='text' id="client_sign" name='client_sign' hidden>
+                                    <a href="#sign-canvas" class="btn btn-info btn-block" onclick='$("#sign-canvas").data("jqScribble").clear();'>נקה חתימה</a>
+                              </div>
+                        </div>
+
                         <?php if ($user_role == "Admin") {
                               echo "<input type='submit' class='btn btn-info' name='submit' value='עדכן תופס'>";
                         }
@@ -200,6 +226,15 @@ if (isset($this->session->userdata['logged_in'])) {
 </main>
 
 <script>
+      $(document).ready(function() {
+            //startup scripts here
+            $("#sign-canvas").jqScribble();
+            $("#sign-canvas").data('jqScribble').update({
+                  width: 300,
+                  height: 100
+            })
+      });
+
       function SendEmail() {
             // Make sure that the formMessages div has the 'success' class.
             $('#form-messages').addClass('alert-info');

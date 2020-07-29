@@ -35,6 +35,7 @@ class Production extends CI_Controller
 
     public function add_form()
     {
+        $user_name = $this->session->userdata['logged_in']['name'];
         // Check validation for user input in SignUp form
         $this->form_validation->set_rules('date', 'date', 'trim|required|xss_clean');
         $this->form_validation->set_rules('company', 'company', 'trim|xss_clean');
@@ -55,10 +56,12 @@ class Production extends CI_Controller
         $this->form_validation->set_rules('trip_start_time', 'trip_start_time', 'trim|xss_clean');
         $this->form_validation->set_rules('trip_end_time', 'trip_end_time', 'trim|xss_clean');
         $this->form_validation->set_rules('back_start_time', 'trip_start_time', 'trim|xss_clean');
-		$this->form_validation->set_rules('back_end_time', 'trip_end_time', 'trim|xss_clean');
+        $this->form_validation->set_rules('back_end_time', 'trip_end_time', 'trim|xss_clean');
+        $this->form_validation->set_rules('client_sign', 'client_sign', 'trim|xss_clean');
         if (!$this->form_validation->run() == FALSE) {
             $data = array(
                 'date' =>  $this->input->post('date'),
+                'creator' =>  $user_name,
                 'company' =>  $this->input->post('company'),
                 'client_num' =>  $this->input->post('client_num'),
                 'issue_num' => $this->input->post('issue_num'),
@@ -77,7 +80,8 @@ class Production extends CI_Controller
                 'trip_start_time' => $this->input->post('trip_start_time'),
                 'trip_end_time' => $this->input->post('trip_end_time'),
 				'back_start_time' => $this->input->post('back_start_time'),
-				'back_end_time' => $this->input->post('back_end_time')
+                'back_end_time' => $this->input->post('back_end_time'),
+				'client_sign' => $this->input->post('client_sign')
             );
             $response =  $this->Production_model->add_form($data);
             if ($response > 0 || $response) {
@@ -128,9 +132,11 @@ class Production extends CI_Controller
             $file = $upload_folder . "/" . $serial . "_" . $num . ".$type";
             $success = file_put_contents($file, $img);
         }
+        /* Image compresion on windows servers
         if (!file_exists("C:\Program Files\Ampps\www\assets\exec\pngquanti.exe")) {
-            //shell_exec('"C:\Program Files\Ampps\www\assets\exec\pngquanti.exe" --ext .jpeg --speed 5 --nofs --force ' . escapeshellarg($file));
+            shell_exec('"C:\Program Files\Ampps\www\assets\exec\pngquanti.exe" --ext .jpeg --speed 5 --nofs --force ' . escapeshellarg($file));
         }
+        */
         print $success ? $file : 'Unable to save the file.';
     }
 

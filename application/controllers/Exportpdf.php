@@ -26,7 +26,7 @@ class Exportpdf extends CI_Controller
         }
 
         //fix for new line in forms
-        $needles = array("<br>", "&#13;", "<br/>", "\n"); 
+        $needles = array("<br>", "&#13;", "<br/>", "\n");
         $replacement = "<br />";
 
         $form = array();
@@ -34,9 +34,9 @@ class Exportpdf extends CI_Controller
         $form['company_data'] = $this->Companies_model->getCompanies('', $form['company'])[0];
         $company = $form['company_data'];
 
-        $add_trip ="<br/> נסיעה:";
-        $add_trip .="<br/> הלוך: ".date('G:i', strtotime($form['trip_start_time']))." - ".date('G:i', strtotime($form['trip_end_time'])) ;
-        $add_trip .="<br/> חזור: ".date('G:i', strtotime($form['back_start_time']))." - ".date('G:i', strtotime($form['back_end_time'])) ;
+        $add_trip = "<br/> נסיעה:";
+        $add_trip .= "<br/> הלוך: " . date('G:i', strtotime($form['trip_start_time'])) . " - " . date('G:i', strtotime($form['trip_end_time']));
+        $add_trip .= "<br/> חזור: " . date('G:i', strtotime($form['back_start_time'])) . " - " . date('G:i', strtotime($form['back_end_time']));
 
         $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
@@ -142,13 +142,19 @@ class Exportpdf extends CI_Controller
         <td>' . str_replace($needles, $replacement, $form['summary_text']) . '</td>
         </tr><tr>
         <td style="width:160px;font-weight:bolder;font-size:11;">הערות: </td>
-        <td>' . str_replace($needles, $replacement, $form['remarks_text']). '</td>
+        <td>' . str_replace($needles, $replacement, $form['remarks_text']) . '</td>
         </tr><tr>
         <td style="width:160px;font-weight:bolder;font-size:11;">המלצות: </td>
-        <td>' . str_replace($needles, $replacement, $form['recommendations_text']) . $add_trip .'</td>
+        <td>' . str_replace($needles, $replacement, $form['recommendations_text']) . $add_trip . '</td>
         </tr></table>';
         $pdf->writeHTMLCell(0, 0, '', '', $html, 0, 0, 0, true, 'R', true);
 
+        $html ='<b>חתימת לקוח:</b>';
+        $imgdata = base64_decode($form['client_sign']);
+        $pdf->writeHTMLCell('','', 100, 225, $html, 0, 0, 0, true, 'R', true);
+        $pdf->SetXY(160, 230);
+        
+        $pdf->Image('@' . $imgdata, '','', '', '', '', '', 'T', false, 150, '', false, false, 1, false, false, false);
         // ---------------------------------------------------------
 
         // Close and output PDF document
@@ -165,7 +171,7 @@ class Exportpdf extends CI_Controller
             $pdf->Output($filePath, 'F');
             chmod($filePath, 0664);
             if (!empty($filePath)) {
-                $this->SendEmail($filePath,$file_name);
+                $this->SendEmail($filePath, $file_name);
             } else {
                 print_r('Could not trace file path');
             }
@@ -174,7 +180,7 @@ class Exportpdf extends CI_Controller
         }
     }
 
-    function SendEmail($fileatt,$file_name)
+    function SendEmail($fileatt, $file_name)
     {
         $user =  $this->Users_model->getUser($this->session->userdata['logged_in']['id'])[0];
         if ($user['email'] != '') {
@@ -185,17 +191,17 @@ class Exportpdf extends CI_Controller
             $Message = 'Form sent from server ' . $_SERVER['SERVER_NAME'];
             $this->email
                 ->from($user['email'], 'Online Forms - ' . $user['name'])
-                ->to($user['email_to'].','.$user['email'])
+                ->to($user['email_to'] . ',' . $user['email'])
                 ->subject($Subject)
                 ->message($Message)
                 ->attach($fileatt);
 
             if ($this->email->send()) {
-                print_r('מייל נשלח ל:  ' . $user['email_to'].','.$user['email'] ." בהצלחה!");
+                print_r('מייל נשלח ל:  ' . $user['email_to'] . ',' . $user['email'] . " בהצלחה!");
             } else {
                 print_r($this->email->print_debugger());
             }
-        }else{
+        } else {
             print_r('לא יכול לשלוח מייל, דואר משתמש לא מוגדר או אין רשימת תפוצה. ');
         }
     }
@@ -218,7 +224,7 @@ class MYPDF extends TCPDF
         $image_file = $this->logo;
         $style = array('width' => 0.2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0));
         $this->Line(10, 10, 200, 10, $style);
-        $this->Image($image_file, 10, 10.5, 30, '', 'JPG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+        $this->Image($image_file, 10, 10.5, 30, '', '', '', 'T', false, 300, '', false, false, 0, false, false, false);
         // Set font
         $this->SetFont('dejavusans', '', 12, '', true);
         // Title
