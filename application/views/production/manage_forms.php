@@ -43,7 +43,7 @@ if (isset($this->session->userdata['logged_in'])) {
 						<th scope="col" class="mobile-hide">שם הלקוח</th>
 						<th scope="col" class="mobile-hide">מיקום</th>
 						<th scope="col" class="mobile-hide">סוג תקלה</th>
-						<th scope="col">חברת נותנת שירות</th>
+						<th scope="col">חברה נותנת שירות</th>
 						<th scope="col">ערוך</th>
 						<?php if ($user_role == "Admin") {
 							echo '<th scope="col">מחק</th>';
