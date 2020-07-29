@@ -18,7 +18,6 @@ class Users extends CI_Controller
         $role = ($this->session->userdata['logged_in']['role']);
         $data['users'] = $this->Users_model->getUsers();
         $this->load->view('header');
-        $this->load->view('header');
         $this->load->view('main_menu');
         if ($role != "Admin") {
             header("location: /");
