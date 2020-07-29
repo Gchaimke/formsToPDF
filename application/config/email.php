@@ -1,7 +1,5 @@
 <?php
 $config['useragent'] = 'CodeIgniter';
-$config['protocol'] = 'sendmail';
-//$config['mailPath'] = '/usr/sbin/sendmail';
 $config['wordwrap'] = TRUE;
 $config['wrapchars'] = 76;
 $config['mailtype'] = 'html';
