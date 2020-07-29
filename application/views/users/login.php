@@ -16,61 +16,9 @@ if (isset($this->session->userdata['logged_in'])) {
 
     <!-- Bootstrap core CSS -->
     <link href="<?php echo base_url('assets/css/bootstrap.css'); ?>" rel="stylesheet">
+    <link href="<?php echo base_url('assets/css/login.css?' . filemtime('assets/css/login.css')); ?>" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
-<style>
-    .rtl {
-        direction: rtl;
-    }
-
-    .center {
-        text-align: center;
-    }
-
-    .message {
-        color: black;
-    }
-
-    .error_msg {
-        color: #fd0000;
-    }
-
-    .message,
-    .error_msg {
-        font-size: larger;
-        font-weight: bold;
-    }
-
-    #cover {
-        background: #222 url('https://unsplash.it/1920/1080/?random') center center no-repeat;
-        background-size: cover;
-        height: 100%;
-        text-align: center;
-        display: flex;
-        align-items: center;
-        position: relative;
-    }
-
-    #cover-caption {
-        width: 100%;
-        position: relative;
-        z-index: 1;
-    }
-
-    /* only used for background overlay not needed for centering */
-    form:before {
-        content: '';
-        height: 100%;
-        left: 0;
-        position: absolute;
-        top: 0;
-        width: 100%;
-        background-color: rgba(255, 255, 255, 0.5);
-        z-index: -1;
-        border-radius: 10px;
-    }
-</style>
-
 <body>
     <section id="cover" class="min-vh-100">
         <div id="cover-caption">
