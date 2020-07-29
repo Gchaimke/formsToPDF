@@ -24,7 +24,6 @@
 				echo  "<a href='/production/new_form?company=$company_name' class='btn btn-primary  btn-block'>מלוי דוח</a>";
 				echo '</div></center></div>';
 			}
-
 			?>
 	</div>
 	</div>

@@ -4,11 +4,11 @@ body {
 
 .input-group-text {
     background-color: #d0eaff;
-    font-weight: 500;
+    font-weight: bolder;
 }
 
 .col-form-label {
-    font-weight: 500;
+    font-weight: bolder;
 }
 
 main {
@@ -29,7 +29,7 @@ main {
     direction: ltr;
 }
 
-body, .dropdown-item {
+.dropdown-item {
     text-align: right;
 }
 

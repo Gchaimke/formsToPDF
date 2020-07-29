@@ -97,7 +97,8 @@ class Production extends CI_Controller
 	public function view_form($id = '1')
 	{
 		$data = array();
-		$data['form_data'] = $this->Admin_model->getForm($id);
+        $data['form_data'] = $this->Admin_model->getForm($id);
+        $data['companies'] = $this->Companies_model->getCompanies();
 		$this->load->view('header');
 		$this->load->view('main_menu');
 		$this->load->view('production/view_form', $data);

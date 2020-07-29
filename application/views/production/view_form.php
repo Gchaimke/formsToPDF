@@ -33,7 +33,18 @@ if (isset($this->session->userdata['logged_in'])) {
                                           <div class="input-group-prepend">
                                                 <div class="input-group-text">תופס שייך לחברת</div>
                                           </div>
-                                          <input type='text' class="form-control " name='company' value="<?php echo $form_data['company'] ?>">
+                                          <select class='form-control' name='company'>
+                                                <?php if (isset($companies)) {
+                                                      foreach ($companies as $company) {
+                                                            if ($company['name'] == $form_data['company']) {
+                                                                  echo '<option selected>' . $company['name'] . '</option>';
+                                                            } else {
+                                                                  echo '<option>' . $company['name'] . '</option>';
+                                                            }
+                                                      }
+                                                }
+                                                ?>
+                                          </select>
                                     </div>
                               </div>
                               <div class="form-group col-md-6">
@@ -44,7 +55,6 @@ if (isset($this->session->userdata['logged_in'])) {
                                           <input type='text' class="form-control " name='creator' value="<?php echo $form_data['creator'] ?>">
                                     </div>
                               </div>
-
                         </div>
 
                         <div class="form-row">
