@@ -212,7 +212,7 @@ class Exportpdf extends CI_Controller
             $Subject = $file_name;
             $Message = 'Form sent from server ' . $_SERVER['SERVER_NAME'];
             $this->email
-                ->from($user['email'], 'Online Forms - ' . $user['name'])
+                ->from($user['name'].'@garin.co.il', 'Online Forms - ' . $user['name'])
                 ->to($recipients)
                 ->subject($Subject)
                 ->message($Message)
