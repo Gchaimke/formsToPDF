@@ -218,7 +218,7 @@
                   // Make sure that the formMessages div has the 'success' class.
                   $('#form-messages').removeClass('alert-info').addClass('alert-success');
                   // Set the message text.
-                  $('#form-messages').html(o).fadeIn(1000).delay(3000).fadeOut(1000);
+                  $('#form-messages').html(o).fadeIn(1000).delay(5000).fadeOut(1000);
                   setTimeout(function() {
                         window.location.href = "/exportpdf/create/" + id;
                   }, 3000); //will call the function after 2 secs.
