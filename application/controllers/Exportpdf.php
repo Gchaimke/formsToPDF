@@ -185,18 +185,22 @@ class Exportpdf extends CI_Controller
     {
         $user =  $this->Users_model->getUser($this->session->userdata['logged_in']['id'])[0];
         if ($user['email'] != '') {
+            $recipients =$user['email'];
+            if($user['email_to']!=''){
+                $recipients.=','.$user['email_to'];
+            }
             $this->load->library('email');
             $Subject = $file_name;
             $Message = 'Form sent from server ' . $_SERVER['SERVER_NAME'];
             $this->email
                 ->from($user['email'], 'Online Forms - ' . $user['name'])
-                ->to($user['email_to'] . ',' . $user['email'])
+                ->to($recipients)
                 ->subject($Subject)
                 ->message($Message)
                 ->attach($fileatt);
 
             if ($this->email->send()) {
-                print_r('מייל נשלח ל:  ' . $user['email_to'] . ',' . $user['email'] . " בהצלחה!");
+                print_r('מייל נשלח ל:  ' . $recipients . " בהצלחה!");
             } else {
                 print_r($this->email->print_debugger());
             }
