@@ -182,14 +182,22 @@ class Exportpdf extends CI_Controller
         //fix for new line in forms
         $needles = array("<br>", "&#13;", "<br/>", "\n");
         $replacement = "<br />";
-        str_replace($needles, $replacement, $string);
-        if (preg_match('/[^A-Za-z0-9]/', substr($string, 0, 1)) === 1) { //if string not starts from english or number
-            return $string;
-        } else if ($string == '') {
-            return "";
-        } else {
-            return "׳" . $string;
+        $string = str_replace($needles, $replacement, $string);
+
+        $arr = explode($replacement,$string);
+
+        //return $arr[0];
+        $out='';
+        foreach($arr as $line ){
+            if (preg_match('/[^A-Za-z0-9]/', substr($line, 0, 1)) === 1) { //if string not starts from english or number
+                    $out.=$line.$replacement;
+            } else if ($line == '') {
+                $out.= "";
+            } else {
+                $out.= "׳" . $line.$replacement;
+            }
         }
+        return $out;     
     }
 
     function SendEmail($fileatt, $file_name)
