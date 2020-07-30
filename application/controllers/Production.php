@@ -162,7 +162,7 @@ class Production extends CI_Controller
 			if ($response) {
 				echo "דוח נשמר בהצלחה!";
 			} else {
-				echo "אין אפשרות לשמור דוח! " . $this->input->post('id');
+				echo "אין אפשרות לשמור את הדוח! " . $this->input->post('id');
 			}
 		} else {
 			echo "יש בעיה בפרטים שצריך למאלות!";
