@@ -21,10 +21,6 @@ class Exportpdf extends CI_Controller
             $send_email = $_POST['email'];
         }
 
-        //fix for new line in forms
-        $needles = array("<br>", "&#13;", "<br/>", "\n");
-        $replacement = "<br />";
-
         $form = array();
         $form = $this->Admin_model->getForm($id)[0];
         $form['company_data'] = $this->Companies_model->getCompanies('', $form['company'])[0];
@@ -129,19 +125,19 @@ class Exportpdf extends CI_Controller
         <td>' . $form['contact_name'] . '</td>
         </tr><tr>
         <td style="width:160px;font-weight:bolder;font-size:13;">תיאור תקלה\ התקנה: </td>
-        <td>' . str_replace($needles, $replacement, $form['activity_text']) . '</td>
+        <td>' . $this->hebrewFix($form['activity_text']) . '</td>
         </tr><tr>
         <td style="width:160px;font-weight:bolder;font-size:13;">תוצאות הבדיקה: </td>
-        <td>' . str_replace($needles, $replacement, $form['checking_text']) . '</td>
+        <td>' . $this->hebrewFix($form['checking_text']) . '</td>
         </tr><tr>
         <td style="width:160px;font-weight:bolder;font-size:13;">סיכום</td>
-        <td>' . str_replace($needles, $replacement, $form['summary_text']) . '</td>
+        <td>' . $this->hebrewFix($form['summary_text']) . '</td>
         </tr><tr>
         <td style="width:160px;font-weight:bolder;font-size:13;">הערות: </td>
-        <td>' . str_replace($needles, $replacement, $form['remarks_text']) . '</td>
+        <td>' . $this->hebrewFix($form['remarks_text']) . '</td>
         </tr><tr>
         <td style="width:160px;font-weight:bolder;font-size:13;">המלצות: </td>
-        <td>' . str_replace($needles, $replacement, $form['recommendations_text']) . $add_trip . '</td>
+        <td>' . $this->hebrewFix($form['recommendations_text']) . $add_trip . '</td>
         </tr></table>';
         $pdf->writeHTMLCell(0, 0, '', '', $html, 0, 0, 0, true, 'R', true);
 
@@ -149,7 +145,7 @@ class Exportpdf extends CI_Controller
         $pdf->writeHTMLCell('', '', 20, 240, $html, 0, 0, 0, true, 'R', true);
 
         //write sign border
-        $pdf->writeHTMLCell('80', '30', 60, 230, '', 1 , 0, 0, true, 'R', true);
+        $pdf->writeHTMLCell('80', '30', 60, 230, '', 1, 0, 0, true, 'R', true);
 
         $pdf->SetXY(135, 235);
         $imgdata = base64_decode($form['client_sign']);
@@ -181,13 +177,28 @@ class Exportpdf extends CI_Controller
         }
     }
 
+    function hebrewFix($string)
+    {
+        //fix for new line in forms
+        $needles = array("<br>", "&#13;", "<br/>", "\n");
+        $replacement = "<br />";
+        str_replace($needles, $replacement, $string);
+        if (preg_match('/[^A-Za-z0-9]/', substr($string, 0, 1)) === 1) { //if string not starts from english or number
+            return $string;
+        } else if ($string == '') {
+            return "";
+        } else {
+            return "׳" . $string;
+        }
+    }
+
     function SendEmail($fileatt, $file_name)
     {
         $user =  $this->Users_model->getUser($this->session->userdata['logged_in']['id'])[0];
         if ($user['email'] != '') {
-            $recipients =$user['email'];
-            if($user['email_to']!=''){
-                $recipients.=','.$user['email_to'];
+            $recipients = $user['email'];
+            if ($user['email_to'] != '') {
+                $recipients .= ',' . $user['email_to'];
             }
             $this->load->library('email');
             $Subject = $file_name;
@@ -253,16 +264,17 @@ class MYPDF extends TCPDF
         $this->SetFont('dejavusans', '', 10, '', true);
 
         $this->SetTextColorArray($this->footer_text_color);
+        $this->SetY($cur_y -3);
+        //Print page number
+        $this->SetX($this->original_rMargin);
+        $this->MultiCell(180, 15, $this->footer, 'T', 'C', 0, 1, '', '', true);
+
         $w_page = isset($this->l['w_page']) ? $this->l['w_page'] . ' ' : '';
         if (empty($this->pagegroups)) {
             $pagenumtxt = "עמוד " . $w_page . $this->getAliasNumPage() . ' מתוך ' . $this->getAliasNbPages();
         } else {
             $pagenumtxt = "עמוד " . $w_page . $this->getPageNumGroupAlias() . ' מתוך ' . $this->getPageGroupAlias();
         }
-        $this->SetY($cur_y - 5);
-        //Print page number
-        $this->SetX($this->original_rMargin);
-        $this->MultiCell(180, 20, $this->footer, 'T', 'C', 0, 1, '', '', true);
         $this->SetX($this->k / 2);
         $this->SetAlpha(1);
         $this->Cell(0, 0, $pagenumtxt, 0, 0, 'C');
