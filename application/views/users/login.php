@@ -18,7 +18,14 @@ if (isset($this->session->userdata['logged_in'])) {
     <link href="<?php echo base_url('assets/css/bootstrap.css'); ?>" rel="stylesheet">
     <link href="<?php echo base_url('assets/css/login.css?' . filemtime('assets/css/login.css')); ?>" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <style>
+        #cover {
+            /*background: #222 url('https://unsplash.it/1920/1080/?random') center center no-repeat;*/
+            background: #222 url('<?php echo base_url('assets/img/backgrounds/').mt_rand(1,14).'.jpg'?>') center center no-repeat;
+        }
+    </style>
 </head>
+
 <body>
     <section id="cover" class="min-vh-100">
         <div id="cover-caption">
