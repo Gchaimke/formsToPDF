@@ -240,7 +240,7 @@ if (isset($this->session->userdata['logged_in'])) {
                               <label for="attachments" class="col-sm-2 col-form-label ">קבצים נוספים</label>
                               <div class="col-sm-10">
                                     <input id="fileupload" style="display:none;" type="file" name="files" data-url="/production/do_upload/<?php echo $form_data['company'] ?>" />
-                                    <textarea rows="3" cols="100" id="attachments" type="text" class="ltr" name="attachments"><?php echo $form_data['attachments'] ?></textarea>
+                                    <textarea rows="3" id="attachments" type="text" class="form-control ltr" cols="10" rows="3" name="attachments"><?php echo $form_data['attachments'] ?></textarea>
                                     <div id='files'></div>
                                     <button class="btn btn-outline-secondary col-sm-2" type="button" onclick="document.getElementById('fileupload').click();">העלה</button>
                               </div>
