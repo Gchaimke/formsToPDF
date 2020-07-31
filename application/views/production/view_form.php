@@ -262,7 +262,7 @@ if (isset($this->session->userdata['logged_in'])) {
                         </div>
 
                         <?php if ($user_role == "Admin") {
-                              echo "<input type='submit' class='btn btn-info' name='submit' value='עדכן תופס'>";
+                              echo "<input type='submit' id='save_btn' class='btn btn-info' name='submit' value='עדכן תופס'>";
                         }
                         ?>
 
@@ -288,6 +288,7 @@ if (isset($this->session->userdata['logged_in'])) {
       });
 
       function SendEmail() {
+            document.getElementById('save_btn').click();
             // Make sure that the formMessages div has the 'success' class.
             $('#form-messages').addClass('alert-info');
             // Set the message text.
