@@ -17,6 +17,11 @@ class Admin_model extends CI_Model
                 'constraint' => 30,
                 'unique' => TRUE
             ),
+            'view_name' => array(
+                'type' => 'VARCHAR',
+                'constraint' => 100,
+                'null' => TRUE
+            ),
             'role' => array(
                 'type' => 'VARCHAR',
                 'constraint' => 60

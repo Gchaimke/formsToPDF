@@ -2,6 +2,7 @@
 if (isset($this->session->userdata['logged_in'])) {
   $id = ($this->session->userdata['logged_in']['id']);
   $username = ($this->session->userdata['logged_in']['name']);
+  $user_view_name = ($this->session->userdata['logged_in']['view_name']);
   $role = ($this->session->userdata['logged_in']['role']);
 }
 ?>
@@ -27,7 +28,7 @@ if (isset($this->session->userdata['logged_in'])) {
     <ul class="navbar-nav  pull-right">
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          שלום <?php echo $username; ?>
+          שלום <?php echo $user_view_name; ?>
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <?php if ($role == 'Admin') { ?>

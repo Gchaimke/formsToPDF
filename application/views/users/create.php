@@ -47,7 +47,15 @@ if (isset($this->session->userdata['logged_in'])) {
                                     <div class="input-group-prepend">
                                           <div class="input-group-text">שם משתמש</div>
                                     </div>
-                                    <input type='text' class="form-control" placeholder="name" name='name' required>
+                                    <input type='text' class="form-control" name='name' required>
+                              </div>
+                        </div>
+                        <div class="form-row">
+                              <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                          <div class="input-group-text">שם שיוצג</div>
+                                    </div>
+                                    <input type='text' class="form-control" name='view_name' required>
                               </div>
                         </div>
 
@@ -79,7 +87,7 @@ if (isset($this->session->userdata['logged_in'])) {
                                     </div><textarea class="form-control ltr" name="email_to" cols="10" rows="3"></textarea>
                               </div>
                         </div>
-                        <input type='submit' class="btn btn-info btn-block" name='submit' value='Add User'>
+                        <input type='submit' class="btn btn-info" name='submit' value='הוסף משתמש'>
                         <?php echo form_close(); ?>
                   </div>
             </div>

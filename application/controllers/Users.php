@@ -37,6 +37,7 @@ class Users extends CI_Controller
             $this->form_validation->set_rules('name', 'Name', 'trim|required|xss_clean');
             $this->form_validation->set_rules('role', 'Role', 'trim|required|xss_clean');
             $this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean');
+            $this->form_validation->set_rules('view_name', 'view_name', 'trim|xss_clean');
             $this->form_validation->set_rules('email', 'email', 'trim|xss_clean');
             $this->form_validation->set_rules('email_to', 'email_to', 'trim|xss_clean');
             if ($this->form_validation->run() == FALSE) {
@@ -48,6 +49,7 @@ class Users extends CI_Controller
             } else {
                 $data = array(
                     'name' => $this->input->post('name'),
+                    'view_name' => $this->input->post('view_name'),
                     'role' => $this->input->post('role'),
                     'password' => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
                     'email' => $this->input->post('email'),
@@ -91,6 +93,7 @@ class Users extends CI_Controller
         // Check validation for user input in SignUp form
         $this->form_validation->set_rules('id', 'Id', 'trim|xss_clean');
         $this->form_validation->set_rules('name', 'Name', 'trim|xss_clean');
+        $this->form_validation->set_rules('view_name', 'Name', 'trim|xss_clean');
         $this->form_validation->set_rules('role', 'Role', 'trim|xss_clean');
         $this->form_validation->set_rules('password', 'Password', 'trim|xss_clean');
         $this->form_validation->set_rules('email', 'email', 'trim|xss_clean');
@@ -107,6 +110,7 @@ class Users extends CI_Controller
                 $sql = array(
                     'id' => $this->input->post('id'),
                     'name' => $this->input->post('name'),
+                    'view_name' => $this->input->post('view_name'),
                     'role' => $this->input->post('role'),
                     'email' => $this->input->post('email'),
                     'email_to' => $this->input->post('email_to')
@@ -120,6 +124,7 @@ class Users extends CI_Controller
             } else {
                 $sql = array(
                     'id' => $this->input->post('id'),
+                    'view_name' => $this->input->post('view_name'),
                     'email' => $this->input->post('email'),
                     'email_to' => $this->input->post('email_to')
                 );
@@ -173,6 +178,7 @@ class Users extends CI_Controller
                     $session_data = array(
                         'id' => $result[0]->id,
                         'name' => $result[0]->name,
+                        'view_name' => $result[0]->view_name,
                         'role' => $result[0]->role,
                         'email' => $result[0]->email,
                         'email_to' => $result[0]->email_to

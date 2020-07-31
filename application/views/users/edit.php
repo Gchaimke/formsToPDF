@@ -7,12 +7,13 @@ if (isset($this->session->userdata['logged_in']) && isset($user)) {
 	}
 }
 ?>
+<div id="form-messages" class='alert hidden' role='alert'></div>
 <main role="main">
 	<div class="jumbotron">
 		<div class="container">
 			<center>
 				<h5>ערוך פרטים</h5>
-				<div id="form-messages" class='alert hidden' role='alert'></div>
+				
 			</center>
 		</div>
 	</div>
@@ -56,9 +57,17 @@ if (isset($this->session->userdata['logged_in']) && isset($user)) {
 						<div class="input-group-prepend">
 							<div class="input-group-text">שם משתמש</div>
 						</div>
-						<input type='text' class="form-control" placeholder="name" name='name' value="<?php echo $user['name'] ?>" <?php if ($current_role != "Admin") {
+						<input type='text' class="form-control" name='name' value="<?php echo $user['name'] ?>" <?php if ($current_role != "Admin") {
 																																		echo 'disabled';
 																																	} ?>>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="input-group mb-2">
+						<div class="input-group-prepend">
+							<div class="input-group-text">שם שיוצג</div>
+						</div>
+						<input type='text' class="form-control" name='view_name' value="<?php echo $user['view_name'] ?>">
 					</div>
 				</div>
 
