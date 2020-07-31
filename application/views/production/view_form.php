@@ -206,16 +206,7 @@ if (isset($this->session->userdata['logged_in'])) {
                               <div class="col-sm-10">
                                     <textarea class="form-control" name="recommendations_text" cols="10" rows="3" placeholder="המלצות"><?php echo $form_data['recommendations_text'] ?></textarea>
                               </div>
-                        </div>
-
-                        <div class="form-group col-md-12">
-                              <div class="input-group mb-4">
-                                    <div class="input-group-prepend">
-                                          <div class="input-group-text">רשימת תפוצה</div>
-                                    </div>
-                                    <input type='text' class="form-control ltr" name='email_to' value="<?php echo $form_data['email_to'] ?>">
-                              </div>
-                        </div>
+                        </div><hr/>
 
                         <div class="form-row">
                               <div class="form-group col-md-3">
@@ -234,7 +225,15 @@ if (isset($this->session->userdata['logged_in'])) {
                                     <label for="back_end_time" class=" col-form-label ">נסיעה חזור סיום</label>
                                     <input type='time' class="form-control" name='back_end_time' value="<?php echo $form_data['back_end_time'] ?>">
                               </div>
-                        </div>
+                        </div><hr/>
+                        <div class="form-group col-md-12">
+                              <div class="input-group mb-4">
+                                    <div class="input-group-prepend">
+                                          <div class="input-group-text">רשימת תפוצה</div>
+                                    </div>
+                                    <input type='text' class="form-control ltr" name='email_to' value="<?php echo $form_data['email_to'] ?>">
+                              </div>
+                        </div><hr/>
 
                         <div class="form-group row">
                               <label for="attachments" class="col-sm-2 col-form-label ">קבצים נוספים</label>
@@ -244,7 +243,7 @@ if (isset($this->session->userdata['logged_in'])) {
                                     <div id='files'></div>
                                     <button class="btn btn-outline-secondary col-sm-2" type="button" onclick="document.getElementById('fileupload').click();">העלה</button>
                               </div>
-                        </div>
+                        </div><hr/>
 
                         <div class="form-group row">
                               <label for="recommendations_text" class="col-sm-2 col-form-label "> חתימת לקוח שמורה:</label>
@@ -259,15 +258,15 @@ if (isset($this->session->userdata['logged_in'])) {
                                     <input type='text' id="client_sign" name='client_sign' hidden>
                                     <a href="#sign-canvas" class="btn btn-info btn-block" onclick='$("#sign-canvas").data("jqScribble").clear();'>נקה חתימה</a>
                               </div>
-                        </div>
+                        </div><hr/>
 
                         <?php if ($user_role == "Admin") {
-                              echo "<input type='submit' id='save_btn' class='btn btn-info' name='submit' value='עדכן תופס'>";
+                              echo "<input type='submit' id='save_btn' class='btn btn-success' name='submit' value='עדכן תופס'>";
                         }
                         ?>
 
                         <a target="_blank" class="btn btn-info" href="/exportpdf/create/<?php echo $form_data['id'] ?>">הצג PDF</a>
-                        <a class="btn btn-info" href="#" onclick="SendEmail()">שלח PDF</a>
+                        <a class="btn btn-danger" href="#" onclick="SendEmail()">שלח PDF</a>
                         <?php echo form_close(); ?>
 
                   <?php } else {
@@ -286,9 +285,9 @@ if (isset($this->session->userdata['logged_in'])) {
                   height: 100
             });
 
-            $('input').change(function(){
+            /*$('input').change(function(){
                   document.getElementById('save_btn').click();
-            });
+            });*/
       });
 
       function SendEmail() {
@@ -324,16 +323,17 @@ if (isset($this->session->userdata['logged_in'])) {
                   data.context.css("background-position-x", 100 - progress + "%");
             },
             done: function(e, data) {
+                  var new_file = 'Uploads/forms_attachments/'+'<?php echo $form_data['company'] ?>'+'/'+data.result;
                   setTimeout(function() {
                         data.context.addClass("done");
                   }, 1000);
                   if ($('#attachments').val() == '') {
-                        $('#attachments').val(data.result);
+                        $('#attachments').val(new_file);
                   } else {
-                        $('#attachments').val($('#attachments').val() + "," + data.result);
+                        $('#attachments').val($('#attachments').val() + "," + new_file);
                   }
 
-                  console.log(data.result);
+                  console.log(new_file);
             }
       });
 </script>

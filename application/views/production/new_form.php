@@ -159,13 +159,31 @@
                         <div class="col-sm-10">
                               <textarea class="form-control" name="recommendations_text" cols="10" rows="3"></textarea>
                         </div>
-                  </div>
+                  </div><hr/>
+                  <div class="form-row">
+                        <div class="form-group col-md-3">
+                              <label for="trip_start_time" class=" col-form-label ">נסיעה הלוך התחלה</label>
+                              <input type='time' class="form-control" name='trip_start_time'>
+                        </div>
+                        <div class="form-group col-md-3">
+                              <label for="trip_end_time" class="col-form-label ">נסיעה הלוך סיום</label>
+                              <input type='time' class="form-control" name='trip_end_time'>
+                        </div>
+                        <div class="form-group col-md-3">
+                              <label for="back_start_time" class=" col-form-label ">נסיעה חזור התחלה</label>
+                              <input type='time' class="form-control" name='back_start_time'>
+                        </div>
+                        <div class="form-group col-md-3">
+                              <label for="back_end_time" class=" col-form-label ">נסיעה חזור סיום</label>
+                              <input type='time' class="form-control" name='back_end_time'>
+                        </div>
+                  </div><hr/>
                   <div class="form-group row" id="emails">
                         <label for="email_to" class="col-sm-2 col-form-label ">למי לשלוח מייל:</label>
                         <?php
                         $emails_arr = preg_split('/\r\n|[\r\n]/', $user['email_to']);
                         $len = count($emails_arr);
-                        if ($len > 0 && $emails_arr[0]!='') {
+                        if ($len > 0 && $emails_arr[0] != '') {
                               $firsthalf = array_slice($emails_arr, 0, $len / 2);
                               $secondhalf = array_slice($emails_arr, $len / 2);
                               echo '<div class="col-sm-5">';
@@ -188,47 +206,23 @@
                               </div>";
                               }
                               echo '</div>';
-                        }else{
+                        } else {
                               echo '<div class="col-sm-5">אין פריטים ברשימת תפוצה של משתמש</div>';
                         }
                         ?>
+                        <input type="hidden" id="sum" class="form-control ltr" name='email_to' value="">
+                  </div><hr/>
 
-                  </div>
-                  <div class="form-group row">
-                        <label for="email_to" class="col-sm-2 col-form-label ">רשימת תפוצה</label>
-                        <div class="col-sm-10">
-                              <input type='text' id="sum" class="form-control ltr" name='email_to'>
-                        </div>
-                  </div>
-
-                  <div class="form-row">
-                        <div class="form-group col-md-3">
-                              <label for="trip_start_time" class=" col-form-label ">נסיעה הלוך התחלה</label>
-                              <input type='time' class="form-control" name='trip_start_time'>
-                        </div>
-                        <div class="form-group col-md-3">
-                              <label for="trip_end_time" class="col-form-label ">נסיעה הלוך סיום</label>
-                              <input type='time' class="form-control" name='trip_end_time'>
-                        </div>
-                        <div class="form-group col-md-3">
-                              <label for="back_start_time" class=" col-form-label ">נסיעה חזור התחלה</label>
-                              <input type='time' class="form-control" name='back_start_time'>
-                        </div>
-                        <div class="form-group col-md-3">
-                              <label for="back_end_time" class=" col-form-label ">נסיעה חזור סיום</label>
-                              <input type='time' class="form-control" name='back_end_time'>
-                        </div>
-                  </div>
 
                   <div class="form-group row">
                         <label for="attachments" class="col-sm-2 col-form-label ">קבצים נוספים</label>
                         <div class="col-sm-10">
                               <input id="fileupload" style="display:none;" type="file" name="files" data-url="/production/do_upload/<?php echo $_GET['company'] ?>" />
-                              <textarea rows="3" cols="100" id="attachments" type="text" class="ltr" name="attachments"></textarea>
+                              <input type="hidden" id="attachments" value="" name="attachments"/>
                               <div id='files'></div>
                               <button class="btn btn-outline-secondary col-sm-2" type="button" onclick="document.getElementById('fileupload').click();">העלה</button>
                         </div>
-                  </div>
+                  </div><hr/>
 
                   <div class="form-row">
                         <div class="form-group col-md-12">
@@ -239,7 +233,7 @@
                               <input type='text' id="client_sign" name='client_sign' hidden>
                               <a href="#sign-canvas" class="btn btn-info btn-block" onclick='$("#sign-canvas").data("jqScribble").clear();'>נקה חתימה</a>
                         </div>
-                  </div>
+                  </div><hr/>
 
                   <input type='submit' class="btn btn-info btn-block" name='submit' value='שמור ושלח לרשימת תפוצה'>
                   <?php echo form_close(); ?>
@@ -327,16 +321,16 @@
                   data.context.css("background-position-x", 100 - progress + "%");
             },
             done: function(e, data) {
+                  var new_file = 'Uploads/forms_attachments/'+'<?php echo $_GET['company'] ?>'+'/'+data.result;
                   setTimeout(function() {
                         data.context.addClass("done");
                   }, 1000);
                   if ($('#attachments').val() == '') {
-                        $('#attachments').val(data.result);
+                        $('#attachments').val(new_file);
                   } else {
-                        $('#attachments').val($('#attachments').val() + "," + data.result);
+                        $('#attachments').val($('#attachments').val() + "," + new_file);
                   }
-
-                  console.log(data.result);
+                  console.log(new_file);
             }
       });
 </script>

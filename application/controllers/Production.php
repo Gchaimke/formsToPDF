@@ -349,7 +349,7 @@ class Production extends CI_Controller
         $this->load->library('upload', $config);
         if ($this->upload->do_upload('files')) {
             $data = array('upload_data' => $this->upload->data());
-            echo $data['upload_data']['full_path'];
+            echo  $data['upload_data']["file_name"];
         } else {
             $error = array('error' => $this->upload->display_errors());
             print_r($error);
