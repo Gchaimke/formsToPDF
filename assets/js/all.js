@@ -199,7 +199,7 @@ $('#ajax-form').submit(function (event) {
         // Make sure that the formMessages div has the 'success' class.
         $('#form-messages').addClass('alert-success');
         // Set the message text.
-        $('#form-messages').text(response).fadeIn(1000).delay(3000).fadeOut(1000); //show message
+        $('#form-messages').text(response).fadeIn(1000).delay(3000).fadeOut(5000); //show message
         setTimeout(function () {
             location.reload();
         }, 3000); //will call the function after 2 secs.
@@ -207,7 +207,7 @@ $('#ajax-form').submit(function (event) {
         // Make sure that the formMessages div has the 'error' class.
         $('#form-messages').addClass('alert-danger');
         // Set the message text.
-        $('#form-messages').text('אין אפשרות לשמור שינוים' + response).fadeIn(1000).delay(3000).fadeOut(1000);
+        $('#form-messages').text('אין אפשרות לשמור שינוים' + response).fadeIn(1000).delay(3000).fadeOut(5000);
     });
 
 });

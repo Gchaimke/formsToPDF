@@ -115,6 +115,8 @@ class Users extends CI_Controller
                     $sql += array('password' => $this->input->post('password'));
                 }
                 print_r($this->Users_model->editUser($sql));
+                // Add user data in session
+                $this->session->set_userdata('logged_in', $sql);
             } else {
                 $sql = array(
                     'id' => $this->input->post('id'),
@@ -125,6 +127,7 @@ class Users extends CI_Controller
                     $sql += array('password' => $this->input->post('password'));
                 }
                 print_r($this->Users_model->editUser($sql));
+                $this->session->set_userdata('logged_in', $sql);
             }
         }
     }
@@ -171,6 +174,8 @@ class Users extends CI_Controller
                         'id' => $result[0]->id,
                         'name' => $result[0]->name,
                         'role' => $result[0]->role,
+                        'email' => $result[0]->email,
+                        'email_to' => $result[0]->email_to
                     );
                     // Add user data in session
                     $this->session->set_userdata('logged_in', $session_data);

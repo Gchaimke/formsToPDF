@@ -1,3 +1,27 @@
+<?php $user = $this->session->userdata['logged_in']; ?>
+<script src="<?php echo base_url('assets/js/jQUpload/jquery.ui.widget.js'); ?>"></script>
+<script src="<?php echo base_url('assets/js/jQUpload/jquery.iframe-transport.js'); ?>"></script>
+<script src="<?php echo base_url('assets/js/jQUpload/jquery.fileupload.js'); ?>"></script>
+<style>
+      .file {
+            position: relative;
+            background: linear-gradient(to right, lightblue 50%, transparent 50%);
+            background-size: 200% 100%;
+            background-position: right bottom;
+            transition: all 1s ease;
+      }
+
+      .file.done {
+            background: lightgreen;
+      }
+
+      .file a {
+            display: block;
+            position: relative;
+            padding: 5px;
+            color: black;
+      }
+</style>
 <div id="form-messages" class='alert hidden test' role='alert'></div>
 <main role="main">
       <div class="jumbotron">
@@ -52,7 +76,7 @@
                                     <div class="input-group-prepend">
                                           <div class="input-group-text"><span class="red">*</span>מספר פניה \ תקלה</div>
                                     </div>
-                                    <input type='text' class="form-control" name='issue_num' required>
+                                    <input type='text' id='issue_num' class="form-control" name='issue_num' required>
                               </div>
                         </div>
                         <div class="form-group col-md-4">
@@ -136,6 +160,43 @@
                               <textarea class="form-control" name="recommendations_text" cols="10" rows="3"></textarea>
                         </div>
                   </div>
+                  <div class="form-group row" id="emails">
+                        <label for="email_to" class="col-sm-2 col-form-label ">למי לשלוח מייל:</label>
+                        <?php
+                        $emails_arr = preg_split('/\r\n|[\r\n]/', $user['email_to']);
+                        $len = count($emails_arr);
+
+                        $firsthalf = array_slice($emails_arr, 0, $len / 2);
+                        $secondhalf = array_slice($emails_arr, $len / 2);
+                        echo '<div class="col-sm-5">';
+                        foreach ($firsthalf as $email) {
+                              echo "<div class='input-group'>
+                              <div class='input-group-text'>
+                              <input type='checkbox' value='$email'>
+                              </div>
+                              <label class='col-sm-2 col-form-label'>$email</label>
+                              </div>";
+                        }
+                        echo '</div>';
+                        echo '<div class="col-sm-5">';
+                        foreach ($secondhalf as $email) {
+                              echo "<div class='input-group'>
+                              <div class='input-group-text'>
+                              <input type='checkbox' value='$email'>
+                              </div>
+                              <label class='col-sm-2 col-form-label'>$email</label>
+                              </div>";
+                        }
+                        echo '</div>';
+                        ?>
+
+                  </div>
+                  <div class="form-group row">
+                        <label for="email_to" class="col-sm-2 col-form-label ">רשימת תפוצה</label>
+                        <div class="col-sm-10">
+                              <input type='text' id="sum" class="form-control ltr" name='email_to'>
+                        </div>
+                  </div>
 
                   <div class="form-row">
                         <div class="form-group col-md-3">
@@ -155,6 +216,17 @@
                               <input type='time' class="form-control" name='back_end_time'>
                         </div>
                   </div>
+
+                  <div class="form-group row">
+                        <label for="attachments" class="col-sm-2 col-form-label ">קבצים נוספים</label>
+                        <div class="col-sm-10">
+                              <input id="fileupload" style="display:none;" type="file" name="files" data-url="/production/do_upload/<?php echo $_GET['company'] ?>" />
+                              <textarea rows="3" cols="100" id="attachments" type="text" class="ltr" name="attachments"></textarea>
+                              <div id='files'></div>
+                              <button class="btn btn-outline-secondary col-sm-2" type="button" onclick="document.getElementById('fileupload').click();">העלה</button>
+                        </div>
+                  </div>
+
                   <div class="form-row">
                         <div class="form-group col-md-12">
                               <label for="back_start_time" class=" col-form-label ">חתימת לקוח</label>
@@ -179,7 +251,18 @@
             $("#sign-canvas").data('jqScribble').update({
                   width: 300,
                   height: 100
-            })
+            });
+
+            var sum = '';
+            $('#emails :checkbox').click(function() {
+                  sum = '';
+                  $('#emails :checkbox:checked').each(function(idx, elm) {
+                        sum += elm.value + ", ";
+                  });
+
+                  $('#sum').val(sum);
+
+            });
       });
 
       $('#new-form').submit(function(event) {
@@ -229,4 +312,30 @@
                   $('#form-messages').html(o).fadeIn(1000);
             });
       }
+
+      $("#fileupload").fileupload({
+            autoUpload: true,
+            add: function(e, data) {
+                  data.context = $('<p class="file ltr">')
+                        .append($('<span>').text(data.files[0].name))
+                        .appendTo('#files');
+                  data.submit();
+            },
+            progress: function(e, data) {
+                  var progress = parseInt((data.loaded / data.total) * 100, 10);
+                  data.context.css("background-position-x", 100 - progress + "%");
+            },
+            done: function(e, data) {
+                  setTimeout(function() {
+                        data.context.addClass("done");
+                  }, 1000);
+                  if ($('#attachments').val() == '') {
+                        $('#attachments').val(data.result);
+                  } else {
+                        $('#attachments').val($('#attachments').val() + ", " + data.result);
+                  }
+
+                  console.log(data.result);
+            }
+      });
 </script>

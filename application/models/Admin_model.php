@@ -31,8 +31,7 @@ class Admin_model extends CI_Model
                 'null' => TRUE
             ),
             'email_to' => array(
-                'type' => 'VARCHAR',
-                'constraint' => 500,
+                'type' => 'TEXT',
                 'null' => TRUE
             ),
             'log' => array(
@@ -197,6 +196,10 @@ class Admin_model extends CI_Model
                 'type' => 'TEXT',
                 'null' => TRUE
             ),
+            'email_to' => array(
+                'type' => 'TEXT',
+                'null' => TRUE
+            ),
             'client_sign' => array(
                 'type' => 'TEXT',
                 'null' => TRUE
@@ -211,6 +214,10 @@ class Admin_model extends CI_Model
             ),
             'back_start_time' => array(
                 'type' => 'TIME',
+                'null' => TRUE
+            ),
+            'attachments' => array(
+                'type' => 'TEXT',
                 'null' => TRUE
             ),
             'back_end_time' => array(

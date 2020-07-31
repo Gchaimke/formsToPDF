@@ -3,6 +3,29 @@ if (isset($this->session->userdata['logged_in'])) {
       $user_role = $this->session->userdata['logged_in']['role'];
 }
 ?>
+<script src="<?php echo base_url('assets/js/jQUpload/jquery.ui.widget.js'); ?>"></script>
+<script src="<?php echo base_url('assets/js/jQUpload/jquery.iframe-transport.js'); ?>"></script>
+<script src="<?php echo base_url('assets/js/jQUpload/jquery.fileupload.js'); ?>"></script>
+<style>
+      .file {
+            position: relative;
+            background: linear-gradient(to right, lightblue 50%, transparent 50%);
+            background-size: 200% 100%;
+            background-position: right bottom;
+            transition: all 1s ease;
+      }
+
+      .file.done {
+            background: lightgreen;
+      }
+
+      .file a {
+            display: block;
+            position: relative;
+            padding: 5px;
+            color: black;
+      }
+</style>
 <div id="form-messages" class='alert hidden' role='alert'></div>
 <main role="main">
       <div class="jumbotron">
@@ -185,6 +208,15 @@ if (isset($this->session->userdata['logged_in'])) {
                               </div>
                         </div>
 
+                        <div class="form-group col-md-12">
+                              <div class="input-group mb-4">
+                                    <div class="input-group-prepend">
+                                          <div class="input-group-text">רשימת תפוצה</div>
+                                    </div>
+                                    <input type='text' class="form-control ltr" name='contact_name' value="<?php echo $form_data['email_to'] ?>">
+                              </div>
+                        </div>
+
                         <div class="form-row">
                               <div class="form-group col-md-3">
                                     <label for="trip_start_time" class=" col-form-label ">נסיעה הלוך התחלה</label>
@@ -201,6 +233,16 @@ if (isset($this->session->userdata['logged_in'])) {
                               <div class="form-group col-md-3">
                                     <label for="back_end_time" class=" col-form-label ">נסיעה חזור סיום</label>
                                     <input type='time' class="form-control" name='back_end_time' value="<?php echo $form_data['back_end_time'] ?>">
+                              </div>
+                        </div>
+
+                        <div class="form-group row">
+                              <label for="attachments" class="col-sm-2 col-form-label ">קבצים נוספים</label>
+                              <div class="col-sm-10">
+                                    <input id="fileupload" style="display:none;" type="file" name="files" data-url="/production/do_upload/<?php echo $form_data['company'] ?>" />
+                                    <textarea rows="3" cols="100" id="attachments" type="text" class="ltr" name="attachments"><?php echo $form_data['attachments'] ?></textarea>
+                                    <div id='files'></div>
+                                    <button class="btn btn-outline-secondary col-sm-2" type="button" onclick="document.getElementById('fileupload').click();">העלה</button>
                               </div>
                         </div>
 
@@ -263,4 +305,30 @@ if (isset($this->session->userdata['logged_in'])) {
                   $('#form-messages').html(o).fadeIn(1000);
             });
       }
+
+      $("#fileupload").fileupload({
+            autoUpload: true,
+            add: function(e, data) {
+                  data.context = $('<p class="file ltr">')
+                        .append($('<span>').text(data.files[0].name))
+                        .appendTo('#files');
+                  data.submit();
+            },
+            progress: function(e, data) {
+                  var progress = parseInt((data.loaded / data.total) * 100, 10);
+                  data.context.css("background-position-x", 100 - progress + "%");
+            },
+            done: function(e, data) {
+                  setTimeout(function() {
+                        data.context.addClass("done");
+                  }, 1000);
+                  if ($('#attachments').val() == '') {
+                        $('#attachments').val(data.result);
+                  } else {
+                        $('#attachments').val($('#attachments').val() + "," + data.result);
+                  }
+
+                  console.log(data.result);
+            }
+      });
 </script>

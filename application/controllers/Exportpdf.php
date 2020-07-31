@@ -161,14 +161,21 @@ class Exportpdf extends CI_Controller
         //the option E: return the document as base64 mime multi-part email attachment (RFC 2045)
         if ($send_email) {
             define('UPLOAD_DIR',  FCPATH . '/Uploads/PDF/');
-            $filePath = UPLOAD_DIR . $file_name . '.pdf';
+            $pdf_file = UPLOAD_DIR . $file_name . '.pdf';
             if (!file_exists(UPLOAD_DIR)) {
                 mkdir(UPLOAD_DIR, 0770, true);
             }
-            $pdf->Output($filePath, 'F');
-            chmod($filePath, 0664);
-            if (!empty($filePath)) {
-                $this->SendEmail($filePath, $file_name);
+            $pdf->Output($pdf_file, 'F');
+            chmod($pdf_file, 0664);
+            $attachments = array($pdf_file);
+            if (!empty($pdf_file)) {
+                if ($form['attachments'] != '') {
+                    $form_att_arr = explode(',',$form['attachments']);
+                    foreach( $form_att_arr as $att){
+                        array_push($attachments,$att);
+                    }
+                }
+                $this->SendEmail($attachments, $file_name, $form['email_to']);
             } else {
                 print_r('Could not trace file path');
             }
@@ -184,39 +191,40 @@ class Exportpdf extends CI_Controller
         $replacement = "<br />";
         $string = str_replace($needles, $replacement, $string);
 
-        $arr = explode($replacement,$string);
+        $arr = explode($replacement, $string);
 
         //return $arr[0];
-        $out='';
-        foreach($arr as $line ){
+        $out = '';
+        foreach ($arr as $line) {
             if (preg_match('/[^A-Za-z0-9]/', substr($line, 0, 1)) === 1) { //if string not starts from english or number
-                    $out.=$line.$replacement;
+                $out .= $line . $replacement;
             } else if ($line == '') {
-                $out.= "";
+                $out .= "";
             } else {
-                $out.= "׳" . $line.$replacement;
+                $out .= "׳" . $line . $replacement;
             }
         }
-        return $out;     
+        return $out;
     }
 
-    function SendEmail($fileatt, $file_name)
+    function SendEmail($attachments, $file_name, $recipients)
     {
         $user =  $this->Users_model->getUser($this->session->userdata['logged_in']['id'])[0];
         if ($user['email'] != '') {
-            $recipients = $user['email'];
-            if ($user['email_to'] != '') {
-                $recipients .= ',' . $user['email_to'];
-            }
+            $recipients .= $user['email'];
             $this->load->library('email');
             $Subject = $file_name;
             $Message = 'Form sent from server ' . $_SERVER['SERVER_NAME'];
             $this->email
-                ->from($user['name'].'@garin.co.il', 'Online Forms - ' . $user['name'])
+                ->from($user['name'] . '@garin.co.il', 'Online Forms - ' . $user['name'])
                 ->to($recipients)
                 ->subject($Subject)
-                ->message($Message)
-                ->attach($fileatt);
+                ->message($Message);
+            foreach ($attachments as $att) {
+                $this->email->attach($att);
+            }
+
+            //$this->email->attach('C:/laragon/www/formsToPDF/Uploads/forms_attachments/Cellcom/ishur_refui_alex.pdf');
 
             if ($this->email->send()) {
                 print_r('מייל נשלח ל:  ' . $recipients . " בהצלחה!");
@@ -226,6 +234,7 @@ class Exportpdf extends CI_Controller
         } else {
             print_r('לא יכול לשלוח מייל, דואר משתמש לא מוגדר או אין רשימת תפוצה. ');
         }
+        $this->email->clear(TRUE);
     }
 }
 
@@ -272,7 +281,7 @@ class MYPDF extends TCPDF
         $this->SetFont('dejavusans', '', 10, '', true);
 
         $this->SetTextColorArray($this->footer_text_color);
-        $this->SetY($cur_y -3);
+        $this->SetY($cur_y - 3);
         //Print page number
         $this->SetX($this->original_rMargin);
         $this->MultiCell(180, 15, $this->footer, 'T', 'C', 0, 1, '', '', true);
