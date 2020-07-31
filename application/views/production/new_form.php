@@ -285,7 +285,7 @@
                         // Set the message text.
                         $('#form-messages').html('אין אפשרות לשמור את השינוים ' + response).fadeIn(1000);
                   }
-            }).fail(function() {
+            }).fail(function(response) {
                   $('#form-messages').addClass('alert-danger');
                   // Set the message text.
                   $('#form-messages').html('אין אפשרות לשמור שינוים' + response).fadeIn(1000);
