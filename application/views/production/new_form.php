@@ -165,7 +165,7 @@
                         <?php
                         $emails_arr = preg_split('/\r\n|[\r\n]/', $user['email_to']);
                         $len = count($emails_arr);
-                        if ($len > 0) {
+                        if ($len > 0 && $emails_arr[0]!='') {
                               $firsthalf = array_slice($emails_arr, 0, $len / 2);
                               $secondhalf = array_slice($emails_arr, $len / 2);
                               echo '<div class="col-sm-5">';
