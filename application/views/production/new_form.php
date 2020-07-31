@@ -165,29 +165,32 @@
                         <?php
                         $emails_arr = preg_split('/\r\n|[\r\n]/', $user['email_to']);
                         $len = count($emails_arr);
-
-                        $firsthalf = array_slice($emails_arr, 0, $len / 2);
-                        $secondhalf = array_slice($emails_arr, $len / 2);
-                        echo '<div class="col-sm-5">';
-                        foreach ($firsthalf as $email) {
-                              echo "<div class='input-group'>
+                        if ($len > 0) {
+                              $firsthalf = array_slice($emails_arr, 0, $len / 2);
+                              $secondhalf = array_slice($emails_arr, $len / 2);
+                              echo '<div class="col-sm-5">';
+                              foreach ($firsthalf as $email) {
+                                    echo "<div class='input-group'>
                               <div class='input-group-text'>
                               <input type='checkbox' value='$email'>
                               </div>
                               <label class='col-sm-2 col-form-label'>$email</label>
                               </div>";
-                        }
-                        echo '</div>';
-                        echo '<div class="col-sm-5">';
-                        foreach ($secondhalf as $email) {
-                              echo "<div class='input-group'>
+                              }
+                              echo '</div>';
+                              echo '<div class="col-sm-5">';
+                              foreach ($secondhalf as $email) {
+                                    echo "<div class='input-group'>
                               <div class='input-group-text'>
                               <input type='checkbox' value='$email'>
                               </div>
                               <label class='col-sm-2 col-form-label'>$email</label>
                               </div>";
+                              }
+                              echo '</div>';
+                        }else{
+                              echo '<div class="col-sm-5">אין מאיילים ברשימת תפוצה של משתמש</div>';
                         }
-                        echo '</div>';
                         ?>
 
                   </div>
