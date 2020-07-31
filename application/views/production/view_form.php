@@ -298,15 +298,13 @@ if (isset($this->session->userdata['logged_in'])) {
 <script>
       $(document).ready(function() {
             //startup scripts here
-            $("#sign-canvas").jqScribble();
-            $("#sign-canvas").data('jqScribble').update({
-                  width: 300,
-                  height: 100
-            });
-
-            /*$('input').change(function(){
-                  document.getElementById('save_btn').click();
-            });*/
+            if ($("#sign-canvas").length && $("#client_sign").length) {
+                  $("#sign-canvas").jqScribble();
+                  $("#sign-canvas").data('jqScribble').update({
+                        width: 300,
+                        height: 100
+                  });
+            }
 
             $("#creator_id").change(function() {
                   $("#creator_name").val($("#creator_id option:selected").text());
@@ -355,7 +353,6 @@ if (isset($this->session->userdata['logged_in'])) {
                   } else {
                         $('#attachments').val($('#attachments').val() + "," + new_file);
                   }
-
                   console.log(new_file);
             }
       });
