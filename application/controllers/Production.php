@@ -247,7 +247,7 @@ class Production extends CI_Controller
             if ($user_role != 'Admin' && $form['creator'] != $user_view_name)
                 continue;
             $str .= "<a class='badge badge-info' href='/production/view_form/" . $form["id"] .
-             "?issue=" . $form["issue_num"] . "'>" . urldecode($form["client_name"]) . ": " . $form["issue_num"] . "</a>";
+             "?issue=" . $form["issue_num"] . "'>" . urldecode($form["client_name"]) . ": " . $form["date"] . "</a>";
             $count++;
         }
         echo "<h2>מצאתי " . $count . " דוחות.</h2>" . $str;
