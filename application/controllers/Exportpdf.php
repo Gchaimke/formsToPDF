@@ -190,10 +190,7 @@ class Exportpdf extends CI_Controller
         $needles = array("<br>", "&#13;", "<br/>", "\n");
         $replacement = "<br />";
         $string = str_replace($needles, $replacement, $string);
-
         $arr = explode($replacement, $string);
-
-        //return $arr[0];
         $out = '';
         foreach ($arr as $line) {
             if (preg_match('/[^A-Za-z0-9]/', substr($line, 0, 1)) === 1) { //if string not starts from english or number
