@@ -67,7 +67,7 @@ if (isset($this->session->userdata['logged_in']) && isset($user)) {
 						<div class="input-group-prepend">
 							<div class="input-group-text">שם שיוצג</div>
 						</div>
-						<input type='text' class="form-control" name='view_name' value="<?php echo $user['view_name'] ?>">
+						<input type='text' class="form-control" name='view_name' value="<?php echo $user['view_name'] ?>" required>
 					</div>
 				</div>
 

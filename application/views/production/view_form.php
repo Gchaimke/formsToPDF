@@ -75,7 +75,19 @@ if (isset($this->session->userdata['logged_in'])) {
                                           <div class="input-group-prepend">
                                                 <div class="input-group-text">יוצר</div>
                                           </div>
-                                          <input type='text' class="form-control " name='creator' value="<?php echo $form_data['creator'] ?>">
+                                          <select id='creator_id' class='form-control' name='creator_id' <?php if ($user_role != "Admin") echo 'disabled' ?>>
+                                                <?php if (isset($users)) {
+                                                      foreach ($users as $user) {
+                                                            if ($user['id'] == $form_data['creator_id']) {
+                                                                  echo '<option value="' . $user['id'] . '" selected>' . $user['view_name'] . '</option>';
+                                                            } else {
+                                                                  echo '<option value="' . $user['id'] . '">' . $user['view_name'] . '</option>';
+                                                            }
+                                                      }
+                                                }
+                                                ?>
+                                          </select>
+                                          <input type='hidden' id='creator_name' class="form-control" name='creator_name' value="<?php echo $form_data['creator_name'] ?>">
                                     </div>
                               </div>
                         </div>
@@ -206,7 +218,8 @@ if (isset($this->session->userdata['logged_in'])) {
                               <div class="col-sm-10">
                                     <textarea class="form-control" name="recommendations_text" cols="10" rows="3" placeholder="המלצות"><?php echo $form_data['recommendations_text'] ?></textarea>
                               </div>
-                        </div><hr/>
+                        </div>
+                        <hr />
 
                         <div class="form-row">
                               <div class="form-group col-md-3">
@@ -225,7 +238,8 @@ if (isset($this->session->userdata['logged_in'])) {
                                     <label for="back_end_time" class=" col-form-label ">נסיעה חזור סיום</label>
                                     <input type='time' class="form-control" name='back_end_time' value="<?php echo $form_data['back_end_time'] ?>">
                               </div>
-                        </div><hr/>
+                        </div>
+                        <hr />
                         <div class="form-group col-md-12">
                               <div class="input-group mb-4">
                                     <div class="input-group-prepend">
@@ -233,7 +247,8 @@ if (isset($this->session->userdata['logged_in'])) {
                                     </div>
                                     <input type='text' class="form-control ltr" name='email_to' value="<?php echo $form_data['email_to'] ?>">
                               </div>
-                        </div><hr/>
+                        </div>
+                        <hr />
 
                         <div class="form-group row">
                               <label for="attachments" class="col-sm-2 col-form-label ">קבצים נוספים</label>
@@ -243,22 +258,26 @@ if (isset($this->session->userdata['logged_in'])) {
                                     <div id='files'></div>
                                     <button class="btn btn-outline-secondary col-sm-2" type="button" onclick="document.getElementById('fileupload').click();">העלה</button>
                               </div>
-                        </div><hr/>
+                        </div>
+                        <hr />
 
                         <div class="form-group row">
                               <label for="recommendations_text" class="col-sm-2 col-form-label "> חתימת לקוח שמורה:</label>
                               <div class="col-sm-4">
                                     <img src="data:image/png;base64, <?php echo $form_data['client_sign'] ?>" />
                               </div>
-                              <label for="recommendations_text" class="col-sm-2 col-form-label ">חתימת לקוח חדשה:</label>
+                              <?php if ($user_role == "Admin") {
+                                    echo '<label for="recommendations_text" class="col-sm-2 col-form-label ">חתימת לקוח חדשה:</label>
                               <div class="col-sm-4">
                                     <div id="sketchpadapp">
                                           <canvas id="sign-canvas" style="border: 1px solid red;"></canvas>
                                     </div>
-                                    <input type='text' id="client_sign" name='client_sign' hidden>
-                                    <a href="#sign-canvas" class="btn btn-info btn-block" onclick='$("#sign-canvas").data("jqScribble").clear();'>נקה חתימה</a>
-                              </div>
-                        </div><hr/>
+                                    <input type="text" id="client_sign" name="client_sign" hidden>
+                                    <a href="#sign-canvas" class="btn btn-info btn-block" onclick="$("#sign-canvas").data("jqScribble").clear();">נקה חתימה</a>
+                              </div>';
+                              } ?>
+                        </div>
+                        <hr />
 
                         <?php if ($user_role == "Admin") {
                               echo "<input type='submit' id='save_btn' class='btn btn-success' name='submit' value='עדכן תופס'>";
@@ -288,6 +307,10 @@ if (isset($this->session->userdata['logged_in'])) {
             /*$('input').change(function(){
                   document.getElementById('save_btn').click();
             });*/
+
+            $("#creator_id").change(function() {
+                  $("#creator_name").val($("#creator_id option:selected").text());
+            });
       });
 
       function SendEmail() {
@@ -323,7 +346,7 @@ if (isset($this->session->userdata['logged_in'])) {
                   data.context.css("background-position-x", 100 - progress + "%");
             },
             done: function(e, data) {
-                  var new_file = 'Uploads/forms_attachments/'+'<?php echo $form_data['company'] ?>'+'/'+data.result;
+                  var new_file = 'Uploads/forms_attachments/' + '<?php echo $form_data['company'] ?>' + '/' + data.result;
                   setTimeout(function() {
                         data.context.addClass("done");
                   }, 1000);

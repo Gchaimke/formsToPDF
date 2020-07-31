@@ -124,9 +124,14 @@ class Admin_model extends CI_Model
                 'unsigned' => TRUE,
                 'auto_increment' => TRUE
             ),
-            'creator' => array(
+            'creator_id' => array(
+                'type' => 'INT',
+                'constraint' => 9,
+                'null' => TRUE
+            ),
+            'creator_name' => array(
                 'type' => 'VARCHAR',
-                'constraint' => 500,
+                'constraint' => 100,
                 'null' => TRUE
             ),
             'company' => array(
@@ -315,68 +320,6 @@ class Admin_model extends CI_Model
             $response['forms'] = $this->db->count_all("forms");
         }
         return $response;
-    }
-
-    public function get_current_forms_records($limit, $start)
-    {
-        $this->db->limit($limit, $start);
-        $this->db->order_by('date', 'DESC');
-        $query = $this->db->get("forms");
-
-        if ($query->num_rows() > 0) {
-            foreach ($query->result() as $row) {
-                $data[] = $row;
-            }
-            return $data;
-        }
-        return false;
-    }
-
-    public function get_total()
-    {
-        $this->db->from('forms');
-        return $this->db->count_all_results();
-    }
-
-    function searchForm($num = '')
-    {
-        if ($this->db->table_exists('forms')) {
-            if ($num != "") {
-                $num = urldecode($num);
-                $condition = "issue_num LIKE '%$num%'";
-                $this->db->select('*');
-                $this->db->from('forms');
-                $this->db->where($condition);
-                $this->db->order_by('date');
-                $q = $this->db->get();
-                $response = $q->result_array();
-                return $response;
-            }
-        }
-    }
-
-    function getForm($id)
-    {
-        // Select record
-        $this->db->select('*');
-        $this->db->from('forms');
-        $condition = "id ='" . $id . "'";
-        $this->db->where($condition);
-        $this->db->limit(1);
-        $query = $this->db->get();
-        return $query->result_array();
-    }
-
-    public function update_form($data)
-    {
-        // Query to check whether id already exist or not
-        $where = "id ='" . $data['id'] . "'";
-        return $this->db->update('forms', $data, $where);
-    }
-
-    function deleteForm($id)
-    {
-        $this->db->delete('wft_forms', array('id' => $id));
     }
 
     function restore_from_trash($data)

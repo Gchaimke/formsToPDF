@@ -34,7 +34,7 @@
       <div class="container">
             <center>
                   <?php echo form_open("production/add_form", 'id=new-form'); ?>
-                  <input type='text' class="form-control " name='company' value="<?php echo $_GET['company'] ?>" hidden>
+                  <input type='hidden' class="form-control " name='company' value="<?php echo $_GET['company'] ?>">
                   <div class="form-row">
                         <div class="form-group col-md-4">
                               <div class="input-group mb-2">

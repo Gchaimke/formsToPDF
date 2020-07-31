@@ -89,7 +89,7 @@ class Users extends CI_Controller
     public function edit($id = '')
     {
         //$data = array();
-        $role = ($this->session->userdata['logged_in']['role']);
+        $role = $this->session->userdata['logged_in']['role'];
         // Check validation for user input in SignUp form
         $this->form_validation->set_rules('id', 'Id', 'trim|xss_clean');
         $this->form_validation->set_rules('name', 'Name', 'trim|xss_clean');
@@ -119,8 +119,6 @@ class Users extends CI_Controller
                     $sql += array('password' => $this->input->post('password'));
                 }
                 print_r($this->Users_model->editUser($sql));
-                // Add user data in session
-                $this->session->set_userdata('logged_in', $sql);
             } else {
                 $sql = array(
                     'id' => $this->input->post('id'),
@@ -132,7 +130,6 @@ class Users extends CI_Controller
                     $sql += array('password' => $this->input->post('password'));
                 }
                 print_r($this->Users_model->editUser($sql));
-                $this->session->set_userdata('logged_in', $sql);
             }
         }
     }

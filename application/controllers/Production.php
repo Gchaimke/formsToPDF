@@ -7,10 +7,9 @@ class Production extends CI_Controller
     {
         parent::__construct();
         // Load model
-        $this->load->model('Admin_model');
         $this->load->model('Production_model');
+        $this->load->model('Users_model');
         $this->load->model('Companies_model');
-        $this->load->library('pagination');
     }
 
     public function index()
@@ -35,7 +34,8 @@ class Production extends CI_Controller
 
     public function add_form()
     {
-        $user_name = $this->session->userdata['logged_in']['name'];
+        $creator = $this->session->userdata['logged_in']['id'];
+        $creator_name = $this->session->userdata['logged_in']['view_name'];
         // Check validation for user input in SignUp form
         $this->form_validation->set_rules('date', 'date', 'trim|required|xss_clean');
         $this->form_validation->set_rules('company', 'company', 'trim|xss_clean');
@@ -63,7 +63,8 @@ class Production extends CI_Controller
         if (!$this->form_validation->run() == FALSE) {
             $data = array(
                 'date' =>  $this->input->post('date'),
-                'creator' =>  $user_name,
+                'creator_id' =>  $creator,
+                'creator_name' =>  $creator_name,
                 'company' =>  $this->input->post('company'),
                 'client_num' =>  $this->input->post('client_num'),
                 'issue_num' => $this->input->post('issue_num'),
@@ -101,8 +102,9 @@ class Production extends CI_Controller
     public function view_form($id = '1')
     {
         $data = array();
-        $data['form_data'] = $this->Admin_model->getForm($id);
+        $data['form_data'] = $this->Production_model->getForm($id);
         $data['companies'] = $this->Companies_model->getCompanies();
+        $data['users'] = $this->Users_model->getUsers();
         $this->load->view('header');
         $this->load->view('main_menu');
         $this->load->view('production/view_form', $data);
@@ -113,6 +115,8 @@ class Production extends CI_Controller
     {
         // Check validation for user input in SignUp form
         $this->form_validation->set_rules('id', 'id', 'trim|xss_clean');
+        $this->form_validation->set_rules('creator_id', 'creator_id', 'trim|xss_clean');
+        $this->form_validation->set_rules('creator_name', 'creator_name', 'trim|xss_clean');
         $this->form_validation->set_rules('company', 'company', 'trim|xss_clean');
         $this->form_validation->set_rules('date', 'date', 'trim|xss_clean');
         $this->form_validation->set_rules('client_num', 'client_num', 'trim|xss_clean');
@@ -139,6 +143,8 @@ class Production extends CI_Controller
         if (!$this->form_validation->run() == FALSE) {
             $data = array(
                 'id' =>  $this->input->post('id'),
+                'creator_id' =>  $this->input->post('creator_id'),
+                'creator_name' =>  $this->input->post('creator_name'),
                 'company' =>  $this->input->post('company'),
                 'date' =>  $this->input->post('date'),
                 'client_num' =>  $this->input->post('client_num'),
@@ -166,7 +172,7 @@ class Production extends CI_Controller
             if ($this->input->post('client_sign') != '') {
                 $data += array('client_sign' => $this->input->post('client_sign'));
             }
-            $response =  $this->Admin_model->update_form($data);
+            $response =  $this->Production_model->update_form($data);
             if ($response) {
                 echo "דוח נשמר בהצלחה!";
             } else {
@@ -179,16 +185,17 @@ class Production extends CI_Controller
 
     public function manage_forms()
     {
-        $this->load->database();
+        //$this->load->database();
+        $this->load->library('pagination');
         // init params
         $params = array();
         $config = array();
         $limit_per_page = 20;
         define('SEGMENT', 3);
         $start_index = ($this->uri->segment(SEGMENT)) ? $this->uri->segment(SEGMENT) : 0;
-        $total_records = $this->Admin_model->get_total();
+        $total_records = $this->Production_model->get_total();
         if ($total_records > 0) {
-            $params["results"] = $this->Admin_model->get_current_forms_records($limit_per_page, $start_index);
+            $params["results"] = $this->Production_model->get_current_forms_records($limit_per_page, $start_index);
 
             $config['base_url'] = base_url() . 'production/manage_forms/';
             $config['total_rows'] = $total_records;
@@ -221,6 +228,7 @@ class Production extends CI_Controller
             // build paging links
             $params["links"] = $this->pagination->create_links();
         }
+        $params['users'] = $this->Users_model->getUsers();
         $this->load->view('header');
         $this->load->view('main_menu', $params);
         $this->load->view('production/manage_forms', $params);
@@ -229,12 +237,17 @@ class Production extends CI_Controller
 
     public function form_search()
     {
+        $user_role = $this->session->userdata['logged_in']['role'];
+        $user_view_name = $this->session->userdata['logged_in']['view_name'];
         $this->form_validation->set_rules('search', 'Search', 'trim|xss_clean');
-        $data = $this->Admin_model->searchForm($this->input->post('search'));
+        $data = $this->Production_model->searchForm($this->input->post('search'));
         $str = '';
         $count = 0;
-        foreach ($data as $result) {
-            $str .= "<a class='badge badge-info' href='/production/view_form/" . $result["id"] . "?issue=" . $result["issue_num"] . "'>" . urldecode($result["client_name"]) . ": " . $result["issue_num"] . "</a>";
+        foreach ($data as $form) {
+            if ($user_role != 'Admin' && $form['creator'] != $user_view_name)
+                continue;
+            $str .= "<a class='badge badge-info' href='/production/view_form/" . $form["id"] .
+             "?issue=" . $form["issue_num"] . "'>" . urldecode($form["client_name"]) . ": " . $form["issue_num"] . "</a>";
             $count++;
         }
         echo "<h2>מצאתי " . $count . " דוחות.</h2>" . $str;
@@ -244,7 +257,7 @@ class Production extends CI_Controller
     {
         $this->form_validation->set_rules('id', 'Id', 'trim|xss_clean');
         $id = $this->input->post('id');
-        $this->Admin_model->deleteForm($id);
+        $this->Production_model->deleteForm($id);
     }
 
     public function save_photo()
@@ -332,9 +345,9 @@ class Production extends CI_Controller
         $this->load->view('footer');
     }
 
-    public function do_upload($folder='')
+    public function do_upload($folder = '')
     {
-        $upload_folder = "./Uploads/forms_attachments/".$folder;
+        $upload_folder = "./Uploads/forms_attachments/" . $folder;
         if (!file_exists($upload_folder)) {
             mkdir($upload_folder, 0770, true);
         }

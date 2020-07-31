@@ -1,6 +1,7 @@
 <?php
 if (isset($this->session->userdata['logged_in'])) {
 	$user_role = $this->session->userdata['logged_in']['role'];
+	$user_id = $this->session->userdata['logged_in']['id'];
 }
 ?>
 <main role="main">
@@ -25,7 +26,7 @@ if (isset($this->session->userdata['logged_in'])) {
 		</nav>
 		<form id="form" class='ltr'>
 			<div class="input-group mb-3">
-				<input id='inputSearch' type="text" class="form-control" placeholder="חפש דוחות לפי מספר תקלה" aria-label="Search in forms" aria-describedby="basic-addon2" autofocus>
+				<input id='inputSearch' type="text" class="form-control" placeholder="מספר תקלה,מספר לקוח,שם לקוח,יוצר" aria-label="Search in forms" aria-describedby="basic-addon2" autofocus>
 				<div class="input-group-append">
 					<button class="btn btn-secondary" type="button" onclick="formSearch()">חפש</button>
 				</div>
@@ -36,9 +37,8 @@ if (isset($this->session->userdata['logged_in'])) {
 			<table class="table">
 				<thead class="thead-dark">
 					<tr>
-						<th scope="col" class="mobile-hide">*</th>
 						<th scope="col">תאריך</th>
-						<th scope="col" >מספר תקלה</th>
+						<th scope="col">יוצר</th>
 						<th scope="col" class="mobile-hide">מספר לקוח</th>
 						<th scope="col" class="mobile-hide">שם הלקוח</th>
 						<th scope="col" class="mobile-hide">מיקום</th>
@@ -53,13 +53,17 @@ if (isset($this->session->userdata['logged_in'])) {
 				</thead>
 				<tbody>
 
-					<?php foreach ($results as $data) { ?>
+					<?php foreach ($results as $data) {
+						if ($user_role != 'Admin' && $data->creator_id != $user_id)
+							continue;
+					?>
 						<tr id='<?php echo $data->id ?>'>
-							<td class="mobile-hide">
-								<div class='checkbox'><input type='checkbox' class='select' id='<?php echo $data->id ?>' $checked></div>
-							</td>
-							<td><?php echo $data->date ?></td>
-							<td><?php echo $data->issue_num ?></td>
+							<td><?php echo date("d-m-Y", strtotime($data->date))  ?></td>
+							<?php foreach($users as $user){
+								if($user['id']==$data->creator_id){
+									echo '<td>'.$user['view_name'].'</td>';
+								}
+							}?>
 							<td class="mobile-hide"><?php echo $data->client_num ?></td>
 							<td class="mobile-hide"><?php echo $data->client_name ?></td>
 							<td class="mobile-hide"><?php echo $data->place ?></td>
@@ -67,10 +71,10 @@ if (isset($this->session->userdata['logged_in'])) {
 							<td class="mobile-hide"><?php echo $data->company ?></td>
 							<td><a href='/production/view_form/<?php echo $data->id ?>' class='btn btn-info'><i class="fa fa-edit"></i></a></td>
 							<?php if ($user_role == "Admin") {
-								echo "<td><button id='".$data->id ."' class='btn btn-danger' onclick='deleteForm(this.id)'><i class='fa fa-trash'></i></button></td>";
+								echo "<td><button id='" . $data->id . "' class='btn btn-danger' onclick='deleteForm(this.id)'><i class='fa fa-trash'></i></button></td>";
 							}
 							?>
-							
+
 						</tr>
 					<?php } ?>
 				</tbody>

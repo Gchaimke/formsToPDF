@@ -5,7 +5,7 @@ if (isset($this->session->userdata['logged_in'])) {
     }
 }
 ?>
-
+<div id="form-messages" class='alert hidden' role='alert'></div>
 <main role="main">
     <div class="jumbotron">
         <div class="container">
@@ -14,7 +14,6 @@ if (isset($this->session->userdata['logged_in'])) {
             </center>
         </div>
     </div>
-    <div id="form-messages" class='alert hidden' role='alert'></div>
     <div class="container">
         <?php
         $users_count = 0;
