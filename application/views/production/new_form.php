@@ -189,7 +189,7 @@
                               }
                               echo '</div>';
                         }else{
-                              echo '<div class="col-sm-5">אין מאיילים ברשימת תפוצה של משתמש</div>';
+                              echo '<div class="col-sm-5">אין פריטים ברשימת תפוצה של משתמש</div>';
                         }
                         ?>
 
