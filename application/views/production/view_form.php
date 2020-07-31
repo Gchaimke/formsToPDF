@@ -213,7 +213,7 @@ if (isset($this->session->userdata['logged_in'])) {
                                     <div class="input-group-prepend">
                                           <div class="input-group-text">רשימת תפוצה</div>
                                     </div>
-                                    <input type='text' class="form-control ltr" name='contact_name' value="<?php echo $form_data['email_to'] ?>">
+                                    <input type='text' class="form-control ltr" name='email_to' value="<?php echo $form_data['email_to'] ?>">
                               </div>
                         </div>
 
@@ -284,11 +284,15 @@ if (isset($this->session->userdata['logged_in'])) {
             $("#sign-canvas").data('jqScribble').update({
                   width: 300,
                   height: 100
-            })
+            });
+
+            $('input').change(function(){
+                  document.getElementById('save_btn').click();
+            });
       });
 
       function SendEmail() {
-            document.getElementById('save_btn').click();
+            //document.getElementById('save_btn').click();
             // Make sure that the formMessages div has the 'success' class.
             $('#form-messages').addClass('alert-info');
             // Set the message text.

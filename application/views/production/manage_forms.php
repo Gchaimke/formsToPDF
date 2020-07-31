@@ -76,7 +76,7 @@ if (isset($this->session->userdata['logged_in'])) {
 				</tbody>
 			</table>
 		<?php } else { ?>
-			<div>No checklist(s) found.</div>
+			<div>אין עדיין דוחות</div>
 		<?php } ?>
 	</div>
 </main>

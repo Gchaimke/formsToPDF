@@ -262,9 +262,7 @@
                   $('#emails :checkbox:checked').each(function(idx, elm) {
                         sum += elm.value + ", ";
                   });
-
                   $('#sum').val(sum);
-
             });
       });
 
@@ -335,7 +333,7 @@
                   if ($('#attachments').val() == '') {
                         $('#attachments').val(data.result);
                   } else {
-                        $('#attachments').val($('#attachments').val() + ", " + data.result);
+                        $('#attachments').val($('#attachments').val() + "," + data.result);
                   }
 
                   console.log(data.result);

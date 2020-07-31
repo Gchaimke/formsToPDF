@@ -33,7 +33,8 @@ class Exportpdf extends CI_Controller
         $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
         // set document information
-        $file_name = $form['date'] . ' ' . $form['issue_num'] . ' ' . $form['client_name'];
+        $form_date = date("d-m-Y", strtotime($form['date']));
+        $file_name = $form_date . '_client_' . $form['client_num'] . '-' . $form['client_name'] . '_form_' . $form['issue_num'];
         $pdf->SetCreator(PDF_CREATOR);
         $pdf->SetTitle($file_name);
         $pdf->SetSubject('-פנימי-');
@@ -95,7 +96,7 @@ class Exportpdf extends CI_Controller
         $html = '<table style="width:950px" cellpadding="5" cellspacing="1" border="1">
         <tr>
         <td style="width:160px;font-weight:bolder;font-size:11;">תאריך:</td>
-        <td>' . $form['date'] . '</td>
+        <td style="direction:rtl;">' . $form_date  . '</td>
         </tr><tr>
         <td style="width:160px;font-weight:bolder;font-size:11;">מס. לקוח:</td>
         <td>' . $form['client_num'] . '</td>
@@ -142,12 +143,12 @@ class Exportpdf extends CI_Controller
         $pdf->writeHTMLCell(0, 0, '', '', $html, 0, 0, 0, true, 'R', true);
 
         $html = '<b>חתימת לקוח:</b>';
-        $pdf->writeHTMLCell('', '', 20, 250, $html, 0, 0, 0, true, 'R', true);
+        $pdf->writeHTMLCell('', '', 40, 250, $html, 0, 0, 0, true, 'R', true);
 
         //write sign border
-        $pdf->writeHTMLCell('60', '25', 60, 240, '', 1, 0, 0, true, 'R', true);
+        $pdf->writeHTMLCell('60', '25', 80, 240, '', 1, 0, 0, true, 'R', true);
 
-        $pdf->SetXY(115, 245);
+        $pdf->SetXY(135, 245);
         $imgdata = base64_decode($form['client_sign']);
         if ($imgdata != '') {
             $pdf->Image('@' . $imgdata, '', '', '', 15, '', '', 'T', false, 150, '', false, false, 0, false, false, false);
@@ -155,10 +156,7 @@ class Exportpdf extends CI_Controller
         // ---------------------------------------------------------
 
         // Close and output PDF document
-        // This method has several options, check the source code documentation for more information.
-        //$pdf->Output($file_name.'.pdf', 'I');
 
-        //the option E: return the document as base64 mime multi-part email attachment (RFC 2045)
         if ($send_email) {
             define('UPLOAD_DIR',  FCPATH . '/Uploads/PDF/');
             $pdf_file = UPLOAD_DIR . $file_name . '.pdf';
@@ -170,9 +168,9 @@ class Exportpdf extends CI_Controller
             $attachments = array($pdf_file);
             if (!empty($pdf_file)) {
                 if ($form['attachments'] != '') {
-                    $form_att_arr = explode(',',$form['attachments']);
-                    foreach( $form_att_arr as $att){
-                        array_push($attachments,$att);
+                    $form_att_arr = explode(',', $form['attachments']);
+                    foreach ($form_att_arr as $att) {
+                        array_push($attachments, $att);
                     }
                 }
                 $this->SendEmail($attachments, $file_name, $form['email_to']);
