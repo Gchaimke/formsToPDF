@@ -29,7 +29,7 @@ if (isset($this->session->userdata['logged_in'])) {
                 <tr>
                     <th scope="col" class="mobile-hide">#</th>
                     <th scope="col">שם משתמש</th>
-                    <th scope="col">שם שיוצג</th>
+                    <th scope="col">שם יוצג</th>
                     <th scope="col">תפקיד</th>
                     <th scope="col">ערוך</th>
                     <th scope="col">מחק</th>
