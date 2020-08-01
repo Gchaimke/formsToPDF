@@ -1,4 +1,4 @@
-<?php $user = $this->session->userdata['logged_in']; ?>
+<?php $user = $user[0] ?>
 <script src="<?php echo base_url('assets/js/jQUpload/jquery.ui.widget.js'); ?>"></script>
 <script src="<?php echo base_url('assets/js/jQUpload/jquery.iframe-transport.js'); ?>"></script>
 <script src="<?php echo base_url('assets/js/jQUpload/jquery.fileupload.js'); ?>"></script>
@@ -179,7 +179,7 @@
                         </div>
                   </div><hr/>
                   <div class="form-group row" id="emails">
-                        <label for="email_to" class="col-sm-2 col-form-label ">למי לשלוח מייל:</label>
+                        <label for="email_to" class="col-sm-2 col-form-label ">מכותבים:</label>
                         <?php
                         $emails_arr = preg_split('/\r\n|[\r\n]/', $user['email_to']);
                         $len = count($emails_arr);
@@ -188,20 +188,18 @@
                               $secondhalf = array_slice($emails_arr, $len / 2);
                               echo '<div class="col-sm-5">';
                               foreach ($firsthalf as $email) {
-                                    echo "<div class='input-group'>
+                                    echo "
                               <div class='input-group-text'>
                               <input type='checkbox' value='$email'>
-                              </div>
                               <label class='col-sm-2 col-form-label'>$email</label>
                               </div>";
                               }
                               echo '</div>';
                               echo '<div class="col-sm-5">';
                               foreach ($secondhalf as $email) {
-                                    echo "<div class='input-group'>
+                                    echo "
                               <div class='input-group-text'>
                               <input type='checkbox' value='$email'>
-                              </div>
                               <label class='col-sm-2 col-form-label'>$email</label>
                               </div>";
                               }
@@ -220,7 +218,7 @@
                               <input id="fileupload" style="display:none;" type="file" name="files" data-url="/production/do_upload/<?php echo $_GET['company'] ?>" />
                               <input type="hidden" id="attachments" value="" name="attachments"/>
                               <div id='files'></div>
-                              <button class="btn btn-outline-secondary col-sm-2" type="button" onclick="document.getElementById('fileupload').click();">העלה</button>
+                              <button class="btn btn-outline-secondary col-sm-2 mt-2 mt-md-0" type="button" onclick="document.getElementById('fileupload').click();">העלה</button>
                         </div>
                   </div><hr/>
 
@@ -231,11 +229,11 @@
                                     <canvas id="sign-canvas" style="border: 1px solid red;"></canvas>
                               </div>
                               <input type='text' id="client_sign" name='client_sign' hidden>
-                              <a href="#sign-canvas" class="btn btn-info btn-block" onclick='$("#sign-canvas").data("jqScribble").clear();'>נקה חתימה</a>
+                              <a href="#sign-canvas" class="btn btn-outline-danger btn-sm mt-3" onclick='$("#sign-canvas").data("jqScribble").clear();'>נקה חתימה</a>
                         </div>
                   </div><hr/>
 
-                  <input type='submit' class="btn btn-info btn-block" name='submit' value='שמור ושלח לרשימת תפוצה'>
+                  <input type='submit' class="btn btn-success btn-block" name='submit' value='שמור ושלח לרשימת תפוצה'>
                   <?php echo form_close(); ?>
 
             </center>

@@ -9,7 +9,7 @@ class Exportpdf extends CI_Controller
     {
         parent::__construct();
         // Load model
-        $this->load->model('Admin_model');
+        $this->load->model('Production_model');
         $this->load->model('Users_model');
         $this->load->model('Companies_model');
     }
@@ -22,7 +22,7 @@ class Exportpdf extends CI_Controller
         }
 
         $form = array();
-        $form = $this->Admin_model->getForm($id)[0];
+        $form = $this->Production_model->getForm($id)[0];
         $form['company_data'] = $this->Companies_model->getCompanies('', $form['company'])[0];
         $company = $form['company_data'];
 

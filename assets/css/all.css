@@ -19,6 +19,8 @@ main {
     color: red;
 }
 
+
+
 /* RTL START*/
 
 .rtl {
@@ -58,6 +60,10 @@ input.form-control {
 .navbar-nav {
     padding-left: initial;
     padding-right: 0;
+}
+
+.show .pull-right {
+    float: left;
 }
 
 /* RTL END*/

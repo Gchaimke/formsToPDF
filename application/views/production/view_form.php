@@ -243,7 +243,7 @@ if (isset($this->session->userdata['logged_in'])) {
                         <div class="form-group col-md-12">
                               <div class="input-group mb-4">
                                     <div class="input-group-prepend">
-                                          <div class="input-group-text">רשימת תפוצה</div>
+                                          <div class="input-group-text">מכותבים:</div>
                                     </div>
                                     <input type='text' class="form-control ltr" name='email_to' value="<?php echo $form_data['email_to'] ?>">
                               </div>
@@ -273,19 +273,19 @@ if (isset($this->session->userdata['logged_in'])) {
                                           <canvas id="sign-canvas" style="border: 1px solid red;"></canvas>
                                     </div>
                                     <input type="text" id="client_sign" name="client_sign" hidden>
-                                    <a href="#sign-canvas" class="btn btn-info btn-block" onclick="$("#sign-canvas").data("jqScribble").clear();">נקה חתימה</a>
+                                    <a href="#sign-canvas" class="btn btn-outline-danger btn-sm" onclick="$("#sign-canvas").data("jqScribble").clear();">נקה חתימה</a>
                               </div>';
                               } ?>
                         </div>
                         <hr />
 
                         <?php if ($user_role == "Admin") {
-                              echo "<input type='submit' id='save_btn' class='btn btn-success' name='submit' value='עדכן תופס'>";
+                              echo "<input type='submit' id='save_btn' class='btn btn-danger' name='submit' value='עדכן דוח'>";
                         }
                         ?>
 
                         <a target="_blank" class="btn btn-info" href="/exportpdf/create/<?php echo $form_data['id'] ?>">הצג PDF</a>
-                        <a class="btn btn-danger" href="#" onclick="SendEmail()">שלח PDF</a>
+                        <a class="btn btn-success" href="#" onclick="SendEmail()">שלח דוח</a>
                         <?php echo form_close(); ?>
 
                   <?php } else {

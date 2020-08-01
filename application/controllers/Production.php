@@ -25,17 +25,20 @@ class Production extends CI_Controller
 
     public function new_form()
     {
+        $data=array();
+        $data['user'] = $this->Users_model->getUser($this->session->userdata['logged_in']['id']);
         $this->load->view('header');
         $this->load->view('main_menu');
-        $this->load->view('production/new_form');
+        $this->load->view('production/new_form',$data);
         $this->load->view('footer');
     }
 
 
     public function add_form()
     {
-        $creator = $this->session->userdata['logged_in']['id'];
-        $creator_name = $this->session->userdata['logged_in']['view_name'];
+
+        $creator_id = $this->session->userdata['logged_in']['id'];
+        $creator_name = $this->Users_model->getUser($creator_id)[0]['name'];
         // Check validation for user input in SignUp form
         $this->form_validation->set_rules('date', 'date', 'trim|required|xss_clean');
         $this->form_validation->set_rules('company', 'company', 'trim|xss_clean');
@@ -63,7 +66,7 @@ class Production extends CI_Controller
         if (!$this->form_validation->run() == FALSE) {
             $data = array(
                 'date' =>  $this->input->post('date'),
-                'creator_id' =>  $creator,
+                'creator_id' =>  $creator_id,
                 'creator_name' =>  $creator_name,
                 'company' =>  $this->input->post('company'),
                 'client_num' =>  $this->input->post('client_num'),
@@ -238,16 +241,15 @@ class Production extends CI_Controller
     public function form_search()
     {
         $user_role = $this->session->userdata['logged_in']['role'];
-        $user_view_name = $this->session->userdata['logged_in']['view_name'];
         $this->form_validation->set_rules('search', 'Search', 'trim|xss_clean');
         $data = $this->Production_model->searchForm($this->input->post('search'));
         $str = '';
         $count = 0;
         foreach ($data as $form) {
-            if ($user_role != 'Admin' && $form['creator'] != $user_view_name)
+            if ($user_role != 'Admin' && $form['creator_id'] != $this->session->userdata['logged_in']['id'])
                 continue;
             $str .= "<a class='badge badge-info' href='/production/view_form/" . $form["id"] .
-             "?issue=" . $form["issue_num"] . "'>" . urldecode($form["client_name"]) . ": " . $form["date"] . "</a>";
+                "?issue=" . $form["issue_num"] . "'>" . urldecode($form["client_name"]) . ": " . $form["date"] . "</a>";
             $count++;
         }
         echo "<h2>מצאתי " . $count . " דוחות.</h2>" . $str;

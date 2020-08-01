@@ -14,9 +14,9 @@ if (isset($this->session->userdata['logged_in'])) {
   </button>
 
   <div class="collapse navbar-collapse" id="navbarDefault">
-  <ul class="navbar-nav  mx-4">
-  <li class="nav-item mx-1"><a class="nav-link btn btn-sm btn-outline-secondary" href="/"> דוח חדש</a></li>
-  <li class="nav-item mx-1"><a class="nav-link btn btn-sm btn-outline-secondary" href="/production/manage_forms"> רשימת דוחות</a></li>
+  <ul class="navbar-nav  my-4 my-md-0">
+  <li class="nav-item mx-1 mt-3 mt-md-0 "><a class="nav-link btn btn-sm btn-outline-secondary" href="/"> דוח חדש</a></li>
+  <li class="nav-item mx-1 mt-3 mt-md-0 "><a class="nav-link btn btn-sm btn-outline-secondary" href="/production/manage_forms"> רשימת דוחות</a></li>
   </ul>
   </div>
 
@@ -33,13 +33,13 @@ if (isset($this->session->userdata['logged_in'])) {
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <?php if ($role == 'Admin') { ?>
             
-            <a class="dropdown-item" href="/companies">חברות</a>
-            <a class="dropdown-item" href="/users">משתמשים</a>
-            <a class="dropdown-item" href="/admin/settings">הגדרות</a>
+            <a class="dropdown-item p-2 px-md-2" href="/companies">חברות</a>
+            <a class="dropdown-item p-2 px-md-2" href="/users">משתמשים</a>
+            <a class="dropdown-item p-2 px-md-2" href="/admin/settings">הגדרות</a>
           <?php } ?>
           <hr>
-          <a class="dropdown-item" href="/users/edit/<?php echo $id ?>">עדכן פרטים שלי</a>
-          <a class="dropdown-item" href="/users/logout">צא ממערכת</a>
+          <a class="dropdown-item p-2 px-md-2" href="/users/edit/<?php echo $id ?>">עדכן פרטים שלי</a>
+          <a class="dropdown-item p-2 px-md-2" href="/users/logout">צא ממערכת</a>
         </div>
       </li>
     </ul>
