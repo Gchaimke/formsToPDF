@@ -26,9 +26,11 @@ if (isset($this->session->userdata['logged_in'])) {
 		</nav>
 		<form id="form" class='ltr'>
 			<div class="input-group mb-3">
-				<input id='inputSearch' type="text" class="form-control" placeholder="מספר תקלה,מספר לקוח,שם לקוח,יוצר" aria-label="Search in forms" aria-describedby="basic-addon2" autofocus>
+				<input id='inputSearch' type="text" class="form-control" 
+				placeholder="מספר תקלה,מספר לקוח,שם לקוח,יוצר" 
+				aria-label="Search in forms" aria-describedby="basic-addon2" autofocus>
 				<div class="input-group-append">
-					<button class="btn btn-secondary" type="button" onclick="formSearch()">חפש</button>
+					<button class="btn btn-outline-primary" type="button" onclick="formSearch()">חפש</button>
 				</div>
 			</div>
 			<div id='searchResult' class='rtl text-center'></div>
@@ -58,20 +60,20 @@ if (isset($this->session->userdata['logged_in'])) {
 							continue;
 					?>
 						<tr id='<?php echo $data->id ?>'>
-							<td><?php echo date("d-m-Y", strtotime($data->date))  ?></td>
+							<td class="align-middle"><?php echo date("d-m-Y", strtotime($data->date))  ?></td>
 							<?php foreach($users as $user){
 								if($user['id']==$data->creator_id){
-									echo '<td>'.$user['view_name'].'</td>';
+									echo '<td class="align-middle">'.$user['view_name'].'</td>';
 								}
 							}?>
-							<td class="mobile-hide"><?php echo $data->client_num ?></td>
-							<td class="mobile-hide"><?php echo $data->client_name ?></td>
-							<td class="mobile-hide"><?php echo $data->place ?></td>
-							<td class="mobile-hide"><?php echo $data->issue_kind ?></td>
-							<td class="mobile-hide"><?php echo $data->company ?></td>
-							<td><a href='/production/view_form/<?php echo $data->id ?>' class='btn btn-info'><i class="fa fa-edit"></i></a></td>
+							<td class="mobile-hide align-middle"><?php echo $data->client_num ?></td>
+							<td class="mobile-hide align-middle"><?php echo $data->client_name ?></td>
+							<td class="mobile-hide align-middle"><?php echo $data->place ?></td>
+							<td class="mobile-hide align-middle"><?php echo $data->issue_kind ?></td>
+							<td class="mobile-hide align-middle"><?php echo $data->company ?></td>
+							<td><a href='/production/view_form/<?php echo $data->id ?>' class='btn btn-outline-info'><i class="fa fa-edit"></i></a></td>
 							<?php if ($user_role == "Admin") {
-								echo "<td><button id='" . $data->id . "' class='btn btn-danger' onclick='deleteForm(this.id)'><i class='fa fa-trash'></i></button></td>";
+								echo "<td><button id='" . $data->id . "' class='btn btn-outline-danger' onclick='deleteForm(this.id)'><i class='fa fa-trash'></i></button></td>";
 							}
 							?>
 
