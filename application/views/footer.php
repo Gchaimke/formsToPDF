@@ -1,4 +1,4 @@
-<footer class="container">
+<footer class="footer">
   <p>
     <center><div>גרעין מערכות&copy; <?php echo date('Y'); ?> |  נוצר על ידי חיים גורבוב</div>
     </center>

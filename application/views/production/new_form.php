@@ -233,7 +233,7 @@
                         </div>
                   </div><hr/>
 
-                  <input type='submit' class="btn btn-success btn-block" name='submit' value='שמור ושלח לרשימת תפוצה'>
+                  <input type='submit' class="btn btn-success my-5" name='submit' value='שמור ושלח לרשימת תפוצה'>
                   <?php echo form_close(); ?>
 
             </center>

@@ -19,8 +19,6 @@ main {
     color: red;
 }
 
-
-
 /* RTL START*/
 
 .rtl {
@@ -145,9 +143,13 @@ table.table.files td {
     vertical-align: middle;
 }
 
-footer.container {
-    position: static;
-    margin-top: 100px;
+main {
+    min-height: calc(100vh - 100px);
+}
+
+.footer {
+    height: 50px;
+    background-color: #343a404f;
 }
 
 div#show-log {
