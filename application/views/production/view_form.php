@@ -266,7 +266,7 @@ if (isset($this->session->userdata['logged_in'])) {
                               <label for="recommendations_text" class="col-sm-2 col-form-label "> חתימת לקוח שמורה:</label>
                               <div class="col-sm-4">
                                     <?php if ($form_data['client_sign']) {
-                                          echo '<img src="data:image/png;base64, <?php echo $form_data["client_sign"] ?>" />';
+                                          echo '<img src="data:image/png;base64, '.$form_data["client_sign"] .'" />';
                                     } else {
                                           echo 'אין חתימה';
                                     }
@@ -356,7 +356,7 @@ if (isset($this->session->userdata['logged_in'])) {
                   var yyyy = today.getFullYear();
 
                   var str_date = dd + '_' + mm + '_' + yyyy;
-                  var new_file = 'Uploads/forms_attachments/' + str_date +"_"+Date.now()+ '/' + data.result;
+                  var new_file = 'Uploads/forms_attachments/' + str_date + '/' + data.result;
                   setTimeout(function() {
                         data.context.addClass("done");
                   }, 1000);
