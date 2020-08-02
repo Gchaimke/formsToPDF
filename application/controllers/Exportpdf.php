@@ -27,8 +27,8 @@ class Exportpdf extends CI_Controller
         $company = $form['company_data'];
 
         $add_trip = "<br/> נסיעה:";
-        $add_trip .= "<br/> הלוך: " . date('G:i', strtotime($form['trip_start_time'])) . " - " . date('G:i', strtotime($form['trip_end_time']));
-        $add_trip .= "<br/> חזור: " . date('G:i', strtotime($form['back_start_time'])) . " - " . date('G:i', strtotime($form['back_end_time']));
+        $add_trip .= "<br/> הלוך: " . date('G:i', strtotime($form['trip_start_time'])) . " - " . date('G:i', strtotime($form['start_time']));
+        $add_trip .= "<br/> חזור: " . date('G:i', strtotime($form['end_time'])) . " - " . date('G:i', strtotime($form['back_end_time']));
 
         $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
@@ -100,59 +100,72 @@ class Exportpdf extends CI_Controller
         </tr><tr>
         <td style="width:160px;font-weight:bolder;font-size:11;">מס. לקוח:</td>
         <td>' . $form['client_num'] . '</td>
-        </tr><tr>
-        <td style="width:160px;font-weight:bolder;font-size:11;">מס. פניה\תקלה:</td>
-        <td>' . $form['issue_num'] . '</td>
-        </tr><tr>
-        <td style="width:160px;font-weight:bolder;font-size:11;">שם לקוח: </td>
-        <td>' . $form['client_name'] . '</td>
-        </tr><tr>
-        <td style="width:160px;font-weight:bolder;font-size:11;">סוג תקלה\ התקנה: </td>
-        <td>' . $form['issue_kind'] . '</td>
-        </tr><tr>
-        <td style="width:160px;font-weight:bolder;font-size:11;">מיקום</td>
-        <td>' . $form['place'] . '</td>
-        </tr><tr>
-        <td style="width:160px;font-weight:bolder;font-size:11;">שעת התחלה: </td>
-        <td>' . date('G:i', strtotime($form['start_time'])) . '</td>
-        </tr><tr>
-        <td style="width:160px;font-weight:bolder;font-size:11;">שעת סיום: </td>
-        <td>' . date('G:i', strtotime($form['end_time'])) . '</td>
-        </tr><tr>
-        <td style="width:160px;font-weight:bolder;font-size:11;">אחראי</td>
-        <td>' . $form['manager'] . '</td>
-        </tr><tr>
-        <td style="width:160px;font-weight:bolder;font-size:11;">איש קשר: </td>
-        <td>' . $form['contact_name'] . '</td>
-        </tr><tr>
-        <td style="width:160px;font-weight:bolder;font-size:11;">תיאור תקלה\ התקנה: </td>
-        <td>' . $this->hebrewFix($form['activity_text']) . '</td>
-        </tr><tr>
-        <td style="width:160px;font-weight:bolder;font-size:11;">תוצאות הבדיקה: </td>
-        <td>' . $this->hebrewFix($form['checking_text']) . '</td>
-        </tr><tr>
-        <td style="width:160px;font-weight:bolder;font-size:11;">סיכום</td>
-        <td>' . $this->hebrewFix($form['summary_text']) . '</td>
-        </tr><tr>
-        <td style="width:160px;font-weight:bolder;font-size:11;">הערות: </td>
-        <td>' . $this->hebrewFix($form['remarks_text']) . '</td>
-        </tr><tr>
-        <td style="width:160px;font-weight:bolder;font-size:11;">המלצות: </td>
+        </tr>';
+        if ($form['issue_num'] != '') {
+            $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:11;">מס. פניה\תקלה:</td>
+            <td>' . $form['issue_num'] . '</td></tr>';
+        }
+        if ($form['client_name'] != '') {
+            $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:11;">שם לקוח: </td>
+            <td>' . $form['client_name'] . '</td></tr>';
+        }
+        if ($form['issue_kind'] != '') {
+            $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:11;">סוג תקלה\ התקנה: </td>
+            <td>' . $form['issue_kind'] . '</td></tr>';
+        }
+        if ($form['place'] != '') {
+            $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:11;">מיקום</td>
+            <td>' . $form['place'] . '</td></tr>';
+        }
+        $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:11;">שעת התחלה: </td>
+        <td>' . date('G:i', strtotime($form['start_time'])) . '</td></tr>
+        <tr><td style="width:160px;font-weight:bolder;font-size:11;">שעת סיום: </td>
+        <td>' . date('G:i', strtotime($form['end_time'])) . '</td></tr>';
+
+        if ($form['manager'] != '') {
+            $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:11;">אחראי</td>
+            <td>' . $form['manager'] . '</td></tr>';
+        }
+        if ($form['contact_name'] != '') {
+            $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:11;">איש קשר: </td>
+            <td>' . $form['contact_name'] . '</td></tr>';
+        }
+        if ($form['activity_text'] != '') {
+            $html .= ' <tr><td style="width:160px;font-weight:bolder;font-size:11;">תיאור תקלה\ התקנה: </td>
+            <td>' . $this->hebrewFix($form['activity_text']) . '</td></tr>';
+        }
+        if ($form['checking_text'] != '') {
+            $html .= ' <tr><td style="width:160px;font-weight:bolder;font-size:11;">תוצאות הבדיקה: </td>
+            <td>' . $this->hebrewFix($form['checking_text']) . '</td></tr>';
+        }
+        if ($form['summary_text'] != '') {
+            $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:11;">סיכום</td>
+            <td>' . $this->hebrewFix($form['summary_text']) . '</td></tr>';
+        }
+        if ($form['remarks_text'] != '') {
+            $html .= '';
+        }
+        if ($form['remarks_text'] != '') {
+            $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:11;">הערות: </td>
+            <td>' . $this->hebrewFix($form['remarks_text']) . '</td></tr>';
+        }
+        $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:11;">המלצות: </td>
         <td>' . $this->hebrewFix($form['recommendations_text']) . $add_trip . '</td>
         </tr></table>';
         $pdf->writeHTMLCell(0, 0, '', '', $html, 0, 0, 0, true, 'R', true);
 
-        $html = '<b>חתימת לקוח:</b>';
-        $pdf->writeHTMLCell('', '', 40, 250, $html, 0, 0, 0, true, 'R', true);
-
-        //write sign border
-        $pdf->writeHTMLCell('60', '25', 80, 240, '', 1, 0, 0, true, 'R', true);
-
-        $pdf->SetXY(135, 245);
-        $imgdata = base64_decode($form['client_sign']);
-        if ($imgdata != '') {
-            $pdf->Image('@' . $imgdata, '', '', '', 15, '', '', 'T', false, 150, '', false, false, 0, false, false, false);
+        if ($form['client_sign'] != '') {
+            $html = '<b>חתימת לקוח:</b>';
+            $pdf->writeHTMLCell('', '', 40, 250, $html, 0, 0, 0, true, 'R', true);
+            //write sign border
+            $pdf->writeHTMLCell(60, 25, 80, 240, '', 1, 0, 0, true, 'R', true);
+            $pdf->SetXY(135, 245);
+            $imgdata = base64_decode($form['client_sign']);
+            if ($imgdata != '') {
+                $pdf->Image('@' . $imgdata, '', '', '', 15, '', '', 'T', false, 150, '', false, false, 0, false, false, false);
+            }
         }
+
         // ---------------------------------------------------------
 
         // Close and output PDF document
@@ -283,12 +296,12 @@ class MYPDF extends TCPDF
 
         $w_page = isset($this->l['w_page']) ? $this->l['w_page'] . ' ' : '';
         if (empty($this->pagegroups)) {
-            $pagenumtxt = "עמוד " . $w_page . $this->getAliasNumPage() . ' מתוך ' . $this->getAliasNbPages();
+            $pagenumtxt =  $w_page . $this->getAliasNumPage() . '/' . $this->getAliasNbPages();
         } else {
-            $pagenumtxt = "עמוד " . $w_page . $this->getPageNumGroupAlias() . ' מתוך ' . $this->getPageGroupAlias();
+            $pagenumtxt =  $w_page . $this->getPageNumGroupAlias() . '/' . $this->getPageGroupAlias();
         }
-        $this->SetX($this->k / 2);
-        $this->SetAlpha(1);
-        $this->Cell(0, 0, $pagenumtxt, 0, 0, 'C');
+        //$this->SetX($this->k / 2);
+        //$this->SetAlpha(1);
+        $this->writeHTMLCell('', '', -10, '', $pagenumtxt, 0, 0, 0, true, 'C', true);
     }
 }

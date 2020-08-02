@@ -222,21 +222,22 @@ if (isset($this->session->userdata['logged_in'])) {
                         <hr />
 
                         <div class="form-row">
-                              <div class="form-group col-md-3">
-                                    <label for="trip_start_time" class=" col-form-label ">נסיעה הלוך התחלה</label>
-                                    <input type='time' class="form-control" name='trip_start_time' value="<?php echo $form_data['trip_start_time'] ?>">
+                              <label for="recommendations_text" class="col-md-2 col-form-label ">נסיעות:</label>
+                              <div class="form-group col-md-5">
+                                    <div class="input-group mb-2">
+                                          <div class="input-group-prepend">
+                                                <div class="input-group-text">שעת התחלה נסיעת הלוך</div>
+                                          </div>
+                                          <input type='time' class="form-control" name='trip_start_time' value="<?php echo $form_data['trip_start_time'] ?>">
+                                    </div>
                               </div>
-                              <div class="form-group col-md-3">
-                                    <label for="trip_end_time" class="col-form-label ">נסיעה הלוך סיום</label>
-                                    <input type='time' class="form-control" name='trip_end_time' value="<?php echo $form_data['trip_end_time'] ?>">
-                              </div>
-                              <div class="form-group col-md-3">
-                                    <label for="back_start_time" class=" col-form-label ">נסיעה חזור התחלה</label>
-                                    <input type='time' class="form-control" name='back_start_time' value="<?php echo $form_data['back_start_time'] ?>">
-                              </div>
-                              <div class="form-group col-md-3">
-                                    <label for="back_end_time" class=" col-form-label ">נסיעה חזור סיום</label>
-                                    <input type='time' class="form-control" name='back_end_time' value="<?php echo $form_data['back_end_time'] ?>">
+                              <div class="form-group col-md-5">
+                                    <div class="input-group mb-2">
+                                          <div class="input-group-prepend">
+                                                <div class="input-group-text">שעת סיום נסיעת חזור</div>
+                                          </div>
+                                          <input type='time' class="form-control" name='back_end_time' value="<?php echo $form_data['back_end_time'] ?>">
+                                    </div>
                               </div>
                         </div>
                         <hr />

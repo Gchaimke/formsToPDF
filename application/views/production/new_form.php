@@ -76,7 +76,7 @@
                                     <div class="input-group-prepend">
                                           <div class="input-group-text"><span class="red">*</span>מספר פניה \ תקלה</div>
                                     </div>
-                                    <input type='text' id='issue_num' class="form-control" name='issue_num' required>
+                                    <input type='text' id='issue_num' class="form-control" name='issue_num'>
                               </div>
                         </div>
                         <div class="form-group col-md-4">
@@ -159,25 +159,28 @@
                         <div class="col-sm-10">
                               <textarea class="form-control" name="recommendations_text" cols="10" rows="3"></textarea>
                         </div>
-                  </div><hr/>
+                  </div>
+                  <hr />
                   <div class="form-row">
-                        <div class="form-group col-md-3">
-                              <label for="trip_start_time" class=" col-form-label ">נסיעה הלוך התחלה</label>
-                              <input type='time' class="form-control" name='trip_start_time'>
+                        <label for="recommendations_text" class="col-md-2 col-form-label ">נסיעות:</label>
+                        <div class="form-group col-md-5">
+                              <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                          <div class="input-group-text">שעת התחלה נסיעת הלוך</div>
+                                    </div>
+                                    <input type='time' class="form-control" name='trip_start_time'>
+                              </div>
                         </div>
-                        <div class="form-group col-md-3">
-                              <label for="trip_end_time" class="col-form-label ">נסיעה הלוך סיום</label>
-                              <input type='time' class="form-control" name='trip_end_time'>
+                        <div class="form-group col-md-5">
+                              <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                          <div class="input-group-text">שעת סיום נסיעת חזור</div>
+                                    </div>
+                                    <input type='time' class="form-control" name='back_end_time'>
+                              </div>
                         </div>
-                        <div class="form-group col-md-3">
-                              <label for="back_start_time" class=" col-form-label ">נסיעה חזור התחלה</label>
-                              <input type='time' class="form-control" name='back_start_time'>
-                        </div>
-                        <div class="form-group col-md-3">
-                              <label for="back_end_time" class=" col-form-label ">נסיעה חזור סיום</label>
-                              <input type='time' class="form-control" name='back_end_time'>
-                        </div>
-                  </div><hr/>
+                  </div>
+                  <hr />
                   <div class="form-group row" id="emails">
                         <label for="email_to" class="col-sm-2 col-form-label ">מכותבים:</label>
                         <?php
@@ -209,18 +212,20 @@
                         }
                         ?>
                         <input type="hidden" id="sum" class="form-control ltr" name='email_to' value="">
-                  </div><hr/>
+                  </div>
+                  <hr />
 
 
                   <div class="form-group row">
                         <label for="attachments" class="col-sm-2 col-form-label ">קבצים נוספים</label>
                         <div class="col-sm-10">
                               <input id="fileupload" style="display:none;" type="file" name="files" data-url="/production/do_upload/<?php echo $_GET['company'] ?>" />
-                              <input type="hidden" id="attachments" value="" name="attachments"/>
+                              <input type="hidden" id="attachments" value="" name="attachments" />
                               <div id='files'></div>
                               <button class="btn btn-outline-secondary col-sm-2 mt-2 mt-md-0" type="button" onclick="document.getElementById('fileupload').click();">העלה</button>
                         </div>
-                  </div><hr/>
+                  </div>
+                  <hr />
 
                   <div class="form-row">
                         <div class="form-group col-md-12">
@@ -231,7 +236,8 @@
                               <input type='text' id="client_sign" name='client_sign' hidden>
                               <a href="#sign-canvas" class="btn btn-outline-danger btn-sm mt-3" onclick='$("#sign-canvas").data("jqScribble").clear();'>נקה חתימה</a>
                         </div>
-                  </div><hr/>
+                  </div>
+                  <hr />
 
                   <input type='submit' class="btn btn-success my-5" name='submit' value='שמור ושלח לרשימת תפוצה'>
                   <?php echo form_close(); ?>
@@ -319,7 +325,7 @@
                   data.context.css("background-position-x", 100 - progress + "%");
             },
             done: function(e, data) {
-                  var new_file = 'Uploads/forms_attachments/'+'<?php echo $_GET['company'] ?>'+'/'+data.result;
+                  var new_file = 'Uploads/forms_attachments/' + '<?php echo $_GET['company'] ?>' + '/' + data.result;
                   setTimeout(function() {
                         data.context.addClass("done");
                   }, 1000);
