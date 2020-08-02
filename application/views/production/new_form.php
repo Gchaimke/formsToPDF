@@ -325,7 +325,13 @@
                   data.context.css("background-position-x", 100 - progress + "%");
             },
             done: function(e, data) {
-                  var new_file = 'Uploads/forms_attachments/' + '<?php echo $_GET['company'] ?>' + '/' + data.result;
+                  var today = new Date();
+                  var dd = today.getDate();
+                  var mm = today.getMonth() + 1;
+                  var yyyy = today.getFullYear();
+
+                  var str_date = dd+'_'+mm+'_'+yyyy;
+                  var new_file = 'Uploads/forms_attachments/' +str_date +'_'+Date.now()+ '/' + data.result;
                   setTimeout(function() {
                         data.context.addClass("done");
                   }, 1000);

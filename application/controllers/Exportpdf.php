@@ -34,7 +34,7 @@ class Exportpdf extends CI_Controller
 
         // set document information
         $form_date = date("d-m-Y", strtotime($form['date']));
-        $file_name = $form_date . '_client_' . $form['client_num'] . '-' . $form['client_name'] . '_form_' . $form['issue_num'];
+        $file_name = $form_date . '__' . $form['client_num'] . '__' . $form['client_name']. '__' .$form['place'];
         $pdf->SetCreator(PDF_CREATOR);
         $pdf->SetTitle($file_name);
         $pdf->SetSubject('-פנימי-');
@@ -222,17 +222,15 @@ class Exportpdf extends CI_Controller
             $recipients .= $user['email'];
             $this->load->library('email');
             $Subject = $file_name;
-            $Message = 'Server: ' . $_SERVER['SERVER_NAME'];
+            $Message = ''; //'Server: ' . $_SERVER['SERVER_NAME'];
             $this->email
-                ->from('yossigorbov@garin.co.il', 'New Form from - ' . $user['name'])
+                ->from('yossigorbov@garin.co.il', 'דוח חדש - ' . $user['view_name'])
                 ->to($recipients)
                 ->subject($Subject)
                 ->message($Message);
             foreach ($attachments as $att) {
                 $this->email->attach($att);
             }
-
-            //$this->email->attach('C:/laragon/www/formsToPDF/Uploads/forms_attachments/Cellcom/ishur_refui_alex.pdf');
 
             if ($this->email->send()) {
                 print_r('מייל נשלח ל:  ' . $recipients . " בהצלחה!");
