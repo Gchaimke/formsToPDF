@@ -349,13 +349,13 @@ class Production extends CI_Controller
 
     public function do_upload($folder = '')
     {
-        $upload_folder = "./Uploads/forms_attachments/" . $folder;
+        $upload_folder = "./Uploads/forms_attachments/" . urldecode($folder);
         if (!file_exists($upload_folder)) {
             mkdir($upload_folder, 0770, true);
         }
         $config = array(
             'upload_path' => $upload_folder,
-            'allowed_types' => "gif|jpg|jpeg|png|zip|rar|doc|docx|xls|xlsx|ppt|pptx|csv|ods|odt|odp|pdf|txt",
+            'allowed_types' => "gif|jpg|jpeg|png|zip|rar|doc|docx|xls|xlsx|ppt|pptx|csv|ods|odt|odp|pdf|txt|conf|",
             'overwrite' => TRUE,
             'max_size' => "2048000", // Can be set to particular file size , here it is 2 MB(2048 Kb)
             //'max_height' => "768",

@@ -265,7 +265,12 @@ if (isset($this->session->userdata['logged_in'])) {
                         <div class="form-group row">
                               <label for="recommendations_text" class="col-sm-2 col-form-label "> חתימת לקוח שמורה:</label>
                               <div class="col-sm-4">
-                                    <img src="data:image/png;base64, <?php echo $form_data['client_sign'] ?>" />
+                                    <?php if ($form_data['client_sign']) {
+                                          echo '<img src="data:image/png;base64, <?php echo $form_data["client_sign"] ?>" />';
+                                    }else{
+                                          echo 'אין חתימה';
+                                    }
+                                    ?>
                               </div>
                               <?php if ($user_role == "Admin") {
                                     echo '<label for="recommendations_text" class="col-sm-2 col-form-label ">חתימת לקוח חדשה:</label>

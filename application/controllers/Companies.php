@@ -130,7 +130,7 @@ class Companies extends CI_Controller
         $role = ($this->session->userdata['logged_in']['role']);
         if ($role == "Admin") {
             $id = $_POST['id'];
-            $this->Companies_model->deleteClient($id);
+            $this->Companies_model->deleteCompany($id);
         }
     }
 }
