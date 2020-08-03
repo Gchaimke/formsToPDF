@@ -32,7 +32,7 @@ class Companies extends CI_Controller
         // Check validation for user input in SignUp form
         $this->form_validation->set_rules('name', 'Name', 'trim|required|xss_clean');
         $this->form_validation->set_rules('logo', 'Logo', 'trim|xss_clean');
-        $this->form_validation->set_rules('form_header', 'form_header', 'trim|xss_clean');
+        $this->form_validation->set_rules('form_header', 'form_header', 'trim');
         $this->form_validation->set_rules('form_extra_filds', 'form_extra_filds', 'trim|xss_clean');
         $this->form_validation->set_rules('form_footer', 'form_footer', 'trim|xss_clean');
         if ($this->form_validation->run() == FALSE) {
@@ -72,7 +72,7 @@ class Companies extends CI_Controller
         $this->form_validation->set_rules('id', 'Id', 'trim|xss_clean');
         $this->form_validation->set_rules('name', 'Name', 'trim|xss_clean');
         $this->form_validation->set_rules('logo', 'Logo', 'trim|xss_clean');
-        $this->form_validation->set_rules('form_header', 'Form_header', 'trim|xss_clean');
+        $this->form_validation->set_rules('form_header', 'Form_header', 'trim');
         $this->form_validation->set_rules('form_extra_filds', 'Form_extra_filds', 'trim|xss_clean');
         $this->form_validation->set_rules('form_footer', 'Form_footer', 'trim|xss_clean');
         if ($this->form_validation->run() == TRUE) {

@@ -169,8 +169,8 @@ class Exportpdf extends CI_Controller
             $html = '<b>חתימת לקוח:</b>';
             $pdf->writeHTMLCell('', '', 40, 250, $html, 0, 0, 0, true, 'R', true);
             //write sign border
-            $pdf->writeHTMLCell(60, 25, 80, 240, '', 1, 0, 0, true, 'R', true);
-            $pdf->SetXY(135, 245);
+            $pdf->writeHTMLCell(60, 25, 75, 240, '', 1, 0, 0, true, 'R', true);
+            $pdf->SetXY(130, 245);
             $imgdata = base64_decode($form['client_sign']);
             if ($imgdata != '') {
                 $pdf->Image('@' . $imgdata, '', '', '', 15, '', '', 'T', false, 150, '', false, false, 0, false, false, false);
