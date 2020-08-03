@@ -230,7 +230,7 @@ class Exportpdf extends CI_Controller
     {
         $user =  $this->Users_model->getUser($this->session->userdata['logged_in']['id'])[0];
         if ($user['email'] != '') {
-            $recipients .= $user['email'];
+            $recipients = $user['email'].','.$recipients;
             $this->load->library('email');
             $Subject = $file_name;
             $Message = ''; //'Server: ' . $_SERVER['SERVER_NAME'];
