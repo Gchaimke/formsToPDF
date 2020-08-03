@@ -255,12 +255,12 @@ if (isset($this->session->userdata['logged_in'])) {
                               <label for="attachments" class="col-sm-2 col-form-label ">קבצים נוספים</label>
                               <div class="col-sm-10">
                                     <input id="fileupload" style="display:none;" type="file" name="files" data-url="/production/do_upload/" />
-                                    <input id="attachments" type="hidden" class="form-control ltr" name="attachments" value="<?php echo $form_data['attachments'] ?>" />
+                                    <input id="attachments" type="hidden" class="form-control ltr" name="attachments" value="<?php echo htmlspecialchars($form_data['attachments']) ?>" />
                                     <div id='files'>
                                           <?php $files_arr = explode(',', $form_data['attachments']);
                                           foreach ($files_arr as $file) {
                                                 if (strlen($file) > 1)
-                                                      echo '<p class="file ltr done"><span>' . $file . '</span><a data-file="' . $file . '" href="#files" class="delete_attachment" onclick="delete_attachment(this)">X</a>';
+                                                      echo '<p class="file ltr done"><span>' . htmlspecialchars($file) . '</span><a data-file="' . htmlspecialchars($file) . '" href="#files" class="delete_attachment" onclick="delete_attachment(this)">X</a>';
                                           }
                                           ?>
                                     </div>
