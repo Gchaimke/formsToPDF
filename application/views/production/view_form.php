@@ -286,7 +286,7 @@ if (isset($this->session->userdata['logged_in'])) {
                                           <canvas id="sign-canvas" style="border: 1px solid red;"></canvas>
                                     </div>
                                     <input type="text" id="client_sign" name="client_sign" hidden>
-                                    <a href="#sign-canvas" class="btn btn-outline-danger btn-sm" onclick="$("#sign-canvas").data("jqScribble").clear();">נקה חתימה</a>
+                                    <a href="#sign-canvas" class="btn btn-outline-danger btn-sm" onclick="clearCanvas()">נקה חתימה</a>
                               </div>';
                               } ?>
                         </div>
@@ -323,7 +323,9 @@ if (isset($this->session->userdata['logged_in'])) {
                   $("#creator_name").val($("#creator_id option:selected").text());
             });
       });
-
+      function clearCanvas(){
+            $("#sign-canvas").data("jqScribble").clear();
+      }
       function SendEmail() {
             // Make sure that the formMessages div has the 'success' class.
             $('#form-messages').addClass('alert-info');
