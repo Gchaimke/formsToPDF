@@ -302,6 +302,6 @@ class MYPDF extends TCPDF
         }
         //$this->SetX($this->k / 2);
         //$this->SetAlpha(1);
-        $this->writeHTMLCell('', '', -10, '', $pagenumtxt, 0, 0, 0, true, 'C', true);
+        $this->writeHTMLCell('', '', '', '', $pagenumtxt, 0, 0, 0, true, 'L', true);
     }
 }
