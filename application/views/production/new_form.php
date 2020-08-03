@@ -2,26 +2,6 @@
 <script src="<?php echo base_url('assets/js/jQUpload/jquery.ui.widget.js'); ?>"></script>
 <script src="<?php echo base_url('assets/js/jQUpload/jquery.iframe-transport.js'); ?>"></script>
 <script src="<?php echo base_url('assets/js/jQUpload/jquery.fileupload.js'); ?>"></script>
-<style>
-      .file {
-            position: relative;
-            background: linear-gradient(to right, lightblue 50%, transparent 50%);
-            background-size: 200% 100%;
-            background-position: right bottom;
-            transition: all 1s ease;
-      }
-
-      .file.done {
-            background: lightgreen;
-      }
-
-      .file a {
-            display: block;
-            position: relative;
-            padding: 5px;
-            color: black;
-      }
-</style>
 <div id="form-messages" class='alert hidden test' role='alert'></div>
 <main role="main">
       <div class="jumbotron">

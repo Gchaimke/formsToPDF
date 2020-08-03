@@ -164,18 +164,6 @@ function snapPhoto() {
     }
 }
 
-function delFile(file) {
-    var r = confirm("Delete File " + file + "?");
-    if (r == true) {
-        $.post("/production/delete_photo", {
-            photo: file
-        }).done(function (o) {
-            console.log('File deleted from the server.');
-            sleep(1000)
-            location.reload();
-        });
-    }
-}
 
 function saveSign() {
     $("#sign-canvas").data("jqScribble").save(function (imageData) {
@@ -241,19 +229,41 @@ if ($("#fileupload").length) {
             data.context.css("background-position-x", 100 - progress + "%");
         },
         done: function (e, data) {
-            setTimeout(function () {
-                data.context.addClass("done");
-            }, 1000);
             var upload_folder = 'Uploads/forms_attachments/' + getfolder_name();
             var new_file = upload_folder + '/' + data.result;
-            if ($('#attachments').val() == '') {
-                $('#attachments').val(new_file);
+            if (~new_file.indexOf("[error]")) {
+                alert('The filetype you are attempting to upload is not allowed.');
+                data.context.addClass("error");
             } else {
-                $('#attachments').val($('#attachments').val() + "," + new_file);
+                setTimeout(function () {
+                    data.context.addClass("done").append('<a data-file="'+new_file+'" href="#files" class="delete_attachment" onclick="delete_attachment(this)">X</a>');
+                }, 1000);
+                if ($('#attachments').val() == '') {
+                    $('#attachments').val(new_file);
+                } else {
+                    $('#attachments').val($('#attachments').val() + "," + new_file);
+                }
             }
             console.log(new_file);
         }
     });
+}
+
+function delete_attachment(attachment) {
+    var data_file = $(attachment).attr('data-file');
+    var r = confirm("Delete File " + data_file + "?");
+    if (r == true) {
+        $.post("/production/delete_attachment", {
+            attachment: data_file
+        }).done(function (o) {
+            $(attachment).parent().hide();
+            $('#attachments').val($('#attachments').val().replace(data_file, ""));
+            if($('#attachments').val().startsWith(',')){
+                $('#attachments').val($('#attachments').val().substring(1,$('#attachments').val().length))
+            }
+            console.log(o);
+        });
+    }
 }
 
 function sleep(milliseconds) {

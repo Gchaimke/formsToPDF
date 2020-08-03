@@ -306,18 +306,17 @@ class Production extends CI_Controller
     }
 
 
-    public function delete_photo()
+    public function delete_attachment()
     {
         $this->form_validation->set_rules('photo', 'Photo', 'trim|xss_clean');
-
         if ($this->form_validation->run() == TRUE) {
-            $photo = $this->input->post('photo');
+            $attachment ="./".$this->input->post('attachment'); // $_SERVER["DOCUMENT_ROOT"].
             // Use unlink() function to delete a file  
-            if (!unlink($_SERVER["DOCUMENT_ROOT"] . $photo)) {
-                echo ($_SERVER["DOCUMENT_ROOT"] . $photo . " cannot be deleted due to an error");
+            if (!unlink($attachment)) {
+                echo ($attachment . " cannot be deleted due to an error");
             } else {
-                echo ($_SERVER["DOCUMENT_ROOT"] . $photo . " has been deleted");
-                $this->log_data('deleted ' . $photo, 3);
+                echo ($attachment . " has been deleted");
+                $this->log_data('deleted ' . $this->input->post('attachment'), 3);
             }
         }
     }
@@ -329,7 +328,7 @@ class Production extends CI_Controller
         }
         $level_arr = array('INFO', 'CREATE', 'TRASH', 'DELETE');
         $user = $this->session->userdata['logged_in']['name'];
-        $log_file = APPPATH . "logs/production/" . date("m-d-Y") . ".log";
+        $log_file = APPPATH . "logs/admin/" . date("m-d-Y") . ".log";
         $fp = fopen($log_file, 'a'); //opens file in append mode  
         fwrite($fp, $level_arr[$level] . " - " . date("H:i:s") . " --> " . $user . " - " . $msg . PHP_EOL);
         fclose($fp);

@@ -64,6 +64,35 @@ input.form-control {
     float: left;
 }
 
+.file {
+    position: relative;
+    background: linear-gradient(to right, lightblue 50%, transparent 50%);
+    background-size: 200% 100%;
+    background-position: right bottom;
+    transition: all 1s ease;
+}
+
+.file.done {
+    background: lightgreen;
+}
+
+.file.error {
+    background: rgb(255, 176, 139);
+}
+
+.file a {
+    display: block;
+    position: relative;
+    padding: 5px;
+    color: black;
+}
+
+.file .delete_attachment {
+    float: right;
+    padding: 0 15px;
+    background: #ffbf82;
+}
+
 /* RTL END*/
 
 .jumbotron {
