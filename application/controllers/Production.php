@@ -40,7 +40,7 @@ class Production extends CI_Controller
         $creator_id = $this->session->userdata['logged_in']['id'];
         $creator_name = $this->Users_model->getUser($creator_id)[0]['name'];
         // Check validation for user input in SignUp form
-        $this->form_validation->set_rules('date', 'date', 'trim|required|xss_clean');
+        $this->form_validation->set_rules('date', 'date', 'trim|xss_clean');
         $this->form_validation->set_rules('company', 'company', 'trim|xss_clean');
         $this->form_validation->set_rules('client_num', 'client_num', 'trim|xss_clean');
         $this->form_validation->set_rules('issue_num', 'issue_num', 'trim|xss_clean');
