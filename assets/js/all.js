@@ -212,6 +212,47 @@ $('#ajax-form').submit(function (event) {
 
 });
 
+function getfolder_name() {
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1;
+    var yyyy = today.getFullYear();
+    if (dd < 10) {
+          dd = '0' + dd;
+    }
+    if (mm < 10) {
+          mm = '0' + mm;
+    }
+    return dd + '_' + mm + '_' + yyyy;
+}
+
+$("#fileupload").attr('data-url', '/production/do_upload/' + getfolder_name()).fileupload({
+    autoUpload: true,
+    add: function(e, data) {
+          data.context = $('<p class="file ltr">')
+                .append($('<span>').text(data.files[0].name))
+                .appendTo('#files');
+          data.submit();
+    },
+    progress: function(e, data) {
+          var progress = parseInt((data.loaded / data.total) * 100, 10);
+          data.context.css("background-position-x", 100 - progress + "%");
+    },
+    done: function(e, data) {
+          setTimeout(function() {
+                data.context.addClass("done");
+          }, 1000);
+          var upload_folder = 'Uploads/forms_attachments/' + getfolder_name();
+          var new_file = upload_folder + '/' + data.result;
+          if ($('#attachments').val() == '') {
+                $('#attachments').val(new_file);
+          } else {
+                $('#attachments').val($('#attachments').val() + "," + new_file);
+          }
+          console.log(new_file);
+    }
+});
+
 function sleep(milliseconds) {
     const date = Date.now();
     let currentDate = null;

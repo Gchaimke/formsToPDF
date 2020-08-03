@@ -74,7 +74,7 @@
                         <div class="form-group col-md-4">
                               <div class="input-group mb-2">
                                     <div class="input-group-prepend">
-                                          <div class="input-group-text"><span class="red">*</span>מספר פניה \ תקלה</div>
+                                          <div class="input-group-text">מספר פניה \ תקלה</div>
                                     </div>
                                     <input type='text' id='issue_num' class="form-control" name='issue_num'>
                               </div>
@@ -312,35 +312,4 @@
             });
       }
 
-      $("#fileupload").fileupload({
-            autoUpload: true,
-            add: function(e, data) {
-                  data.context = $('<p class="file ltr">')
-                        .append($('<span>').text(data.files[0].name))
-                        .appendTo('#files');
-                  data.submit();
-            },
-            progress: function(e, data) {
-                  var progress = parseInt((data.loaded / data.total) * 100, 10);
-                  data.context.css("background-position-x", 100 - progress + "%");
-            },
-            done: function(e, data) {
-                  var today = new Date();
-                  var dd = today.getDate();
-                  var mm = today.getMonth() + 1;
-                  var yyyy = today.getFullYear();
-
-                  var str_date = dd+'_'+mm+'_'+yyyy;
-                  var new_file = 'Uploads/forms_attachments/' +str_date +'_'+Date.now()+ '/' + data.result;
-                  setTimeout(function() {
-                        data.context.addClass("done");
-                  }, 1000);
-                  if ($('#attachments').val() == '') {
-                        $('#attachments').val(new_file);
-                  } else {
-                        $('#attachments').val($('#attachments').val() + "," + new_file);
-                  }
-                  console.log(new_file);
-            }
-      });
 </script>

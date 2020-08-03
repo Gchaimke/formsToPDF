@@ -349,7 +349,7 @@ class Production extends CI_Controller
 
     public function do_upload($folder = '')
     {
-        $upload_folder = "./Uploads/forms_attachments/" . date('d_m_Y');
+        $upload_folder = "./Uploads/forms_attachments/" . $folder;
         if (!file_exists($upload_folder)) {
             mkdir($upload_folder, 0770, true);
         }

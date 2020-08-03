@@ -254,7 +254,7 @@ if (isset($this->session->userdata['logged_in'])) {
                         <div class="form-group row">
                               <label for="attachments" class="col-sm-2 col-form-label ">קבצים נוספים</label>
                               <div class="col-sm-10">
-                                    <input id="fileupload" style="display:none;" type="file" name="files" data-url="/production/do_upload/<?php echo $form_data['company'] ?>" />
+                                    <input id="fileupload" style="display:none;" type="file" name="files" data-url="/production/do_upload/" />
                                     <input rows="3" id="attachments" type="text" class="form-control ltr" name="attachments" value="<?php echo $form_data['attachments'] ?>" />
                                     <div id='files'></div>
                                     <button class="btn btn-outline-secondary col-sm-2" type="button" onclick="document.getElementById('fileupload').click();">העלה</button>
@@ -318,7 +318,6 @@ if (isset($this->session->userdata['logged_in'])) {
       });
 
       function SendEmail() {
-            //document.getElementById('save_btn').click();
             // Make sure that the formMessages div has the 'success' class.
             $('#form-messages').addClass('alert-info');
             // Set the message text.
@@ -336,36 +335,4 @@ if (isset($this->session->userdata['logged_in'])) {
                   $('#form-messages').html(o).fadeIn(1000);
             });
       }
-
-      $("#fileupload").fileupload({
-            autoUpload: true,
-            add: function(e, data) {
-                  data.context = $('<p class="file ltr">')
-                        .append($('<span>').text(data.files[0].name))
-                        .appendTo('#files');
-                  data.submit();
-            },
-            progress: function(e, data) {
-                  var progress = parseInt((data.loaded / data.total) * 100, 10);
-                  data.context.css("background-position-x", 100 - progress + "%");
-            },
-            done: function(e, data) {
-                  var today = new Date();
-                  var dd = today.getDate();
-                  var mm = today.getMonth() + 1;
-                  var yyyy = today.getFullYear();
-
-                  var str_date = dd + '_' + mm + '_' + yyyy;
-                  var new_file = 'Uploads/forms_attachments/' + str_date + '/' + data.result;
-                  setTimeout(function() {
-                        data.context.addClass("done");
-                  }, 1000);
-                  if ($('#attachments').val() == '') {
-                        $('#attachments').val(new_file);
-                  } else {
-                        $('#attachments').val($('#attachments').val() + "," + new_file);
-                  }
-                  console.log(new_file);
-            }
-      });
 </script>
