@@ -34,7 +34,16 @@ class Exportpdf extends CI_Controller
 
         // set document information
         $form_date = date("d-m-Y", strtotime($form['date']));
-        $file_name = $form_date . '__' . $form['client_num'] . '__' . $form['client_name']. '__' .$form['place'];
+        $file_name = $form_date . '__' . $form['client_num'] . '__' . $form['client_name'] . '__' . $form['place'];
+
+        // Remove anything which isn't a word, whitespace, number
+        // or any of the following caracters -_~,;[]().
+        // If you don't need to handle multi-byte characters
+        // you can use preg_replace rather than mb_ereg_replace
+        $file_name = mb_ereg_replace("([^\w\s\d\-_~,;\[\]\(\).])", '', $file_name);
+        // Remove any runs of periods
+        $file_name = mb_ereg_replace("([\.]{2,})", '', $file_name);
+
         $pdf->SetCreator(PDF_CREATOR);
         $pdf->SetTitle($file_name);
         $pdf->SetSubject('-פנימי-');

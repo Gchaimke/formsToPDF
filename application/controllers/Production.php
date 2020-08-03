@@ -325,15 +325,6 @@ class Production extends CI_Controller
         fclose($fp);
     }
 
-
-    public function view_upload()
-    {
-        $this->load->view('header');
-        $this->load->view('main_menu');
-        $this->load->view('upload');
-        $this->load->view('footer');
-    }
-
     public function do_upload($folder = '')
     {
         $upload_folder = "./Uploads/forms_attachments/" . $folder;
