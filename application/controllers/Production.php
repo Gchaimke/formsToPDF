@@ -87,6 +87,11 @@ class Production extends CI_Controller
                 'attachments' => $this->input->post('attachments'),
                 'client_sign' => $this->input->post('client_sign')
             );
+            foreach($data as $key => &$str){
+                if(!$key == 'client_sign'){
+                    $str = $this->cleanStr($str);
+                }
+            }
             $response =  $this->Production_model->add_form($data);
             if ($response > 0 || $response) {
                 echo $response;
@@ -164,6 +169,11 @@ class Production extends CI_Controller
                 'back_end_time' => $this->input->post('back_end_time'),
 
             );
+            foreach($data as $key => &$str){
+                if(!$key == 'client_sign'){
+                    $str = $this->cleanStr($str);
+                }
+            }
             if ($this->input->post('client_sign') != '') {
                 $data += array('client_sign' => $this->input->post('client_sign'));
             }
@@ -349,4 +359,14 @@ class Production extends CI_Controller
         }
     }
 
+    private function cleanStr($str){
+        // Remove anything which isn't a word, whitespace, number
+        // or any of the following caracters -_~,;[]().:#
+        // If you don't need to handle multi-byte characters
+        // you can use preg_replace rather than mb_ereg_replace
+        $str = mb_ereg_replace("([^\w\s\d\-_~,;:#\[\]\(\).])", '', $str); //allowed simbols
+        // Remove any runs of periods
+        $str = mb_ereg_replace("([\.]{2,})", '', $str);
+        return htmlspecialchars($str);
+    }
 }

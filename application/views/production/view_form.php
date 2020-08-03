@@ -60,9 +60,9 @@ if (isset($this->session->userdata['logged_in'])) {
                                                 <?php if (isset($companies)) {
                                                       foreach ($companies as $company) {
                                                             if ($company['name'] == $form_data['company']) {
-                                                                  echo '<option selected>' . $company['name'] . '</option>';
+                                                                  echo '<option selected>' . htmlspecialchars($company['name']) . '</option>';
                                                             } else {
-                                                                  echo '<option>' . $company['name'] . '</option>';
+                                                                  echo '<option>' . htmlspecialchars($company['name']) . '</option>';
                                                             }
                                                       }
                                                 }
@@ -126,7 +126,7 @@ if (isset($this->session->userdata['logged_in'])) {
                                           <div class="input-group-prepend">
                                                 <div class="input-group-text">מספר לקוח</div>
                                           </div>
-                                          <input type='text' class="form-control" name='client_num' value="<?php echo $form_data['client_num'] ?>">
+                                          <input type='text' class="form-control" name='client_num' value="<?php echo htmlspecialchars($form_data['client_num']) ?>">
                                     </div>
                               </div>
                               <div class="form-group col-md-4">
@@ -134,7 +134,7 @@ if (isset($this->session->userdata['logged_in'])) {
                                           <div class="input-group-prepend">
                                                 <div class="input-group-text">מספר פניה \ תקלה</div>
                                           </div>
-                                          <input type='text' class="form-control" name='issue_num' value="<?php echo $form_data['issue_num'] ?>">
+                                          <input type='text' class="form-control" name='issue_num' value="<?php echo htmlspecialchars($form_data['issue_num']) ?>">
                                     </div>
                               </div>
                               <div class="form-group col-md-4">
@@ -142,7 +142,7 @@ if (isset($this->session->userdata['logged_in'])) {
                                           <div class="input-group-prepend">
                                                 <div class="input-group-text">סוג תקלה \ התקנה</div>
                                           </div>
-                                          <input type='text' class="form-control" name='issue_kind' value="<?php echo $form_data['issue_kind'] ?>">
+                                          <input type='text' class="form-control" name='issue_kind' value="<?php echo htmlspecialchars($form_data['issue_kind']) ?>">
                                     </div>
                               </div>
                         </div>
@@ -153,7 +153,7 @@ if (isset($this->session->userdata['logged_in'])) {
                                           <div class="input-group-prepend">
                                                 <div class="input-group-text">שם לקוח</div>
                                           </div>
-                                          <input type='text' class="form-control" name='client_name' value="<?php echo $form_data['client_name'] ?>">
+                                          <input type='text' class="form-control" name='client_name' value="<?php echo htmlspecialchars($form_data['client_name']) ?>">
                                     </div>
                               </div>
                               <div class="form-group col-md-6">
@@ -161,7 +161,7 @@ if (isset($this->session->userdata['logged_in'])) {
                                           <div class="input-group-prepend">
                                                 <div class="input-group-text">מיקום</div>
                                           </div>
-                                          <input type='text' class="form-control" name='place' value="<?php echo $form_data['place'] ?>">
+                                          <input type='text' class="form-control" name='place' value="<?php echo htmlspecialchars($form_data['place']) ?>">
                                     </div>
                               </div>
                         </div>
@@ -172,7 +172,7 @@ if (isset($this->session->userdata['logged_in'])) {
                                           <div class="input-group-prepend">
                                                 <div class="input-group-text">אחראי</div>
                                           </div>
-                                          <input type='text' class="form-control" name='manager' value="<?php echo $form_data['manager'] ?>">
+                                          <input type='text' class="form-control" name='manager' value="<?php echo htmlspecialchars($form_data['manager']) ?>">
                                     </div>
                               </div>
                               <div class="form-group col-md-6">
@@ -180,7 +180,7 @@ if (isset($this->session->userdata['logged_in'])) {
                                           <div class="input-group-prepend">
                                                 <div class="input-group-text">איש קשר</div>
                                           </div>
-                                          <input type='text' class="form-control" name='contact_name' value="<?php echo $form_data['contact_name'] ?>">
+                                          <input type='text' class="form-control" name='contact_name' value="<?php echo htmlspecialchars($form_data['contact_name']) ?>">
                                     </div>
                               </div>
                         </div>
@@ -266,7 +266,7 @@ if (isset($this->session->userdata['logged_in'])) {
                               <label for="recommendations_text" class="col-sm-2 col-form-label "> חתימת לקוח שמורה:</label>
                               <div class="col-sm-4">
                                     <?php if ($form_data['client_sign']) {
-                                          echo '<img src="data:image/png;base64, '.$form_data["client_sign"] .'" />';
+                                          echo '<img src="data:image/png;base64, ' . $form_data["client_sign"] . '" />';
                                     } else {
                                           echo 'אין חתימה';
                                     }

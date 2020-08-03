@@ -38,7 +38,7 @@ if (isset($this->session->userdata['logged_in'])) {
 			?>
 			<?php echo form_open("companies/edit/$id", 'class=user-create'); ?>
 			<input type='hidden' name='id' value="<?php echo $id ?>">
-			<label>Company</label><input id='company_name' type='text' class="form-control" name='name' value="<?php echo $company ?>" onchange="updateClient(this.value)"></hr>
+			<label>Company</label><input id='company_name' type='text' class="form-control" name='name' value="<?php echo htmlspecialchars($company) ?>" onchange="updateClient(this.value)"></hr>
 			<label>Logo</label>
 			<div class="input-group mb-3 ltr">
 				<input id="logo_path" type='text' class="form-control" name='logo' value="<?php echo $logo ?>">
