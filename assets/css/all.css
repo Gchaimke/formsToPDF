@@ -178,6 +178,7 @@ main {
 
 .footer {
     height: 50px;
+    margin-top: 200px;
 }
 
 div#show-log {
