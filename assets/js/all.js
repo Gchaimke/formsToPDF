@@ -114,8 +114,8 @@ function snapLogo() {
                 var image = new Image();
                 image.title = file.name;
                 image.src = this.result;
-                if(ext =='jpg'){
-                    ext='jpeg';
+                if (ext == 'jpg') {
+                    ext = 'jpeg';
                 }
                 logo_path.value = "/Uploads/Companies/" + company + "_logo." + ext;
                 logo_img.src = logo_path.value;
@@ -218,40 +218,43 @@ function getfolder_name() {
     var mm = today.getMonth() + 1;
     var yyyy = today.getFullYear();
     if (dd < 10) {
-          dd = '0' + dd;
+        dd = '0' + dd;
     }
     if (mm < 10) {
-          mm = '0' + mm;
+        mm = '0' + mm;
     }
     return dd + '_' + mm + '_' + yyyy;
 }
 
-$("#fileupload").attr('data-url', '/production/do_upload/' + getfolder_name()).fileupload({
-    autoUpload: true,
-    add: function(e, data) {
-          data.context = $('<p class="file ltr">')
+
+if ($("#fileupload").length) {
+    $("#fileupload").attr('data-url', '/production/do_upload/' + getfolder_name()).fileupload({
+        autoUpload: true,
+        add: function (e, data) {
+            data.context = $('<p class="file ltr">')
                 .append($('<span>').text(data.files[0].name))
                 .appendTo('#files');
-          data.submit();
-    },
-    progress: function(e, data) {
-          var progress = parseInt((data.loaded / data.total) * 100, 10);
-          data.context.css("background-position-x", 100 - progress + "%");
-    },
-    done: function(e, data) {
-          setTimeout(function() {
+            data.submit();
+        },
+        progress: function (e, data) {
+            var progress = parseInt((data.loaded / data.total) * 100, 10);
+            data.context.css("background-position-x", 100 - progress + "%");
+        },
+        done: function (e, data) {
+            setTimeout(function () {
                 data.context.addClass("done");
-          }, 1000);
-          var upload_folder = 'Uploads/forms_attachments/' + getfolder_name();
-          var new_file = upload_folder + '/' + data.result;
-          if ($('#attachments').val() == '') {
+            }, 1000);
+            var upload_folder = 'Uploads/forms_attachments/' + getfolder_name();
+            var new_file = upload_folder + '/' + data.result;
+            if ($('#attachments').val() == '') {
                 $('#attachments').val(new_file);
-          } else {
+            } else {
                 $('#attachments').val($('#attachments').val() + "," + new_file);
-          }
-          console.log(new_file);
-    }
-});
+            }
+            console.log(new_file);
+        }
+    });
+}
 
 function sleep(milliseconds) {
     const date = Date.now();

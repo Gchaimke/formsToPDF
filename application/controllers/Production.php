@@ -58,8 +58,6 @@ class Production extends CI_Controller
         $this->form_validation->set_rules('recommendations_text', 'recommendations_text', 'trim|xss_clean');
         $this->form_validation->set_rules('email_to', 'email_to', 'trim|xss_clean');
         $this->form_validation->set_rules('trip_start_time', 'trip_start_time', 'trim|xss_clean');
-        $this->form_validation->set_rules('trip_end_time', 'trip_end_time', 'trim|xss_clean');
-        $this->form_validation->set_rules('back_start_time', 'trip_start_time', 'trim|xss_clean');
         $this->form_validation->set_rules('back_end_time', 'trip_end_time', 'trim|xss_clean');
         $this->form_validation->set_rules('attachments', 'attachments', 'trim|xss_clean');
         $this->form_validation->set_rules('client_sign', 'client_sign', 'trim|xss_clean');
@@ -85,8 +83,6 @@ class Production extends CI_Controller
                 'recommendations_text' => $this->input->post('recommendations_text'),
                 'email_to' => $this->input->post('email_to'),
                 'trip_start_time' => $this->input->post('trip_start_time'),
-                'trip_end_time' => $this->input->post('trip_end_time'),
-                'back_start_time' => $this->input->post('back_start_time'),
                 'back_end_time' => $this->input->post('back_end_time'),
                 'attachments' => $this->input->post('attachments'),
                 'client_sign' => $this->input->post('client_sign')
@@ -138,8 +134,6 @@ class Production extends CI_Controller
         $this->form_validation->set_rules('recommendations_text', 'recommendations_text', 'trim|xss_clean');
         $this->form_validation->set_rules('email_to', 'email_to', 'trim|xss_clean');
         $this->form_validation->set_rules('trip_start_time', 'trip_start_time', 'trim|xss_clean');
-        $this->form_validation->set_rules('trip_end_time', 'trip_end_time', 'trim|xss_clean');
-        $this->form_validation->set_rules('back_start_time', 'trip_start_time', 'trim|xss_clean');
         $this->form_validation->set_rules('back_end_time', 'trip_end_time', 'trim|xss_clean');
         $this->form_validation->set_rules('attachments', 'attachments', 'trim|xss_clean');
         $this->form_validation->set_rules('client_sign', 'client_sign', 'trim|xss_clean');
@@ -166,8 +160,6 @@ class Production extends CI_Controller
                 'recommendations_text' => $this->input->post('recommendations_text'),
                 'email_to' => $this->input->post('email_to'),
                 'trip_start_time' => $this->input->post('trip_start_time'),
-                'trip_end_time' => $this->input->post('trip_end_time'),
-                'back_start_time' => $this->input->post('back_start_time'),
                 'attachments' => $this->input->post('attachments'),
                 'back_end_time' => $this->input->post('back_end_time'),
 
@@ -249,7 +241,7 @@ class Production extends CI_Controller
             if ($user_role != 'Admin' && $form['creator_id'] != $this->session->userdata['logged_in']['id'])
                 continue;
             $str .= "<a class='badge badge-info' href='/production/view_form/" . $form["id"] .
-                "?issue=" . $form["issue_num"] . "'>" . urldecode($form["client_name"]) . ": " . $form["date"] . "</a>";
+                "?issue=" . $form["issue_num"] . "'>" . urldecode($form["client_name"]) . ": " . date("d-m-Y", strtotime($form["date"])) . "</a>";
             $count++;
         }
         echo "<h2>מצאתי " . $count . " דוחות.</h2>" . $str;
@@ -300,11 +292,6 @@ class Production extends CI_Controller
             $file = $upload_folder . "/" . $serial . "_" . $num . ".$type";
             $success = file_put_contents($file, $img);
         }
-        /* Image compresion on windows servers
-        if (!file_exists("C:\Program Files\Ampps\www\assets\exec\pngquanti.exe")) {
-            shell_exec('"C:\Program Files\Ampps\www\assets\exec\pngquanti.exe" --ext .jpeg --speed 5 --nofs --force ' . escapeshellarg($file));
-        }
-        */
         print $success ? $file : 'Unable to save the file.';
     }
 
