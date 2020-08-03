@@ -145,13 +145,15 @@ class Exportpdf extends CI_Controller
         if ($form['remarks_text'] != '') {
             $html .= '';
         }
-        if ($form['remarks_text'] != '') {
-            $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:11;">הערות: </td>
-            <td>' . $this->hebrewFix($form['remarks_text']) . '</td></tr>';
+        $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:11;">הערות: </td>
+            <td>' . $this->hebrewFix($form['remarks_text']) . $add_trip . '</td></tr>';
+
+        if ($form['recommendations_text'] != '') {
+            $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:11;">המלצות: </td>
+            <td>' . $this->hebrewFix($form['recommendations_text']) . '</td>
+            </tr>';
         }
-        $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:11;">המלצות: </td>
-        <td>' . $this->hebrewFix($form['recommendations_text']) . $add_trip . '</td>
-        </tr></table>';
+        $html .= '</table>';
         $pdf->writeHTMLCell(0, 0, '', '', $html, 0, 0, 0, true, 'R', true);
 
         if ($form['client_sign'] != '') {
