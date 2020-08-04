@@ -13,7 +13,7 @@ if (isset($this->session->userdata['logged_in'])) {
 		</div>
 	</div>
 	<a target="blank" href='/production/export_to/csv' class='btn btn-outline-info'><i class="fa fa-file-excel-o"></i></a>
-	<div class="container rtl">
+	<div class="container rtl col-md-10">
 		<?php
 		if (isset($message_display)) {
 			echo "<div class='alert alert-success' role='alert'>";
