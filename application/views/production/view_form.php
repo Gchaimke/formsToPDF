@@ -79,10 +79,8 @@ if (isset($this->session->userdata['logged_in'])) {
                                           <select id='creator_id' class='form-control' name='creator_id' <?php if ($user_role != "Admin") echo 'disabled' ?>>
                                                 <?php if (isset($users)) {
                                                       foreach ($users as $user) {
-                                                            if ($user_name == $user['name']) {
-                                                                  $emails_arr = preg_split('/\r\n|[\r\n]/', $user['email_to']);
-                                                            }
                                                             if ($user['id'] == $form_data['creator_id']) {
+                                                                  $emails_arr = preg_split('/\r\n|[\r\n]/', $user['email_to']);
                                                                   echo '<option value="' . $user['id'] . '" selected>' . $user['view_name'] . '</option>';
                                                             } else {
                                                                   echo '<option value="' . $user['id'] . '">' . $user['view_name'] . '</option>';
@@ -280,7 +278,7 @@ if (isset($this->session->userdata['logged_in'])) {
                                           echo '<div class="col-sm-5">אין פריטים ברשימת תפוצה של משתמש</div>';
                                     }
                                     ?>
-                                    <input type="hidden" id="sum" class="form-control ltr" name='email_to' value="<?php echo $form_data['email_to'] ?>">
+                                    <input type="text" id="sum" class="form-control ltr mt-5" name='email_to' value="<?php echo $form_data['email_to'] ?>">
                               </div>
                         </div>
                         <hr />
