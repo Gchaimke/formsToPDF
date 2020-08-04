@@ -292,11 +292,12 @@ if (isset($this->session->userdata['logged_in'])) {
                                           <?php $files_arr = explode(',', $form_data['attachments']);
                                           foreach ($files_arr as $file) {
                                                 if (strlen($file) > 1)
-                                                      echo '<p class="file ltr done"><span>' . htmlspecialchars($file) . '</span><a data-file="' . htmlspecialchars($file) . '" href="#files" class="delete_attachment" onclick="delete_attachment(this)">X</a>';
+                                                      echo '<p class="file ltr done"><a target="blank" href="/'.htmlspecialchars($file).'">' . htmlspecialchars($file) . '</a>
+                                                      <a data-file="' . htmlspecialchars($file) . '" href="#files" class="delete_attachment" onclick="delete_attachment(this)">X</a></p>';
                                           }
                                           ?>
                                     </div>
-                                    <button class="btn btn-outline-secondary col-sm-2" type="button" onclick="document.getElementById('fileupload').click();">העלה</button>
+                                    <button class="btn btn-outline-success col-sm-2" type="button" onclick="document.getElementById('fileupload').click();">העלה</button>
                               </div>
                         </div>
                         <hr />

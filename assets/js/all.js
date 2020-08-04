@@ -216,11 +216,14 @@ function getfolder_name() {
 
 
 if ($("#fileupload").length) {
+    var upload_folder = 'Uploads/forms_attachments/' + getfolder_name() + '/';
+    var new_file = '';
     $("#fileupload").attr('data-url', '/production/do_upload/' + getfolder_name()).fileupload({
         autoUpload: true,
         add: function (e, data) {
+            new_file = upload_folder + data.files[0].name
             data.context = $('<p class="file ltr">')
-                .append($('<span>').text(data.files[0].name))
+                .append($('<a target="blank" href="/' + new_file + '">').text(new_file))
                 .appendTo('#files');
             data.submit();
         },
@@ -229,14 +232,13 @@ if ($("#fileupload").length) {
             data.context.css("background-position-x", 100 - progress + "%");
         },
         done: function (e, data) {
-            var upload_folder = 'Uploads/forms_attachments/' + getfolder_name();
-            var new_file = upload_folder + '/' + data.result;
+            new_file = upload_folder + data.result;
             if (~new_file.indexOf("[error]")) {
                 alert('The filetype you are attempting to upload is not allowed.');
                 data.context.addClass("error");
             } else {
                 setTimeout(function () {
-                    data.context.addClass("done").append('<a data-file="'+new_file+'" href="#files" class="delete_attachment" onclick="delete_attachment(this)">X</a>');
+                    data.context.addClass("done").append('<a data-file="' + new_file + '" href="#files" class="delete_attachment" onclick="delete_attachment(this)">X</a>');
                 }, 1000);
                 if ($('#attachments').val() == '') {
                     $('#attachments').val(new_file);
@@ -258,8 +260,8 @@ function delete_attachment(attachment) {
         }).done(function (o) {
             $(attachment).parent().hide();
             $('#attachments').val($('#attachments').val().replace(data_file, ""));
-            if($('#attachments').val().startsWith(',')){
-                $('#attachments').val($('#attachments').val().substring(1,$('#attachments').val().length))
+            if ($('#attachments').val().startsWith(',')) {
+                $('#attachments').val($('#attachments').val().substring(1, $('#attachments').val().length))
             }
             console.log(o);
         });

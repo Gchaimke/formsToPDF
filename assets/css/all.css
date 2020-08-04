@@ -89,8 +89,13 @@ input.form-control {
 
 .file .delete_attachment {
     float: right;
-    padding: 0 15px;
+    padding: 5px 15px;
     background: #ffbf82;
+    z-index: 3;
+    position: absolute;
+    left: 0;
+    top: 0;
+    cursor: pointer;
 }
 
 /* RTL END*/
