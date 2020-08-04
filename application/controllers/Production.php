@@ -25,11 +25,11 @@ class Production extends CI_Controller
 
     public function new_form()
     {
-        $data=array();
+        $data = array();
         $data['user'] = $this->Users_model->getUser($this->session->userdata['logged_in']['id']);
         $this->load->view('header');
         $this->load->view('main_menu');
-        $this->load->view('production/new_form',$data);
+        $this->load->view('production/new_form', $data);
         $this->load->view('footer');
     }
 
@@ -87,8 +87,8 @@ class Production extends CI_Controller
                 'attachments' => $this->input->post('attachments'),
                 'client_sign' => $this->input->post('client_sign')
             );
-            foreach($data as $key => &$str){
-                if(!$key == 'client_sign'){
+            foreach ($data as $key => &$str) {
+                if (!$key == 'client_sign') {
                     $str = $this->cleanStr($str);
                 }
             }
@@ -169,8 +169,8 @@ class Production extends CI_Controller
                 'back_end_time' => $this->input->post('back_end_time'),
 
             );
-            foreach($data as $key => &$str){
-                if(!$key == 'client_sign'){
+            foreach ($data as $key => &$str) {
+                if (!$key == 'client_sign') {
                     $str = $this->cleanStr($str);
                 }
             }
@@ -310,7 +310,7 @@ class Production extends CI_Controller
     {
         $this->form_validation->set_rules('photo', 'Photo', 'trim|xss_clean');
         if ($this->form_validation->run() == TRUE) {
-            $attachment ="./".$this->input->post('attachment'); // $_SERVER["DOCUMENT_ROOT"].
+            $attachment = "./" . $this->input->post('attachment'); // $_SERVER["DOCUMENT_ROOT"].
             // Use unlink() function to delete a file  
             if (!unlink($attachment)) {
                 echo ($attachment . " cannot be deleted due to an error");
@@ -358,7 +358,8 @@ class Production extends CI_Controller
         }
     }
 
-    private function cleanStr($str){
+    private function cleanStr($str)
+    {
         // Remove anything which isn't a word, whitespace, number
         // or any of the following caracters -_~,;[]().:#
         // If you don't need to handle multi-byte characters
@@ -367,5 +368,41 @@ class Production extends CI_Controller
         // Remove any runs of periods
         $str = mb_ereg_replace("([\.]{2,})", '', $str);
         return htmlspecialchars($str);
+    }
+
+    function export_to($str = '')
+    {   
+        $file_date = date("d-m-Y");
+        $file_name = "froms_".$file_date.".csv";
+        $data = $this->Production_model->searchForm($str);
+        header('Content-Encoding: UTF-8');
+        header("Content-type: text/csv; charset=UTF-8");
+        header("Content-Disposition: attachment; filename=$file_name");
+        header("Pragma: no-cache");
+        header("Expires: 0");
+
+        echo "\xEF\xBB\xBF";
+        $fp = fopen('php://output', 'w');
+
+        $tmp_arr = array(array('תאריך', 'יוצר', 'שם הלקוח', 'מיקום', 'סוג תקלה', 'חברה נותנת שירות', 'התחלת נסיעה', 'התחלת עבודה', 'סיום עבודה', 'סיום נסיעה'));
+        foreach ($data as  $line) {
+            array_push($tmp_arr, array(
+                $line['date'],
+                $line['creator_name'],
+                $line['client_name'],
+                $line['place'],
+                $line['issue_kind'],
+                $line['company'],
+                $line['start_time'],
+                $line['end_time'],
+                $line['back_end_time']
+            ));
+        }
+
+        foreach ($tmp_arr as $fields) {
+            fputcsv($fp, $fields);
+        }
+
+        fclose($fp);
     }
 }

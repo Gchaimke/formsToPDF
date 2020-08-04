@@ -226,12 +226,12 @@ class Admin_model extends CI_Model
                 'type' => 'TIME',
                 'null' => TRUE
             ),
-            'attachments' => array(
-                'type' => 'TEXT',
-                'null' => TRUE
-            ),
             'back_end_time' => array(
                 'type' => 'TIME',
+                'null' => TRUE
+            ),
+            'attachments' => array(
+                'type' => 'TEXT',
                 'null' => TRUE
             )
         );

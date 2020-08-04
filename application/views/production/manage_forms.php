@@ -12,6 +12,7 @@ if (isset($this->session->userdata['logged_in'])) {
 			</center>
 		</div>
 	</div>
+	<a target="blank" href='/production/export_to/csv' class='btn btn-outline-info'><i class="fa fa-file-excel-o"></i></a>
 	<div class="container rtl">
 		<?php
 		if (isset($message_display)) {

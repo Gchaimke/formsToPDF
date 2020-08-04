@@ -80,11 +80,13 @@ class Production_model extends CI_Model
 	{
 		if ($this->db->table_exists('forms')) {
 			if ($search != "") {
-				$num = urldecode($search);
-				$condition = "issue_num LIKE '%$search%' OR client_num LIKE '%$search%' OR client_name LIKE '%$search%' OR creator_name LIKE '%$search%' OR place LIKE '%$search%'";
+				$search = urldecode($search);
+				if(!$search='csv'){
+					$condition = "issue_num LIKE '%$search%' OR client_num LIKE '%$search%' OR client_name LIKE '%$search%' OR creator_name LIKE '%$search%' OR place LIKE '%$search%'";
+					$this->db->where($condition);
+				}
 				$this->db->select('*');
 				$this->db->from('forms');
-				$this->db->where($condition);
 				$this->db->order_by('date');
 				$q = $this->db->get();
 				$response = $q->result_array();
