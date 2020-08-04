@@ -1,6 +1,7 @@
 <?php
 if (isset($this->session->userdata['logged_in'])) {
       $user_role = $this->session->userdata['logged_in']['role'];
+      $user_name = $this->session->userdata['logged_in']['name'];
 }
 ?>
 <script src="<?php echo base_url('assets/js/jQUpload/jquery.ui.widget.js'); ?>"></script>
@@ -78,6 +79,9 @@ if (isset($this->session->userdata['logged_in'])) {
                                           <select id='creator_id' class='form-control' name='creator_id' <?php if ($user_role != "Admin") echo 'disabled' ?>>
                                                 <?php if (isset($users)) {
                                                       foreach ($users as $user) {
+                                                            if ($user_name == $user['name']) {
+                                                                  $emails_arr = preg_split('/\r\n|[\r\n]/', $user['email_to']);
+                                                            }
                                                             if ($user['id'] == $form_data['creator_id']) {
                                                                   echo '<option value="' . $user['id'] . '" selected>' . $user['view_name'] . '</option>';
                                                             } else {
@@ -241,12 +245,42 @@ if (isset($this->session->userdata['logged_in'])) {
                               </div>
                         </div>
                         <hr />
-                        <div class="form-group col-md-12">
+                        <div class="form-group row" id="emails">
                               <div class="input-group mb-4">
-                                    <div class="input-group-prepend">
-                                          <div class="input-group-text">מכותבים:</div>
-                                    </div>
-                                    <input type='text' class="form-control ltr" name='email_to' value="<?php echo $form_data['email_to'] ?>">
+                              <label for="email_to" class="col-sm-2 col-form-label ">מכותבים:</label>
+                                    <?php $len = count($emails_arr);
+                                    if ($len > 0 && $emails_arr[0] != '') {
+                                          $firsthalf = array_slice($emails_arr, 0, $len / 2);
+                                          $secondhalf = array_slice($emails_arr, $len / 2);
+                                          echo '<div class="col-sm-5">';
+                                          foreach ($firsthalf as $email) {
+                                                $checked = '';
+                                                if (strpos($form_data['email_to'], $email) !== false) {
+                                                      $checked = 'checked';
+                                                }
+                                                echo "<div class='input-group-text'>
+                                                      <input type='checkbox' value='$email' $checked>
+                                                      <label class='col-sm-2 col-form-label'>$email</label>
+                                                      </div>";
+                                          }
+                                          echo '</div>';
+                                          echo '<div class="col-sm-5">';
+                                          foreach ($secondhalf as $email) {
+                                                $checked = '';
+                                                if (strpos($form_data['email_to'], $email) !== false) {
+                                                      $checked = 'checked';
+                                                }
+                                                echo "<div class='input-group-text'>
+                                                      <input type='checkbox' value='$email' $checked>
+                                                      <label class='col-sm-2 col-form-label'>$email</label>
+                                                      </div>";
+                                          }
+                                          echo '</div>';
+                                    } else {
+                                          echo '<div class="col-sm-5">אין פריטים ברשימת תפוצה של משתמש</div>';
+                                    }
+                                    ?>
+                                    <input type="hidden" id="sum" class="form-control ltr" name='email_to' value="<?php echo $form_data['email_to'] ?>">
                               </div>
                         </div>
                         <hr />
@@ -322,10 +356,21 @@ if (isset($this->session->userdata['logged_in'])) {
             $("#creator_id").change(function() {
                   $("#creator_name").val($("#creator_id option:selected").text());
             });
+
+            var sum = '';
+            $('#emails :checkbox').click(function() {
+                  sum = '';
+                  $('#emails :checkbox:checked').each(function(idx, elm) {
+                        sum += elm.value + ',';
+                  });
+                  $('#sum').val(sum);
+            });
       });
-      function clearCanvas(){
+
+      function clearCanvas() {
             $("#sign-canvas").data("jqScribble").clear();
       }
+
       function SendEmail() {
             // Make sure that the formMessages div has the 'success' class.
             $('#form-messages').addClass('alert-info');
