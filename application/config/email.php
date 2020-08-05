@@ -10,8 +10,8 @@ $config['smtp_timeout'] = 5;
 /*/GMAIL
 $config['protocol'] = 'smtp';
 $config['smtp_host']    = 'ssl://smtp.gmail.com';
-$config['smtp_user'] = 'yoramtechno@gmail.com';
-$config['smtp_pass'] = 'telaviv2019';
+$config['smtp_user'] = 'user_name@gmail.com';
+$config['smtp_pass'] = 'smtp_password';
 $config['smtp_port'] = 465;
 */
 $config['useragent'] = 'CodeIgniter';
