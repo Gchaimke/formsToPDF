@@ -234,6 +234,7 @@ class Exportpdf extends CI_Controller
     {
         $user =  $this->Users_model->getUser($this->session->userdata['logged_in']['id'])[0];
         $settings = $this->Admin_model->getSettings()[0];
+        $sender = 'yossigorbov@garin.co.il';
         if ($user['email'] != '') {
             $recipients = $user['email'] . ',' . $recipients;
             $this->load->library('email');
@@ -244,11 +245,13 @@ class Exportpdf extends CI_Controller
                 $config['smtp_pass'] = $settings['smtp_pass'];
                 $config['smtp_port'] = $settings['smtp_port'];;
                 $this->email->initialize($config);
+
+                $sender = $settings['smtp_user'];
             }
             $Subject = $file_name;
             $Message = ''; //'Server: ' . $_SERVER['SERVER_NAME'];
             $this->email
-                ->from('yossigorbov@garin.co.il', 'דוח חדש - ' . $user['view_name'])
+                ->from($sender, 'דוח חדש - ' . $user['view_name'])
                 ->to($recipients)
                 ->subject($Subject)
                 ->message($Message);
