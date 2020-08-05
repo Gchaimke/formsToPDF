@@ -265,6 +265,10 @@ class Admin_model extends CI_Model
                 'type' => 'TEXT',
                 'null' => TRUE
             ),
+            'SMTP' => array(
+                'type' => 'TEXT',
+                'null' => TRUE
+            ),
             'log' => array(
                 'type' => 'LONGTEXT',
                 'null' => TRUE
@@ -279,6 +283,7 @@ class Admin_model extends CI_Model
 
         $st = array(
             'roles' => 'Admin,Manager,User',
+            'SMTP' => '0,ssl://smtp.gmail.com,465,user,password',
             'log' => 'Database "settings created."'
         );
         $this->db->insert('settings', $st);
@@ -290,6 +295,7 @@ class Admin_model extends CI_Model
         // Select record
         $this->db->select('*');
         $this->db->from('settings');
+        $this->db->limit(1);
         $query = $this->db->get();
         $response = $query->result_array();
         return $response;

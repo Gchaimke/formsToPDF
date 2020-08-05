@@ -18,7 +18,7 @@ class Admin extends CI_Controller
 		$this->load->view('main_menu');
 		$data = $this->Admin_model->getStatistic();
 		if ($this->db->table_exists('settings')) {
-			$data['settings'] = $this->Admin_model->getSettings();
+			$data['settings'] = $this->Admin_model->getSettings()[0];
 		}
 		$this->load->view('admin/settings', $data);
 		$this->load->view('footer');

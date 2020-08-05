@@ -19,7 +19,7 @@ if (isset($this->session->userdata['logged_in'])) {
         $users_count = 0;
         $companies_count = 0;
         $forms_count = 0;
-        if (isset($users) and isset($companies) and isset($forms)) {
+        if (isset($users) and isset($companies) and isset($forms) and isset($settings)) {
             $users_count = $users;
             $companies_count = $companies;
             $forms_count = $forms;
@@ -44,9 +44,51 @@ if (isset($this->session->userdata['logged_in'])) {
             <div class="input-group-prepend">
                 <div class="input-group-text">תפקידים</div>
             </div>
-            <input name="roles" class="form-control" value="<?php if (isset($settings) && $settings != "") {
-                                                                echo $settings[0]['roles'];
-                                                            } ?>">
+            <input name="roles" class="form-control" value="<?php echo $settings['roles']; ?>">
+        </div>
+
+        <?php 
+        $smtp_arr=explode(',',$settings['roles']);
+        ?>
+        <div class="input-group mb-2">
+            <div class='input-group-text'>
+                <input type='checkbox' value=''>
+                <label class='col-sm-2 col-form-label'>להשתמש ב-SMTP </label>
+            </div>
+        </div>
+        <div class="form-row ltr">
+            <div class="form-group col-md-4">
+                <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">SMTP HOST</div>
+                    </div>
+                    <input type='text' class="form-control" name='smpt_host' value="ssl://smtp.gmail.com">
+                </div>
+            </div>
+            <div class="form-group col-md-2">
+                <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">Port</div>
+                    </div>
+                    <input type='number' class="form-control" name='smpt_port' value="465">
+                </div>
+            </div>
+            <div class="form-group col-md-3">
+                <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">Username</div>
+                    </div>
+                    <input type='text' class="form-control" name='smpt_user' >
+                </div>
+            </div>
+            <div class="form-group col-md-3">
+                <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">Password</div>
+                    </div>
+                    <input type='text' class="form-control" name='smpt_pass'>
+                </div>
+            </div>
         </div>
         <input type='submit' class='btn btn-info' name='submit' value='שמור'>
         <?php echo form_close(); ?><br />
