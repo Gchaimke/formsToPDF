@@ -48,11 +48,17 @@ if (isset($this->session->userdata['logged_in'])) {
         </div>
 
         <?php 
-        $smtp_arr=explode(',',$settings['roles']);
+        $checked = '';
+        $disabled ='';
+        if($settings['smpt_on']==1){
+            $checked = 'checked';
+        }else{
+            $disabled ='disabled';
+        }
         ?>
         <div class="input-group mb-2">
             <div class='input-group-text'>
-                <input type='checkbox' value=''>
+                <input type='checkbox' id='smtp_on' name='smpt_on' <?php echo $checked ?>>
                 <label class='col-sm-2 col-form-label'>להשתמש ב-SMTP </label>
             </div>
         </div>
@@ -62,7 +68,7 @@ if (isset($this->session->userdata['logged_in'])) {
                     <div class="input-group-prepend">
                         <div class="input-group-text">SMTP HOST</div>
                     </div>
-                    <input type='text' class="form-control" name='smpt_host' value="ssl://smtp.gmail.com">
+                    <input id='smpt_host' type='text' class="form-control" name='smpt_host' value="<?php echo $settings['smpt_host']; ?>" <?php echo $disabled ?>>
                 </div>
             </div>
             <div class="form-group col-md-2">
@@ -70,7 +76,7 @@ if (isset($this->session->userdata['logged_in'])) {
                     <div class="input-group-prepend">
                         <div class="input-group-text">Port</div>
                     </div>
-                    <input type='number' class="form-control" name='smpt_port' value="465">
+                    <input id='smpt_port' type='number' class="form-control" name='smpt_port' value="<?php echo $settings['smpt_port']; ?>" <?php echo $disabled ?>>
                 </div>
             </div>
             <div class="form-group col-md-3">
@@ -78,7 +84,7 @@ if (isset($this->session->userdata['logged_in'])) {
                     <div class="input-group-prepend">
                         <div class="input-group-text">Username</div>
                     </div>
-                    <input type='text' class="form-control" name='smpt_user' >
+                    <input id='smpt_user' type='text' class="form-control" name='smpt_user' value='<?php echo $settings['smpt_user']; ?>' <?php echo $disabled ?>>
                 </div>
             </div>
             <div class="form-group col-md-3">
@@ -86,7 +92,7 @@ if (isset($this->session->userdata['logged_in'])) {
                     <div class="input-group-prepend">
                         <div class="input-group-text">Password</div>
                     </div>
-                    <input type='text' class="form-control" name='smpt_pass'>
+                    <input id='smpt_pass' type='password' class="form-control" name='smpt_pass' value='' <?php echo $disabled ?>>
                 </div>
             </div>
         </div>
@@ -106,4 +112,18 @@ if (isset($this->session->userdata['logged_in'])) {
             $('#form-messages').html(o).fadeIn(1000).delay(3000).fadeOut(1000);
         });
     }
+
+    $('#smtp_on').click(function (e) { 
+        if($('#smtp_on').prop("checked")== true){
+            $('#smpt_host').prop("disabled", false);
+            $('#smpt_port').prop("disabled", false);
+            $('#smpt_user').prop("disabled", false);
+            $('#smpt_pass').prop("disabled", false);
+        }else{
+            $('#smpt_host').prop("disabled", true);
+            $('#smpt_port').prop("disabled", true);
+            $('#smpt_user').prop("disabled", true);
+            $('#smpt_pass').prop("disabled", true);
+        }
+    });
 </script>

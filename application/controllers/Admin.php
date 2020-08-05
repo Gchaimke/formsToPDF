@@ -27,13 +27,29 @@ class Admin extends CI_Controller
 	public function save_settings()
 	{
 		// Check validation for user input in SignUp form
+		$smtp_on = 0;
 		$this->form_validation->set_rules('roles', 'Roles', 'trim|xss_clean');
+		$this->form_validation->set_rules('smpt_host', 'smpt_host', 'trim|xss_clean');
+		$this->form_validation->set_rules('smpt_user', 'smpt_user', 'trim|xss_clean');
+		$this->form_validation->set_rules('smpt_pass', 'smpt_pass', 'trim|xss_clean');
 		if ($this->form_validation->run() == FALSE) {
 			$this->settings();
 		} else {
-			$data = array(
-				'roles' => $this->input->post('roles')
-			);
+			$data = array('roles' => $this->input->post('roles'));
+			if (isset($_POST['smpt_on'])) {
+				$smtp_on = 1;
+				$data += array(
+					'smpt_on' => $smtp_on,
+					'smpt_host' => $this->input->post('smpt_host'),
+					'smpt_port' => $this->input->post('smpt_port'),
+					'smpt_user' => $this->input->post('smpt_user')
+				);
+				if ($this->input->post('smpt_pass') != '') {
+					$data += array('smpt_pass' => $this->input->post('smpt_pass'));
+				}
+			} else {
+				$data += array('smpt_on' => $smtp_on);
+			}
 			$this->Admin_model->save_settings($data);
 			echo 'הגדרות נשמרו בהצלחה!';
 		}

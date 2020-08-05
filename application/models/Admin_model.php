@@ -265,8 +265,29 @@ class Admin_model extends CI_Model
                 'type' => 'TEXT',
                 'null' => TRUE
             ),
-            'SMTP' => array(
-                'type' => 'TEXT',
+            'smpt_on' => array(
+                'type' => 'INT',
+                'constraint' => 1,
+                'unsigned' => TRUE
+            ),
+            'smpt_host' => array(
+                'type' => 'VARCHAR',
+                'constraint' => 300,
+                'null' => TRUE
+            ),
+            'smpt_port' => array(
+                'type' => 'INT',
+                'constraint' => 10,
+                'unsigned' => TRUE
+            ),
+            'smpt_user' => array(
+                'type' => 'VARCHAR',
+                'constraint' => 300,
+                'null' => TRUE
+            ),
+            'smpt_pass' => array(
+                'type' => 'VARCHAR',
+                'constraint' => 300,
                 'null' => TRUE
             ),
             'log' => array(
@@ -283,7 +304,11 @@ class Admin_model extends CI_Model
 
         $st = array(
             'roles' => 'Admin,Manager,User',
-            'SMTP' => '0,ssl://smtp.gmail.com,465,user,password',
+            'smpt' => '0',
+            'smpt_host' => 'ssl://smtp.gmail.com',
+            'smpt_port' => '465',
+            'smpt_user' => 'user',
+            'smpt_pass' => '',
             'log' => 'Database "settings created."'
         );
         $this->db->insert('settings', $st);
@@ -304,9 +329,6 @@ class Admin_model extends CI_Model
     public function save_settings($data)
     {
         $where = "id =1";
-        $data = array(
-            'roles' => $data['roles']
-        );
         return $this->db->update('settings', $data, $where);
     }
 
