@@ -26,9 +26,9 @@ class Exportpdf extends CI_Controller
         $form['company_data'] = $this->Companies_model->getCompanies('', $form['company'])[0];
         $company = $form['company_data'];
 
-        $add_trip = "<br/> נסיעה:";
-        $add_trip .= "<br/> הלוך: " . date('G:i', strtotime($form['trip_start_time'])) . " - " . date('G:i', strtotime($form['start_time']));
-        $add_trip .= "<br/> חזור: " . date('G:i', strtotime($form['end_time'])) . " - " . date('G:i', strtotime($form['back_end_time']));
+        //$add_trip = "<br/> נסיעה:";
+        //$add_trip .= "<br/> הלוך: " . date('G:i', strtotime($form['trip_start_time'])) . " - " . date('G:i', strtotime($form['start_time']));
+        //$add_trip .= "<br/> חזור: " . date('G:i', strtotime($form['end_time'])) . " - " . date('G:i', strtotime($form['back_end_time']));
 
         $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
@@ -155,7 +155,7 @@ class Exportpdf extends CI_Controller
             $html .= '';
         }
         $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:11;">הערות: </td>
-            <td>' . $this->hebrewFix($form['remarks_text']) . $add_trip . '</td></tr>';
+            <td>' . $this->hebrewFix($form['remarks_text']) . '</td></tr>';
 
         if ($form['recommendations_text'] != '') {
             $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:11;">המלצות: </td>
