@@ -12,6 +12,7 @@ class Exportpdf extends CI_Controller
         $this->load->model('Production_model');
         $this->load->model('Users_model');
         $this->load->model('Companies_model');
+        $this->load->model('Admin_model');
     }
 
     public function create($id = '1')
@@ -232,9 +233,18 @@ class Exportpdf extends CI_Controller
     function SendEmail($attachments, $file_name, $recipients)
     {
         $user =  $this->Users_model->getUser($this->session->userdata['logged_in']['id'])[0];
+        $settings = $this->Admin_model->getSettings()[0];
         if ($user['email'] != '') {
             $recipients = $user['email'] . ',' . $recipients;
             $this->load->library('email');
+            if ($settings['smtp_on'] == 1) {
+                $config['protocol'] = 'smtp';
+                $config['smtp_host'] = $settings['smtp_host'];
+                $config['smtp_user'] = $settings['smtp_user'];
+                $config['smtp_pass'] = $settings['smtp_pass'];
+                $config['smtp_port'] = $settings['smtp_port'];;
+                $this->email->initialize($config);
+            }
             $Subject = $file_name;
             $Message = ''; //'Server: ' . $_SERVER['SERVER_NAME'];
             $this->email
