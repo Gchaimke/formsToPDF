@@ -38,7 +38,7 @@ class Production extends CI_Controller
     {
 
         $creator_id = $this->session->userdata['logged_in']['id'];
-        $creator_name = $this->Users_model->getUser($creator_id)[0]['name'];
+        $creator_name = $this->Users_model->getUser($creator_id)[0]['view_name'];
         // Check validation for user input in SignUp form
         $this->form_validation->set_rules('date', 'date', 'trim|xss_clean');
         $this->form_validation->set_rules('company', 'company', 'trim|xss_clean');
@@ -384,7 +384,7 @@ class Production extends CI_Controller
         echo "\xEF\xBB\xBF";
         $fp = fopen('php://output', 'w');
 
-        $tmp_arr = array(array('תאריך', 'יוצר', 'שם הלקוח', 'מיקום', 'סוג תקלה', 'חברה נותנת שירות', 'התחלת נסיעה', 'התחלת עבודה', 'סיום עבודה', 'סיום נסיעה'));
+        $tmp_arr = array(array('תאריך', 'יוצר', 'שם הלקוח', 'מיקום', 'סוג תקלה', 'חברה נותנת שירות', 'שעת התחלת', 'שעת סיום'));
         foreach ($data as  $line) {
             array_push($tmp_arr, array(
                 $line['date'],
@@ -393,8 +393,7 @@ class Production extends CI_Controller
                 $line['place'],
                 $line['issue_kind'],
                 $line['company'],
-                $line['start_time'],
-                $line['end_time'],
+                $line['trip_start_time'],
                 $line['back_end_time']
             ));
         }
