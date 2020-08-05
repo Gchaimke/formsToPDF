@@ -256,7 +256,21 @@ class Exportpdf extends CI_Controller
         }
         $this->email->clear(TRUE);
     }
+
+    public function export_doc()
+    {
+        header("Content-type: application/vnd.ms-word");
+        header("Content-Disposition: attachment;Filename=document_name.doc");
+        echo "<html style=\"direction:rtl\">";
+        echo "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">";
+        echo "<body>";
+        echo "<b>שלום</b>";
+        echo "</body>";
+        echo "</html>";
+    }
 }
+
+
 
 
 // Extend the TCPDF class to create custom Header and Footer
