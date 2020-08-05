@@ -11,7 +11,7 @@ $config['smtp_timeout'] = 5;
 $config['protocol'] = 'smtp';
 $config['smtp_host']    = 'ssl://smtp.gmail.com';
 $config['smtp_user'] = 'yoramtechno@gmail.com';
-$config['smtp_pass'] = 'telaviv2019';
+$config['smtp_pass'] = '*******';
 $config['smtp_port'] = 465;
 */
 $config['useragent'] = 'CodeIgniter';
