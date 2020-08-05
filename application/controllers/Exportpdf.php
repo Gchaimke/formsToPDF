@@ -23,8 +23,11 @@ class Exportpdf extends CI_Controller
 
         $form = array();
         $form = $this->Production_model->getForm($id)[0];
-        $form['company_data'] = $this->Companies_model->getCompanies('', $form['company'])[0];
-        $company = $form['company_data'];
+        if (isset($this->Companies_model->getCompanies('', $form['company'])[0])) {
+            $company = $this->Companies_model->getCompanies('', $form['company'])[0];
+        } else {
+            $company = $this->Companies_model->getCompanies()[0];
+        }
 
         //$add_trip = "<br/> נסיעה:";
         //$add_trip .= "<br/> הלוך: " . date('G:i', strtotime($form['trip_start_time'])) . " - " . date('G:i', strtotime($form['start_time']));
@@ -230,7 +233,7 @@ class Exportpdf extends CI_Controller
     {
         $user =  $this->Users_model->getUser($this->session->userdata['logged_in']['id'])[0];
         if ($user['email'] != '') {
-            $recipients = $user['email'].','.$recipients;
+            $recipients = $user['email'] . ',' . $recipients;
             $this->load->library('email');
             $Subject = $file_name;
             $Message = ''; //'Server: ' . $_SERVER['SERVER_NAME'];
