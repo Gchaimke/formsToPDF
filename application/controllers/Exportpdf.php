@@ -272,6 +272,7 @@ class Exportpdf extends CI_Controller
 
     public function export_doc($id = '')
     {
+        global $CurrVal;
         if ($id != '') {
             $form = $this->Production_model->getForm($id);
 
@@ -280,7 +281,6 @@ class Exportpdf extends CI_Controller
 
             $TBS = new clsTinyButStrong;
             $TBS->Plugin(TBS_INSTALL, OPENTBS_PLUGIN);
-
             // -----------------
             // Load the template
             // -----------------
@@ -295,6 +295,7 @@ class Exportpdf extends CI_Controller
             $list = array(
                 array('date' => '2013-10-13', 'thin' => 156, 'havy' => 128, 'total' => 284)
             );
+            $CurrVal='</w:t></w:r><w:r><w:rPr><w:rFonts w:ascii="Arial" w:hAnsi="Arial" w:cs="Arial"/><w:rtl/></w:rPr><w:t>'.$CurrVal.'</w:t></w:r><w:r><w:t>';
             $TBS->MergeBlock('c', $form);
             // -----------------
             // Output the result
