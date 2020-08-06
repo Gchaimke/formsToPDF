@@ -117,7 +117,7 @@ class Admin_model extends CI_Model
     function createFormsDb()
     {
         $this->load->dbforge();
-        $company = array(
+        $form = array(
             'id' => array(
                 'type' => 'INT',
                 'constraint' => 9,
@@ -235,7 +235,7 @@ class Admin_model extends CI_Model
                 'null' => TRUE
             )
         );
-        $this->dbforge->add_field($company);
+        $this->dbforge->add_field($form);
         $this->dbforge->add_key('id', TRUE);
         $this->dbforge->create_table('forms');
 

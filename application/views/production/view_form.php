@@ -331,6 +331,7 @@ if (isset($this->session->userdata['logged_in'])) {
                         ?>
 
                         <a target="_blank" class="btn btn-info" href="/exportpdf/create/<?php echo $form_data['id'] ?>">הצג PDF</a>
+                        <a target="_blank" class="btn btn-info" href="/exportpdf/export_doc/<?php echo $form_data['id'] ?>">הורד DOC</a>
                         <a class="btn btn-success" href="#" onclick="SendEmail()">שלח דוח</a>
                         <?php echo form_close(); ?>
 
