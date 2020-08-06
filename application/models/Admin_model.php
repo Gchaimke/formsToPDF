@@ -265,27 +265,27 @@ class Admin_model extends CI_Model
                 'type' => 'TEXT',
                 'null' => TRUE
             ),
-            'smpt_on' => array(
+            'smtp_on' => array(
                 'type' => 'INT',
                 'constraint' => 1,
                 'unsigned' => TRUE
             ),
-            'smpt_host' => array(
+            'smtp_host' => array(
                 'type' => 'VARCHAR',
                 'constraint' => 300,
                 'null' => TRUE
             ),
-            'smpt_port' => array(
+            'smtp_port' => array(
                 'type' => 'INT',
                 'constraint' => 10,
                 'unsigned' => TRUE
             ),
-            'smpt_user' => array(
+            'smtp_user' => array(
                 'type' => 'VARCHAR',
                 'constraint' => 300,
                 'null' => TRUE
             ),
-            'smpt_pass' => array(
+            'smtp_pass' => array(
                 'type' => 'VARCHAR',
                 'constraint' => 300,
                 'null' => TRUE
@@ -304,11 +304,11 @@ class Admin_model extends CI_Model
 
         $st = array(
             'roles' => 'Admin,Manager,User',
-            'smpt' => '0',
-            'smpt_host' => 'ssl://smtp.gmail.com',
-            'smpt_port' => '465',
-            'smpt_user' => 'user',
-            'smpt_pass' => '',
+            'smtp_on' => '0',
+            'smtp_host' => 'ssl://smtp.gmail.com',
+            'smtp_port' => '465',
+            'smtp_user' => 'user',
+            'smtp_pass' => '',
             'log' => 'Database "settings created."'
         );
         $this->db->insert('settings', $st);
