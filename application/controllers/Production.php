@@ -342,18 +342,18 @@ class Production extends CI_Controller
         }
         $config = array(
             'upload_path' => $upload_folder,
-            'allowed_types' => "gif|jpg|jpeg|png|zip|rar|doc|docx|xls|xlsx|ppt|pptx|csv|ods|odt|odp|pdf|txt|conf|",
             'overwrite' => TRUE,
+            'allowed_types' => '*',
             'max_size' => "2048000", // Can be set to particular file size , here it is 2 MB(2048 Kb)
             //'max_height' => "768",
             //'max_width' => "1024"
         );
-        $this->load->library('upload', $config);
+        $this->load->library('upload',$config);
         if ($this->upload->do_upload('files')) {
             $data = array('upload_data' => $this->upload->data());
             echo  $data['upload_data']["file_name"];
         } else {
-            $error = array('error' => $this->upload->display_errors());
+            $error = array('error' => $this->upload->display_errors()." ".var_dump($_FILES['files']['type']));
             print_r($error);
         }
     }
@@ -371,9 +371,9 @@ class Production extends CI_Controller
     }
 
     function export_to($str = '')
-    {   
+    {
         $file_date = date("d-m-Y");
-        $file_name = "froms_".$file_date.".csv";
+        $file_name = "froms_" . $file_date . ".csv";
         $data = $this->Production_model->searchForm($str);
         header('Content-Encoding: UTF-8');
         header("Content-type: text/csv; charset=UTF-8");
