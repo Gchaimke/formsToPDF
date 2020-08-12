@@ -57,8 +57,6 @@ class Production extends CI_Controller
         $this->form_validation->set_rules('remarks_text', 'remarks_text', 'trim|xss_clean');
         $this->form_validation->set_rules('recommendations_text', 'recommendations_text', 'trim|xss_clean');
         $this->form_validation->set_rules('email_to', 'email_to', 'trim|xss_clean');
-        $this->form_validation->set_rules('trip_start_time', 'trip_start_time', 'trim|xss_clean');
-        $this->form_validation->set_rules('back_end_time', 'trip_end_time', 'trim|xss_clean');
         $this->form_validation->set_rules('attachments', 'attachments', 'trim|xss_clean');
         $this->form_validation->set_rules('client_sign', 'client_sign', 'trim|xss_clean');
         if (!$this->form_validation->run() == FALSE) {
@@ -82,8 +80,6 @@ class Production extends CI_Controller
                 'remarks_text' => $this->input->post('remarks_text'),
                 'recommendations_text' => $this->input->post('recommendations_text'),
                 'email_to' => $this->input->post('email_to'),
-                'trip_start_time' => $this->input->post('trip_start_time'),
-                'back_end_time' => $this->input->post('back_end_time'),
                 'attachments' => $this->input->post('attachments'),
                 'client_sign' => $this->input->post('client_sign')
             );
@@ -138,8 +134,6 @@ class Production extends CI_Controller
         $this->form_validation->set_rules('remarks_text', 'remarks_text', 'trim|xss_clean');
         $this->form_validation->set_rules('recommendations_text', 'recommendations_text', 'trim|xss_clean');
         $this->form_validation->set_rules('email_to', 'email_to', 'trim|xss_clean');
-        $this->form_validation->set_rules('trip_start_time', 'trip_start_time', 'trim|xss_clean');
-        $this->form_validation->set_rules('back_end_time', 'trip_end_time', 'trim|xss_clean');
         $this->form_validation->set_rules('attachments', 'attachments', 'trim|xss_clean');
         $this->form_validation->set_rules('client_sign', 'client_sign', 'trim|xss_clean');
         if (!$this->form_validation->run() == FALSE) {
@@ -164,10 +158,7 @@ class Production extends CI_Controller
                 'remarks_text' => $this->input->post('remarks_text'),
                 'recommendations_text' => $this->input->post('recommendations_text'),
                 'email_to' => $this->input->post('email_to'),
-                'trip_start_time' => $this->input->post('trip_start_time'),
-                'attachments' => $this->input->post('attachments'),
-                'back_end_time' => $this->input->post('back_end_time'),
-
+                'attachments' => $this->input->post('attachments')
             );
             foreach ($data as $key => &$str) {
                 if (!$key == 'client_sign') {
@@ -392,9 +383,7 @@ class Production extends CI_Controller
                 $line['client_name'],
                 $line['place'],
                 $line['issue_kind'],
-                $line['company'],
-                $line['trip_start_time'],
-                $line['back_end_time']
+                $line['company']
             ));
         }
 

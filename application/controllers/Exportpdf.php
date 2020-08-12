@@ -30,10 +30,6 @@ class Exportpdf extends CI_Controller
             $company = $this->Companies_model->getCompanies()[0];
         }
 
-        //$add_trip = "<br/> נסיעה:";
-        //$add_trip .= "<br/> הלוך: " . date('G:i', strtotime($form['trip_start_time'])) . " - " . date('G:i', strtotime($form['start_time']));
-        //$add_trip .= "<br/> חזור: " . date('G:i', strtotime($form['end_time'])) . " - " . date('G:i', strtotime($form['back_end_time']));
-
         $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
         // set document information
