@@ -221,28 +221,7 @@ if (isset($this->session->userdata['logged_in'])) {
                                     <textarea class="form-control" name="recommendations_text" cols="10" rows="3" placeholder="המלצות"><?php echo $form_data['recommendations_text'] ?></textarea>
                               </div>
                         </div>
-                        <hr />
-
-                        <div class="form-row">
-                              <label for="recommendations_text" class="col-md-2 col-form-label ">נסיעות:</label>
-                              <div class="form-group col-md-5">
-                                    <div class="input-group mb-2">
-                                          <div class="input-group-prepend">
-                                                <div class="input-group-text">שעת התחלה נסיעת הלוך</div>
-                                          </div>
-                                          <input type='time' class="form-control" name='trip_start_time' value="<?php echo $form_data['trip_start_time'] ?>">
-                                    </div>
-                              </div>
-                              <div class="form-group col-md-5">
-                                    <div class="input-group mb-2">
-                                          <div class="input-group-prepend">
-                                                <div class="input-group-text">שעת סיום נסיעת חזור</div>
-                                          </div>
-                                          <input type='time' class="form-control" name='back_end_time' value="<?php echo $form_data['back_end_time'] ?>">
-                                    </div>
-                              </div>
-                        </div>
-                        <hr />
+                       <hr />
                         <div class="form-group row" id="emails">
                               <div class="input-group mb-4">
                               <label for="email_to" class="col-sm-2 col-form-label ">מכותבים:</label>
