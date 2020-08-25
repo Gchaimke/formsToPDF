@@ -361,11 +361,11 @@ class Production extends CI_Controller
         return htmlspecialchars($str);
     }
 
-    function export_to($str = '')
+    function export_to($str = '1')
     {
-        $file_date = date("d-m-Y");
-        $file_name = "froms_" . $file_date . ".csv";
-        $data = $this->Production_model->searchForm($str);
+        $file_date = date("Y");
+        $file_name = "froms_" . $str."-".$file_date . ".csv";
+        $data = $this->Production_model->searchFormByMonth($str);
         header('Content-Encoding: UTF-8');
         header("Content-type: text/csv; charset=UTF-8");
         header("Content-Disposition: attachment; filename=$file_name");
@@ -383,7 +383,9 @@ class Production extends CI_Controller
                 $line['client_name'],
                 $line['place'],
                 $line['issue_kind'],
-                $line['company']
+                $line['company'],
+                $line['start_time'],
+                $line['end_time']
             ));
         }
 

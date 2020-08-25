@@ -81,10 +81,8 @@ class Production_model extends CI_Model
 		if ($this->db->table_exists('forms')) {
 			if ($search != "") {
 				$search = urldecode($search);
-				if (!$search = 'csv') {
-					$condition = "issue_num LIKE '%$search%' OR client_num LIKE '%$search%' OR client_name LIKE '%$search%' OR creator_name LIKE '%$search%' OR place LIKE '%$search%'";
-					$this->db->where($condition);
-				}
+				$condition = "issue_num LIKE '%$search%' OR client_num LIKE '%$search%' OR client_name LIKE '%$search%' OR creator_name LIKE '%$search%' OR place LIKE '%$search%'";
+				$this->db->where($condition);
 				$this->db->select('*');
 				$this->db->from('forms');
 				$this->db->order_by('date', 'DESC');
@@ -93,6 +91,23 @@ class Production_model extends CI_Model
 				$response = $q->result_array();
 				return $response;
 			}
+		}
+	}
+
+	function searchFormByMonth($search = '1')
+	{
+		if ($this->db->table_exists('forms')) {
+			if (is_numeric($search)) {
+				$condition = "MONTH(date) = $search";
+				$this->db->where($condition);
+				$this->db->select('*');
+				$this->db->from('forms');
+				$this->db->order_by('date', 'DESC');
+				$this->db->order_by('start_time', 'DESC');
+				$q = $this->db->get();
+				$response = $q->result_array();
+			}
+			return $response;
 		}
 	}
 

@@ -136,6 +136,11 @@ a.fa {
     font-weight: 100 !important;
 }
 
+#csv_month {
+    position: absolute;
+    left: 0;
+}
+
 a#edit_checklist {
     margin: 0 25px;
 }

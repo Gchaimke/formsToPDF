@@ -214,14 +214,19 @@ class Exportpdf extends CI_Controller
         $string = str_replace($needles, $replacement, $string);
         $arr = explode($replacement, $string);
         $out = '';
+        $regex = '~(:\w+)~';
         foreach ($arr as $line) {
-            if (preg_match('/[^A-Za-z0-9]/', substr($line, 0, 1)) === 1) { //if string not starts from english or number
-                $out .= $line . $replacement;
-            } else if ($line == '') {
-                $out .= "";
-            } else {
-                $out .= "׳" . $line . $replacement;
+            $words = explode(" ", $line);
+            foreach ($words as $word) {
+                if (preg_match('/[^A-Za-z0-9]/', substr($word, 0, 1)) === 1) {
+                    $out .= " "  . $word; //if word not start from english or digit just add to string
+                } else if ($word == '') {
+                    $out .= "";
+                } else {
+                    $out .= " " . "׳" . $word; //if not hebrew add tag before
+                }
             }
+            $out .= " " . $replacement;
         }
         return $out;
     }
@@ -291,7 +296,7 @@ class Exportpdf extends CI_Controller
             $list = array(
                 array('date' => '2013-10-13', 'thin' => 156, 'havy' => 128, 'total' => 284)
             );
-            $CurrVal='</w:t></w:r><w:r><w:rPr><w:rFonts w:ascii="Arial" w:hAnsi="Arial" w:cs="Arial"/><w:rtl/></w:rPr><w:t>'.$CurrVal.'</w:t></w:r><w:r><w:t>';
+            $CurrVal = '</w:t></w:r><w:r><w:rPr><w:rFonts w:ascii="Arial" w:hAnsi="Arial" w:cs="Arial"/><w:rtl/></w:rPr><w:t>' . $CurrVal . '</w:t></w:r><w:r><w:t>';
             $TBS->MergeBlock('c', $form);
             // -----------------
             // Output the result
@@ -311,7 +316,7 @@ class Exportpdf extends CI_Controller
                 // The script can continue.
                 exit("File [$output_file_name] has been created.");
             }
-        }else{
+        } else {
             echo "Form not Found";
         }
     }
