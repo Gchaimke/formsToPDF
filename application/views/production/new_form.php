@@ -199,7 +199,8 @@
                   </div>
                   <hr />
 
-                  <input type='submit' class="btn btn-success my-5" name='submit' value='שמור ושלח לרשימת תפוצה'>
+                  <input type='submit' class="btn btn-danger my-5" name='submit' value='שמור ושלח לרשימת תפוצה'>
+                  <input id='save_form' type='button' class="btn btn-success my-5" name='submit' value='שמור'>
                   <?php echo form_close(); ?>
 
             </center>
@@ -246,8 +247,29 @@
                   // Set the message text.
                   $('#form-messages').html('אין אפשרות לשמור שינוים' + response).fadeIn(1000);
             });
-
       });
+
+      $('#save_form').click(function(){
+            saveSign();
+            var formData = $('#new-form').serialize();
+            $.ajax({
+                  type: 'POST',
+                  url: $('#new-form').attr('action'),
+                  data: formData
+            }).done(function(response) {
+                  if ($.isNumeric(response)) {
+                        window.location.href = "/production/manage_forms/";
+                  } else {
+                        $('#form-messages').addClass('alert-danger');
+                        // Set the message text.
+                        $('#form-messages').html('אין אפשרות לשמור את השינוים ' + response).fadeIn(1000);
+                  }
+            }).fail(function(response) {
+                  $('#form-messages').addClass('alert-danger');
+                  // Set the message text.
+                  $('#form-messages').html('אין אפשרות לשמור שינוים' + response).fadeIn(1000);
+            });
+      })
 
       function SendEmail(id) {
             var newWindow = window.open("","_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=600,height=800");
