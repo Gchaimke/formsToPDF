@@ -198,9 +198,8 @@
                         </div>
                   </div>
                   <hr />
-
-                  <input type='submit' class="btn btn-danger my-5" name='submit' value='שמור ושלח לרשימת תפוצה'>
                   <input id='save_form' type='button' class="btn btn-success my-5" name='submit' value='שמור'>
+                  <input type='submit' class="btn btn-danger my-5" name='submit' value='שמור ושלח לרשימת תפוצה'>
                   <?php echo form_close(); ?>
 
             </center>
