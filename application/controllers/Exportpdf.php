@@ -152,11 +152,10 @@ class Exportpdf extends CI_Controller
             <td>' . $this->hebrewFix($form['summary_text']) . '</td></tr>';
         }
         if ($form['remarks_text'] != '') {
-            $html .= '';
-        }
-        $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:11;">הערות: </td>
+            $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:11;">הערות: </td>
             <td>' . $this->hebrewFix($form['remarks_text']) . '</td></tr>';
-
+        }
+        
         if ($form['recommendations_text'] != '') {
             $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:11;">המלצות: </td>
             <td>' . $this->hebrewFix($form['recommendations_text']) . '</td>

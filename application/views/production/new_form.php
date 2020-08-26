@@ -46,7 +46,7 @@
                         <div class="form-group col-md-4">
                               <div class="input-group mb-2">
                                     <div class="input-group-prepend">
-                                          <div class="input-group-text"><span class="red">*</span>מספר לקוח</div>
+                                          <div class="input-group-text">מספר לקוח</div>
                                     </div>
                                     <input type='text' class="form-control" name='client_num'>
                               </div>
