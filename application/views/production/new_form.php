@@ -151,8 +151,8 @@
                               $secondhalf = array_slice($emails_arr, $len / 2);
                               echo "<div class='col-sm-5'>
                               <div class='input-group-text'>
-                              <input type='checkbox' value='".$user['email']."'>
-                              <label class='col-sm-2 col-form-label'>".$user['email']."</label>
+                              <input type='checkbox' value='" . $user['email'] . "'>
+                              <label class='col-sm-2 col-form-label'>" . $user['email'] . "</label>
                               </div>";
                               foreach ($firsthalf as $email) {
                                     echo "
@@ -191,18 +191,18 @@
                   </div>
                   <hr />
                   <div class="form-row row">
+                        <div class="form-group row col-md-10 mr-2">
+                              <label for="details" class="col-sm-2 col-form-label ">הערות</label>
+                              <div class="col-sm-10">
+                                    <textarea class="form-control" name="details" rows="3"></textarea>
+                              </div>
+                        </div>
                         <div class="form-group col-md-2">
                               <div class="input-group mb-2">
                                     <div class="input-group-prepend">
                                           <div class="input-group-text">מחיר</div>
                                     </div>
                                     <input type='text' id='price' class="form-control" name='price'>
-                              </div>
-                        </div>
-                        <div class="form-group row col-md-10 mr-2">
-                              <label for="details" class="col-sm-2 col-form-label ">הערות</label>
-                              <div class="col-sm-10">
-                                    <textarea class="form-control" name="details" rows="3"></textarea>
                               </div>
                         </div>
                   </div>
@@ -294,9 +294,9 @@
       function SendEmail(id) {
             var r = confirm("לשלוח עם קבצים נוספים?");
             var ans = false;
-            if(r==true){
+            if (r == true) {
                   var ans = 'yes';
-            }else{
+            } else {
                   ans = 'no';
             }
             var newWindow = window.open("", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=600,height=800");
@@ -306,7 +306,7 @@
             $('#form-messages').html("שולח מייל, נא להמתין...").fadeIn(1000);
             $.post("/exportpdf/create/" + id, {
                   email: true,
-                  add_attachments : ans
+                  add_attachments: ans
             }).done(function(o) {
                   // Make sure that the formMessages div has the 'success' class.
                   $('#form-messages').removeClass('alert-info').addClass('alert-success');
