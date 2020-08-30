@@ -383,7 +383,7 @@ class Production extends CI_Controller
         echo "\xEF\xBB\xBF";
         $fp = fopen('php://output', 'w');
 
-        $tmp_arr = array(array('תאריך', 'יוצר', 'שם הלקוח', 'מיקום', 'סוג תקלה', 'חברה נותנת שירות', 'שעת התחלת', 'שעת סיום','מחיר','הערות'));
+        $tmp_arr = array(array('תאריך', 'יוצר', 'שם הלקוח', 'מיקום', 'סוג תקלה', 'חברה נותנת שירות', 'שעת התחלת', 'שעת סיום','הערות','מחיר'));
         foreach ($data as  $line) {
             array_push($tmp_arr, array(
                 $line['date'],
@@ -394,8 +394,8 @@ class Production extends CI_Controller
                 $line['company'],
                 $line['start_time'],
                 $line['end_time'],
-                $line['price'],
-                $line['details']
+                $line['details'],
+                $line['price']
             ));
         }
 
