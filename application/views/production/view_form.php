@@ -370,12 +370,20 @@ if (isset($this->session->userdata['logged_in'])) {
       }
 
       function SendEmail() {
+            var r = confirm("לשלוח עם קבצים נוספים?");
+            var ans = false;
+            if(r==true){
+                  ans = 'yes';
+            }else{
+                  ans = 'no';
+            }
             // Make sure that the formMessages div has the 'success' class.
             $('#form-messages').addClass('alert-info');
             // Set the message text.
             $('#form-messages').html("שולח מייל, נא להמתין...").fadeIn(1000);
             $.post("/exportpdf/create/<?php echo $form_data['id'] ?>", {
-                  email: true
+                  email: true,
+                  add_attachments : ans
             }).done(function(o) {
                   // Make sure that the formMessages div has the 'success' class.
                   $('#form-messages').removeClass('alert-info').addClass('alert-success');

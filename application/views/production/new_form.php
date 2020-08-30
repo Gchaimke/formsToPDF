@@ -288,13 +288,21 @@
       })
 
       function SendEmail(id) {
+            var r = confirm("לשלוח עם קבצים נוספים?");
+            var ans = false;
+            if(r==true){
+                  var ans = 'yes';
+            }else{
+                  ans = 'no';
+            }
             var newWindow = window.open("", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=600,height=800");
             // Make sure that the formMessages div has the 'success' class.
             $('#form-messages').removeClass('alert-danger').addClass('alert-info');
             // Set the message text.
             $('#form-messages').html("שולח מייל, נא להמתין...").fadeIn(1000);
             $.post("/exportpdf/create/" + id, {
-                  email: true
+                  email: true,
+                  add_attachments : ans
             }).done(function(o) {
                   // Make sure that the formMessages div has the 'success' class.
                   $('#form-messages').removeClass('alert-info').addClass('alert-success');

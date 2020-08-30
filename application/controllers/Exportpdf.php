@@ -21,6 +21,10 @@ class Exportpdf extends CI_Controller
         if (isset($_POST['email'])) {
             $send_email = $_POST['email'];
         }
+        $add_attachments = false;
+        if (isset($_POST['add_attachments'])) {
+            $add_attachments = $_POST['add_attachments'];
+        }
 
         $form = array();
         $form = $this->Production_model->getForm($id)[0];
@@ -155,7 +159,7 @@ class Exportpdf extends CI_Controller
             $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:11;">הערות: </td>
             <td>' . $this->hebrewFix($form['remarks_text']) . '</td></tr>';
         }
-        
+
         if ($form['recommendations_text'] != '') {
             $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:11;">המלצות: </td>
             <td>' . $this->hebrewFix($form['recommendations_text']) . '</td>
@@ -190,7 +194,7 @@ class Exportpdf extends CI_Controller
             chmod($pdf_file, 0664);
             $attachments = array($pdf_file);
             if (!empty($pdf_file)) {
-                if ($form['attachments'] != '') {
+                if ($add_attachments == 'yes' && $form['attachments'] != '') {
                     $form_att_arr = explode(',', $form['attachments']);
                     foreach ($form_att_arr as $att) {
                         array_push($attachments, $att);
@@ -237,6 +241,9 @@ class Exportpdf extends CI_Controller
         $sender = 'yossigorbov@garin.co.il';
         if ($user['email'] != '') {
             //$recipients = $user['email'] . ',' . $recipients;
+            if($recipients==''){
+                $recipients = $user['email'];
+            }
             $this->load->library('email');
             if ($settings['smtp_on'] == 1) {
                 $config['protocol'] = 'smtp';
