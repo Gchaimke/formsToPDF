@@ -221,10 +221,10 @@ if (isset($this->session->userdata['logged_in'])) {
                                     <textarea class="form-control" name="recommendations_text" cols="10" rows="3" placeholder="המלצות"><?php echo $form_data['recommendations_text'] ?></textarea>
                               </div>
                         </div>
-                       <hr />
+                        <hr />
                         <div class="form-group row" id="emails">
                               <div class="input-group mb-4">
-                              <label for="email_to" class="col-sm-2 col-form-label ">מכותבים:</label>
+                                    <label for="email_to" class="col-sm-2 col-form-label ">מכותבים:</label>
                                     <?php $len = count($emails_arr);
                                     if ($len > 0 && $emails_arr[0] != '') {
                                           $firsthalf = array_slice($emails_arr, 0, $len / 2);
@@ -271,7 +271,7 @@ if (isset($this->session->userdata['logged_in'])) {
                                           <?php $files_arr = explode(',', $form_data['attachments']);
                                           foreach ($files_arr as $file) {
                                                 if (strlen($file) > 1)
-                                                      echo '<p class="file ltr done"><a target="blank" href="/'.htmlspecialchars($file).'">' . htmlspecialchars($file) . '</a>
+                                                      echo '<p class="file ltr done"><a target="blank" href="/' . htmlspecialchars($file) . '">' . htmlspecialchars($file) . '</a>
                                                       <a data-file="' . htmlspecialchars($file) . '" href="#files" class="delete_attachment" onclick="delete_attachment(this)">X</a></p>';
                                           }
                                           ?>
@@ -280,9 +280,26 @@ if (isset($this->session->userdata['logged_in'])) {
                               </div>
                         </div>
                         <hr />
+                        <div class="form-row row">
+                              <div class="form-group col-md-2">
+                                    <div class="input-group mb-2">
+                                          <div class="input-group-prepend">
+                                                <div class="input-group-text">מחיר</div>
+                                          </div>
+                                          <input type='number' id='price' class="form-control" name='price' value='<?php echo $form_data['price'] ?>'>
+                                    </div>
+                              </div>
+                              <div class="form-group row col-md-10 mr-2">
+                                    <label for="details" class="col-sm-2 col-form-label ">הערות</label>
+                                    <div class="col-sm-10">
+                                          <textarea class="form-control" name="details" rows="3"><?php echo $form_data['details'] ?></textarea>
+                                    </div>
+                              </div>
+                        </div>
+                        <hr />
 
                         <div class="form-group row">
-                              <label for="recommendations_text" class="col-sm-2 col-form-label "> חתימת לקוח שמורה:</label>
+                              <label class="col-sm-2 col-form-label "> חתימת לקוח שמורה:</label>
                               <div class="col-sm-4">
                                     <?php if ($form_data['client_sign']) {
                                           echo '<img src="data:image/png;base64, ' . $form_data["client_sign"] . '" />';
@@ -292,7 +309,7 @@ if (isset($this->session->userdata['logged_in'])) {
                                     ?>
                               </div>
                               <?php if ($user_role == "Admin") {
-                                    echo '<label for="recommendations_text" class="col-sm-2 col-form-label ">חתימת לקוח חדשה:</label>
+                                    echo '<label class="col-sm-2 col-form-label ">חתימת לקוח חדשה:</label>
                               <div class="col-sm-4">
                                     <div id="sketchpadapp">
                                           <canvas id="sign-canvas" style="border: 1px solid red;"></canvas>

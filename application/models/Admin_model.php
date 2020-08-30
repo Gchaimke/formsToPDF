@@ -214,23 +214,15 @@ class Admin_model extends CI_Model
                 'type' => 'TEXT',
                 'null' => TRUE
             ),
-            'trip_start_time' => array(
-                'type' => 'TIME',
-                'null' => TRUE
-            ),
-            'trip_end_time' => array(
-                'type' => 'TIME',
-                'null' => TRUE
-            ),
-            'back_start_time' => array(
-                'type' => 'TIME',
-                'null' => TRUE
-            ),
-            'back_end_time' => array(
-                'type' => 'TIME',
-                'null' => TRUE
-            ),
             'attachments' => array(
+                'type' => 'TEXT',
+                'null' => TRUE
+            ),
+            'price' => array(
+                'type' => 'decimal',
+                'null' => TRUE
+            ),
+            'details' => array(
                 'type' => 'TEXT',
                 'null' => TRUE
             )

@@ -186,10 +186,27 @@
                         </div>
                   </div>
                   <hr />
+                  <div class="form-row row">
+                        <div class="form-group col-md-2">
+                              <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                          <div class="input-group-text">מחיר</div>
+                                    </div>
+                                    <input type='number' id='price' class="form-control" name='price'>
+                              </div>
+                        </div>
+                        <div class="form-group row col-md-10 mr-2">
+                              <label for="details" class="col-sm-2 col-form-label ">הערות</label>
+                              <div class="col-sm-10">
+                                    <textarea class="form-control" name="details" rows="3"></textarea>
+                              </div>
+                        </div>
+                  </div>
+                  <hr />
 
                   <div class="form-row">
                         <div class="form-group col-md-12">
-                              <label for="back_start_time" class=" col-form-label ">חתימת לקוח</label>
+                              <label for="client_sign" class=" col-form-label ">חתימת לקוח</label>
                               <div id="sketchpadapp">
                                     <canvas id="sign-canvas" style="border: 1px solid red;"></canvas>
                               </div>
@@ -248,7 +265,7 @@
             });
       });
 
-      $('#save_form').click(function(){
+      $('#save_form').click(function() {
             saveSign();
             var formData = $('#new-form').serialize();
             $.ajax({
@@ -271,7 +288,7 @@
       })
 
       function SendEmail(id) {
-            var newWindow = window.open("","_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=600,height=800");
+            var newWindow = window.open("", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=600,height=800");
             // Make sure that the formMessages div has the 'success' class.
             $('#form-messages').removeClass('alert-danger').addClass('alert-info');
             // Set the message text.
@@ -287,12 +304,11 @@
                         //window.location.href = "/exportpdf/create/" + id;
                         window.location.href = "/production/manage_forms/";
                   }, 3000); //will call the function after 2 secs.
-                  newWindow.location.href="/exportpdf/create/" + id;
+                  newWindow.location.href = "/exportpdf/create/" + id;
             }).fail(function(o) {
                   $('#form-messages').removeClass('alert-info').addClass('alert-danger');
                   // Set the message text.
                   $('#form-messages').html(o).fadeIn(1000);
             });
       }
-
 </script>

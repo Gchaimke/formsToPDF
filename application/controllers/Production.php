@@ -58,6 +58,8 @@ class Production extends CI_Controller
         $this->form_validation->set_rules('recommendations_text', 'recommendations_text', 'trim|xss_clean');
         $this->form_validation->set_rules('email_to', 'email_to', 'trim|xss_clean');
         $this->form_validation->set_rules('attachments', 'attachments', 'trim|xss_clean');
+        $this->form_validation->set_rules('price', 'price', 'trim|xss_clean');
+        $this->form_validation->set_rules('details', 'details', 'trim|xss_clean');
         $this->form_validation->set_rules('client_sign', 'client_sign', 'trim|xss_clean');
         if (!$this->form_validation->run() == FALSE) {
             $data = array(
@@ -81,6 +83,8 @@ class Production extends CI_Controller
                 'recommendations_text' => $this->input->post('recommendations_text'),
                 'email_to' => $this->input->post('email_to'),
                 'attachments' => $this->input->post('attachments'),
+                'price' => $this->input->post('price'),
+                'details' => $this->input->post('details'),
                 'client_sign' => $this->input->post('client_sign')
             );
             foreach ($data as $key => &$str) {
@@ -135,6 +139,8 @@ class Production extends CI_Controller
         $this->form_validation->set_rules('recommendations_text', 'recommendations_text', 'trim|xss_clean');
         $this->form_validation->set_rules('email_to', 'email_to', 'trim|xss_clean');
         $this->form_validation->set_rules('attachments', 'attachments', 'trim|xss_clean');
+        $this->form_validation->set_rules('price', 'price', 'trim|xss_clean');
+        $this->form_validation->set_rules('details', 'details', 'trim|xss_clean');
         $this->form_validation->set_rules('client_sign', 'client_sign', 'trim|xss_clean');
         if (!$this->form_validation->run() == FALSE) {
             $data = array(
@@ -158,7 +164,9 @@ class Production extends CI_Controller
                 'remarks_text' => $this->input->post('remarks_text'),
                 'recommendations_text' => $this->input->post('recommendations_text'),
                 'email_to' => $this->input->post('email_to'),
-                'attachments' => $this->input->post('attachments')
+                'attachments' => $this->input->post('attachments'),
+                'price' => $this->input->post('price'),
+                'details' => $this->input->post('details')
             );
             foreach ($data as $key => &$str) {
                 if (!$key == 'client_sign') {
@@ -375,7 +383,7 @@ class Production extends CI_Controller
         echo "\xEF\xBB\xBF";
         $fp = fopen('php://output', 'w');
 
-        $tmp_arr = array(array('תאריך', 'יוצר', 'שם הלקוח', 'מיקום', 'סוג תקלה', 'חברה נותנת שירות', 'שעת התחלת', 'שעת סיום'));
+        $tmp_arr = array(array('תאריך', 'יוצר', 'שם הלקוח', 'מיקום', 'סוג תקלה', 'חברה נותנת שירות', 'שעת התחלת', 'שעת סיום','מחיר','הערות'));
         foreach ($data as  $line) {
             array_push($tmp_arr, array(
                 $line['date'],
@@ -385,7 +393,9 @@ class Production extends CI_Controller
                 $line['issue_kind'],
                 $line['company'],
                 $line['start_time'],
-                $line['end_time']
+                $line['end_time'],
+                $line['price'],
+                $line['details']
             ));
         }
 
