@@ -149,7 +149,11 @@
                         if ($len > 0 && $emails_arr[0] != '') {
                               $firsthalf = array_slice($emails_arr, 0, $len / 2);
                               $secondhalf = array_slice($emails_arr, $len / 2);
-                              echo '<div class="col-sm-5">';
+                              echo "<div class='col-sm-5'>
+                              <div class='input-group-text'>
+                              <input type='checkbox' value='".$user['email']."'>
+                              <label class='col-sm-2 col-form-label'>".$user['email']."</label>
+                              </div>";
                               foreach ($firsthalf as $email) {
                                     echo "
                               <div class='input-group-text'>
@@ -171,7 +175,7 @@
                               echo '<div class="col-sm-5">אין פריטים ברשימת תפוצה של משתמש</div>';
                         }
                         ?>
-                        <input type="hidden" id="sum" class="form-control ltr" name='email_to' value="">
+                        <input type="text" id="sum" class="form-control ltr mt-3" name='email_to' value="">
                   </div>
                   <hr />
 

@@ -81,6 +81,7 @@ if (isset($this->session->userdata['logged_in'])) {
                                                       foreach ($users as $user) {
                                                             if ($user['id'] == $form_data['creator_id']) {
                                                                   $emails_arr = preg_split('/\r\n|[\r\n]/', $user['email_to']);
+                                                                  $user_email = $user['email'];
                                                                   echo '<option value="' . $user['id'] . '" selected>' . $user['view_name'] . '</option>';
                                                             } else {
                                                                   echo '<option value="' . $user['id'] . '">' . $user['view_name'] . '</option>';
@@ -229,7 +230,11 @@ if (isset($this->session->userdata['logged_in'])) {
                                     if ($len > 0 && $emails_arr[0] != '') {
                                           $firsthalf = array_slice($emails_arr, 0, $len / 2);
                                           $secondhalf = array_slice($emails_arr, $len / 2);
-                                          echo '<div class="col-sm-5">';
+                                          echo "<div class='col-sm-5'>
+                                                <div class='input-group-text'>
+                                                <input type='checkbox' value='$user_email'>
+                                                <label class='col-sm-2 col-form-label'>$user_email</label>
+                                                </div>";
                                           foreach ($firsthalf as $email) {
                                                 $checked = '';
                                                 if (strpos($form_data['email_to'], $email) !== false) {
@@ -279,25 +284,26 @@ if (isset($this->session->userdata['logged_in'])) {
                                     <button class="btn btn-outline-success col-sm-2" type="button" onclick="document.getElementById('fileupload').click();">העלה</button>
                               </div>
                         </div>
-                        <?php if ($user_role == "Admin") {?>
-                        <hr />
-                        <div class="form-row row">
-                              <div class="form-group col-md-2">
-                                    <div class="input-group mb-2">
-                                          <div class="input-group-prepend">
-                                                <div class="input-group-text">מחיר</div>
+                        <?php if ($user_role == "Admin") { ?>
+                              <hr />
+                              <div class="form-row row">
+                                    <div class="form-group col-md-2">
+                                          <div class="input-group mb-2">
+                                                <div class="input-group-prepend">
+                                                      <div class="input-group-text">מחיר</div>
+                                                </div>
+                                                <input type='text' id='price' class="form-control" name='price' value='<?php echo $form_data['price'] ?>'>
                                           </div>
-                                          <input type='text' id='price' class="form-control" name='price' value='<?php echo $form_data['price'] ?>'>
+                                    </div>
+                                    <div class="form-group row col-md-10 mr-2">
+                                          <label for="details" class="col-sm-2 col-form-label ">הערות</label>
+                                          <div class="col-sm-10">
+                                                <textarea class="form-control" name="details" rows="3"><?php echo $form_data['details'] ?></textarea>
+                                          </div>
                                     </div>
                               </div>
-                              <div class="form-group row col-md-10 mr-2">
-                                    <label for="details" class="col-sm-2 col-form-label ">הערות</label>
-                                    <div class="col-sm-10">
-                                          <textarea class="form-control" name="details" rows="3"><?php echo $form_data['details'] ?></textarea>
-                                    </div>
-                              </div>
-                        </div>
-                        <?php } //end if?> 
+                        <?php } //end if
+                        ?>
                         <hr />
 
                         <div class="form-group row">
@@ -372,9 +378,9 @@ if (isset($this->session->userdata['logged_in'])) {
       function SendEmail() {
             var r = confirm("לשלוח עם קבצים נוספים?");
             var ans = false;
-            if(r==true){
+            if (r == true) {
                   ans = 'yes';
-            }else{
+            } else {
                   ans = 'no';
             }
             // Make sure that the formMessages div has the 'success' class.
@@ -383,7 +389,7 @@ if (isset($this->session->userdata['logged_in'])) {
             $('#form-messages').html("שולח מייל, נא להמתין...").fadeIn(1000);
             $.post("/exportpdf/create/<?php echo $form_data['id'] ?>", {
                   email: true,
-                  add_attachments : ans
+                  add_attachments: ans
             }).done(function(o) {
                   // Make sure that the formMessages div has the 'success' class.
                   $('#form-messages').removeClass('alert-info').addClass('alert-success');
