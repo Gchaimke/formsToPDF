@@ -236,7 +236,7 @@ class Exportpdf extends CI_Controller
         $settings = $this->Admin_model->getSettings()[0];
         $sender = 'yossigorbov@garin.co.il';
         if ($user['email'] != '') {
-            $recipients = $user['email'] . ',' . $recipients;
+            //$recipients = $user['email'] . ',' . $recipients;
             $this->load->library('email');
             if ($settings['smtp_on'] == 1) {
                 $config['protocol'] = 'smtp';
