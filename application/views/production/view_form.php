@@ -287,7 +287,7 @@ if (isset($this->session->userdata['logged_in'])) {
                                           <div class="input-group-prepend">
                                                 <div class="input-group-text">מחיר</div>
                                           </div>
-                                          <input type='number' id='price' class="form-control" name='price' value='<?php echo $form_data['price'] ?>'>
+                                          <input type='text' id='price' class="form-control" name='price' value='<?php echo $form_data['price'] ?>'>
                                     </div>
                               </div>
                               <div class="form-group row col-md-10 mr-2">

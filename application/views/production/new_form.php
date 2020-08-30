@@ -192,7 +192,7 @@
                                     <div class="input-group-prepend">
                                           <div class="input-group-text">מחיר</div>
                                     </div>
-                                    <input type='number' id='price' class="form-control" name='price'>
+                                    <input type='text' id='price' class="form-control" name='price'>
                               </div>
                         </div>
                         <div class="form-group row col-md-10 mr-2">
