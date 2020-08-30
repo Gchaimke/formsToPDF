@@ -279,6 +279,7 @@ if (isset($this->session->userdata['logged_in'])) {
                                     <button class="btn btn-outline-success col-sm-2" type="button" onclick="document.getElementById('fileupload').click();">העלה</button>
                               </div>
                         </div>
+                        <?php if ($user_role == "Admin") {?>
                         <hr />
                         <div class="form-row row">
                               <div class="form-group col-md-2">
@@ -296,6 +297,7 @@ if (isset($this->session->userdata['logged_in'])) {
                                     </div>
                               </div>
                         </div>
+                        <?php } //end if?> 
                         <hr />
 
                         <div class="form-group row">
