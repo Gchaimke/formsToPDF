@@ -7,7 +7,6 @@ class Companies extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        // Load model
         $this->load->model('Companies_model');
     }
 
@@ -17,7 +16,6 @@ class Companies extends CI_Controller
         if ($msg != '') {
             $data['message_display'] = $msg;
         }
-        // get data from model
         $data['companies'] = $this->Companies_model->getCompanies();
         $this->load->view('header');
         $this->load->view('main_menu');
@@ -25,11 +23,9 @@ class Companies extends CI_Controller
         $this->load->view('footer');
     }
 
-    // Validate and store checklist data in database
     public function create()
     {
         $msg = array();
-        // Check validation for user input in SignUp form
         $this->form_validation->set_rules('name', 'Name', 'trim|required|xss_clean');
         $this->form_validation->set_rules('logo', 'Logo', 'trim|xss_clean');
         $this->form_validation->set_rules('form_header', 'form_header', 'trim');
@@ -68,7 +64,6 @@ class Companies extends CI_Controller
             $data['message_display'] = $msg;
         }
         $data = array();
-        // Check validation for user input in form
         $this->form_validation->set_rules('id', 'Id', 'trim|xss_clean');
         $this->form_validation->set_rules('name', 'Name', 'trim|xss_clean');
         $this->form_validation->set_rules('logo', 'Logo', 'trim|xss_clean');
@@ -102,7 +97,7 @@ class Companies extends CI_Controller
         $img = $_POST['data'];
         if (preg_match('/^data:image\/(\w+);base64,/', $img, $type)) {
             $img = substr($img, strpos($img, ',') + 1);
-            $type = strtolower($type[1]); // jpg, png, gif
+            $type = strtolower($type[1]);
 
             if (!in_array($type, ['jpg', 'jpeg', 'gif', 'png'])) {
                 throw new \Exception('invalid image type');

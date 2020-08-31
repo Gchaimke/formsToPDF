@@ -8,7 +8,6 @@ class Exportpdf extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        // Load model
         $this->load->model('Production_model');
         $this->load->model('Users_model');
         $this->load->model('Companies_model');
@@ -42,8 +41,6 @@ class Exportpdf extends CI_Controller
 
         // Remove anything which isn't a word, whitespace, number
         // or any of the following caracters -_~,;[]().
-        // If you don't need to handle multi-byte characters
-        // you can use preg_replace rather than mb_ereg_replace
         $file_name = mb_ereg_replace("([^\w\s\d\-_~,;\[\]\(\).])", '', $file_name);
         // Remove any runs of periods
         $file_name = mb_ereg_replace("([\.]{2,})", '', $file_name);
@@ -88,21 +85,12 @@ class Exportpdf extends CI_Controller
 
         // Set font
         // dejavusans is a UTF-8 Unicode font, if you only need to
-        // print standard ASCII chars, you can use core fonts like
-        // helvetica or times to reduce file size.
+        // print standard ASCII chars
         $pdf->SetFont('dejavusans', '', 10, '', true);
-
-        // Add a page
-        // This method has several options, check the source code documentation for more information.
         $pdf->AddPage();
-
-        // set text shadow effect
-        //$pdf->setTextShadow(array('enabled' => true, 'depth_w' => 0.2, 'depth_h' => 0.2, 'color' => array(196, 196, 196), 'opacity' => 1, 'blend_mode' => 'Normal'));
         $pdf->setRTL(true);
         $pdf->SetY(25);
-        // Set some content to print
         $html = '<h1>דו"ח סיכום פעילות</h1>';
-        // Print text using writeHTMLCell()
         $pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, 'C', true);
 
         $pdf->SetY(40);
@@ -180,10 +168,6 @@ class Exportpdf extends CI_Controller
             }
         }
 
-        // ---------------------------------------------------------
-
-        // Close and output PDF document
-
         if ($send_email) {
             define('UPLOAD_DIR',  FCPATH . '/Uploads/PDF/');
             $pdf_file = UPLOAD_DIR . $file_name . '.pdf';
@@ -256,7 +240,7 @@ class Exportpdf extends CI_Controller
                 $sender = $settings['smtp_user'];
             }
             $Subject = $file_name;
-            $Message = ''; //'Server: ' . $_SERVER['SERVER_NAME'];
+            $Message = '';
             $this->email
                 ->from($sender, 'דוח חדש - ' . $user['view_name'])
                 ->to($recipients)
@@ -288,27 +272,14 @@ class Exportpdf extends CI_Controller
 
             $TBS = new clsTinyButStrong;
             $TBS->Plugin(TBS_INSTALL, OPENTBS_PLUGIN);
-            // -----------------
-            // Load the template
-            // -----------------
 
             $template = './Uploads/DOC/' . $form[0]['company'] . '.docx';
-            $TBS->LoadTemplate($template, OPENTBS_ALREADY_UTF8); // Also merge some [onload] automatic fields (depends of the type of document).
-
-            // --------------------------------------------
-            // Merging and other operations on the template
-            // --------------------------------------------
-
+            $TBS->LoadTemplate($template, OPENTBS_ALREADY_UTF8);
             $list = array(
                 array('date' => '2013-10-13', 'thin' => 156, 'havy' => 128, 'total' => 284)
             );
             $CurrVal = '</w:t></w:r><w:r><w:rPr><w:rFonts w:ascii="Arial" w:hAnsi="Arial" w:cs="Arial"/><w:rtl/></w:rPr><w:t>' . $CurrVal . '</w:t></w:r><w:r><w:t>';
             $TBS->MergeBlock('c', $form);
-            // -----------------
-            // Output the result
-            // -----------------
-
-            // Define the name of the output file
             $save_as = (isset($_POST['save_as']) && (trim($_POST['save_as']) !== '') && ($_SERVER['SERVER_NAME'] == 'localhost')) ? trim($_POST['save_as']) : '';
             $output_file_name = str_replace('.', '_' . date('Y-m-d') . $save_as . '.', $template);
             if ($save_as === '') {
@@ -327,9 +298,6 @@ class Exportpdf extends CI_Controller
         }
     }
 }
-
-
-
 
 // Extend the TCPDF class to create custom Header and Footer
 class MYPDF extends TCPDF
@@ -384,8 +352,6 @@ class MYPDF extends TCPDF
         } else {
             $pagenumtxt =  $w_page . $this->getPageNumGroupAlias() . '/' . $this->getPageGroupAlias();
         }
-        //$this->SetX($this->k / 2);
-        //$this->SetAlpha(1);
         $this->writeHTMLCell('', '', '', '', $pagenumtxt, 0, 0, 0, true, 'L', true);
     }
 }

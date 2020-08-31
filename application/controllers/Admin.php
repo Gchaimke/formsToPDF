@@ -4,7 +4,6 @@ class Admin extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		// Load model
 		$this->load->model('Users_model');
 		$this->load->model('Admin_model');
 		$this->load->library('pagination');
@@ -26,7 +25,6 @@ class Admin extends CI_Controller
 
 	public function save_settings()
 	{
-		// Check validation for user input in SignUp form
 		$smtp_on = 0;
 		$this->form_validation->set_rules('roles', 'Roles', 'trim|xss_clean');
 		$this->form_validation->set_rules('smtp_host', 'smtp_host', 'trim|xss_clean');
@@ -94,7 +92,6 @@ class Admin extends CI_Controller
 			mkdir('application/logs/admin', 0770, true);
 		}
 		$dirlistR = $this->getFileList('application/logs/admin');
-		// init params
 		$params = array();
 		$config = array();
 		$limit_per_page = 10;
@@ -130,7 +127,6 @@ class Admin extends CI_Controller
 			$config['prev_tag_close'] = '</li>';
 
 			$this->pagination->initialize($config);
-			// build paging links
 			$params["links"] = $this->pagination->create_links();
 		}
 		$this->load->view('header');
@@ -158,8 +154,7 @@ class Admin extends CI_Controller
 		// open pointer to directory and read list of files
 		$d = @dir($dir) or die("getFileList: Failed opening directory {$dir} for reading");
 		while (FALSE !== ($entry = $d->read())) {
-			// skip hidden files
-			if ($entry[0] == ".") continue;
+			if ($entry[0] == ".") continue; // skip hidden files
 			if (is_dir("{$dir}{$entry}")) {
 				$retval[] = [
 					'name' => "{$dir}{$entry}",
@@ -199,7 +194,7 @@ class Admin extends CI_Controller
 		$level_arr = array('INFO', 'CREATE', 'TRASH', 'DELETE');
 		$user = $this->session->userdata['logged_in']['name'];
 		$log_file = APPPATH . "logs/admin/" . date("m-d-Y") . ".log";
-		$fp = fopen($log_file, 'a'); //opens file in append mode  
+		$fp = fopen($log_file, 'a');
 		fwrite($fp, $level_arr[$level] . " - " . date("H:i:s") . " --> " . $user . " - " . $msg . PHP_EOL);
 		fclose($fp);
 	}
@@ -222,13 +217,12 @@ class Admin extends CI_Controller
 		}
 		$html_view = '';
 		$dirlistR = $this->getFileList($dir);
-		$dir = explode('/', $dir);  //string to array
-		$last_dir = array_pop($dir);            //remove last element
-		$dir = implode('/', $dir);  //array to string
+		$dir = explode('/', $dir);
+		$last_dir = array_pop($dir);
+		$dir = implode('/', $dir);
 		if ($dir != '') {
 			$html_view .=  "<a href='?folder=$dir'>$dir/<a><b>" . $last_dir . "/</b><br>";
 		}
-		// output file list as HTML table
 		$html_view .= "<table class='table files'";
 		$html_view .= "<thead>\n";
 		$html_view .= "<tr><th>image</th><th>Path</th><th>Type</th><th>Size</th><th>Last Modified</th><th>Delete</th></tr>\n";
@@ -244,15 +238,15 @@ class Admin extends CI_Controller
 				$subDir = $this->getFileList($file['name']);
 				$count = count(array_filter($subDir, function ($x) {
 					return $x['type'] != 'text/html';
-				})); //count all files, filter html
+				}));
 				$html_view .= '<a class="btn btn-primary folder" href="?folder=' . $file['name'] .
 					'" role="button"><i class="fa fa-folder"></i> ' .
 					basename($file['name']) . ' (' .  $count . ')</a>';
 			} else {
 				$html_view .= "<tr>\n";
 				$html_view .=  "<td class='td_file_manager'><a target='_blank' href=\"/{$file['name']}\"><img class='img-thumbnail' src=\"/{$file['name']}\"></a>" .
-					"</td>\n"; //basename($file['name'])
-				$html_view .=  "<td>" . $file['name'] . "</td>\n"; //basename($file['name'])
+					"</td>\n";
+				$html_view .=  "<td>" . $file['name'] . "</td>\n";
 				$html_view .= "<td>{$file['type']}</td>\n";
 				$html_view .= "<td>" . $this->human_filesize($file['size']) . "</td>\n";
 				$html_view .= "<td>" . date('d/m/Y h:i:s', $file['lastmod']) . "</td>\n";

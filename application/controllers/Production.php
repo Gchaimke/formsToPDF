@@ -6,7 +6,6 @@ class Production extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        // Load model
         $this->load->model('Production_model');
         $this->load->model('Users_model');
         $this->load->model('Companies_model');
@@ -15,7 +14,6 @@ class Production extends CI_Controller
     public function index()
     {
         $data = array();
-        // get data from model
         $data['companies'] = $this->Companies_model->getCompanies();
         $this->load->view('header');
         $this->load->view('main_menu');
@@ -39,7 +37,6 @@ class Production extends CI_Controller
 
         $creator_id = $this->session->userdata['logged_in']['id'];
         $creator_name = $this->Users_model->getUser($creator_id)[0]['view_name'];
-        // Check validation for user input in SignUp form
         $this->form_validation->set_rules('date', 'date', 'trim|xss_clean');
         $this->form_validation->set_rules('company', 'company', 'trim|xss_clean');
         $this->form_validation->set_rules('client_num', 'client_num', 'trim|xss_clean');
@@ -117,7 +114,6 @@ class Production extends CI_Controller
 
     public function update_form()
     {
-        // Check validation for user input in SignUp form
         $this->form_validation->set_rules('id', 'id', 'trim|xss_clean');
         $this->form_validation->set_rules('creator_id', 'creator_id', 'trim|xss_clean');
         $this->form_validation->set_rules('creator_name', 'creator_name', 'trim|xss_clean');
@@ -189,9 +185,7 @@ class Production extends CI_Controller
 
     public function manage_forms()
     {
-        //$this->load->database();
         $this->load->library('pagination');
-        // init params
         $params = array();
         $config = array();
         $limit_per_page = 20;
@@ -229,7 +223,6 @@ class Production extends CI_Controller
 
             $this->pagination->initialize($config);
 
-            // build paging links
             $params["links"] = $this->pagination->create_links();
         }
         $params['users'] = $this->Users_model->getUsers();
@@ -265,7 +258,6 @@ class Production extends CI_Controller
 
     public function save_photo()
     {
-        // requires php5
         define('UPLOAD_DIR', 'Uploads/');
         $folder = $_POST['project'];
         $company = $_POST['company'];
@@ -309,8 +301,7 @@ class Production extends CI_Controller
     {
         $this->form_validation->set_rules('photo', 'Photo', 'trim|xss_clean');
         if ($this->form_validation->run() == TRUE) {
-            $attachment = "./" . $this->input->post('attachment'); // $_SERVER["DOCUMENT_ROOT"].
-            // Use unlink() function to delete a file  
+            $attachment = "./" . $this->input->post('attachment');
             if (!unlink($attachment)) {
                 echo ($attachment . " cannot be deleted due to an error");
             } else {
@@ -328,7 +319,7 @@ class Production extends CI_Controller
         $level_arr = array('INFO', 'CREATE', 'TRASH', 'DELETE');
         $user = $this->session->userdata['logged_in']['name'];
         $log_file = APPPATH . "logs/admin/" . date("m-d-Y") . ".log";
-        $fp = fopen($log_file, 'a'); //opens file in append mode  
+        $fp = fopen($log_file, 'a');
         fwrite($fp, $level_arr[$level] . " - " . date("H:i:s") . " --> " . $user . " - " . $msg . PHP_EOL);
         fclose($fp);
     }
@@ -343,9 +334,7 @@ class Production extends CI_Controller
             'upload_path' => $upload_folder,
             'overwrite' => TRUE,
             'allowed_types' => '*',
-            'max_size' => "2048000", // Can be set to particular file size , here it is 2 MB(2048 Kb)
-            //'max_height' => "768",
-            //'max_width' => "1024"
+            'max_size' => "2048000"
         );
         $this->load->library('upload',$config);
         if ($this->upload->do_upload('files')) {
