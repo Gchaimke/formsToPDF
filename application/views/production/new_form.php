@@ -191,15 +191,17 @@
                   </div>
                   <hr />
                   <div class="form-row row">
-                        <div class="form-group row col-md-10 mr-2">
-                              <label for="details" class="col-sm-2 col-form-label ">הערות</label>
+                        <div class="form-group row col-md-12 ">
+                              <label for="details" class="col-sm-2 col-form-label ">הערות (CSV)</label>
                               <div class="col-sm-10">
                                     <textarea class="form-control" name="details" rows="3"></textarea>
                               </div>
                         </div>
-                        <div class="form-group col-md-2">
-                              <div class="input-group mb-2">
-                                    <div class="input-group-prepend">
+                  </div>
+                  <div class="form-row row">
+                        <div class="form-group col-sm-4 mr-5">
+                              <div class="input-group mr-5">
+                                    <div class="input-group-prepend mr-3">
                                           <div class="input-group-text">מחיר</div>
                                     </div>
                                     <input type='text' id='price' class="form-control" name='price'>

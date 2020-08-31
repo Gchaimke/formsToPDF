@@ -288,7 +288,7 @@ if (isset($this->session->userdata['logged_in'])) {
                               <hr />
                               <div class="form-row row">
                                     <div class="form-group row col-md-12 ">
-                                          <label for="details" class="col-sm-2 col-form-label ">הערות</label>
+                                          <label for="details" class="col-sm-2 col-form-label ">הערות (CSV)</label>
                                           <div class="col-sm-10">
                                                 <textarea class="form-control" name="details" rows="3"><?php echo $form_data['details'] ?></textarea>
                                           </div>
@@ -304,7 +304,7 @@ if (isset($this->session->userdata['logged_in'])) {
                                           </div>
                                     </div>
                               </div>
-                        <?php } //end if
+                        <?php } //end if user admin
                         ?>
                         <hr />
 
