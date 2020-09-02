@@ -157,17 +157,20 @@ class Exportpdf extends CI_Controller
         $pdf->writeHTMLCell(0, 0, '', '', $html, 0, 0, 0, true, 'R', true);
 
         if ($form['attachments'] != '') {
-            $attachments_tag = '';
+            $attachments_tag = '<b>קבצים נוספים להורדה:</b>';
             $form_att_arr = explode(',', $form['attachments']);
+            $pdf->writeHTMLCell("", "", 10, 215, $attachments_tag, 0, 0, 0, true, 'R', true);
+            $attachments_tag ='<ol>';
             foreach ($form_att_arr as $att) {
-                $attachments_tag .= '<a target="_blank" href="http://'.$_SERVER['SERVER_NAME'].'/'.$att.'" dir="ltr">'.$att.'</a><br/>';
+                $attachments_tag .= '<li><a target="_blank" href="http://'.$_SERVER['SERVER_NAME'].'/'.$att.'" dir="ltr">'.$att.'</a></li>';
             }
-            $pdf->writeHTMLCell("", "", 40, 220, $attachments_tag, 0, 0, 0, true, 'L', true);
+            $attachments_tag .='</ol>';
+            $pdf->writeHTMLCell("", "", 10, 220, $attachments_tag, 0, 0, 0, true, 'L', true);
         }
 
         if ($form['client_sign'] != '') {
             $html = '<b>חתימת לקוח:</b>';
-            $pdf->writeHTMLCell('', '', 40, 250, $html, 0, 0, 0, true, 'R', true);
+            $pdf->writeHTMLCell('', '', 10, 250, $html, 0, 0, 0, true, 'R', true);
             //write sign border
             $pdf->writeHTMLCell(60, 25, 75, 240, '', 1, 0, 0, true, 'R', true);
             $pdf->SetXY(130, 245);
