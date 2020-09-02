@@ -156,6 +156,15 @@ class Exportpdf extends CI_Controller
         $html .= '</table>';
         $pdf->writeHTMLCell(0, 0, '', '', $html, 0, 0, 0, true, 'R', true);
 
+        if ($form['attachments'] != '') {
+            $attachments_tag = '';
+            $form_att_arr = explode(',', $form['attachments']);
+            foreach ($form_att_arr as $att) {
+                $attachments_tag .= '<a target="_blank" href="http://'.$_SERVER['SERVER_NAME'].'/'.$att.'" dir="ltr">'.$att.'</a><br/>';
+            }
+            $pdf->writeHTMLCell("", "", 40, 220, $attachments_tag, 0, 0, 0, true, 'L', true);
+        }
+
         if ($form['client_sign'] != '') {
             $html = '<b>חתימת לקוח:</b>';
             $pdf->writeHTMLCell('', '', 40, 250, $html, 0, 0, 0, true, 'R', true);
