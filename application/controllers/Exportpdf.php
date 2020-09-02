@@ -225,7 +225,7 @@ class Exportpdf extends CI_Controller
         $sender = 'yossigorbov@garin.co.il';
         if ($user['email'] != '') {
             //$recipients = $user['email'] . ',' . $recipients;
-            if($recipients==''){
+            if ($recipients == '') {
                 $recipients = $user['email'];
             }
             $this->load->library('email');
@@ -261,9 +261,14 @@ class Exportpdf extends CI_Controller
         $this->email->clear(TRUE);
     }
 
+
+    public static function hebrew_fix($FieldName, &$CurrVal, &$CurrPrm)
+    {
+        $CurrVal = '</w:t></w:r><w:r><w:rPr><w:rFonts w:ascii="Arial" w:hAnsi="Arial" w:cs="Arial"/><w:rtl/></w:rPr><w:t>' . $CurrVal . '</w:t></w:r><w:r><w:t>';
+    }
+
     public function export_doc($id = '')
     {
-        global $CurrVal;
         if ($id != '') {
             $form = $this->Production_model->getForm($id);
 
@@ -275,10 +280,6 @@ class Exportpdf extends CI_Controller
 
             $template = './Uploads/DOC/' . $form[0]['company'] . '.docx';
             $TBS->LoadTemplate($template, OPENTBS_ALREADY_UTF8);
-            $list = array(
-                array('date' => '2013-10-13', 'thin' => 156, 'havy' => 128, 'total' => 284)
-            );
-            $CurrVal = '</w:t></w:r><w:r><w:rPr><w:rFonts w:ascii="Arial" w:hAnsi="Arial" w:cs="Arial"/><w:rtl/></w:rPr><w:t>' . $CurrVal . '</w:t></w:r><w:r><w:t>';
             $TBS->MergeBlock('c', $form);
             $save_as = (isset($_POST['save_as']) && (trim($_POST['save_as']) !== '') && ($_SERVER['SERVER_NAME'] == 'localhost')) ? trim($_POST['save_as']) : '';
             $output_file_name = str_replace('.', '_' . date('Y-m-d') . $save_as . '.', $template);
