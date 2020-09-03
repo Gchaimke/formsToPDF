@@ -49,7 +49,7 @@ if (isset($this->session->userdata['logged_in'])) {
 							<th scope="col">תאריך</th>
 							<th scope="col">יוצר</th>
 							<th scope="col" class="mobile-hide">מספר לקוח</th>
-							<th scope="col" class="mobile-hide">שם הלקוח</th>
+							<th scope="col">שם הלקוח</th>
 							<th scope="col" class="mobile-hide">מיקום</th>
 							<th scope="col" class="mobile-hide">סוג תקלה</th>
 							<th scope="col" class="mobile-hide">חברה נותנת שירות</th>
@@ -81,11 +81,11 @@ if (isset($this->session->userdata['logged_in'])) {
 									}
 								} ?>
 								<td class="mobile-hide align-middle"><?php echo $data->client_num ?></td>
-								<td class="mobile-hide align-middle"><?php echo $data->client_name ?></td>
+								<td class="align-middle"><?php echo $data->client_name ?></td>
 								<td class="mobile-hide align-middle"><?php echo $data->place ?></td>
 								<td class="mobile-hide align-middle"><?php echo $data->issue_kind ?></td>
 								<td class="mobile-hide align-middle"><?php echo $data->company ?></td>
-								<td class="mobile-hide align-middle"><?php echo $data->price ?></td>
+								<td class="align-middle"><?php echo $data->price ?></td>
 								<td><a href='/production/view_form/<?php echo $data->id ?>' class='btn btn-outline-info'><i class="fa fa-edit"></i></a></td>
 								<?php if ($user_role == "Admin") {
 									echo "<td><button id='" . $data->id . "' class='btn btn-outline-danger' onclick='deleteForm(this.id)'><i class='fa fa-trash'></i></button></td>";
