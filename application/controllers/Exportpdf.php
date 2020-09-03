@@ -168,29 +168,18 @@ class Exportpdf extends CI_Controller
 
         if ($form['client_sign'] != '') {
             $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:14px;">חתימת לקוח: </td>';
-            //$pdf->writeHTMLCell('', '', 10, 250, $html, 0, 0, 0, true, 'R', true);
-            //write sign border
-            //$pdf->writeHTMLCell(60, 25, 75, 240, '', 1, 0, 0, true, 'R', true);
-            //$pdf->SetXY(130, 245);
             $imgdata = base64_decode($form['client_sign']);
             $img_base64_encoded = "data:image/png;base64," . $form['client_sign'];
             $imageContent = file_get_contents($img_base64_encoded);
             $path = tempnam(sys_get_temp_dir(), 'prefix');
             file_put_contents($path, $imageContent);
-
             if ($imgdata != '') {
-                //$pdf->Image('@' . $imgdata, '', '', '', 15, '', '', 'T', false, 150, '', false, false, 0, false, false, false);
                 $html .= '<td><div style="position:relative;text-align:left;left:0;"><img  style="width:200px;" src="' . $path . '" alt="client_sign"/></div></td></tr>';
-                //$html .= "data:image/png;base64,".$form['client_sign'];
             }
         }
 
         $html .= '</table>';
         $pdf->writeHTMLCell(0, 0, '', '', $html, 0, 0, 0, true, 'R', true);
-
-
-
-
 
         if ($send_email) {
             define('UPLOAD_DIR',  FCPATH . '/Uploads/PDF/');
