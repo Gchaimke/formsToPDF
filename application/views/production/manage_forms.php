@@ -53,6 +53,7 @@ if (isset($this->session->userdata['logged_in'])) {
 							<th scope="col" class="mobile-hide">מיקום</th>
 							<th scope="col" class="mobile-hide">סוג תקלה</th>
 							<th scope="col" class="mobile-hide">חברה נותנת שירות</th>
+							<th scope="col">מחיר</th>
 							<th scope="col">ערוך </th>
 							<?php if ($user_role == "Admin") {
 								echo '<th scope="col">מחק</th>';
@@ -84,6 +85,7 @@ if (isset($this->session->userdata['logged_in'])) {
 								<td class="mobile-hide align-middle"><?php echo $data->place ?></td>
 								<td class="mobile-hide align-middle"><?php echo $data->issue_kind ?></td>
 								<td class="mobile-hide align-middle"><?php echo $data->company ?></td>
+								<td class="mobile-hide align-middle"><?php echo $data->price ?></td>
 								<td><a href='/production/view_form/<?php echo $data->id ?>' class='btn btn-outline-info'><i class="fa fa-edit"></i></a></td>
 								<?php if ($user_role == "Admin") {
 									echo "<td><button id='" . $data->id . "' class='btn btn-outline-danger' onclick='deleteForm(this.id)'><i class='fa fa-trash'></i></button></td>";
