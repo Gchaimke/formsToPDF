@@ -175,10 +175,10 @@ class Exportpdf extends CI_Controller
             $imgdata = base64_decode($form['client_sign']);
             $img_base64_encoded = "data:image/png;base64," . $form['client_sign'];
             $imageContent = file_get_contents($img_base64_encoded);
-            $path = tempnam(TMP_DIR, 'prefix');
-            file_put_contents($path, $imageContent);
+            $tmp_image = tempnam(TMP_DIR, 'prefix');
+            file_put_contents($tmp_image, $imageContent);
             if ($imgdata != '') {
-                $html .= '<td><div style="position:relative;text-align:left;left:0;"><img  style="width:200px;" src="' . $path . '" alt="client_sign"/></div></td></tr>';
+                $html .= '<td><div style="position:relative;text-align:left;left:0;"><img  style="width:200px;" src="' . $tmp_image . '" alt="client_sign"/></div></td></tr>';
             }
         }
 
@@ -208,6 +208,8 @@ class Exportpdf extends CI_Controller
         } else {
             $pdf->Output($file_name . '.pdf', 'I');
         }
+
+        unlink($tmp_image); //remove temp sign image
     }
 
     function hebrewFix($string)
