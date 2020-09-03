@@ -167,11 +167,15 @@ class Exportpdf extends CI_Controller
         }
 
         if ($form['client_sign'] != '') {
+            define('TMP_DIR',  FCPATH . '/Uploads/tmp/');
+            if (!file_exists(TMP_DIR)) {
+                mkdir(TMP_DIR, 0770, true);
+            }
             $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:14px;">חתימת לקוח: </td>';
             $imgdata = base64_decode($form['client_sign']);
             $img_base64_encoded = "data:image/png;base64," . $form['client_sign'];
             $imageContent = file_get_contents($img_base64_encoded);
-            $path = tempnam(sys_get_temp_dir(), 'prefix');
+            $path = tempnam(TMP_DIR, 'prefix');
             file_put_contents($path, $imageContent);
             if ($imgdata != '') {
                 $html .= '<td><div style="position:relative;text-align:left;left:0;"><img  style="width:200px;" src="' . $path . '" alt="client_sign"/></div></td></tr>';
