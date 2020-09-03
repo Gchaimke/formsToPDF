@@ -156,7 +156,7 @@ class Exportpdf extends CI_Controller
 
         if ($form['attachments'] != '') {
             $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:14px;">קבצים נוספים להורדה: </td>';
-            $html .='<td style="text-align:left;">';
+            $html .= '<td style="text-align:left;">';
             $form_att_arr = explode(',', $form['attachments']);
             foreach ($form_att_arr as $att) {
                 $attachment_name_array = explode('/', $att);
@@ -288,31 +288,38 @@ class Exportpdf extends CI_Controller
 
     public function export_doc($id = '')
     {
+
         if ($id != '') {
             $form = $this->Production_model->getForm($id);
-
             include_once APPPATH . 'third_party/OpenTBS/tbs_plugin_opentbs.php';
             include_once APPPATH . 'third_party/OpenTBS/tbs_class.php';
-
-            $TBS = new clsTinyButStrong;
-            $TBS->Plugin(TBS_INSTALL, OPENTBS_PLUGIN);
-
             $template = './Uploads/DOC/' . $form[0]['company'] . '.docx';
-            $TBS->LoadTemplate($template, OPENTBS_ALREADY_UTF8);
-            $TBS->MergeBlock('c', $form);
-            $save_as = (isset($_POST['save_as']) && (trim($_POST['save_as']) !== '') && ($_SERVER['SERVER_NAME'] == 'localhost')) ? trim($_POST['save_as']) : '';
-            $output_file_name = str_replace('.', '_' . date('Y-m-d') . $save_as . '.', $template);
-            if ($save_as === '') {
-                // Output the result as a downloadable file (only streaming, no data saved in the server)
-                $TBS->Show(OPENTBS_DOWNLOAD, $output_file_name); // Also merges all [onshow] automatic fields.
-                // Be sure that no more output is done, otherwise the download file is corrupted with extra data.
-                exit();
-            } else {
-                // Output the result as a file on the server.
-                $TBS->Show(OPENTBS_FILE, $output_file_name); // Also merges all [onshow] automatic fields.
-                // The script can continue.
-                exit("File [$output_file_name] has been created.");
+            if (!file_exists('./Uploads/DOC/')) {
+                mkdir('./Uploads/DOC/', 0770, true);
             }
+            if (!@file_exists($template)) {
+                copy('./assets/doc/template.docx', $template);
+            }
+                $TBS = new clsTinyButStrong;
+                $TBS->Plugin(TBS_INSTALL, OPENTBS_PLUGIN);
+
+
+                $TBS->LoadTemplate($template, OPENTBS_ALREADY_UTF8);
+                $TBS->MergeBlock('c', $form);
+                $save_as = (isset($_POST['save_as']) && (trim($_POST['save_as']) !== '') && ($_SERVER['SERVER_NAME'] == 'localhost')) ? trim($_POST['save_as']) : '';
+                $output_file_name = str_replace('.', '_' . date('Y-m-d') . $save_as . '.', $template);
+                if ($save_as === '') {
+                    // Output the result as a downloadable file (only streaming, no data saved in the server)
+                    $TBS->Show(OPENTBS_DOWNLOAD, $output_file_name); // Also merges all [onshow] automatic fields.
+                    // Be sure that no more output is done, otherwise the download file is corrupted with extra data.
+                    exit();
+                } else {
+                    // Output the result as a file on the server.
+                    $TBS->Show(OPENTBS_FILE, $output_file_name); // Also merges all [onshow] automatic fields.
+                    // The script can continue.
+                    exit("File [$output_file_name] has been created.");
+                }
+            
         } else {
             echo "Form not Found";
         }
