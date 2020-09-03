@@ -96,89 +96,101 @@ class Exportpdf extends CI_Controller
         $pdf->SetY(40);
         $html = '<table style="width:950px" cellpadding="5" cellspacing="1" border="1">
         <tr>
-        <td style="width:160px;font-weight:bolder;font-size:11;">תאריך:</td>
+        <td style="width:160px;font-weight:bolder;font-size:14px;">תאריך:</td>
         <td style="direction:rtl;">' . $form_date  . '</td>
         </tr><tr>
-        <td style="width:160px;font-weight:bolder;font-size:11;">מס. לקוח:</td>
+        <td style="width:160px;font-weight:bolder;font-size:14px;">מס. לקוח:</td>
         <td>' . $form['client_num'] . '</td>
         </tr>';
         if ($form['issue_num'] != '') {
-            $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:11;">מס. פניה\תקלה:</td>
+            $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:14px;">מס. פניה\תקלה:</td>
             <td>' . $form['issue_num'] . '</td></tr>';
         }
         if ($form['client_name'] != '') {
-            $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:11;">שם לקוח: </td>
+            $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:14px;">שם לקוח: </td>
             <td>' . $form['client_name'] . '</td></tr>';
         }
         if ($form['issue_kind'] != '') {
-            $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:11;">סוג תקלה\ התקנה: </td>
+            $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:14px;">סוג תקלה\ התקנה: </td>
             <td>' . $form['issue_kind'] . '</td></tr>';
         }
         if ($form['place'] != '') {
-            $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:11;">מיקום</td>
+            $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:14px;">מיקום</td>
             <td>' . $form['place'] . '</td></tr>';
         }
-        $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:11;">שעת התחלה: </td>
+        $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:14px;">שעת התחלה: </td>
         <td>' . date('G:i', strtotime($form['start_time'])) . '</td></tr>
-        <tr><td style="width:160px;font-weight:bolder;font-size:11;">שעת סיום: </td>
+        <tr><td style="width:160px;font-weight:bolder;font-size:14px;">שעת סיום: </td>
         <td>' . date('G:i', strtotime($form['end_time'])) . '</td></tr>';
 
         if ($form['manager'] != '') {
-            $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:11;">אחראי</td>
+            $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:14px;">אחראי</td>
             <td>' . $form['manager'] . '</td></tr>';
         }
         if ($form['contact_name'] != '') {
-            $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:11;">איש קשר: </td>
+            $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:14px;">איש קשר: </td>
             <td>' . $form['contact_name'] . '</td></tr>';
         }
         if ($form['activity_text'] != '') {
-            $html .= ' <tr><td style="width:160px;font-weight:bolder;font-size:11;">תיאור תקלה\ התקנה: </td>
+            $html .= ' <tr><td style="width:160px;font-weight:bolder;font-size:14px;">תיאור תקלה\ התקנה: </td>
             <td>' . $this->hebrewFix($form['activity_text']) . '</td></tr>';
         }
         if ($form['checking_text'] != '') {
-            $html .= ' <tr><td style="width:160px;font-weight:bolder;font-size:11;">תוצאות הבדיקה: </td>
+            $html .= ' <tr><td style="width:160px;font-weight:bolder;font-size:14px;">תוצאות הבדיקה: </td>
             <td>' . $this->hebrewFix($form['checking_text']) . '</td></tr>';
         }
         if ($form['summary_text'] != '') {
-            $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:11;">סיכום</td>
+            $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:14px;">סיכום</td>
             <td>' . $this->hebrewFix($form['summary_text']) . '</td></tr>';
         }
         if ($form['remarks_text'] != '') {
-            $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:11;">הערות: </td>
+            $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:14px;">הערות: </td>
             <td>' . $this->hebrewFix($form['remarks_text']) . '</td></tr>';
         }
 
         if ($form['recommendations_text'] != '') {
-            $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:11;">המלצות: </td>
+            $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:14px;">המלצות: </td>
             <td>' . $this->hebrewFix($form['recommendations_text']) . '</td>
             </tr>';
         }
-        $html .= '</table>';
-        $pdf->writeHTMLCell(0, 0, '', '', $html, 0, 0, 0, true, 'R', true);
 
         if ($form['attachments'] != '') {
-            $attachments_tag = '<b>קבצים נוספים להורדה:</b>';
+            $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:14px;">קבצים נוספים להורדה: </td>';
+            $html .='<td style="text-align:left;">';
             $form_att_arr = explode(',', $form['attachments']);
-            $pdf->writeHTMLCell("", "", 10, 215, $attachments_tag, 0, 0, 0, true, 'R', true);
-            $attachments_tag ='<ol>';
             foreach ($form_att_arr as $att) {
-                $attachments_tag .= '<li><a target="_blank" href="http://'.$_SERVER['SERVER_NAME'].'/'.$att.'" dir="ltr">'.$att.'</a></li>';
+                $attachment_name_array = explode('/', $att);
+                $attachment_name = end($attachment_name_array); //get last array element
+                $html .= '<a target="_blank" href="http://' . $_SERVER['SERVER_NAME'] . '/' . $att . '" dir="ltr">' . $attachment_name . '</a><br/>';
             }
-            $attachments_tag .='</ol>';
-            $pdf->writeHTMLCell("", "", 10, 220, $attachments_tag, 0, 0, 0, true, 'L', true);
+            $html .= '</td></tr>';
         }
 
         if ($form['client_sign'] != '') {
-            $html = '<b>חתימת לקוח:</b>';
-            $pdf->writeHTMLCell('', '', 10, 250, $html, 0, 0, 0, true, 'R', true);
+            $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:14px;">חתימת לקוח: </td>';
+            //$pdf->writeHTMLCell('', '', 10, 250, $html, 0, 0, 0, true, 'R', true);
             //write sign border
-            $pdf->writeHTMLCell(60, 25, 75, 240, '', 1, 0, 0, true, 'R', true);
-            $pdf->SetXY(130, 245);
+            //$pdf->writeHTMLCell(60, 25, 75, 240, '', 1, 0, 0, true, 'R', true);
+            //$pdf->SetXY(130, 245);
             $imgdata = base64_decode($form['client_sign']);
+            $img_base64_encoded = "data:image/png;base64," . $form['client_sign'];
+            $imageContent = file_get_contents($img_base64_encoded);
+            $path = tempnam(sys_get_temp_dir(), 'prefix');
+            file_put_contents($path, $imageContent);
+
             if ($imgdata != '') {
-                $pdf->Image('@' . $imgdata, '', '', '', 15, '', '', 'T', false, 150, '', false, false, 0, false, false, false);
+                //$pdf->Image('@' . $imgdata, '', '', '', 15, '', '', 'T', false, 150, '', false, false, 0, false, false, false);
+                $html .= '<td><div style="position:relative;text-align:left;left:0;"><img  style="width:200px;" src="' . $path . '" alt="client_sign"/></div></td></tr>';
+                //$html .= "data:image/png;base64,".$form['client_sign'];
             }
         }
+
+        $html .= '</table>';
+        $pdf->writeHTMLCell(0, 0, '', '', $html, 0, 0, 0, true, 'R', true);
+
+
+
+
 
         if ($send_email) {
             define('UPLOAD_DIR',  FCPATH . '/Uploads/PDF/');
@@ -341,7 +353,7 @@ class MYPDF extends TCPDF
     // Page footer
     public function Footer()
     {
-        $cur_y = $this->y - 15;
+        $cur_y = $this->y - 12;
         $this->footer_line_color = array(0, 0, 0);
         $this->footer_text_color = array(0, 0, 0);
         // footer text
@@ -349,12 +361,12 @@ class MYPDF extends TCPDF
         //set style for cell border
         $this->SetAlpha(0.6);
         $this->SetY($cur_y);
-        $line_width = (0.85 / $this->k);
+        $line_width = (0.35 / $this->k);
         $this->SetLineStyle(array('width' => $line_width, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => $this->footer_line_color));
-        $this->SetFont('dejavusans', '', 10, '', true);
+        $this->SetFont('dejavusans', '', 8, '', true);
 
         $this->SetTextColorArray($this->footer_text_color);
-        $this->SetY($cur_y - 3);
+        $this->SetY($cur_y + 1);
         //Print page number
         $this->SetX($this->original_rMargin);
         $this->MultiCell(180, 15, $this->footer, 'T', 'C', 0, 1, '', '', true);
