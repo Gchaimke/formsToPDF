@@ -208,8 +208,9 @@ class Exportpdf extends CI_Controller
         } else {
             $pdf->Output($file_name . '.pdf', 'I');
         }
-
-        unlink($tmp_image); //remove temp sign image
+        if (file_exists($tmp_image)) {
+            unlink($tmp_image);
+        }
     }
 
     function hebrewFix($string)
