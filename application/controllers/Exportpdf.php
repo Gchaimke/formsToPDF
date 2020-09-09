@@ -208,7 +208,7 @@ class Exportpdf extends CI_Controller
         } else {
             $pdf->Output($file_name . '.pdf', 'I');
         }
-        if (file_exists($tmp_image)) {
+        if(isset($tmp_image) AND file_exists($tmp_image)){
             unlink($tmp_image);
         }
     }
