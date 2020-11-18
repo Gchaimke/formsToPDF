@@ -277,8 +277,9 @@
                   url: $('#new-form').attr('action'),
                   data: formData
             }).done(function(response) {
+                  console.log(response);
                   if ($.isNumeric(response)) {
-                        window.location.href = "/production/manage_forms/";
+                        window.location.href = "/production/view_form/" + response;
                   } else {
                         $('#form-messages').addClass('alert-danger');
                         // Set the message text.
@@ -292,14 +293,14 @@
       })
 
       function SendEmail(id) {
-            //var r = confirm("לשלוח עם קבצים נוספים?");
             var ans = 'no';
+            //var r = confirm("לשלוח עם קבצים נוספים?");
             //if (r == true) {
             //      var ans = 'yes';
             //} else {
             //      ans = 'no';
             //}
-            var newWindow = window.open("", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=600,height=800");
+            //var newWindow = window.open("", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=600,height=800");
             // Make sure that the formMessages div has the 'success' class.
             $('#form-messages').removeClass('alert-danger').addClass('alert-info');
             // Set the message text.
@@ -314,9 +315,9 @@
                   $('#form-messages').html(o).fadeIn(1000).delay(5000).fadeOut(1000);
                   setTimeout(function() {
                         //window.location.href = "/exportpdf/create/" + id;
-                        window.location.href = "/production/manage_forms/";
+                        window.location.href = "/production/view_form/" + id;
                   }, 3000); //will call the function after 2 secs.
-                  newWindow.location.href = "/exportpdf/create/" + id;
+                  //newWindow.location.href = "/exportpdf/create/" + id;
             }).fail(function(o) {
                   $('#form-messages').removeClass('alert-info').addClass('alert-danger');
                   // Set the message text.

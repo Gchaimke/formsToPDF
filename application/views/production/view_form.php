@@ -385,13 +385,13 @@ if (isset($users)) {
       }
 
       function SendEmail() {
-            var r = confirm("לשלוח עם קבצים נוספים?");
-            var ans = false;
-            if (r == true) {
-                  ans = 'yes';
-            } else {
-                  ans = 'no';
-            }
+            var ans = 'no';
+            //var r = confirm("לשלוח עם קבצים נוספים?");
+            //if (r == true) {
+            //      var ans = 'yes';
+            //} else {
+            //      ans = 'no';
+            //}
             // Make sure that the formMessages div has the 'success' class.
             $('#form-messages').addClass('alert-info');
             // Set the message text.
