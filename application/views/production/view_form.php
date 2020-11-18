@@ -2,6 +2,15 @@
 if (isset($this->session->userdata['logged_in'])) {
       $user_role = $this->session->userdata['logged_in']['role'];
       $user_name = $this->session->userdata['logged_in']['name'];
+      $user_id = $this->session->userdata['logged_in']['id'];
+}
+if (isset($users)) {
+      foreach ($users as $user) {
+            if ($user['id'] == $user_id) {
+                  $user_email = $user['email'];
+                  $emails_arr = preg_split('/\r\n|[\r\n]/', $user['email_to']);
+            }
+      }
 }
 ?>
 <script src="<?php echo base_url('assets/js/jQUpload/jquery.ui.widget.js'); ?>"></script>
@@ -76,21 +85,26 @@ if (isset($this->session->userdata['logged_in'])) {
                                           <div class="input-group-prepend">
                                                 <div class="input-group-text">יוצר</div>
                                           </div>
-                                          <select id='creator_id' class='form-control' name='creator_id' <?php if ($user_role != "Admin") echo 'disabled' ?>>
-                                                <?php if (isset($users)) {
-                                                      foreach ($users as $user) {
-                                                            if ($user['id'] == $form_data['creator_id']) {
-                                                                  $emails_arr = preg_split('/\r\n|[\r\n]/', $user['email_to']);
-                                                                  $user_email = $user['email'];
-                                                                  echo '<option value="' . $user['id'] . '" selected>' . $user['view_name'] . '</option>';
-                                                            } else {
-                                                                  echo '<option value="' . $user['id'] . '">' . $user['view_name'] . '</option>';
+                                          <?php if ($user_role != "Admin") : ?>
+                                                <input type="hidden" id='creator_id' name='creator_id' value="<?php echo $form_data['creator_id'] ?>">
+                                                <input type='hidden' id='creator_name' name='creator_name' value="<?php echo $form_data['creator_name'] ?>">
+                                                <div class='form-control'><?php echo $form_data['creator_name'] ?></div>
+                                          <?php else : ?>
+                                                <select id='creator_id' class='form-control' name='creator_id'>
+                                                      <?php if (isset($users)) {
+                                                            foreach ($users as $user) {
+                                                                  if ($user['id'] == $form_data['creator_id']) {
+                                                                        $user_email = $user['email'];
+                                                                        echo '<option value="' . $user['id'] . '" selected>' . $user['view_name'] . '</option>';
+                                                                  } else {
+                                                                        echo '<option value="' . $user['id'] . '" >' . $user['view_name'] . '</option>';
+                                                                  }
                                                             }
                                                       }
-                                                }
-                                                ?>
-                                          </select>
-                                          <input type='hidden' id='creator_name' class="form-control" name='creator_name' value="<?php echo $form_data['creator_name'] ?>">
+                                                      ?>
+                                                </select>
+                                                <input type='hidden' id='creator_name' class="form-control" name='creator_name' value="<?php echo $form_data['creator_name'] ?>">
+                                          <?php endif ?>
                                     </div>
                               </div>
                         </div>
@@ -226,7 +240,8 @@ if (isset($this->session->userdata['logged_in'])) {
                         <div class="form-group row" id="emails">
                               <div class="input-group mb-4">
                                     <label for="email_to" class="col-sm-2 col-form-label ">מכותבים:</label>
-                                    <?php $len = count($emails_arr);
+                                    <?php
+                                    $len = count($emails_arr);
                                     if ($len > 0 && $emails_arr[0] != '') {
                                           $firsthalf = array_slice($emails_arr, 0, $len / 2);
                                           $secondhalf = array_slice($emails_arr, $len / 2);
@@ -316,24 +331,18 @@ if (isset($this->session->userdata['logged_in'])) {
                                     }
                                     ?>
                               </div>
-                              <?php if ($user_role == "Admin") {
-                                    echo '<label class="col-sm-2 col-form-label ">חתימת לקוח חדשה:</label>
+                              <label class="col-sm-2 col-form-label ">חתימת לקוח חדשה:</label>
                               <div class="col-sm-4">
                                     <div id="sketchpadapp">
                                           <canvas id="sign-canvas" style="border: 1px solid red;"></canvas>
                                     </div>
                                     <input type="text" id="client_sign" name="client_sign" hidden>
                                     <a href="#sign-canvas" class="btn btn-outline-danger btn-sm" onclick="clearCanvas()">נקה חתימה</a>
-                              </div>';
-                              } ?>
+                              </div>
                         </div>
                         <hr />
 
-                        <?php if ($user_role == "Admin") {
-                              echo "<input type='submit' id='save_btn' class='btn btn-danger' name='submit' value='עדכן דוח'>";
-                        }
-                        ?>
-
+                        <input type='submit' id='save_btn' class='btn btn-danger' name='submit' value='עדכן דוח'>
                         <a target="_blank" class="btn btn-info" href="/exportpdf/create/<?php echo $form_data['id'] ?>">הצג PDF</a>
                         <a target="_blank" class="btn btn-info" href="/exportpdf/export_doc/<?php echo $form_data['id'] ?>">הורד DOC</a>
                         <a class="btn btn-success" href="#" onclick="SendEmail()">שלח דוח</a>
