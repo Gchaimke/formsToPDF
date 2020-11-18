@@ -358,6 +358,7 @@ if (isset($users)) {
 <script>
       $(document).ready(function() {
             //startup scripts here
+            startTimer();
             if ($("#sign-canvas").length && $("#client_sign").length) {
                   $("#sign-canvas").jqScribble();
                   $("#sign-canvas").data('jqScribble').update({
@@ -410,4 +411,10 @@ if (isset($users)) {
                   $('#form-messages').html(o).fadeIn(1000);
             });
       }
+
+      function startTimer() { 
+            timer = setInterval(function() {  
+                  $('#save_btn').click();
+            }, 60000); 
+        } 
 </script>
