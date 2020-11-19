@@ -120,6 +120,10 @@ td.td_file_manager {
     max-width: 150px;
 }
 
+div#show-log {
+    direction: ltr;
+}
+
 img#logo_img {
     max-height: 200px;
 }

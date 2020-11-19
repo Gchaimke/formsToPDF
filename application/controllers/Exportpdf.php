@@ -201,14 +201,14 @@ class Exportpdf extends CI_Controller
                         array_push($attachments, $att);
                     }
                 }
-                $this->SendEmail($attachments, $file_name, $form['email_to']);
+                $this->SendEmail($attachments, $file_name, $form['email_to'], $id);
             } else {
                 print_r('Could not trace file path');
             }
         } else {
             $pdf->Output($file_name . '.pdf', 'I');
         }
-        if(isset($tmp_image) AND file_exists($tmp_image)){
+        if (isset($tmp_image) and file_exists($tmp_image)) {
             unlink($tmp_image);
         }
     }
@@ -238,7 +238,7 @@ class Exportpdf extends CI_Controller
         return $out;
     }
 
-    function SendEmail($attachments, $file_name, $recipients)
+    function SendEmail($attachments, $file_name, $recipients, $id = 1)
     {
         $user =  $this->Users_model->getUser($this->session->userdata['logged_in']['id'])[0];
         $settings = $this->Admin_model->getSettings()[0];
@@ -271,9 +271,14 @@ class Exportpdf extends CI_Controller
             }
 
             if ($this->email->send()) {
-                print_r('מייל נשלח ל:  ' . $recipients . " בהצלחה!");
+                $msg = "מייל נשלח ל:  " . $recipients . " בהצלחה!";
+                $this->log_data($msg, $id);
+                print_r($msg);
             } else {
-                print_r($this->email->print_debugger());
+                $error = $this->email->print_debugger();
+                $msg = strtok($error, '.') ;
+                $this->log_data($msg, $id, 4);
+                print_r($msg);
             }
         } else {
             print_r('לא יכול לשלוח מייל, דואר משתמש לא מוגדר או אין רשימת תפוצה. ');
@@ -281,6 +286,31 @@ class Exportpdf extends CI_Controller
         $this->email->clear(TRUE);
     }
 
+    public function log_data($msg, $file_id = '', $level = 0)
+    {
+        if (!file_exists('application/logs/admin')) {
+            mkdir('application/logs/admin', 0770, true);
+        }
+
+        $level_arr = array('INFO', 'CREATE', 'TRASH', 'DELETE', 'ERROR');
+        $user = $this->session->userdata['logged_in']['name'];
+
+        $file_name = date("m-d-Y");
+        $log_file = APPPATH . "logs/admin/" . $file_name . ".log";
+        $fp = fopen($log_file, 'a');
+        fwrite($fp, $level_arr[$level] . " - " . date("H:i:s") . " --> " . $user . " - " . $msg . PHP_EOL);
+        fclose($fp);
+
+        if ($file_id != '') {
+            if (!file_exists('Uploads/logs')) {
+                mkdir('Uploads/logs', 0770, true);
+            }
+            $log_file = "Uploads/logs/" . $file_id . ".log";
+            $fp = fopen($log_file, 'a');
+            fwrite($fp, $level_arr[$level] . " - " . date("H:i:s") . " --> " . $user . " - " . $msg . PHP_EOL);
+            fclose($fp);
+        }
+    }
 
     public static function hebrew_fix($FieldName, &$CurrVal, &$CurrPrm)
     {
@@ -301,26 +331,25 @@ class Exportpdf extends CI_Controller
             if (!@file_exists($template)) {
                 copy('./assets/doc/template.docx', $template);
             }
-                $TBS = new clsTinyButStrong;
-                $TBS->Plugin(TBS_INSTALL, OPENTBS_PLUGIN);
+            $TBS = new clsTinyButStrong;
+            $TBS->Plugin(TBS_INSTALL, OPENTBS_PLUGIN);
 
 
-                $TBS->LoadTemplate($template, OPENTBS_ALREADY_UTF8);
-                $TBS->MergeBlock('c', $form);
-                $save_as = (isset($_POST['save_as']) && (trim($_POST['save_as']) !== '') && ($_SERVER['SERVER_NAME'] == 'localhost')) ? trim($_POST['save_as']) : '';
-                $output_file_name = str_replace('.', '_' . date('Y-m-d') . $save_as . '.', $template);
-                if ($save_as === '') {
-                    // Output the result as a downloadable file (only streaming, no data saved in the server)
-                    $TBS->Show(OPENTBS_DOWNLOAD, $output_file_name); // Also merges all [onshow] automatic fields.
-                    // Be sure that no more output is done, otherwise the download file is corrupted with extra data.
-                    exit();
-                } else {
-                    // Output the result as a file on the server.
-                    $TBS->Show(OPENTBS_FILE, $output_file_name); // Also merges all [onshow] automatic fields.
-                    // The script can continue.
-                    exit("File [$output_file_name] has been created.");
-                }
-            
+            $TBS->LoadTemplate($template, OPENTBS_ALREADY_UTF8);
+            $TBS->MergeBlock('c', $form);
+            $save_as = (isset($_POST['save_as']) && (trim($_POST['save_as']) !== '') && ($_SERVER['SERVER_NAME'] == 'localhost')) ? trim($_POST['save_as']) : '';
+            $output_file_name = str_replace('.', '_' . date('Y-m-d') . $save_as . '.', $template);
+            if ($save_as === '') {
+                // Output the result as a downloadable file (only streaming, no data saved in the server)
+                $TBS->Show(OPENTBS_DOWNLOAD, $output_file_name); // Also merges all [onshow] automatic fields.
+                // Be sure that no more output is done, otherwise the download file is corrupted with extra data.
+                exit();
+            } else {
+                // Output the result as a file on the server.
+                $TBS->Show(OPENTBS_FILE, $output_file_name); // Also merges all [onshow] automatic fields.
+                // The script can continue.
+                exit("File [$output_file_name] has been created.");
+            }
         } else {
             echo "Form not Found";
         }

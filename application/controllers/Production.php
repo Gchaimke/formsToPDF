@@ -89,9 +89,10 @@ class Production extends CI_Controller
                     $str = $this->cleanStr($str);
                 }
             }
-            $response =  $this->Production_model->add_form($data);
-            if ($response > 0 || $response) {
-                echo $response;
+            $id =  $this->Production_model->add_form($data);
+            if ($id > 0 || $id) {
+                $this->log_data(' יצר דוח ' . $id . ' לחברת ' . $this->input->post('company'), $id, 1);
+                echo $id;
             } else {
                 echo "דוח לא נשמר";
             }
@@ -174,7 +175,9 @@ class Production extends CI_Controller
             }
             $response =  $this->Production_model->update_form($data);
             if ($response) {
-                echo "דוח נשמר בהצלחה!";
+                $msg = ' דוח ' .  $this->input->post('id') . ' נשמר בהצלחה! ';
+                $this->log_data($msg, $this->input->post('id'));
+                echo $msg;
             } else {
                 echo "אין אפשרות לשמור את הדוח! " . $this->input->post('id');
             }
@@ -306,23 +309,47 @@ class Production extends CI_Controller
                 echo ($attachment . " cannot be deleted due to an error");
             } else {
                 echo ($attachment . " has been deleted");
-                $this->log_data('deleted ' . $this->input->post('attachment'), 3);
+                $this->log_data('deleted ' . $this->input->post('attachment'), '', 3);
             }
         }
     }
 
-    public function log_data($msg, $level = 0)
+    public function log_data($msg, $file_id = '', $level = 0)
     {
         if (!file_exists('application/logs/admin')) {
             mkdir('application/logs/admin', 0770, true);
         }
-        $level_arr = array('INFO', 'CREATE', 'TRASH', 'DELETE');
+
+        $level_arr = array('INFO', 'CREATE', 'TRASH', 'DELETE', 'ERROR');
         $user = $this->session->userdata['logged_in']['name'];
-        $log_file = APPPATH . "logs/admin/" . date("m-d-Y") . ".log";
+
+        $file_name = date("m-d-Y");
+        $log_file = APPPATH . "logs/admin/" . $file_name . ".log";
         $fp = fopen($log_file, 'a');
         fwrite($fp, $level_arr[$level] . " - " . date("H:i:s") . " --> " . $user . " - " . $msg . PHP_EOL);
         fclose($fp);
+
+        if ($file_id != '') {
+            if (!file_exists('Uploads/logs')) {
+                mkdir('Uploads/logs', 0770, true);
+            }
+            $log_file = "Uploads/logs/" . $file_id . ".log";
+            $fp = fopen($log_file, 'a');
+            fwrite($fp, $level_arr[$level] . " - " . date("H:i:s") . " --> " . $user . " - " . $msg . PHP_EOL);
+            fclose($fp);
+        }
     }
+
+    public function get_log()
+	{
+        $this->form_validation->set_rules('id', 'id', 'trim|xss_clean');
+        $id = $this->input->post('id');
+        $file = 'Uploads/logs/'.$id.'.log';
+        if (!file_exists($file)) {
+            $this->log_data('Log created', $id, $level = 1);
+        }
+		echo file_get_contents($file);
+	}
 
     public function do_upload($folder = '')
     {
@@ -336,12 +363,12 @@ class Production extends CI_Controller
             'allowed_types' => '*',
             'max_size' => "2048000"
         );
-        $this->load->library('upload',$config);
+        $this->load->library('upload', $config);
         if ($this->upload->do_upload('files')) {
             $data = array('upload_data' => $this->upload->data());
             echo  $data['upload_data']["file_name"];
         } else {
-            $error = array('error' => $this->upload->display_errors()." ".var_dump($_FILES['files']['type']));
+            $error = array('error' => $this->upload->display_errors() . " " . var_dump($_FILES['files']['type']));
             print_r($error);
         }
     }
@@ -361,7 +388,7 @@ class Production extends CI_Controller
     function export_to($str = '1')
     {
         $file_date = date("Y");
-        $file_name = "froms_" . $str."-".$file_date . ".csv";
+        $file_name = "froms_" . $str . "-" . $file_date . ".csv";
         $data = $this->Production_model->searchFormByMonth($str);
         header('Content-Encoding: UTF-8');
         header("Content-type: text/csv; charset=UTF-8");
@@ -372,7 +399,7 @@ class Production extends CI_Controller
         echo "\xEF\xBB\xBF";
         $fp = fopen('php://output', 'w');
 
-        $tmp_arr = array(array('תאריך', 'יוצר', 'שם הלקוח', 'מיקום', 'סוג תקלה', 'חברה נותנת שירות', 'שעת התחלת', 'שעת סיום','הערות','מחיר'));
+        $tmp_arr = array(array('תאריך', 'יוצר', 'שם הלקוח', 'מיקום', 'סוג תקלה', 'חברה נותנת שירות', 'שעת התחלת', 'שעת סיום', 'הערות', 'מחיר'));
         foreach ($data as  $line) {
             array_push($tmp_arr, array(
                 $line['date'],

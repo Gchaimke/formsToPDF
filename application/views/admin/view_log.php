@@ -63,7 +63,7 @@ if (isset($this->session->userdata['logged_in'])) {
 				$("#serial-header").text(file);
 				log_arr.forEach(element => {
 					if (element != '') {
-						if (~element.indexOf("DELETE")) {
+						if (~element.indexOf("DELETE") || ~element.indexOf("ERROR")) {
 							$("#show-log .list-group").append("<li class='list-group-item list-group-item-danger'>" + element + "</li>");
 						} else if (~element.indexOf("TRASH")){
 							$("#show-log .list-group").append("<li class='list-group-item list-group-item-warning'>" + element + "</li>");

@@ -38,7 +38,16 @@ if (isset($users)) {
 </style>
 <div id="form-messages" class='alert hidden' role='alert'></div>
 <main role="main">
+
       <div class="jumbotron">
+            <a id="show_log_button" href='#' class='btn btn-outline-info' onclick="showLogFile('<?php echo $form_data[0]['id'] ?>')"><i class="fa fa-file"> Log</i></a>
+            <div id='show-log' style='display:none;'>
+		<div id="show-log-header">
+			<div id="serial-header"></div>Click here to move<button type="button" class="close" aria-label="Close"> <span aria-hidden="true">&times;</span></button>
+		</div>
+		<ul class="list-group list-group-flush">
+		</ul>
+	</div>
             <div class="container">
                   <center>
                         <h5>עדכון דוח </h5>
@@ -46,6 +55,7 @@ if (isset($users)) {
             </div>
       </div>
       <div class="container">
+
             <center>
                   <?php
                   if (validation_errors()) {
@@ -381,6 +391,10 @@ if (isset($users)) {
             });
       });
 
+      $('#show_csv').click(function() {
+            $('#csv_month').toggle();
+      });
+
       function clearCanvas() {
             $("#sign-canvas").data("jqScribble").clear();
       }
@@ -412,9 +426,34 @@ if (isset($users)) {
             });
       }
 
-      function startTimer() { 
-            timer = setInterval(function() {  
+      function startTimer() {
+            timer = setInterval(function() {
                   $('#save_btn').click();
-            }, 60000); 
-        } 
+            }, 60000);
+      }
+
+      function showLogFile(id) {
+            $.post("/production/get_log", {
+                  id: id
+            }).done(function(o) {
+                  if (o != '') {
+                        log_arr = o.split(/\r?\n/)
+                        $("#show-log").show();
+                        $("#show-log .list-group").empty();
+                        $("#serial-header").text(id);
+                        log_arr.forEach(element => {
+                              if (element != '') {
+                                    if (~element.indexOf("DELETE") || ~element.indexOf("ERROR")) {
+                                          $("#show-log .list-group").append("<li class='list-group-item list-group-item-danger'>" + element + "</li>");
+                                    } else if (~element.indexOf("TRASH")) {
+                                          $("#show-log .list-group").append("<li class='list-group-item list-group-item-warning'>" + element + "</li>");
+                                    } else {
+                                          $("#show-log .list-group").append("<li class='list-group-item list-group-item-info'>" + element + "</li>");
+                                    }
+                              }
+                        });
+                  }
+            });
+
+      }
 </script>
