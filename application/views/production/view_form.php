@@ -40,14 +40,6 @@ if (isset($users)) {
 <main role="main">
 
       <div class="jumbotron">
-            <a id="show_log_button" href='#' class='btn btn-outline-info' onclick="showLogFile('<?php echo $form_data[0]['id'] ?>')"><i class="fa fa-file"> Log</i></a>
-            <div id='show-log' style='display:none;'>
-		<div id="show-log-header">
-			<div id="serial-header"></div>Click here to move<button type="button" class="close" aria-label="Close"> <span aria-hidden="true">&times;</span></button>
-		</div>
-		<ul class="list-group list-group-flush">
-		</ul>
-	</div>
             <div class="container">
                   <center>
                         <h5>עדכון דוח </h5>
@@ -255,11 +247,7 @@ if (isset($users)) {
                                     if ($len > 0 && $emails_arr[0] != '') {
                                           $firsthalf = array_slice($emails_arr, 0, $len / 2);
                                           $secondhalf = array_slice($emails_arr, $len / 2);
-                                          echo "<div class='col-sm-5'>
-                                                <div class='input-group-text'>
-                                                <input type='checkbox' value='$user_email'>
-                                                <label class='col-sm-2 col-form-label'>$user_email</label>
-                                                </div>";
+                                          echo "<div class='col-sm-5'>";                                                
                                           foreach ($firsthalf as $email) {
                                                 $checked = '';
                                                 if (strpos($form_data['email_to'], $email) !== false) {
@@ -356,6 +344,14 @@ if (isset($users)) {
                         <a target="_blank" class="btn btn-info" href="/exportpdf/create/<?php echo $form_data['id'] ?>">הצג PDF</a>
                         <a target="_blank" class="btn btn-info" href="/exportpdf/export_doc/<?php echo $form_data['id'] ?>">הורד DOC</a>
                         <a class="btn btn-success" href="#" onclick="SendEmail()">שלח דוח</a>
+                        <a id="show_log_button" href='#show_log_button' class='btn btn-outline-info' onclick="showLogFile('<?php echo $form_data['id'] ?>')"><i class="fa fa-file"> Log</i></a>
+                        <div id='show-log' style='display:none;'>
+                              <div id="show-log-header">
+                                    <div id="serial-header"></div>Email Log<button type="button" class="close" aria-label="Close"> <span aria-hidden="true">&times;</span></button>
+                              </div>
+                              <ul class="list-group list-group-flush">
+                              </ul>
+                        </div>
                         <?php echo form_close(); ?>
 
                   <?php } else {

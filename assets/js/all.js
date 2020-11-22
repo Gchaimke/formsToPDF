@@ -1,4 +1,5 @@
 var count = 0;
+var autosave = false;
 function showLog(log_data, serial) {
     if (log_data != '') {
         log_arr = log_data.split(';')
@@ -173,6 +174,7 @@ function saveSign() {
 
 $('#ajax-form').submit(function (event) {
     //Check if sign canvas exists on page
+    var reload = false;
     if ($("#sign-canvas").length && $("#client_sign").length) {
         saveSign();
     }
@@ -184,13 +186,15 @@ $('#ajax-form').submit(function (event) {
         url: $('#ajax-form').attr('action'),
         data: formData
     }).done(function (response) {
-        // Make sure that the formMessages div has the 'success' class.
-        $('#form-messages').addClass('alert-success');
-        // Set the message text.
-        $('#form-messages').text(response).fadeIn(1000).delay(3000).fadeOut(5000); //show message
-        setTimeout(function () {
-            location.reload();
-        }, 3000); //will call the function after 2 secs.
+            // Make sure that the formMessages div has the 'success' class.
+            $('#form-messages').addClass('alert-success');
+            // Set the message text.
+            $('#form-messages').text(response).fadeIn(1000).delay(3000).fadeOut(1000); //show message
+            setTimeout(function () {
+                if (reload){
+                    location.reload();
+                }
+            }, 3000); //will call the function after 2 secs.
     }).fail(function () {
         // Make sure that the formMessages div has the 'error' class.
         $('#form-messages').addClass('alert-danger');

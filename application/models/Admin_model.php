@@ -230,16 +230,6 @@ class Admin_model extends CI_Model
         $this->dbforge->add_field($form);
         $this->dbforge->add_key('id', TRUE);
         $this->dbforge->create_table('forms');
-
-        $demoForm = array(
-            "date" => '2020-05-26',
-            "client_num" => '123456',
-            "issue_num" => '1225544',
-            "client_name" => 'Client',
-            "issue_kind" => 'issue',
-            "place" => 'Tel-Aviv'
-        );
-        $this->db->insert('forms', $demoForm);
     }
 
 

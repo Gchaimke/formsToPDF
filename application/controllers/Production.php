@@ -176,7 +176,7 @@ class Production extends CI_Controller
             $response =  $this->Production_model->update_form($data);
             if ($response) {
                 $msg = ' דוח ' .  $this->input->post('id') . ' נשמר בהצלחה! ';
-                $this->log_data($msg, $this->input->post('id'));
+                $this->log_data($msg);
                 echo $msg;
             } else {
                 echo "אין אפשרות לשמור את הדוח! " . $this->input->post('id');
