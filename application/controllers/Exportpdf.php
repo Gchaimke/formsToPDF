@@ -288,6 +288,7 @@ class Exportpdf extends CI_Controller
 
     public function log_data($msg, $file_id = '', $level = 0)
     {
+        date_default_timezone_set("Asia/Jerusalem");
         if (!file_exists('application/logs/admin')) {
             mkdir('application/logs/admin', 0770, true);
         }
