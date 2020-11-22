@@ -343,7 +343,7 @@ if (isset($users)) {
                         <input type='submit' id='save_btn' class='btn btn-danger' name='submit' value='עדכן דוח'>
                         <a target="_blank" class="btn btn-info" href="/exportpdf/create/<?php echo $form_data['id'] ?>">הצג PDF</a>
                         <a target="_blank" class="btn btn-info" href="/exportpdf/export_doc/<?php echo $form_data['id'] ?>">הורד DOC</a>
-                        <a class="btn btn-success" href="#" onclick="SendEmail()">שלח דוח</a>
+                        <a id="send_email" class="btn btn-success" href="#send_email" onclick="SendEmail()">שלח דוח</a>
                         <a id="show_log_button" href='#show_log_button' class='btn btn-outline-info' onclick="showLogFile('<?php echo $form_data['id'] ?>')"><i class="fa fa-file"> Log</i></a>
                         <div id='show-log' style='display:none;'>
                               <div id="show-log-header">
