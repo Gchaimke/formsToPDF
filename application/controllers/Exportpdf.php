@@ -221,7 +221,6 @@ class Exportpdf extends CI_Controller
         $string = str_replace($needles, $replacement, $string);
         $arr = explode($replacement, $string);
         $out = '';
-        $regex = '~(:\w+)~';
         foreach ($arr as $line) {
             $words = explode(" ", $line);
             foreach ($words as $word) {

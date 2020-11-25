@@ -319,11 +319,11 @@ if (isset($users)) {
                         ?>
                         <hr />
 
-                        <div class="form-group row">
+                        <div class="form-group row client-sign-form">
                               <label class="col-sm-2 col-form-label "> חתימת לקוח שמורה:</label>
                               <div class="col-sm-4">
                                     <?php if ($form_data['client_sign']) {
-                                          echo '<img src="data:image/png;base64, ' . $form_data["client_sign"] . '" />';
+                                          echo '<img class="sing-image" src="data:image/png;base64, ' . $form_data["client_sign"] . '" />';
                                     } else {
                                           echo 'אין חתימה';
                                     }
@@ -339,7 +339,7 @@ if (isset($users)) {
                               </div>
                         </div>
                         <hr />
-
+                        <div class="btn btn-info my-5" style="color: azure;" onclick=' $(".client-sign-form").toggle();'>חתימת לקוח</div>
                         <input type='submit' id='save_btn' class='btn btn-danger' name='submit' value='עדכן דוח'>
                         <a target="_blank" class="btn btn-info" href="/exportpdf/create/<?php echo $form_data['id'] ?>">הצג PDF</a>
                         <a target="_blank" class="btn btn-info" href="/exportpdf/export_doc/<?php echo $form_data['id'] ?>">הורד DOC</a>

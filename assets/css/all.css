@@ -251,6 +251,17 @@ div#form-messages {
     font-size: 1em;
 }
 
+.form-row.client-sign-form {
+    position: fixed;
+    top: 0;
+    z-index: 999999;
+    background: white;
+}
+
+.sing-image{
+    width: 100%;
+}
+
 @media (min-width: 320px) {
     .badge-info, .badge-danger {
         font-size: 12px;

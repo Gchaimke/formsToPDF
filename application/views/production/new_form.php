@@ -149,11 +149,7 @@
                         if ($len > 0 && $emails_arr[0] != '') {
                               $firsthalf = array_slice($emails_arr, 0, $len / 2);
                               $secondhalf = array_slice($emails_arr, $len / 2);
-                              echo "<div class='col-sm-5'>
-                              <div class='input-group-text'>
-                              <input type='checkbox' value='" . $user['email'] . "'>
-                              <label class='col-sm-2 col-form-label'>" . $user['email'] . "</label>
-                              </div>";
+                              echo "<div class='col-sm-5'>";
                               foreach ($firsthalf as $email) {
                                     echo "
                               <div class='input-group-text'>
@@ -206,19 +202,19 @@
                               </div>
                         </div>
                   </div>
-                  <hr />
-
-                  <div class="form-row">
+                  <div class="form-row client-sign-form" style="display: none;">
                         <div class="form-group col-md-12">
-                              <label for="client_sign" class=" col-form-label ">חתימת לקוח</label>
                               <div id="sketchpadapp">
                                     <canvas id="sign-canvas" style="border: 1px solid red;"></canvas>
                               </div>
                               <input type='text' id="client_sign" name='client_sign' hidden>
-                              <a href="#sign-canvas" class="btn btn-outline-danger btn-sm mt-3" onclick='$("#sign-canvas").data("jqScribble").clear();'>נקה חתימה</a>
+                              <div class="btn btn-outline-danger btn-sm mt-3" onclick='$("#sign-canvas").data("jqScribble").clear();'>נקה חתימה</div>
+                              <div class="btn btn-outline-success btn-sm mt-3" onclick=' $(".client-sign-form").toggle();'>שמור חתימה</div>
+                              <div class="btn btn-outline-danger btn-sm mt-3" onclick='$(".client-sign-form").toggle();$("#sign-canvas").data("jqScribble").clear();'>X</div>
                         </div>
                   </div>
                   <hr />
+                  <div class="btn btn-info my-5" style="color: azure;" onclick=' $(".client-sign-form").toggle();'>חתימת לקוח</div>
                   <input id='save_form' type='button' class="btn btn-success my-5" name='submit' value='שמור'>
                   <input type='submit' class="btn btn-danger my-5" name='submit' value='שמור ושלח לרשימת תפוצה'>
                   <?php echo form_close(); ?>
@@ -231,8 +227,8 @@
             //startup scripts here
             $("#sign-canvas").jqScribble();
             $("#sign-canvas").data('jqScribble').update({
-                  width: 300,
-                  height: 100
+                  width: $( '.container' ).width(),
+                  height: 300
             });
 
             var sum = '';
@@ -294,14 +290,6 @@
 
       function SendEmail(id) {
             var ans = 'no';
-            //var r = confirm("לשלוח עם קבצים נוספים?");
-            //if (r == true) {
-            //      var ans = 'yes';
-            //} else {
-            //      ans = 'no';
-            //}
-            //var newWindow = window.open("", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=600,height=800");
-            // Make sure that the formMessages div has the 'success' class.
             $('#form-messages').removeClass('alert-danger').addClass('alert-info');
             // Set the message text.
             $('#form-messages').html("שולח מייל, נא להמתין...").fadeIn(1000);
