@@ -171,7 +171,7 @@
                               echo '<div class="col-sm-5">אין פריטים ברשימת תפוצה של משתמש</div>';
                         }
                         ?>
-                        <input type="text" id="sum" class="form-control ltr mt-3 mr-5 col-sm-10" name='email_to' value="">
+                        <input type="text" id="sum" class="form-control ltr mt-3 mr-3 ml-3" name='email_to' value="">
                   </div>
                   <hr />
 
