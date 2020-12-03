@@ -327,6 +327,9 @@ class Exportpdf extends CI_Controller
 
         if ($id != '') {
             $form = $this->Production_model->getForm($id);
+            $creator =  $this->Users_model->getUser($form[0]['creator_id'])[0];
+            $creator_name = $creator['view_name'];
+            $form[0] += [ "creator" => $creator_name ];
             include_once APPPATH . 'third_party/OpenTBS/tbs_plugin_opentbs.php';
             include_once APPPATH . 'third_party/OpenTBS/tbs_class.php';
             $template = './Uploads/DOC/' . $form[0]['company'] . '.docx';
