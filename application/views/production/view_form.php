@@ -207,35 +207,35 @@ if (isset($users)) {
                         <div class="form-group row">
                               <label for="activity_text" class="col-sm-2 col-form-label ">תיאור תקלה \ פניה</label>
                               <div class="col-sm-10">
-                                    <textarea class="form-control" name="activity_text" cols="10" rows="3" placeholder="תיאור תקלה \ פניה"><?php echo $form_data['activity_text'] ?></textarea>
+                                    <textarea class="form-control" name="activity_text" cols="10" rows="6" placeholder="תיאור תקלה \ פניה"><?php echo $form_data['activity_text'] ?></textarea>
                               </div>
                         </div>
 
                         <div class="form-group row">
                               <label for="checking_text" class="col-sm-2 col-form-label ">תוצאות הבדיקה</label>
                               <div class="col-sm-10">
-                                    <textarea class="form-control" name="checking_text" cols="10" rows="3" placeholder="תוצאות הבדיקה"><?php echo $form_data['checking_text'] ?></textarea>
+                                    <textarea class="form-control" name="checking_text" cols="10" rows="2" placeholder="תוצאות הבדיקה"><?php echo $form_data['checking_text'] ?></textarea>
                               </div>
                         </div>
 
                         <div class="form-group row">
                               <label for="summary_text" class="col-sm-2 col-form-label ">סיכום</label>
                               <div class="col-sm-10">
-                                    <textarea class="form-control" name="summary_text" cols="10" rows="3" placeholder="סיכום"><?php echo $form_data['summary_text'] ?></textarea>
+                                    <textarea class="form-control" name="summary_text" cols="10" rows="2" placeholder="סיכום"><?php echo $form_data['summary_text'] ?></textarea>
                               </div>
                         </div>
 
                         <div class="form-group row">
                               <label for="remarks_text" class="col-sm-2 col-form-label ">הערות</label>
                               <div class="col-sm-10">
-                                    <textarea class="form-control" name="remarks_text" cols="10" rows="3" placeholder="הערות"><?php echo $form_data['remarks_text'] ?></textarea>
+                                    <textarea class="form-control" name="remarks_text" cols="10" rows="2" placeholder="הערות"><?php echo $form_data['remarks_text'] ?></textarea>
                               </div>
                         </div>
 
                         <div class="form-group row">
                               <label for="recommendations_text" class="col-sm-2 col-form-label ">המלצות</label>
                               <div class="col-sm-10">
-                                    <textarea class="form-control" name="recommendations_text" cols="10" rows="3" placeholder="המלצות"><?php echo $form_data['recommendations_text'] ?></textarea>
+                                    <textarea class="form-control" name="recommendations_text" cols="10" rows="2" placeholder="המלצות"><?php echo $form_data['recommendations_text'] ?></textarea>
                               </div>
                         </div>
                         <hr />
@@ -275,7 +275,7 @@ if (isset($users)) {
                                           echo '<div class="col-sm-5">אין פריטים ברשימת תפוצה של משתמש</div>';
                                     }
                                     ?>
-                                    <input type="text" id="sum" class="form-control ltr mt-5" name='email_to' value="<?php echo $form_data['email_to'] ?>">
+                                    <input type="text" id="sum" class="form-control ltr mt-5 mr-5 col-sm-10" name='email_to' value="<?php echo $form_data['email_to'] ?>">
                               </div>
                         </div>
                         <hr />
@@ -303,7 +303,7 @@ if (isset($users)) {
                                     <div class="form-group row col-md-9 mr-2 ">
                                           <label for="details" class="col-sm-2 col-form-label ">הערות (CSV)</label>
                                           <div class="col-sm-10">
-                                                <textarea class="form-control" name="details" rows="3"><?php echo $form_data['details'] ?></textarea>
+                                                <textarea class="form-control" name="details" rows="1"><?php echo $form_data['details'] ?></textarea>
                                           </div>
                                     </div>
                                     <div class="form-group col-md-3">
@@ -342,11 +342,11 @@ if (isset($users)) {
                               </div>
                         </div>
                         <hr />
-                        <input type='submit' id='save_btn' class='btn btn-danger' name='submit' value='עדכן דוח'>
+                        <input type='submit' id='save_btn' class='btn btn-warning' name='submit' value='עדכן דוח'>
                         <a id="send_email" class="btn btn-success ml-3" href="#send_email" onclick="SendEmail()">שלח דוח</a>
                         <a target="_blank" class="btn btn-info" href="/exportpdf/create/<?php echo $form_data['id'] ?>">הצג PDF</a>
                         <a target="_blank" class="btn btn-info ml-3" href="/exportpdf/export_doc/<?php echo $form_data['id'] ?>">הורד DOC</a>
-                        <div class="btn btn-info my-5 ml-3" style="color: azure;" onclick=' $(".client-sign-form").toggle();'>חתימת לקוח</div>
+                        <div class="btn btn-danger my-5 ml-3" style="color: azure;" onclick=' $(".client-sign-form").toggle();'>חתימת לקוח</div>
                         <a id="show_log_button" href='#show_log_button' class='btn btn-outline-info ml-3' onclick="showLogFile('<?php echo $form_data['id'] ?>')"><i class="fa fa-file"> Log</i></a>
                         <div id='show-log' style='display:none;'>
                               <div id="show-log-header">

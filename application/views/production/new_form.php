@@ -109,35 +109,35 @@
                   <div class="form-group row">
                         <label for="activity_text" class="col-sm-2 col-form-label ">תיאור תקלה \ פניה</label>
                         <div class="col-sm-10">
-                              <textarea class="form-control" name="activity_text" cols="10" rows="3"></textarea>
+                              <textarea class="form-control" name="activity_text" cols="10" rows="6"></textarea>
                         </div>
                   </div>
 
                   <div class="form-group row">
                         <label for="checking_text" class="col-sm-2 col-form-label ">תוצאות הבדיקה</label>
                         <div class="col-sm-10">
-                              <textarea class="form-control" name="checking_text" cols="10" rows="3"></textarea>
+                              <textarea class="form-control" name="checking_text" cols="10" rows="2"></textarea>
                         </div>
                   </div>
 
                   <div class="form-group row">
                         <label for="summary_text" class="col-sm-2 col-form-label ">סיכום</label>
                         <div class="col-sm-10">
-                              <textarea class="form-control" name="summary_text" cols="10" rows="3"></textarea>
+                              <textarea class="form-control" name="summary_text" cols="10" rows="2"></textarea>
                         </div>
                   </div>
 
                   <div class="form-group row">
                         <label for="remarks_text" class="col-sm-2 col-form-label ">הערות</label>
                         <div class="col-sm-10">
-                              <textarea class="form-control" name="remarks_text" cols="10" rows="3"></textarea>
+                              <textarea class="form-control" name="remarks_text" cols="10" rows="2"></textarea>
                         </div>
                   </div>
 
                   <div class="form-group row">
                         <label for="recommendations_text" class="col-sm-2 col-form-label ">המלצות</label>
                         <div class="col-sm-10">
-                              <textarea class="form-control" name="recommendations_text" cols="10" rows="3"></textarea>
+                              <textarea class="form-control" name="recommendations_text" cols="10" rows="2"></textarea>
                         </div>
                   </div>
                   <hr />
@@ -171,7 +171,7 @@
                               echo '<div class="col-sm-5">אין פריטים ברשימת תפוצה של משתמש</div>';
                         }
                         ?>
-                        <input type="text" id="sum" class="form-control ltr mt-3" name='email_to' value="">
+                        <input type="text" id="sum" class="form-control ltr mt-3 mr-5 col-sm-10" name='email_to' value="">
                   </div>
                   <hr />
 
