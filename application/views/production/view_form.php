@@ -247,7 +247,7 @@ if (isset($users)) {
                                     if ($len > 0 && $emails_arr[0] != '') {
                                           $firsthalf = array_slice($emails_arr, 0, $len / 2);
                                           $secondhalf = array_slice($emails_arr, $len / 2);
-                                          echo "<div class='col-sm-5'>";                                                
+                                          echo "<div class='col-sm-5'>";
                                           foreach ($firsthalf as $email) {
                                                 $checked = '';
                                                 if (strpos($form_data['email_to'], $email) !== false) {
@@ -329,13 +329,16 @@ if (isset($users)) {
                                     }
                                     ?>
                               </div>
-                              <label class="col-sm-2 col-form-label ">חתימת לקוח חדשה:</label>
-                              <div class="col-sm-4">
+                        </div>
+                        <div class="form-row client-sign-form" style="display: none;">
+                              <div class="form-group col-md-12">
                                     <div id="sketchpadapp">
-                                          <canvas id="sign-canvas" style="border: 1px solid red;"></canvas>
+                                          <canvas id="sign-canvas" style="border: 5px solid red;"></canvas>
                                     </div>
-                                    <input type="text" id="client_sign" name="client_sign" hidden>
-                                    <a href="#sign-canvas" class="btn btn-outline-danger btn-sm" onclick="clearCanvas()">נקה חתימה</a>
+                                    <input type='text' id="client_sign" name='client_sign' hidden>
+                                    <div class="btn btn-outline-danger btn-sm mt-3" onclick='$("#sign-canvas").data("jqScribble").clear();'>נקה חתימה</div>
+                                    <div class="btn btn-outline-success btn-sm mt-3" onclick=' $(".client-sign-form").toggle();'>שמור חתימה</div>
+                                    <div class="btn btn-outline-danger btn-sm mt-3" onclick='$(".client-sign-form").toggle();$("#sign-canvas").data("jqScribble").clear();'>X</div>
                               </div>
                         </div>
                         <hr />
@@ -368,8 +371,8 @@ if (isset($users)) {
             if ($("#sign-canvas").length && $("#client_sign").length) {
                   $("#sign-canvas").jqScribble();
                   $("#sign-canvas").data('jqScribble').update({
-                        width: 300,
-                        height: 100
+                        width: $('.container').width(),
+                        height: 300
                   });
             }
 
