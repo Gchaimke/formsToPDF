@@ -336,7 +336,7 @@ if (isset($users)) {
                                           <canvas id="sign-canvas" style="border: 5px solid red;"></canvas>
                                     </div>
                                     <input type='text' id="client_sign" name='client_sign' hidden>
-                                    <div class="btn btn-outline-success btn-sm mt-3" onclick=' $(".client-sign-form").toggle();'>שמור חתימה</div>
+                                    <div id="save_sign" class="btn btn-outline-success btn-sm mt-3">שמור חתימה</div>
                                     <div class="btn btn-outline-danger btn-sm mt-3" onclick='$("#sign-canvas").data("jqScribble").clear();'>נקה חתימה</div>
                                     <div class="btn btn-outline-danger btn-sm mt-3" onclick='$(".client-sign-form").toggle();$("#sign-canvas").data("jqScribble").clear();'>X</div>
                               </div>
@@ -388,6 +388,12 @@ if (isset($users)) {
                   });
                   $('#sum').val(sum);
             });
+      });
+
+      $('#save_sign').click(function(){
+            $(".client-sign-form").toggle();
+            $("#save_btn").click();
+            setTimeout(function () { location.reload();}, 2000);
       });
 
       $('#show_csv').click(function() {
