@@ -336,18 +336,18 @@ if (isset($users)) {
                                           <canvas id="sign-canvas" style="border: 5px solid red;"></canvas>
                                     </div>
                                     <input type='text' id="client_sign" name='client_sign' hidden>
-                                    <div class="btn btn-outline-danger btn-sm mt-3" onclick='$("#sign-canvas").data("jqScribble").clear();'>נקה חתימה</div>
                                     <div class="btn btn-outline-success btn-sm mt-3" onclick=' $(".client-sign-form").toggle();'>שמור חתימה</div>
+                                    <div class="btn btn-outline-danger btn-sm mt-3" onclick='$("#sign-canvas").data("jqScribble").clear();'>נקה חתימה</div>
                                     <div class="btn btn-outline-danger btn-sm mt-3" onclick='$(".client-sign-form").toggle();$("#sign-canvas").data("jqScribble").clear();'>X</div>
                               </div>
                         </div>
                         <hr />
-                        <div class="btn btn-info my-5" style="color: azure;" onclick=' $(".client-sign-form").toggle();'>חתימת לקוח</div>
-                        <input type='submit' id='save_btn' class='btn btn-danger' name='submit' value='עדכן דוח'>
-                        <a target="_blank" class="btn btn-info" href="/exportpdf/create/<?php echo $form_data['id'] ?>">הצג PDF</a>
-                        <a target="_blank" class="btn btn-info" href="/exportpdf/export_doc/<?php echo $form_data['id'] ?>">הורד DOC</a>
-                        <a id="send_email" class="btn btn-success" href="#send_email" onclick="SendEmail()">שלח דוח</a>
-                        <a id="show_log_button" href='#show_log_button' class='btn btn-outline-info' onclick="showLogFile('<?php echo $form_data['id'] ?>')"><i class="fa fa-file"> Log</i></a>
+                        <div class="btn btn-info my-5 ml-3" style="color: azure;" onclick=' $(".client-sign-form").toggle();'>חתימת לקוח</div>
+                        <input type='submit' id='save_btn' class='btn btn-danger ml-3' name='submit' value='עדכן דוח'>
+                        <a target="_blank" class="btn btn-info ml-3" href="/exportpdf/create/<?php echo $form_data['id'] ?>">הצג PDF</a>
+                        <a target="_blank" class="btn btn-info ml-3" href="/exportpdf/export_doc/<?php echo $form_data['id'] ?>">הורד DOC</a>
+                        <a id="send_email" class="btn btn-success ml-3" href="#send_email" onclick="SendEmail()">שלח דוח</a>
+                        <a id="show_log_button" href='#show_log_button' class='btn btn-outline-info ml-3' onclick="showLogFile('<?php echo $form_data['id'] ?>')"><i class="fa fa-file"> Log</i></a>
                         <div id='show-log' style='display:none;'>
                               <div id="show-log-header">
                                     <div id="serial-header"></div>Email Log<button type="button" class="close" aria-label="Close"> <span aria-hidden="true">&times;</span></button>

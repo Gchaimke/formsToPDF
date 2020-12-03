@@ -208,15 +208,15 @@
                                     <canvas id="sign-canvas" style="border: 5px solid red;"></canvas>
                               </div>
                               <input type='text' id="client_sign" name='client_sign' hidden>
-                              <div class="btn btn-outline-danger btn-sm mt-3" onclick='$("#sign-canvas").data("jqScribble").clear();'>נקה חתימה</div>
                               <div class="btn btn-outline-success btn-sm mt-3" onclick=' $(".client-sign-form").toggle();'>שמור חתימה</div>
+                              <div class="btn btn-outline-danger btn-sm mt-3" onclick='$("#sign-canvas").data("jqScribble").clear();'>נקה חתימה</div>
                               <div class="btn btn-outline-danger btn-sm mt-3" onclick='$(".client-sign-form").toggle();$("#sign-canvas").data("jqScribble").clear();'>X</div>
                         </div>
                   </div>
                   <hr />
-                  <div class="btn btn-info my-5" style="color: azure;" onclick=' $(".client-sign-form").toggle();'>חתימת לקוח</div>
-                  <input id='save_form' type='button' class="btn btn-success my-5" name='submit' value='שמור'>
-                  <input type='submit' class="btn btn-danger my-5" name='submit' value='שמור ושלח לרשימת תפוצה'>
+                  <div class="btn btn-info my-5 ml-3" style="color: azure;" onclick=' $(".client-sign-form").toggle();'>חתימת לקוח</div>
+                  <input id='save_form' type='button' class="btn btn-success my-5 ml-3" name='submit' value='שמור'>
+                  <input type='submit' class="btn btn-danger my-5 ml-3" name='submit' value='שמור ושלח לרשימת תפוצה'>
                   <?php echo form_close(); ?>
 
             </center>
