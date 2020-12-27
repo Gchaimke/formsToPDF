@@ -238,9 +238,7 @@ class Admin extends CI_Controller
 		}
 		for ($i = 1; $i < 13; $i++) {
 			$monthSum = $this->Production_model->getMonthTotal($i, $user_id)[0]['SUM(price)'];
-			if ($monthSum != '' && $monthSum > 0) {
-				$data .= $monthSum . ',';
-			}
+			$data .= $monthSum . ',';
 		}
 		return $data;
 	}
