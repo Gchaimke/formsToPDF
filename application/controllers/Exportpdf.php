@@ -32,6 +32,7 @@ class Exportpdf extends CI_Controller
         } else {
             $company = $this->Companies_model->getCompanies()[0];
         }
+        $creator =  $this->Users_model->getUser($form['creator_id'])[0];
 
         $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
@@ -98,6 +99,9 @@ class Exportpdf extends CI_Controller
         <tr>
         <td style="width:160px;font-weight:bolder;font-size:14px;">תאריך:</td>
         <td style="direction:rtl;">' . $form_date  . '</td>
+        </tr><tr>
+        <td style="width:160px;font-weight:bolder;font-size:14px;">טכנאי:</td>
+        <td style="direction:rtl;">' . $creator['view_name']  . '</td>
         </tr><tr>
         <td style="width:160px;font-weight:bolder;font-size:14px;">מס. לקוח:</td>
         <td>' . $form['client_num'] . '</td>
@@ -201,7 +205,7 @@ class Exportpdf extends CI_Controller
                         array_push($attachments, $att);
                     }
                 }
-                $this->SendEmail($attachments, $file_name, $form['email_to'], $id);
+                $this->SendEmail($attachments, $file_name, $form['email_to'], $id,$form['creator_id']);
             } else {
                 print_r('Could not trace file path');
             }
@@ -221,6 +225,7 @@ class Exportpdf extends CI_Controller
         $string = str_replace($needles, $replacement, $string);
         $arr = explode($replacement, $string);
         $out = '';
+        $regex = '~(:\w+)~';
         foreach ($arr as $line) {
             $words = explode(" ", $line);
             foreach ($words as $word) {
@@ -237,9 +242,9 @@ class Exportpdf extends CI_Controller
         return $out;
     }
 
-    function SendEmail($attachments, $file_name, $recipients, $id = 1)
+    function SendEmail($attachments, $file_name, $recipients, $id = 1, $form_creator)
     {
-        $user =  $this->Users_model->getUser($this->session->userdata['logged_in']['id'])[0];
+        $user =  $this->Users_model->getUser($form_creator)[0];
         $settings = $this->Admin_model->getSettings()[0];
         $sender = 'yossigorbov@garin.co.il';
         if ($user['email'] != '') {
@@ -322,6 +327,9 @@ class Exportpdf extends CI_Controller
 
         if ($id != '') {
             $form = $this->Production_model->getForm($id);
+            $creator =  $this->Users_model->getUser($form[0]['creator_id'])[0];
+            $creator_name = $creator['view_name'];
+            $form[0] += [ "creator" => $creator_name ];
             include_once APPPATH . 'third_party/OpenTBS/tbs_plugin_opentbs.php';
             include_once APPPATH . 'third_party/OpenTBS/tbs_class.php';
             $template = './Uploads/DOC/' . $form[0]['company'] . '.docx';

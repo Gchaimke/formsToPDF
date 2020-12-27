@@ -109,35 +109,35 @@
                   <div class="form-group row">
                         <label for="activity_text" class="col-sm-2 col-form-label ">תיאור תקלה \ פניה</label>
                         <div class="col-sm-10">
-                              <textarea class="form-control" name="activity_text" cols="10" rows="3"></textarea>
+                              <textarea class="form-control" name="activity_text" cols="10" rows="6"></textarea>
                         </div>
                   </div>
 
                   <div class="form-group row">
                         <label for="checking_text" class="col-sm-2 col-form-label ">תוצאות הבדיקה</label>
                         <div class="col-sm-10">
-                              <textarea class="form-control" name="checking_text" cols="10" rows="3"></textarea>
+                              <textarea class="form-control" name="checking_text" cols="10" rows="2"></textarea>
                         </div>
                   </div>
 
                   <div class="form-group row">
                         <label for="summary_text" class="col-sm-2 col-form-label ">סיכום</label>
                         <div class="col-sm-10">
-                              <textarea class="form-control" name="summary_text" cols="10" rows="3"></textarea>
+                              <textarea class="form-control" name="summary_text" cols="10" rows="2"></textarea>
                         </div>
                   </div>
 
                   <div class="form-group row">
                         <label for="remarks_text" class="col-sm-2 col-form-label ">הערות</label>
                         <div class="col-sm-10">
-                              <textarea class="form-control" name="remarks_text" cols="10" rows="3"></textarea>
+                              <textarea class="form-control" name="remarks_text" cols="10" rows="2"></textarea>
                         </div>
                   </div>
 
                   <div class="form-group row">
                         <label for="recommendations_text" class="col-sm-2 col-form-label ">המלצות</label>
                         <div class="col-sm-10">
-                              <textarea class="form-control" name="recommendations_text" cols="10" rows="3"></textarea>
+                              <textarea class="form-control" name="recommendations_text" cols="10" rows="2"></textarea>
                         </div>
                   </div>
                   <hr />
@@ -171,7 +171,7 @@
                               echo '<div class="col-sm-5">אין פריטים ברשימת תפוצה של משתמש</div>';
                         }
                         ?>
-                        <input type="text" id="sum" class="form-control ltr mt-3" name='email_to' value="">
+                        <input type="text" id="sum" class="form-control ltr mt-3 mr-3 ml-3" name='email_to' value="">
                   </div>
                   <hr />
 
@@ -205,18 +205,18 @@
                   <div class="form-row client-sign-form" style="display: none;">
                         <div class="form-group col-md-12">
                               <div id="sketchpadapp">
-                                    <canvas id="sign-canvas" style="border: 1px solid red;"></canvas>
+                                    <canvas id="sign-canvas" style="border: 5px solid red;"></canvas>
                               </div>
                               <input type='text' id="client_sign" name='client_sign' hidden>
-                              <div class="btn btn-outline-danger btn-sm mt-3" onclick='$("#sign-canvas").data("jqScribble").clear();'>נקה חתימה</div>
                               <div class="btn btn-outline-success btn-sm mt-3" onclick=' $(".client-sign-form").toggle();'>שמור חתימה</div>
+                              <div class="btn btn-outline-danger btn-sm mt-3" onclick='$("#sign-canvas").data("jqScribble").clear();'>נקה חתימה</div>
                               <div class="btn btn-outline-danger btn-sm mt-3" onclick='$(".client-sign-form").toggle();$("#sign-canvas").data("jqScribble").clear();'>X</div>
                         </div>
                   </div>
                   <hr />
-                  <div class="btn btn-info my-5" style="color: azure;" onclick=' $(".client-sign-form").toggle();'>חתימת לקוח</div>
-                  <input id='save_form' type='button' class="btn btn-success my-5" name='submit' value='שמור'>
-                  <input type='submit' class="btn btn-danger my-5" name='submit' value='שמור ושלח לרשימת תפוצה'>
+                  <div class="btn btn-info my-5 ml-3" style="color: azure;" onclick=' $(".client-sign-form").toggle();'>חתימת לקוח</div>
+                  <input id='save_form' type='button' class="btn btn-success my-5 ml-3" name='submit' value='שמור'>
+                  <input type='submit' class="btn btn-danger my-5 ml-3" name='submit' value='שמור ושלח לרשימת תפוצה'>
                   <?php echo form_close(); ?>
 
             </center>
