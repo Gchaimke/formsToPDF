@@ -215,7 +215,7 @@ class Admin extends CI_Controller
 	{
 		$data = array();
 		for ($i = 1; $i < 13; $i++) {
-			$data['m_' . $i] = $this->Production_model->getMonthTotal($i, 1)[0]['SUM(price)'];
+			$data['m_' . $i] = $this->Production_model->getMonthTotal($i, 2)[0]['SUM(price)'];
 		}
 		$this->load->view('header');
 		$this->load->view('main_menu');
