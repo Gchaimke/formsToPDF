@@ -152,6 +152,12 @@ a.fa {
     margin: 5px;
 }
 
+.left {
+    position: absolute;
+    left: 5px;
+    margin-top: -36px;
+}
+
 a#edit_checklist {
     margin: 0 25px;
 }

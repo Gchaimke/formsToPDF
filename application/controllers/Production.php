@@ -342,15 +342,15 @@ class Production extends CI_Controller
     }
 
     public function get_log()
-	{
+    {
         $this->form_validation->set_rules('id', 'id', 'trim|xss_clean');
         $id = $this->input->post('id');
-        $file = 'Uploads/logs/'.$id.'.log';
+        $file = 'Uploads/logs/' . $id . '.log';
         if (!file_exists($file)) {
             $this->log_data('Log created', $id, $level = 1);
         }
-		echo file_get_contents($file);
-	}
+        echo file_get_contents($file);
+    }
 
     public function do_upload($folder = '')
     {
@@ -388,8 +388,12 @@ class Production extends CI_Controller
 
     function export_to($str = '1')
     {
+        $user = $this->security->xss_clean($this->input->get('user'));
+        if ($user == '') {
+            $user = 'all users';
+        }
         $file_date = date("Y");
-        $file_name = "froms_" . $str . "-" . $file_date . ".csv";
+        $file_name = "froms_" . $str . "-" . $file_date . "-" . $user . ".csv";
         $data = $this->Production_model->searchFormByMonth($str);
         header('Content-Encoding: UTF-8');
         header("Content-type: text/csv; charset=UTF-8");
@@ -401,20 +405,41 @@ class Production extends CI_Controller
         $fp = fopen('php://output', 'w');
 
         $tmp_arr = array(array('תאריך', 'יוצר', 'שם הלקוח', 'מיקום', 'סוג תקלה', 'חברה נותנת שירות', 'שעת התחלת', 'שעת סיום', 'הערות', 'מחיר'));
-        foreach ($data as  $line) {
-            array_push($tmp_arr, array(
-                $line['date'],
-                $line['creator_name'],
-                $line['client_name'],
-                $line['place'],
-                $line['issue_kind'],
-                $line['company'],
-                $line['start_time'],
-                $line['end_time'],
-                $line['details'],
-                $line['price']
-            ));
+
+        if ($user == 'all users') {
+            foreach ($data as  $line) {
+                array_push($tmp_arr, array(
+                    $line['date'],
+                    $line['creator_name'],
+                    $line['client_name'],
+                    $line['place'],
+                    $line['issue_kind'],
+                    $line['company'],
+                    $line['start_time'],
+                    $line['end_time'],
+                    $line['details'],
+                    $line['price']
+                ));
+            }
+        } else {
+            foreach ($data as  $line) {
+                if ($user == $line['creator_id']) {
+                    array_push($tmp_arr, array(
+                        $line['date'],
+                        $line['creator_name'],
+                        $line['client_name'],
+                        $line['place'],
+                        $line['issue_kind'],
+                        $line['company'],
+                        $line['start_time'],
+                        $line['end_time'],
+                        $line['details'],
+                        $line['price']
+                    ));
+                }
+            }
         }
+
 
         foreach ($tmp_arr as $fields) {
             fputcsv($fp, $fields);

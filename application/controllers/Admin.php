@@ -211,16 +211,38 @@ class Admin extends CI_Controller
 		$this->load->view('footer');
 	}
 
-	function view_charts()
+	function view_charts($user_id = '')
 	{
 		$data = array();
-		for ($i = 1; $i < 13; $i++) {
-			$data['m_' . $i] = $this->Production_model->getMonthTotal($i, 2)[0]['SUM(price)'];
+		if ($user_id == '') {
+			$data['users'] = $this->Users_model->getusers();
+			foreach ($data['users'] as $user) {
+				$data['user_' . $user['id']] = $this->get_year_stats($user['id']);
+			}
+		} else {
+			$data['csv_user'] = $user_id;
+			$data['users'] = $this->Users_model->getUser($user_id);
+			$data['user_' . $user_id] = $this->get_year_stats($user_id);
 		}
 		$this->load->view('header');
 		$this->load->view('main_menu');
 		$this->load->view('admin/view_charts', $data);
 		$this->load->view('footer');
+	}
+
+	function get_year_stats($user_id)
+	{
+		$data = '';
+		if ($user_id == '') {
+			$user_id = $this->security->xss_clean($this->input->get('user'));
+		}
+		for ($i = 1; $i < 13; $i++) {
+			$monthSum = $this->Production_model->getMonthTotal($i, $user_id)[0]['SUM(price)'];
+			if ($monthSum != '' && $monthSum > 0) {
+				$data .= $monthSum . ',';
+			}
+		}
+		return $data;
 	}
 
 	function build_folder_view($dir = "Uploads")

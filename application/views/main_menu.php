@@ -18,7 +18,7 @@ if (isset($this->session->userdata['logged_in'])) {
       <li class="nav-item mx-1 mt-3 mt-md-0 "><a class="nav-link btn btn-sm btn-outline-success" href="/"> דוח חדש</a></li>
       <li class="nav-item mx-1 mt-3 mt-md-0 "><a class="nav-link btn btn-sm btn-outline-info" href="/production/manage_forms"> רשימת דוחות</a></li>
       <?php if ($role == 'Admin') { ?>
-        <li class="nav-item mx-1 mt-3 mt-md-0 "><a class="nav-link btn btn-sm btn-outline-danger" href="/admin/view_charts"> דוחות כספים </a></li>
+        <li class="nav-item mx-1 mt-3 mt-md-0 "><a class="nav-link btn btn-sm btn-outline-danger" href="/admin/view_charts/<?php echo $id ?>"> כספים </a></li>
       <?php } ?>
     </ul>
   </div>
