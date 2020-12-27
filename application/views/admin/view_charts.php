@@ -101,11 +101,12 @@ if ($users) {
                 },
                 responsive: true,
                 legend: {
+                    display: true,
                     position: 'top',
                 },
                 title: {
-                    display: true,
-                    text: 'תלחץ על משתמש כדי להסיר מתצוגע'
+                    display: false,
+                    text: ''
                 }
             }
         });
