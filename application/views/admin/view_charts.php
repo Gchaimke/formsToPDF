@@ -10,6 +10,7 @@ if (isset($this->session->userdata['logged_in'])) {
 }
 
 $dataSets = "";
+$usersButtons = "";
 if ($users) {
     foreach ($users as $user) {
         $userMont = ${'user_' . $user['id']};
@@ -22,6 +23,9 @@ if ($users) {
         borderWidth: 1,
         data: [$userMont]
         },";
+            if (!isset($csv_user)) {
+                $usersButtons .= "<a href='/admin/view_charts/{$user['id']}' class='btn btn-outline-info'>{$user['view_name']}</a>";
+            }
         }
     }
 }
@@ -53,13 +57,7 @@ if ($users) {
     </div>
     <div class="left">
         <a href='/admin/view_charts/' class='btn btn-outline-info'>All Users</a>
-        <?php
-        if (!isset($csv_user)) {
-            foreach ($users as $user) {
-                echo "<a href='/admin/view_charts/{$user['id']}' class='btn btn-outline-info'>{$user['view_name']}</a>";
-            }
-        }
-        ?>
+        <?php echo $usersButtons; ?>
     </div>
     <div id="container" style="width: 75%;margin: auto;">
         <canvas id="canvas" dir="rtl"></canvas>
