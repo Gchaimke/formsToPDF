@@ -6,6 +6,7 @@ class Admin extends CI_Controller
 		parent::__construct();
 		$this->load->model('Users_model');
 		$this->load->model('Admin_model');
+		$this->load->model('Production_model');
 		$this->load->library('pagination');
 	}
 
@@ -199,14 +200,26 @@ class Admin extends CI_Controller
 		fclose($fp);
 	}
 
-	function mange_uploads()
+	function view_folders()
 	{
 		$data = array();
 		$folder = $this->security->xss_clean($this->input->get('folder'));
 		$data['folders'] = $this->build_folder_view($folder);
 		$this->load->view('header');
 		$this->load->view('main_menu');
-		$this->load->view('admin/mange_uploads', $data);
+		$this->load->view('admin/view_folders', $data);
+		$this->load->view('footer');
+	}
+
+	function view_charts()
+	{
+		$data = array();
+		for ($i = 1; $i < 13; $i++) {
+			$data['m_' . $i] = $this->Production_model->getMonthTotal($i, 1)[0]['SUM(price)'];
+		}
+		$this->load->view('header');
+		$this->load->view('main_menu');
+		$this->load->view('admin/view_charts', $data);
 		$this->load->view('footer');
 	}
 
@@ -231,7 +244,7 @@ class Admin extends CI_Controller
 		foreach ($dirlistR as $file) {
 			//filter file types
 			if ($file['type'] != 'image/png' && $file['type'] != 'image/jpeg' && $file['type'] != 'image/jpg' && $file['type'] != 'dir') {
-				continue;
+				//continue;
 			}
 
 			if ($file['type'] == 'dir') {
@@ -244,12 +257,16 @@ class Admin extends CI_Controller
 					basename($file['name']) . ' (' .  $count . ')</a>';
 			} else {
 				$html_view .= "<tr>\n";
-				$html_view .=  "<td class='td_file_manager'><a target='_blank' href=\"/{$file['name']}\"><img class='img-thumbnail' src=\"/{$file['name']}\"></a>" .
-					"</td>\n";
-				$html_view .=  "<td>" . $file['name'] . "</td>\n";
+				if ($file['type'] == 'image/png' || $file['type'] == 'image/jpeg' || $file['type'] == 'image/jpg') {
+					//continue;
+					$html_view .=  "<td class='td_file_manager'><a target='_blank' href=\"/{$file['name']}\"><img class='img-thumbnail' src=\"/{$file['name']}\"></a></td>\n";
+				} else {
+					$html_view .=  "<td class='td_file_manager'>No Preview</td>\n";
+				}
+				$html_view .=  "<td><a target='_blank' href=\"/{$file['name']}\">" . $file['name'] . "</a></td>\n";
 				$html_view .= "<td>{$file['type']}</td>\n";
 				$html_view .= "<td>" . $this->human_filesize($file['size']) . "</td>\n";
-				$html_view .= "<td>" . date('d/m/Y h:i:s', $file['lastmod']) . "</td>\n";
+				$html_view .= "<td>" . date('d/m/Y h:i', $file['lastmod']) . "</td>\n";
 				$html_view .= '<td><span id="/' . $file['name'] . '" onclick="delFile(this.id)" class="btn btn-danger delete-photo">delete</span></td>';
 				$html_view .= "</tr>\n";
 			}

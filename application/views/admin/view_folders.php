@@ -5,7 +5,7 @@ if (isset($this->session->userdata['logged_in'])) {
     }
 }
 ?>
-
+<div id="form-messages" class='alert hidden' role='alert'></div>
 <main role="main">
     <div class="jumbotron">
         <div class="container">

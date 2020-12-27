@@ -23,6 +23,7 @@ main {
 
 .rtl {
     direction: rtl;
+    text-align: right;
 }
 
 .ltr {
@@ -141,8 +142,14 @@ a.fa {
 }
 
 #csv_month {
-    position: absolute;
-    left: 0;
+    position: relative;
+    left: -48px;
+    top: -43px;
+    width: 90%;
+}
+
+#csv_month a {
+    margin: 5px;
 }
 
 a#edit_checklist {
@@ -258,7 +265,7 @@ div#form-messages {
     background: white;
 }
 
-.sing-image{
+.sing-image {
     width: 100%;
 }
 

@@ -12,15 +12,7 @@ if (isset($this->session->userdata['logged_in'])) {
 			</center>
 		</div>
 	</div>
-	<?php if ($user_role == "Admin") { ?>
-		<a id="show_csv" href='#' class='btn btn-outline-info'><i class="fa fa-file-excel-o"></i></a>
-		<div id="csv_month" style="display:none;">
-		<?php for ($i = 1; $i < 13; $i++) {
-			echo "<a target='blank' href='/production/export_to/$i' class='btn btn-outline-info'>$i</a><br/>";
-		}
-	} //end if
-		?>
-		</div>
+
 		<div class="container rtl col-md-10">
 			<?php
 			if (isset($message_display)) {
@@ -116,9 +108,6 @@ if (isset($this->session->userdata['logged_in'])) {
 			});
 		}
 	}
-	$('#show_csv').click(function() {
-		$('#csv_month').toggle();
-	});
 
 	function formSearch() {
 		var search = document.getElementById("inputSearch").value;

@@ -47,13 +47,13 @@ if (isset($this->session->userdata['logged_in'])) {
             <input name="roles" class="form-control" value="<?php echo $settings['roles']; ?>">
         </div>
 
-        <?php 
+        <?php
         $checked = '';
-        $disabled ='';
-        if($settings['smtp_on']==1){
+        $disabled = '';
+        if ($settings['smtp_on'] == 1) {
             $checked = 'checked';
-        }else{
-            $disabled ='disabled';
+        } else {
+            $disabled = 'disabled';
         }
         ?>
         <div class="input-group mb-2">
@@ -100,6 +100,7 @@ if (isset($this->session->userdata['logged_in'])) {
         <?php echo form_close(); ?><br />
         <button class="btn btn-info" onclick="createDB(0)">לייצר בסיס נתונים</button>
         <a class="btn btn-info" href="/admin/view_log">דוחות מערכת</a>
+        <a class="btn btn-info" href="/admin/view_folders">הצג תיקיות</a>
     </div>
 </main>
 
@@ -113,13 +114,13 @@ if (isset($this->session->userdata['logged_in'])) {
         });
     }
 
-    $('#smtp_on').click(function (e) { 
-        if($('#smtp_on').prop("checked")== true){
+    $('#smtp_on').click(function(e) {
+        if ($('#smtp_on').prop("checked") == true) {
             $('#smtp_host').prop("disabled", false);
             $('#smtp_port').prop("disabled", false);
             $('#smtp_user').prop("disabled", false);
             $('#smtp_pass').prop("disabled", false);
-        }else{
+        } else {
             $('#smtp_host').prop("disabled", true);
             $('#smtp_port').prop("disabled", true);
             $('#smtp_user').prop("disabled", true);
