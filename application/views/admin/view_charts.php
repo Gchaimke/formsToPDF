@@ -15,7 +15,7 @@ if ($users) {
     foreach ($users as $user) {
         $userMont = ${'user_' . $user['id']};
         $userColor = 'user' . $user['id'];
-        if ($userMont != '') {
+        if ($userMont != ',,,,,,,,,,,,') {
             $dataSets .= "{
         label:'" . $user['view_name'] . "',
         backgroundColor: color(window.chartColors.$userColor).alpha(0.7).rgbString(),
