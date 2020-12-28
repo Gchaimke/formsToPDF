@@ -32,6 +32,7 @@ if ($users) {
 
 ?>
 <script src="<?php echo base_url('assets/js/ChartJs/'); ?>Chart.min.js"></script>
+<script src="<?php echo base_url('assets/js/ChartJs/'); ?>chartjs-plugin-datalabels.min.js"></script>
 <link href="<?php echo base_url('assets/js/ChartJs/Chart.min.css'); ?>" rel="stylesheet">
 <div id="form-messages" class='alert hidden' role='alert'></div>
 <main role="main">
@@ -104,10 +105,29 @@ if ($users) {
                 legend: {
                     display: true,
                     position: 'top',
+                    labels: {
+                        // This more specific font property overrides the global property
+                        fontColor: 'black',
+                        fontSize: 20,
+                        fontStyle: 'bold'
+                    }
                 },
                 title: {
                     display: false,
                     text: ''
+                },
+                plugins: {
+                    // Change options for ALL labels of THIS CHART
+                    datalabels: {
+                        color: '#000',
+                        align: 'right',
+                        anchor: 'center',
+                        offset: 7,
+                        font: {
+                            weight: 'bold'
+                        },
+                        formatter: Math.round
+                    }
                 }
             }
         });
