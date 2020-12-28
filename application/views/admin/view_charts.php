@@ -97,7 +97,14 @@ if ($users) {
                 scales: {
                     yAxes: [{
                         ticks: {
-                            beginAtZero: true
+                            beginAtZero: true,
+                            fontSize:16
+                        }
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            fontSize:16,
+                            fontStyle:'bold'
                         }
                     }]
                 },
