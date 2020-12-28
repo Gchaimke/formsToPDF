@@ -59,7 +59,7 @@ if ($users) {
         <a href='/admin/view_charts/' class='btn btn-outline-info'>All Users</a>
         <?php echo $usersButtons; ?>
     </div>
-    <div id="container" style="width: 75%;margin: auto;">
+    <div id="container" style="position: relative; height:40vh; width:80vw;margin: auto;">
         <canvas id="canvas" dir="rtl"></canvas>
     </div>
 
@@ -92,6 +92,7 @@ if ($users) {
             type: 'bar',
             data: barChartData,
             options: {
+                maintainAspectRatio: false,
                 scales: {
                     yAxes: [{
                         ticks: {
