@@ -5,6 +5,18 @@ if (isset($this->session->userdata['logged_in'])) {
 	}
 }
 ?>
+<style>
+	li {
+		text-align: left;
+		list-style: none;
+	}
+
+	ul {
+		columns: 3;
+		-webkit-columns: 3;
+		-moz-columns: 3;
+	}
+</style>
 <main role="main">
 	<div class="jumbotron">
 		<div class="container">
@@ -34,6 +46,21 @@ if (isset($this->session->userdata['logged_in'])) {
 				$form_extra_filds = $companies[0]['form_extra_filds'];
 				$form_footer = $companies[0]['form_footer'];
 				$logo = $companies[0]['logo'];
+				$filds = json_decode($companies[0]['view_filds']);
+			}
+
+			if (isset($view_filds)) {
+				$filds_checks = '<ul>';
+				foreach ($view_filds as $fild => $status) {
+					if (isset($filds->$fild)) {
+						$cheked = ($filds->$fild > 0) ? "checked" : '';
+					}else{
+						$cheked ='';
+					}
+
+					$filds_checks .= '<li>' . $fild . '<input class="m-3" type="checkbox" name="view_filds[' . $fild . ']" value="' . $status . '" ' . $cheked . '></li>';
+				}
+				$filds_checks .= '</ul>';
 			}
 			?>
 			<?php echo form_open("companies/edit/$id", 'class=user-create'); ?>
@@ -46,9 +73,13 @@ if (isset($this->session->userdata['logged_in'])) {
 					<button class="btn btn-outline-secondary" type="button" onclick="document.getElementById('browse').click();">Upload</button>
 				</div>
 			</div>
-			<img id="logo_img" class="img-thumbnail" src="<?php echo $logo ?>" onclick="document.getElementById('browse').click();">
-			<input id="browse" style="display:none;" type="file" onchange="snapLogo()" ></hr>
 
+			<img id="logo_img" class="img-thumbnail" src="<?php echo $logo ?>" onclick="document.getElementById('browse').click();">
+			<input id="browse" style="display:none;" type="file" onchange="snapLogo()"><br><br>
+
+			<div id="view_filds-column" class="form-group"><label>Select filds to <b style="color: red;">DISABLE</b></label><br>
+				<?php echo $filds_checks ?></br>
+			</div>
 			<div class="form-group"><label>Form Head</label>
 				<textarea name="form_header" class="form-control" cols="40" rows="5"><?php echo $form_header ?></textarea>
 			</div>
@@ -65,7 +96,8 @@ if (isset($this->session->userdata['logged_in'])) {
 </main>
 <script>
 	var company = document.getElementById("company_name").value;
-	function updateClient(value){
-            company = value;
-      }
+
+	function updateClient(value) {
+		company = value;
+	}
 </script>

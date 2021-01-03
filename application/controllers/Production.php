@@ -21,16 +21,17 @@ class Production extends CI_Controller
         $this->load->view('footer');
     }
 
-    public function new_form()
+    public function new_form($company = '')
     {
         $data = array();
+        $data['companie'] = $this->Companies_model->getCompanies('', $company)[0];
+        $data['hide_filds'] = $this->hide_filds($data['companie']['view_filds']);
         $data['user'] = $this->Users_model->getUser($this->session->userdata['logged_in']['id']);
         $this->load->view('header');
         $this->load->view('main_menu');
         $this->load->view('production/new_form', $data);
         $this->load->view('footer');
     }
-
 
     public function add_form()
     {
@@ -106,6 +107,9 @@ class Production extends CI_Controller
         $data = array();
         $data['form_data'] = $this->Production_model->getForm($id);
         $data['companies'] = $this->Companies_model->getCompanies();
+        $current_company = $this->Companies_model->getCompanies('',$data['form_data'][0]['company'])[0];
+        $data['hide_filds'] = $this->hide_filds($current_company['view_filds']);
+        $data['logo'] = $current_company['logo'];
         $data['users'] = $this->Users_model->getUsers();
         $this->load->view('header');
         $this->load->view('main_menu');
@@ -184,6 +188,20 @@ class Production extends CI_Controller
         } else {
             echo "יש בעיה בפרטים שצריך למאלות!";
         }
+    }
+
+    function hide_filds($view_filds)
+    {
+        $view_filds = json_decode($view_filds, true);
+        $hide_filds = '';
+        if ($view_filds != '') {
+            foreach ($view_filds as $name => $status) {
+                if ($status) {
+                    $hide_filds .= '#' . $name . ', ';
+                }
+            }
+        }
+        return $hide_filds;
     }
 
     public function manage_forms()

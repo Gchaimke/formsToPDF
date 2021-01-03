@@ -1,22 +1,39 @@
-<?php $user = $user[0] ?>
+<?php
+$user = $user[0];
+if (isset($companie)) {
+      $companie_name = $companie['name'];
+}
+?>
+
 <script src="<?php echo base_url('assets/js/jQUpload/jquery.ui.widget.js'); ?>"></script>
 <script src="<?php echo base_url('assets/js/jQUpload/jquery.iframe-transport.js'); ?>"></script>
 <script src="<?php echo base_url('assets/js/jQUpload/jquery.fileupload.js'); ?>"></script>
+<style>
+      <?php echo $hide_filds ?>.hiden {
+            display: none !important;
+      }
+
+      img.logo {
+            width: 100px;
+            margin-right: 230px;
+            margin-top: -65px;
+      }
+</style>
 <div id="form-messages" class='alert hidden test' role='alert'></div>
 <main role="main">
       <div class="jumbotron">
             <div class="container">
                   <center>
-                        <h5>דוח חדש</h5>
+                        <h5>דוח חדש</h5> <img class="logo" src="<?php echo $companie['logo'] ?>">
                   </center>
             </div>
       </div>
       <div class="container">
             <center>
                   <?php echo form_open("production/add_form", 'id=new-form'); ?>
-                  <input type='hidden' class="form-control " name='company' value="<?php echo $_GET['company'] ?>">
+                  <input type='hidden' class="form-control " name='company' value="<?php echo $companie_name ?>">
                   <div class="form-row">
-                        <div class="form-group col-md-4">
+                        <div id="date_column" class="form-group col-md-4">
                               <div class="input-group mb-2">
                                     <div class="input-group-prepend">
                                           <div class="input-group-text"><span class="red">*</span>תאריך</div>
@@ -24,7 +41,7 @@
                                     <input type='date' class="form-control" name='date' required>
                               </div>
                         </div>
-                        <div class="form-group col-md-4">
+                        <div id="start_time_column" class="form-group col-md-4">
                               <div class="input-group mb-2">
                                     <div class="input-group-prepend">
                                           <div class="input-group-text">שעת התחלה</div>
@@ -32,7 +49,7 @@
                                     <input type='time' class="form-control" name='start_time'>
                               </div>
                         </div>
-                        <div class="form-group col-md-4">
+                        <div id="end_time_column" class="form-group col-md-4">
                               <div class="input-group mb-2">
                                     <div class="input-group-prepend">
                                           <div class="input-group-text">שעת סיום</div>
@@ -43,7 +60,7 @@
                   </div>
 
                   <div class="form-row">
-                        <div class="form-group col-md-4">
+                        <div id="client_num_column" class="form-group col-md-4">
                               <div class="input-group mb-2">
                                     <div class="input-group-prepend">
                                           <div class="input-group-text">מספר לקוח</div>
@@ -51,7 +68,7 @@
                                     <input type='text' class="form-control" name='client_num'>
                               </div>
                         </div>
-                        <div class="form-group col-md-4">
+                        <div id="issue_num_column" class="form-group col-md-4">
                               <div class="input-group mb-2">
                                     <div class="input-group-prepend">
                                           <div class="input-group-text">מספר פניה \ תקלה</div>
@@ -59,7 +76,7 @@
                                     <input type='text' id='issue_num' class="form-control" name='issue_num'>
                               </div>
                         </div>
-                        <div class="form-group col-md-4">
+                        <div id="issue_kind_column" class="form-group col-md-4">
                               <div class="input-group mb-2">
                                     <div class="input-group-prepend">
                                           <div class="input-group-text">סוג תקלה \ התקנה</div>
@@ -70,7 +87,7 @@
                   </div>
 
                   <div class="form-row">
-                        <div class="form-group col-md-6">
+                        <div id="client_name_column" class="form-group col-md-6">
                               <div class="input-group mb-2">
                                     <div class="input-group-prepend">
                                           <div class="input-group-text">שם לקוח</div>
@@ -78,7 +95,7 @@
                                     <input type='text' class="form-control" name='client_name'>
                               </div>
                         </div>
-                        <div class="form-group col-md-6">
+                        <div id="place_column" class="form-group col-md-6">
                               <div class="input-group mb-2">
                                     <div class="input-group-prepend">
                                           <div class="input-group-text">מיקום</div>
@@ -89,7 +106,7 @@
                   </div>
 
                   <div class="form-row">
-                        <div class="form-group col-md-6">
+                        <div id="manager_column" class="form-group col-md-6">
                               <div class="input-group mb-2">
                                     <div class="input-group-prepend">
                                           <div class="input-group-text">אחראי</div>
@@ -97,7 +114,7 @@
                                     <input type='text' class="form-control" name='manager'>
                               </div>
                         </div>
-                        <div class="form-group col-md-6">
+                        <div id="contact_name_column" class="form-group col-md-6">
                               <div class="input-group mb-2">
                                     <div class="input-group-prepend">
                                           <div class="input-group-text">איש קשר</div>
@@ -106,35 +123,35 @@
                               </div>
                         </div>
                   </div>
-                  <div class="form-group row">
+                  <div id="activity_text_column" class="form-group row">
                         <label for="activity_text" class="col-sm-2 col-form-label ">תיאור תקלה \ פניה</label>
                         <div class="col-sm-10">
                               <textarea class="form-control" name="activity_text" cols="10" rows="6"></textarea>
                         </div>
                   </div>
 
-                  <div class="form-group row">
+                  <div id="checking_text_column" class="form-group row">
                         <label for="checking_text" class="col-sm-2 col-form-label ">תוצאות הבדיקה</label>
                         <div class="col-sm-10">
                               <textarea class="form-control" name="checking_text" cols="10" rows="2"></textarea>
                         </div>
                   </div>
 
-                  <div class="form-group row">
+                  <div id="summary_text_column" class="form-group row">
                         <label for="summary_text" class="col-sm-2 col-form-label ">סיכום</label>
                         <div class="col-sm-10">
                               <textarea class="form-control" name="summary_text" cols="10" rows="2"></textarea>
                         </div>
                   </div>
 
-                  <div class="form-group row">
+                  <div id="remarks_text_column" class="form-group row">
                         <label for="remarks_text" class="col-sm-2 col-form-label ">הערות</label>
                         <div class="col-sm-10">
                               <textarea class="form-control" name="remarks_text" cols="10" rows="2"></textarea>
                         </div>
                   </div>
 
-                  <div class="form-group row">
+                  <div id="recommendations_text_column" class="form-group row">
                         <label for="recommendations_text" class="col-sm-2 col-form-label ">המלצות</label>
                         <div class="col-sm-10">
                               <textarea class="form-control" name="recommendations_text" cols="10" rows="2"></textarea>
@@ -176,17 +193,17 @@
                   <hr />
 
 
-                  <div class="form-group row">
+                  <div id="files_column" class="form-group row">
                         <label for="attachments" class="col-sm-2 col-form-label ">קבצים נוספים</label>
                         <div class="col-sm-10">
-                              <input id="fileupload" style="display:none;" type="file" name="files" data-url="/production/do_upload/<?php echo $_GET['company'] ?>" />
+                              <input id="fileupload" style="display:none;" type="file" name="files" data-url="/production/do_upload/<?php echo $companie_name ?>" />
                               <input type="hidden" id="attachments" value="" name="attachments" />
                               <div id='files'></div>
                               <button class="btn btn-outline-secondary col-sm-2 mt-2 mt-md-0" type="button" onclick="document.getElementById('fileupload').click();">העלה</button>
                         </div>
                   </div>
                   <hr />
-                  <div class="form-row row">
+                  <div id="details_column" class="form-row row">
                         <div class="form-group row col-md-9 mr-2">
                               <label for="details" class="col-sm-2 col-form-label ">הערות (CSV)</label>
                               <div class="col-sm-10">
@@ -227,7 +244,7 @@
             //startup scripts here
             $("#sign-canvas").jqScribble();
             $("#sign-canvas").data('jqScribble').update({
-                  width: $( '.container' ).width(),
+                  width: $('.container').width(),
                   height: 300
             });
 

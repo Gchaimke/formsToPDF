@@ -17,6 +17,10 @@ if (isset($users)) {
 <script src="<?php echo base_url('assets/js/jQUpload/jquery.iframe-transport.js'); ?>"></script>
 <script src="<?php echo base_url('assets/js/jQUpload/jquery.fileupload.js'); ?>"></script>
 <style>
+      <?php echo $hide_filds ?>.hiden {
+            display: none !important;
+      }
+
       .file {
             position: relative;
             background: linear-gradient(to right, lightblue 50%, transparent 50%);
@@ -35,6 +39,12 @@ if (isset($users)) {
             padding: 5px;
             color: black;
       }
+
+      img.logo {
+            width: 100px;
+            margin-right: 230px;
+            margin-top: -65px;
+      }
 </style>
 <div id="form-messages" class='alert hidden' role='alert'></div>
 <main role="main">
@@ -42,11 +52,11 @@ if (isset($users)) {
       <div class="jumbotron">
             <div class="container">
                   <center>
-                        <h5>עדכון דוח </h5>
+                        <h5>עדכון דוח </h5><img class="logo" src="<?php echo $logo ?>" />
                   </center>
             </div>
       </div>
-      <div class="container">
+      <div class=" container">
 
             <center>
                   <?php
@@ -112,7 +122,7 @@ if (isset($users)) {
                         </div>
 
                         <div class="form-row">
-                              <div class="form-group col-md-4">
+                              <div id="date_column" class="form-group col-md-4">
                                     <div class="input-group mb-2">
                                           <div class="input-group-prepend">
                                                 <div class="input-group-text">תאריך</div>
@@ -121,7 +131,7 @@ if (isset($users)) {
 
                                     </div>
                               </div>
-                              <div class="form-group col-md-4">
+                              <div id="start_time_column" class="form-group col-md-4">
                                     <div class="input-group mb-2">
                                           <div class="input-group-prepend">
                                                 <div class="input-group-text">שעת התחלה</div>
@@ -129,7 +139,7 @@ if (isset($users)) {
                                           <input type='time' class="form-control" name='start_time' value="<?php echo $form_data['start_time'] ?>">
                                     </div>
                               </div>
-                              <div class="form-group col-md-4">
+                              <div id="end_time_column" class="form-group col-md-4">
                                     <div class="input-group mb-2">
                                           <div class="input-group-prepend">
                                                 <div class="input-group-text">שעת סיום</div>
@@ -140,7 +150,7 @@ if (isset($users)) {
                         </div>
 
                         <div class="form-row">
-                              <div class="form-group col-md-4">
+                              <div id="client_num_column" class="form-group col-md-4">
                                     <div class="input-group mb-2">
                                           <div class="input-group-prepend">
                                                 <div class="input-group-text">מספר לקוח</div>
@@ -148,7 +158,7 @@ if (isset($users)) {
                                           <input type='text' class="form-control" name='client_num' value="<?php echo htmlspecialchars($form_data['client_num']) ?>">
                                     </div>
                               </div>
-                              <div class="form-group col-md-4">
+                              <div id="issue_num_column" class="form-group col-md-4">
                                     <div class="input-group mb-2">
                                           <div class="input-group-prepend">
                                                 <div class="input-group-text">מספר פניה \ תקלה</div>
@@ -156,7 +166,7 @@ if (isset($users)) {
                                           <input type='text' class="form-control" name='issue_num' value="<?php echo htmlspecialchars($form_data['issue_num']) ?>">
                                     </div>
                               </div>
-                              <div class="form-group col-md-4">
+                              <div id="issue_kind_column" class="form-group col-md-4">
                                     <div class="input-group mb-2">
                                           <div class="input-group-prepend">
                                                 <div class="input-group-text">סוג תקלה \ התקנה</div>
@@ -167,7 +177,7 @@ if (isset($users)) {
                         </div>
 
                         <div class="form-row">
-                              <div class="form-group col-md-6">
+                              <div id="client_name_column" class="form-group col-md-6">
                                     <div class="input-group mb-2">
                                           <div class="input-group-prepend">
                                                 <div class="input-group-text">שם לקוח</div>
@@ -175,7 +185,7 @@ if (isset($users)) {
                                           <input type='text' class="form-control" name='client_name' value="<?php echo htmlspecialchars($form_data['client_name']) ?>">
                                     </div>
                               </div>
-                              <div class="form-group col-md-6">
+                              <div id="place_column" class="form-group col-md-6">
                                     <div class="input-group mb-2">
                                           <div class="input-group-prepend">
                                                 <div class="input-group-text">מיקום</div>
@@ -186,7 +196,7 @@ if (isset($users)) {
                         </div>
 
                         <div class="form-row">
-                              <div class="form-group col-md-6">
+                              <div id="manager_column" class="form-group col-md-6">
                                     <div class="input-group mb-2">
                                           <div class="input-group-prepend">
                                                 <div class="input-group-text">אחראי</div>
@@ -194,7 +204,7 @@ if (isset($users)) {
                                           <input type='text' class="form-control" name='manager' value="<?php echo htmlspecialchars($form_data['manager']) ?>">
                                     </div>
                               </div>
-                              <div class="form-group col-md-6">
+                              <div id="contact_name_column" class="form-group col-md-6">
                                     <div class="input-group mb-2">
                                           <div class="input-group-prepend">
                                                 <div class="input-group-text">איש קשר</div>
@@ -204,35 +214,35 @@ if (isset($users)) {
                               </div>
                         </div>
 
-                        <div class="form-group row">
+                        <div id="activity_text_column" class="form-group row">
                               <label for="activity_text" class="col-sm-2 col-form-label ">תיאור תקלה \ פניה</label>
                               <div class="col-sm-10">
                                     <textarea class="form-control" name="activity_text" cols="10" rows="6" placeholder="תיאור תקלה \ פניה"><?php echo $form_data['activity_text'] ?></textarea>
                               </div>
                         </div>
 
-                        <div class="form-group row">
+                        <div id="checking_text_column" class="form-group row">
                               <label for="checking_text" class="col-sm-2 col-form-label ">תוצאות הבדיקה</label>
                               <div class="col-sm-10">
                                     <textarea class="form-control" name="checking_text" cols="10" rows="2" placeholder="תוצאות הבדיקה"><?php echo $form_data['checking_text'] ?></textarea>
                               </div>
                         </div>
 
-                        <div class="form-group row">
+                        <div id="summary_text_column" class="form-group row">
                               <label for="summary_text" class="col-sm-2 col-form-label ">סיכום</label>
                               <div class="col-sm-10">
                                     <textarea class="form-control" name="summary_text" cols="10" rows="2" placeholder="סיכום"><?php echo $form_data['summary_text'] ?></textarea>
                               </div>
                         </div>
 
-                        <div class="form-group row">
+                        <div id="remarks_text_column" class="form-group row">
                               <label for="remarks_text" class="col-sm-2 col-form-label ">הערות</label>
                               <div class="col-sm-10">
                                     <textarea class="form-control" name="remarks_text" cols="10" rows="2" placeholder="הערות"><?php echo $form_data['remarks_text'] ?></textarea>
                               </div>
                         </div>
 
-                        <div class="form-group row">
+                        <div id="recommendations_text_column" class="form-group row">
                               <label for="recommendations_text" class="col-sm-2 col-form-label ">המלצות</label>
                               <div class="col-sm-10">
                                     <textarea class="form-control" name="recommendations_text" cols="10" rows="2" placeholder="המלצות"><?php echo $form_data['recommendations_text'] ?></textarea>
@@ -280,7 +290,7 @@ if (isset($users)) {
                         </div>
                         <hr />
 
-                        <div class="form-group row">
+                        <div id="files_column" class="form-group row">
                               <label for="attachments" class="col-sm-2 col-form-label ">קבצים נוספים</label>
                               <div class="col-sm-10">
                                     <input id="fileupload" style="display:none;" type="file" name="files" data-url="/production/do_upload/" />
@@ -390,10 +400,12 @@ if (isset($users)) {
             });
       });
 
-      $('#save_sign').click(function(){
+      $('#save_sign').click(function() {
             $(".client-sign-form").toggle();
             $("#save_btn").click();
-            setTimeout(function () { location.reload();}, 2000);
+            setTimeout(function() {
+                  location.reload();
+            }, 2000);
       });
 
       $('#show_csv').click(function() {

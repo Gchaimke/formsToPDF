@@ -80,6 +80,10 @@ class Admin_model extends CI_Model
                 'constraint' => 500,
                 'null' => TRUE
             ),
+            'view_filds' => array(
+                'type' => 'TEXT',
+                'null' => TRUE
+            ),
             'form_header' => array(
                 'type' => 'VARCHAR',
                 'constraint' => 500,
