@@ -24,6 +24,9 @@ class Production extends CI_Controller
     public function new_form($company = '')
     {
         $data = array();
+        if($company != ''){
+            $company =urldecode($company);
+        }
         $data['companie'] = $this->Companies_model->getCompanies('', $company)[0];
         $data['hide_filds'] = $this->hide_filds($data['companie']['view_filds']);
         $data['user'] = $this->Users_model->getUser($this->session->userdata['logged_in']['id']);
