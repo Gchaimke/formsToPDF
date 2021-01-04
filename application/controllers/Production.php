@@ -212,22 +212,21 @@ class Production extends CI_Controller
         $this->load->library('pagination');
         $url = 'production/manage_forms/';
         $params = array();
-        $params['creator'] = isset($_GET['creator'])?  $_GET['creator']:'';
-        $params['company'] = isset($_GET['company'])? $_GET['company']:''; 
-        $params['date'] = isset($_GET['date'])? $_GET['date']:''; 
+        $params['creator'] = isset($_GET['creator']) ?  $_GET['creator'] : '';
+        $params['company'] = isset($_GET['company']) ? $_GET['company'] : '';
+        $params['year'] = isset($_GET['year']) ? $_GET['year'] : '';
+        $params['month'] = isset($_GET['month']) ? $_GET['month'] : '';
         $limit_per_page = 40;
         $segment = 3;
         $start_index = ($this->uri->segment($segment)) ? $this->uri->segment($segment) : 0;
-        $total_records = $this->Production_model->get_total($params['creator'],$params['company'],$params['date']);
+        $total_records = $this->Production_model->get_total($params['creator'], $params['company'], $params['year'], $params['month']);
         if ($total_records > 0) {
-            $params["results"] = $this->Production_model->get_current_forms_records($limit_per_page, $start_index,$params['creator'],$params['company'],$params['date']);
+            $params["results"] = $this->Production_model->get_current_forms_records($limit_per_page, $start_index, $params['creator'], $params['company'], $params['year'], $params['month']);
             $this->pagination->initialize($this->pagination_config($total_records, $limit_per_page, $url, $segment));
             $params["links"] = $this->pagination->create_links();
         }
         $params['users'] = $this->Users_model->getUsers();
         $params['companies'] = $this->Companies_model->getCompanies();
-
-
         $this->load->view('header');
         $this->load->view('main_menu', $params);
         $this->load->view('production/manage_forms', $params);

@@ -40,33 +40,51 @@ $year = substr($date, 0, 4);
 			<div id='searchResult' class='rtl text-center'></div>
 		</form>
 		<div class="form-row mb-3">
-			<div class="input-group col-md-2">
-				<div class="input-group-prepend">
-					<div class="input-group-text">יוצר</div>
+			<div class="form-group col-md-2">
+				<div class="input-group mb-2">
+					<div class="input-group-prepend">
+						<div class="input-group-text">יוצר</div>
+					</div>
+					<select class="creator_filter">
+						<option></option>
+						<?php foreach ($users as $user) {
+							echo "<option value='{$user['id']}'>{$user['view_name']}</option>";
+						} ?>
+					</select>
 				</div>
-				<select class="creator_filter">
-					<option></option>
-					<?php foreach ($users as $user) {
-						echo "<option value='{$user['id']}'>{$user['view_name']}</option>";
-					} ?>
-				</select>
 			</div>
-			<div class="input-group col-md-2">
-				<div class="input-group-prepend">
-					<div class="input-group-text">חברה</div>
+			<div class="form-group col-md-2">
+				<div class="input-group mb-2">
+					<div class="input-group-prepend">
+						<div class="input-group-text">חברה</div>
+					</div>
+					<select class="company_filter">
+						<option></option>
+						<?php foreach ($companies as $company) {
+							echo "<option value='{$company['name']}'>{$company['name']}</option>";
+						} ?>
+					</select>
 				</div>
-				<select class="company_filter">
-					<option></option>
-					<?php foreach ($companies as $company) {
-						echo "<option value='{$company['name']}'>{$company['name']}</option>";
-					} ?>
-				</select>
 			</div>
-			<div class="input-group col-md-4">
-				<div class="input-group-prepend">
-					<div class="input-group-text">חודש</div>
+			<div class="form-group col-md-2">
+				<div class="input-group mb-2">
+					<div class="input-group-prepend">
+						<div class="input-group-text">חודש</div>
+					</div>
+					<select id="month-dropdown" class="month_filter">
+						<option></option>
+					</select>
 				</div>
-				<input type="date" class="date_filter">
+			</div>
+			<div class="form-group col-md-2">
+				<div class="input-group mb-2">
+					<div class="input-group-prepend">
+						<div class="input-group-text">שנה</div>
+					</div>
+					<select id="yaer-dropdown" class="year_filter">
+						<option></option>
+					</select>
+				</div>
 			</div>
 			<div class="form-group col-md-1">
 				<div class="input-group">
@@ -141,14 +159,20 @@ $year = substr($date, 0, 4);
 <script>
 	var creator = "";
 	var company = "";
-	var date = ''
+	var month = '';
+	var year = '';
 	$('.creator_filter').on('change', function() {
 		creator = $('.creator_filter').val();
 		update_filter()
 	});
 
-	$('.date_filter').on('change', function() {
-		date = $('.date_filter').val();
+	$('.year_filter').on('change', function() {
+		year = $('.year_filter').val();
+		update_filter()
+	});
+
+	$('.month_filter').on('change', function() {
+		month = $('.month_filter').val();
 		update_filter()
 	});
 
@@ -158,7 +182,7 @@ $year = substr($date, 0, 4);
 	});
 
 	function update_filter() {
-		$('.filter_button').attr("href", '?creator=' + creator + '&company=' + company + '&date=' + date);
+		$('.filter_button').attr("href", '?creator=' + creator + '&company=' + company + '&year=' + year + '&month=' + month);
 	}
 
 	function deleteForm(id) {
@@ -199,4 +223,9 @@ $year = substr($date, 0, 4);
 			formSearch();
 		}
 	};
+
+	window.onload = function() {
+		set_years();
+		set_month();
+	}
 </script>

@@ -186,15 +186,15 @@ $('#ajax-form').submit(function (event) {
         url: $('#ajax-form').attr('action'),
         data: formData
     }).done(function (response) {
-            // Make sure that the formMessages div has the 'success' class.
-            $('#form-messages').addClass('alert-success');
-            // Set the message text.
-            $('#form-messages').text(response).fadeIn(1000).delay(3000).fadeOut(1000); //show message
-            setTimeout(function () {
-                if (reload){
-                    location.reload();
-                }
-            }, 3000); //will call the function after 2 secs.
+        // Make sure that the formMessages div has the 'success' class.
+        $('#form-messages').addClass('alert-success');
+        // Set the message text.
+        $('#form-messages').text(response).fadeIn(1000).delay(3000).fadeOut(1000); //show message
+        setTimeout(function () {
+            if (reload) {
+                location.reload();
+            }
+        }, 3000); //will call the function after 2 secs.
     }).fail(function () {
         // Make sure that the formMessages div has the 'error' class.
         $('#form-messages').addClass('alert-danger');
@@ -278,4 +278,33 @@ function sleep(milliseconds) {
     do {
         currentDate = Date.now();
     } while (currentDate - date < milliseconds);
+}
+
+function set_years() {
+    let yearDropdown = document.getElementById('yaer-dropdown');
+    if (yearDropdown !== null) {
+        let currentYear = new Date().getFullYear();
+        let earliestYear = 2020;
+        while (currentYear >= earliestYear) {
+            let dateOption = document.createElement('option');
+            dateOption.text = currentYear;
+            dateOption.value = currentYear;
+            yearDropdown.add(dateOption);
+            currentYear -= 1;
+        }
+    }
+}
+
+function set_month() {
+    let monthDropdown = document.getElementById('month-dropdown');
+    if (monthDropdown !== null) {
+        let i = 1;
+        while (i <= 12) {
+            let dateOption = document.createElement('option');
+            dateOption.text = i;
+            dateOption.value = i;
+            monthDropdown.add(dateOption);
+            i++;
+        }
+    }
 }
