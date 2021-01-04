@@ -94,13 +94,13 @@ class Production_model extends CI_Model
 		}
 	}
 
-	function searchFormByMonth($search = '1',$userid='')
+	function searchFormByMonth($search = '1', $userid = '')
 	{
 		if ($this->db->table_exists('forms')) {
 			if (is_numeric($search)) {
 				$condition = "MONTH(date) = $search";
-				if($userid!=''){
-					$condition .=" AND creator_id = $userid";
+				if ($userid != '') {
+					$condition .= " AND creator_id = $userid";
 				}
 				$this->db->where($condition);
 				$this->db->select('*');
@@ -114,34 +114,61 @@ class Production_model extends CI_Model
 		}
 	}
 
-	function getMonthTotal($month = '1',$userid='1')
+	function getMonthTotal($month, $year, $userid = '')
 	{
 		if ($this->db->table_exists('forms')) {
-			if (is_numeric($month)) {
-				$condition = "MONTH(date) = $month";
-				if($userid!=''){
-					$condition .=" AND creator_id = $userid";
-				}
-				$this->db->where($condition);
-				$this->db->select('SUM(price)');
-				$this->db->from('forms');
-				$this->db->order_by('date', 'DESC');
-				$this->db->order_by('start_time', 'DESC');
-				$q = $this->db->get();
-				$response = $q->result_array();
+			$this->db->where("MONTH(date) = $month");
+			$this->db->where("YEAR(date) = $year");
+			if ($userid != '') {
+				$this->db->where("creator_id = $userid");
 			}
+			$this->db->select('SUM(price)');
+			$this->db->from('forms');
+			$this->db->order_by('date', 'DESC');
+			$this->db->order_by('start_time', 'DESC');
+			$q = $this->db->get();
+			$response = $q->result_array();
+
 			return $response;
 		}
 	}
 
-	public function get_total()
+	public function get_total($creator_id = '', $company_name = '', $date = '')
 	{
+		if ($creator_id != '') {
+			$this->db->where("creator_id = $creator_id");
+		}
+
+		if ($company_name != '') {
+			$company = urldecode($company_name);
+			$this->db->where("company = \"$company\"");
+		}
+
+		if ($date != '') {
+			$month = substr($date, 5, 2);
+			$year = substr($date, 0, 4);
+			$this->db->where("MONTH(date) = $month");
+			$this->db->where("YEAR(date) = $year");
+		}
+
 		$this->db->from('forms');
 		return $this->db->count_all_results();
 	}
 
-	public function get_current_forms_records($limit, $start)
+	public function get_current_forms_records($limit, $start, $creator_id = '', $company_name = '', $month = '')
 	{
+		if ($creator_id != '') {
+			$this->db->where("creator_id = $creator_id");
+		}
+
+		if ($company_name != '') {
+			$company = urldecode($company_name);
+			$this->db->where("company = \"$company\"");
+		}
+
+		if ($month != '' && is_numeric($month)) {
+			$this->db->where("MONTH(date) = $month");
+		}
 		$this->db->limit($limit, $start);
 		$this->db->order_by('date', 'DESC');
 		$this->db->order_by('start_time', 'DESC');

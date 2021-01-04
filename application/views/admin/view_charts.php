@@ -13,15 +13,15 @@ $dataSets = "";
 $usersButtons = "";
 if ($users) {
     foreach ($users as $user) {
-        $userMont = ${'user_' . $user['id']};
+        $userMonth = ${'user_' . $user['id']};
         $userColor = 'user' . $user['id'];
-        if ($userMont != ',,,,,,,,,,,,') {
+        if ($userMonth != ',,,,,,,,,,,,') {
             $dataSets .= "{
         label:'" . $user['view_name'] . "',
         backgroundColor: color(window.chartColors.$userColor).alpha(0.7).rgbString(),
         borderColor: window.chartColors.$userColor,
         borderWidth: 1,
-        data: [$userMont]
+        data: [$userMonth]
         },";
             if (!isset($csv_user)) {
                 $usersButtons .= "<a href='/admin/view_charts/{$user['id']}' class='btn btn-outline-info'>{$user['view_name']}</a>";
@@ -43,7 +43,42 @@ if ($users) {
             </center>
         </div>
     </div>
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">שם</div>
+                </div>
+                <select class="creator_filter col-md-6">
+                    <option></option>
+                    <?php foreach ($users as $user) {
+                        echo "<option value='{$user['id']}'>{$user['view_name']}</option>";
+                    } ?>
+                </select>
+            </div>
+        </div>
+        <div class="form-group col-md-3">
+            <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">שנה</div>
+                </div>
+                <input type="date" class="date_filter col-md-6">
+            </div>
+        </div>
+        <div class="form-group col-md-3">
+            <div class="input-group mb-2">
+                <a href="" class="filter_button btn btn-info" style="color: azure;" onclick=' '>סינון</a>
+            </div>
+        </div>
 
+        <div class="form-group col-md-3">
+            <div class="input-group mb-2">
+                <a href='/admin/view_charts/' class='btn btn-outline-info'>All Users</a>
+                <?php //echo $usersButtons; 
+                ?>
+            </div>
+        </div>
+    </div>
     <a id="show_csv" href='#' class='btn btn-outline-info'><i class="fa fa-file-excel-o"></i></a>
     <div id="csv_month" style="display:none;">
         <?php
@@ -56,16 +91,27 @@ if ($users) {
         }
         ?>
     </div>
-    <div class="left">
-        <a href='/admin/view_charts/' class='btn btn-outline-info'>All Users</a>
-        <?php echo $usersButtons; ?>
-    </div>
     <div id="container" style="position: relative; height:40vh; width:80vw;margin: auto;">
         <canvas id="canvas" dir="rtl"></canvas>
     </div>
 
 </main>
 <script>
+    var creator = "";
+    var year = '';
+    $('.creator_filter').on('change', function() {
+        creator = $('.creator_filter').val();
+        update_filter()
+    });
+
+    $('.date_filter').on('change', function() {
+        year = $('.date_filter').val();
+        update_filter()
+    });
+
+    function update_filter() {
+        $('.filter_button').attr("href", creator + '?year=' + year);
+    }
     $('#show_csv').click(function() {
         $('#csv_month').toggle();
     });
@@ -98,13 +144,13 @@ if ($users) {
                     yAxes: [{
                         ticks: {
                             beginAtZero: true,
-                            fontSize:16
+                            fontSize: 16
                         }
                     }],
                     xAxes: [{
                         ticks: {
-                            fontSize:16,
-                            fontStyle:'bold'
+                            fontSize: 16,
+                            fontStyle: 'bold'
                         }
                     }]
                 },

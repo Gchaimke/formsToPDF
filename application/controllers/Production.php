@@ -24,8 +24,8 @@ class Production extends CI_Controller
     public function new_form($company = '')
     {
         $data = array();
-        if($company != ''){
-            $company =urldecode($company);
+        if ($company != '') {
+            $company = urldecode($company);
         }
         $data['companie'] = $this->Companies_model->getCompanies('', $company)[0];
         $data['hide_filds'] = $this->hide_filds($data['companie']['view_filds']);
@@ -110,7 +110,7 @@ class Production extends CI_Controller
         $data = array();
         $data['form_data'] = $this->Production_model->getForm($id);
         $data['companies'] = $this->Companies_model->getCompanies();
-        $current_company = $this->Companies_model->getCompanies('',$data['form_data'][0]['company'])[0];
+        $current_company = $this->Companies_model->getCompanies('', $data['form_data'][0]['company'])[0];
         $data['hide_filds'] = $this->hide_filds($current_company['view_filds']);
         $data['logo'] = $current_company['logo'];
         $data['users'] = $this->Users_model->getUsers();
@@ -210,50 +210,52 @@ class Production extends CI_Controller
     public function manage_forms()
     {
         $this->load->library('pagination');
+        $url = 'production/manage_forms/';
         $params = array();
-        $config = array();
-        $limit_per_page = 20;
-        define('SEGMENT', 3);
-        $start_index = ($this->uri->segment(SEGMENT)) ? $this->uri->segment(SEGMENT) : 0;
-        $total_records = $this->Production_model->get_total();
+        $params['creator'] = isset($_GET['creator'])?  $_GET['creator']:'';
+        $params['company'] = isset($_GET['company'])? $_GET['company']:''; 
+        $params['date'] = isset($_GET['date'])? $_GET['date']:''; 
+        $limit_per_page = 40;
+        $segment = 3;
+        $start_index = ($this->uri->segment($segment)) ? $this->uri->segment($segment) : 0;
+        $total_records = $this->Production_model->get_total($params['creator'],$params['company'],$params['date']);
         if ($total_records > 0) {
-            $params["results"] = $this->Production_model->get_current_forms_records($limit_per_page, $start_index);
-
-            $config['base_url'] = base_url() . 'production/manage_forms/';
-            $config['total_rows'] = $total_records;
-            $config['per_page'] = $limit_per_page;
-            $config["uri_segment"] = SEGMENT;
-
-            $config['full_tag_open'] = '<ul class="pagination right">';
-            $config['full_tag_close'] = '</ul>';
-
-            $config['cur_tag_open'] = '<li class="page-item active "><a class="page-link">';
-            $config['cur_tag_close'] = '</a></li>';
-
-            $config['num_tag_open'] = '<li class="page-item num-link">';
-            $config['num_tag_close'] = '</li>';
-
-            $config['first_tag_open'] = '<li class="page-item num-link">';
-            $config['first_tag_close'] = '</li>';
-
-            $config['last_tag_open'] = '<li class="page-item num-link">';
-            $config['last_tag_close'] = '</li>';
-
-            $config['next_tag_open'] = '<li class="page-item num-link">';
-            $config['next_tag_close'] = '</li>';
-
-            $config['prev_tag_open'] = '<li class="page-item num-link">';
-            $config['prev_tag_close'] = '</li>';
-
-            $this->pagination->initialize($config);
-
+            $params["results"] = $this->Production_model->get_current_forms_records($limit_per_page, $start_index,$params['creator'],$params['company'],$params['date']);
+            $this->pagination->initialize($this->pagination_config($total_records, $limit_per_page, $url, $segment));
             $params["links"] = $this->pagination->create_links();
         }
         $params['users'] = $this->Users_model->getUsers();
+        $params['companies'] = $this->Companies_model->getCompanies();
+
+
         $this->load->view('header');
         $this->load->view('main_menu', $params);
         $this->load->view('production/manage_forms', $params);
         $this->load->view('footer');
+    }
+
+    function pagination_config($total_records, $limit_per_page, $url, $segment)
+    {
+        $config = array();
+        $config['base_url'] = base_url() . $url;
+        $config['total_rows'] = $total_records;
+        $config['per_page'] = $limit_per_page;
+        $config["uri_segment"] = $segment;
+        $config['full_tag_open'] = '<ul class="pagination right">';
+        $config['full_tag_close'] = '</ul>';
+        $config['cur_tag_open'] = '<li class="page-item active "><a class="page-link" url="?creator=&company=">';
+        $config['cur_tag_close'] = '</a></li>';
+        $config['num_tag_open'] = '<li class="page-item num-link">';
+        $config['num_tag_close'] = '</li>';
+        $config['first_tag_open'] = '<li class="page-item num-link">';
+        $config['first_tag_close'] = '</li>';
+        $config['last_tag_open'] = '<li class="page-item num-link">';
+        $config['last_tag_close'] = '</li>';
+        $config['next_tag_open'] = '<li class="page-item num-link">';
+        $config['next_tag_close'] = '</li>';
+        $config['prev_tag_open'] = '<li class="page-item num-link">';
+        $config['prev_tag_close'] = '</li>';
+        return $config;
     }
 
     public function form_search()

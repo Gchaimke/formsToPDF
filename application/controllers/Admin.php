@@ -214,15 +214,17 @@ class Admin extends CI_Controller
 	function view_charts($user_id = '')
 	{
 		$data = array();
+		$data['year'] = isset($_GET['year']) ? $_GET['year'] : '';
+		$year = ($data['year'] != '') ? substr($data['year'], 0, 4) : date('Y');
 		if ($user_id == '') {
 			$data['users'] = $this->Users_model->getusers();
 			foreach ($data['users'] as $user) {
-				$data['user_' . $user['id']] = $this->get_year_stats($user['id']);
+				$data['user_' . $user['id']] = $this->get_year_stats($user['id'], $year);
 			}
 		} else {
 			$data['csv_user'] = $user_id;
 			$data['users'] = $this->Users_model->getUser($user_id);
-			$data['user_' . $user_id] = $this->get_year_stats($user_id);
+			$data['user_' . $user_id] = $this->get_year_stats($user_id, $year);
 		}
 		$this->load->view('header');
 		$this->load->view('main_menu');
@@ -230,14 +232,14 @@ class Admin extends CI_Controller
 		$this->load->view('footer');
 	}
 
-	function get_year_stats($user_id)
+	function get_year_stats($user_id, $year)
 	{
 		$data = '';
 		if ($user_id == '') {
 			$user_id = $this->security->xss_clean($this->input->get('user'));
 		}
 		for ($i = 1; $i < 13; $i++) {
-			$monthSum = $this->Production_model->getMonthTotal($i, $user_id)[0]['SUM(price)'];
+			$monthSum = $this->Production_model->getMonthTotal($i, $year, $user_id)[0]['SUM(price)'];
 			if ($monthSum > 0) {
 				$data .= $monthSum . ',';
 			} else {
