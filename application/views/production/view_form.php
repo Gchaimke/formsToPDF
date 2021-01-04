@@ -63,12 +63,8 @@ if (isset($users)) {
                   if (validation_errors()) {
                         echo "<div class='alert alert-danger' role='alert'>" . validation_errors() . "</div>";
                   }
-                  ?>
-                  <?php if (isset($form_data)) {
+                  if (isset($form_data)) {
                         $form_data = $form_data[0];
-                  ?>
-
-                        <?php
                         $attributes = ['id' => 'ajax-form'];
                         echo form_open("production/update_form", $attributes); ?>
                         <input type='num' class="form-control" name='id' value="<?php echo $form_data['id'] ?>" hidden>

@@ -39,108 +39,103 @@ $year = substr($date, 0, 4);
 			</div>
 			<div id='searchResult' class='rtl text-center'></div>
 		</form>
-		<div class="form-row">
-			<div class="form-group col-md-3">
-				<div class="input-group mb-2">
-					<div class="input-group-prepend">
-						<div class="input-group-text">שם</div>
-					</div>
-					<select class="creator_filter col-md-6">
-						<option></option>
-						<?php foreach ($users as $user) {
-							echo "<option value='{$user['id']}'>{$user['view_name']}</option>";
-						} ?>
-					</select>
+		<div class="form-row mb-3">
+			<div class="input-group col-md-2">
+				<div class="input-group-prepend">
+					<div class="input-group-text">יוצר</div>
 				</div>
+				<select class="creator_filter">
+					<option></option>
+					<?php foreach ($users as $user) {
+						echo "<option value='{$user['id']}'>{$user['view_name']}</option>";
+					} ?>
+				</select>
 			</div>
-			<div class="form-group col-md-3">
-				<div class="input-group mb-2">
-					<div class="input-group-prepend">
-						<div class="input-group-text">חברה</div>
-					</div>
-					<select class="company_filter col-md-6">
-						<option></option>
-						<?php foreach ($companies as $company) {
-							echo "<option value='{$company['name']}'>{$company['name']}</option>";
-						} ?>
-					</select>
+			<div class="input-group col-md-2">
+				<div class="input-group-prepend">
+					<div class="input-group-text">חברה</div>
 				</div>
+				<select class="company_filter">
+					<option></option>
+					<?php foreach ($companies as $company) {
+						echo "<option value='{$company['name']}'>{$company['name']}</option>";
+					} ?>
+				</select>
 			</div>
-			<div class="form-group col-md-3">
-				<div class="input-group mb-2">
-					<div class="input-group-prepend">
-						<div class="input-group-text">חודש</div>
-					</div>
-					<input type="date" class="date_filter col-md-6">
+			<div class="input-group col-md-4">
+				<div class="input-group-prepend">
+					<div class="input-group-text">חודש</div>
 				</div>
+				<input type="date" class="date_filter">
 			</div>
-			<div class="form-group col-md-3">
-				<div class="input-group mb-2">
+			<div class="form-group col-md-1">
+				<div class="input-group">
 					<a href="" class="filter_button btn btn-info" style="color: azure;" onclick=' '>סינון</a>
 				</div>
 			</div>
 		</div>
-		<?php if (isset($results)) { ?>
-			<table class="table">
-				<thead class="thead-dark">
-					<tr>
-						<th scope="col">תאריך</th>
-						<th scope="col">יוצר</th>
-						<th scope="col" class="mobile-hide">מספר לקוח</th>
-						<th scope="col">שם הלקוח</th>
-						<th scope="col" class="mobile-hide">מיקום</th>
-						<th scope="col" class="mobile-hide">סוג תקלה</th>
-						<th scope="col" class="mobile-hide">חברה נותנת שירות</th>
-						<?php if ($user_role == "Admin") {
-							echo '<th scope="col">מחיר</th>';
+	</div>
+	<?php if (isset($results)) { ?>
+		<table class="table">
+			<thead class="thead-dark">
+				<tr>
+					<th scope="col">תאריך</th>
+					<th scope="col">יוצר</th>
+					<th scope="col" class="mobile-hide">מספר לקוח</th>
+					<th scope="col">שם הלקוח</th>
+					<th scope="col" class="mobile-hide">מיקום</th>
+					<th scope="col" class="mobile-hide">סוג תקלה</th>
+					<th scope="col" class="mobile-hide">חברה נותנת שירות</th>
+					<?php if ($user_role == "Admin") {
+						echo '<th scope="col">מחיר</th>';
+					} ?>
+					<th scope="col">ערוך </th>
+					<?php if ($user_role == "Admin") {
+						echo '<th scope="col">מחק</th>';
+					}
+					?>
+				</tr>
+			</thead>
+			<tbody>
+
+				<?php foreach ($results as $data) {
+					if ($user_role != 'Admin' && $data->creator_id != $user_id)
+						continue;
+				?>
+					<tr id='<?php echo $data->id ?>'>
+						<td class="align-middle">
+							<?php
+							echo date("d-m-Y", strtotime($data->date));
+							if ($data->attachments != '') {
+								echo '<i class="mr-1 fa fa-paperclip" aria-hidden="true"></i> ';
+							} ?>
+						</td>
+						<?php foreach ($users as $user) {
+							if ($user['id'] == $data->creator_id) {
+								echo '<td class="align-middle">' . $user['view_name'] . '</td>';
+							}
 						} ?>
-						<th scope="col">ערוך </th>
+						<td class="mobile-hide align-middle"><?php echo $data->client_num ?></td>
+						<td class="align-middle"><?php echo $data->client_name ?></td>
+						<td class="mobile-hide align-middle"><?php echo $data->place ?></td>
+						<td class="mobile-hide align-middle"><?php echo $data->issue_kind ?></td>
+						<td class="mobile-hide align-middle"><?php echo $data->company ?></td>
 						<?php if ($user_role == "Admin") {
-							echo '<th scope="col">מחק</th>';
+							echo '<td class="align-middle">' . $data->price . '</td>';
+						} ?>
+						<td><a href='/production/view_form/<?php echo $data->id ?>' class='btn btn-outline-info'><i class="fa fa-edit"></i></a></td>
+						<?php if ($user_role == "Admin") {
+							echo "<td><button id='" . $data->id . "' class='btn btn-outline-danger' onclick='deleteForm(this.id)'><i class='fa fa-trash'></i></button></td>";
 						}
 						?>
+
 					</tr>
-				</thead>
-				<tbody>
-
-					<?php foreach ($results as $data) {
-						if ($user_role != 'Admin' && $data->creator_id != $user_id)
-							continue;
-					?>
-						<tr id='<?php echo $data->id ?>'>
-							<td class="align-middle">
-								<?php
-								echo date("d-m-Y", strtotime($data->date));
-								if ($data->attachments != '') {
-									echo '<i class="mr-1 fa fa-paperclip" aria-hidden="true"></i> ';
-								} ?>
-							</td>
-							<?php foreach ($users as $user) {
-								if ($user['id'] == $data->creator_id) {
-									echo '<td class="align-middle">' . $user['view_name'] . '</td>';
-								}
-							} ?>
-							<td class="mobile-hide align-middle"><?php echo $data->client_num ?></td>
-							<td class="align-middle"><?php echo $data->client_name ?></td>
-							<td class="mobile-hide align-middle"><?php echo $data->place ?></td>
-							<td class="mobile-hide align-middle"><?php echo $data->issue_kind ?></td>
-							<td class="mobile-hide align-middle"><?php echo $data->company ?></td>
-							<?php if ($user_role == "Admin") {
-								echo '<td class="align-middle">' . $data->price . '</td>';
-							} ?>
-							<td><a href='/production/view_form/<?php echo $data->id ?>' class='btn btn-outline-info'><i class="fa fa-edit"></i></a></td>
-							<?php if ($user_role == "Admin") {
-								echo "<td><button id='" . $data->id . "' class='btn btn-outline-danger' onclick='deleteForm(this.id)'><i class='fa fa-trash'></i></button></td>";
-							}
-							?>
-
-						</tr>
-					<?php } ?>
-				</tbody>
-			</table>
-		<?php } else { ?>
-			<div>אין עדיין דוחות</div>
-		<?php } ?>
+				<?php } ?>
+			</tbody>
+		</table>
+	<?php } else { ?>
+		<div>אין עדיין דוחות</div>
+	<?php } ?>
 	</div>
 </main>
 <script>
