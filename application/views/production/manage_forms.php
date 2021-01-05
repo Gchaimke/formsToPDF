@@ -201,8 +201,9 @@ $year = substr($date, 0, 4);
 	function view_csv_export() {
 		let creator_str = "?creator=" + "<?php echo $creator = (isset($_GET['creator'])) ? $_GET['creator'] : ''; ?>";
 		let year_str = "&year=" + "<?php echo $year = (isset($_GET['year'])) ? $_GET['year'] : ''; ?>";
+		let company_str = "&company=" + "<?php echo $company = (isset($_GET['company'])) ? $_GET['company'] : ''; ?>";
 		for (let index = 1; index <= 12; index++) {
-			$('#csv_month').append("<a target='blank' href='/production/export_to/" + index + creator_str + year_str + "' class='btn btn-outline-info'>" + index + "</a>")
+			$('#csv_month').append("<a target='blank' href='/production/export_to/" + index + creator_str + year_str + company_str + "' class='btn btn-outline-info'>" + index + "</a>")
 		}
 	}
 
