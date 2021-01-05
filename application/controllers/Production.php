@@ -412,9 +412,10 @@ class Production extends CI_Controller
     {
         $user = $this->security->xss_clean($this->input->get('creator'));
         $year = $this->security->xss_clean($this->input->get('year'));
+        $company = $this->security->xss_clean($this->input->get('company'));
 
-        $file_name = "froms_month_" . $str . "_" . $year . "_userid_" . $user . ".csv";
-        $data = $this->Production_model->getMonthFroms($str, $user, $year);
+        $file_name = "froms_month_" . $str . "_" . $year . "_userid_" . $user . "_" . $company . ".csv";
+        $data = $this->Production_model->getMonthFroms($str, $user, $year, $company);
         header('Content-Encoding: UTF-8');
         header("Content-type: text/csv; charset=UTF-8");
         header("Content-Disposition: attachment; filename=$file_name");

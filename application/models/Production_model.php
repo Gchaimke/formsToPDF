@@ -94,7 +94,7 @@ class Production_model extends CI_Model
 		}
 	}
 
-	function getMonthFroms($month = '1', $userid = '', $year = '')
+	function getMonthFroms($month = '1', $userid = '', $year = '',$company='')
 	{
 		if ($this->db->table_exists('forms')) {
 			if (is_numeric($month)) {
@@ -108,6 +108,11 @@ class Production_model extends CI_Model
 			}else{
 				$year = date('Y');
 				$this->db->where("YEAR(date) = $year");
+			}
+
+			if ($company != '') {
+				$company = urldecode($company);
+				$this->db->where("company =\"$company\"");
 			}
 
 			$this->db->select('*');
