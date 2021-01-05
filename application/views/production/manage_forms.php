@@ -46,7 +46,8 @@ $year = substr($date, 0, 4);
 						<div class="input-group-text">יוצר</div>
 					</div>
 					<select class="creator_filter">
-						<option></option>
+						<option value=""></option>
+						<option value="">-בטל סינון-</option>
 						<?php foreach ($users as $user) {
 							echo "<option value='{$user['id']}'>{$user['view_name']}</option>";
 						} ?>
@@ -59,7 +60,8 @@ $year = substr($date, 0, 4);
 						<div class="input-group-text">חברה</div>
 					</div>
 					<select class="company_filter">
-						<option></option>
+						<option value=""></option>
+						<option value="">-בטל סינון-</option>
 						<?php foreach ($companies as $company) {
 							echo "<option value='{$company['name']}'>{$company['name']}</option>";
 						} ?>
@@ -72,7 +74,8 @@ $year = substr($date, 0, 4);
 						<div class="input-group-text">חודש</div>
 					</div>
 					<select id="month-dropdown" class="month_filter">
-						<option></option>
+						<option value=""></option>
+						<option value="">-בטל סינון-</option>
 					</select>
 				</div>
 			</div>
@@ -82,7 +85,8 @@ $year = substr($date, 0, 4);
 						<div class="input-group-text">שנה</div>
 					</div>
 					<select id="yaer-dropdown" class="year_filter">
-						<option></option>
+						<option value=""></option>
+						<option value="">-בטל סינון-</option>
 					</select>
 				</div>
 			</div>
@@ -91,76 +95,85 @@ $year = substr($date, 0, 4);
 					<a href="" class="filter_button btn btn-info" style="color: azure;" onclick=' '>סינון</a>
 				</div>
 			</div>
+			<div class="form-group col-md-1">
+				<div class="input-group">
+					<a href="/production/manage_forms" class="btn btn-info" style="color: azure;" onclick=' '>בטל סינון</a>
+				</div>
+			</div>
 		</div>
-	</div>
-	<?php if (isset($results)) { ?>
-		<table class="table">
-			<thead class="thead-dark">
-				<tr>
-					<th scope="col">תאריך</th>
-					<th scope="col">יוצר</th>
-					<th scope="col" class="mobile-hide">מספר לקוח</th>
-					<th scope="col">שם הלקוח</th>
-					<th scope="col" class="mobile-hide">מיקום</th>
-					<th scope="col" class="mobile-hide">סוג תקלה</th>
-					<th scope="col" class="mobile-hide">חברה נותנת שירות</th>
-					<?php if ($user_role == "Admin") {
-						echo '<th scope="col">מחיר</th>';
-					} ?>
-					<th scope="col">ערוך </th>
-					<?php if ($user_role == "Admin") {
-						echo '<th scope="col">מחק</th>';
-					}
-					?>
-				</tr>
-			</thead>
-			<tbody>
 
-				<?php foreach ($results as $data) {
-					if ($user_role != 'Admin' && $data->creator_id != $user_id)
-						continue;
-				?>
-					<tr id='<?php echo $data->id ?>'>
-						<td class="align-middle">
-							<?php
-							echo date("d-m-Y", strtotime($data->date));
-							if ($data->attachments != '') {
-								echo '<i class="mr-1 fa fa-paperclip" aria-hidden="true"></i> ';
-							} ?>
-						</td>
-						<?php foreach ($users as $user) {
-							if ($user['id'] == $data->creator_id) {
-								echo '<td class="align-middle">' . $user['view_name'] . '</td>';
-							}
-						} ?>
-						<td class="mobile-hide align-middle"><?php echo $data->client_num ?></td>
-						<td class="align-middle"><?php echo $data->client_name ?></td>
-						<td class="mobile-hide align-middle"><?php echo $data->place ?></td>
-						<td class="mobile-hide align-middle"><?php echo $data->issue_kind ?></td>
-						<td class="mobile-hide align-middle"><?php echo $data->company ?></td>
+		<div id="show_csv" class='btn btn-outline-info'><i class="fa fa-file-excel-o"></i></div>
+		<div id="csv_month" style="display:none;">
+		</div>
+		<?php if (isset($results)) { ?>
+			<table class="table">
+				<thead class="thead-dark">
+					<tr>
+						<th scope="col">תאריך</th>
+						<th scope="col">יוצר</th>
+						<th scope="col" class="mobile-hide">מספר לקוח</th>
+						<th scope="col">שם הלקוח</th>
+						<th scope="col" class="mobile-hide">מיקום</th>
+						<th scope="col" class="mobile-hide">סוג תקלה</th>
+						<th scope="col" class="mobile-hide">חברה נותנת שירות</th>
 						<?php if ($user_role == "Admin") {
-							echo '<td class="align-middle">' . $data->price . '</td>';
+							echo '<th scope="col">מחיר</th>';
 						} ?>
-						<td><a href='/production/view_form/<?php echo $data->id ?>' class='btn btn-outline-info'><i class="fa fa-edit"></i></a></td>
+						<th scope="col">ערוך </th>
 						<?php if ($user_role == "Admin") {
-							echo "<td><button id='" . $data->id . "' class='btn btn-outline-danger' onclick='deleteForm(this.id)'><i class='fa fa-trash'></i></button></td>";
+							echo '<th scope="col">מחק</th>';
 						}
 						?>
-
 					</tr>
-				<?php } ?>
-			</tbody>
-		</table>
-	<?php } else { ?>
-		<div>אין עדיין דוחות</div>
-	<?php } ?>
+				</thead>
+				<tbody>
+
+					<?php foreach ($results as $data) {
+						if ($user_role != 'Admin' && $data->creator_id != $user_id)
+							continue;
+					?>
+						<tr id='<?php echo $data->id ?>'>
+							<td class="align-middle">
+								<?php
+								echo date("d-m-Y", strtotime($data->date));
+								if ($data->attachments != '') {
+									echo '<i class="mr-1 fa fa-paperclip" aria-hidden="true"></i> ';
+								} ?>
+							</td>
+							<?php foreach ($users as $user) {
+								if ($user['id'] == $data->creator_id) {
+									echo '<td class="align-middle">' . $user['view_name'] . '</td>';
+								}
+							} ?>
+							<td class="mobile-hide align-middle"><?php echo $data->client_num ?></td>
+							<td class="align-middle"><?php echo $data->client_name ?></td>
+							<td class="mobile-hide align-middle"><?php echo $data->place ?></td>
+							<td class="mobile-hide align-middle"><?php echo $data->issue_kind ?></td>
+							<td class="mobile-hide align-middle"><?php echo $data->company ?></td>
+							<?php if ($user_role == "Admin") {
+								echo '<td class="align-middle">' . $data->price . '</td>';
+							} ?>
+							<td><a href='/production/view_form/<?php echo $data->id ?>' class='btn btn-outline-info'><i class="fa fa-edit"></i></a></td>
+							<?php if ($user_role == "Admin") {
+								echo "<td><button id='" . $data->id . "' class='btn btn-outline-danger' onclick='deleteForm(this.id)'><i class='fa fa-trash'></i></button></td>";
+							}
+							?>
+
+						</tr>
+					<?php } ?>
+				</tbody>
+			</table>
+		<?php } else { ?>
+			<div>אין עדיין דוחות</div>
+		<?php } ?>
 	</div>
+
 </main>
 <script>
-	var creator = "";
-	var company = "";
-	var month = '';
-	var year = '';
+	var creator = "<?php echo $creator = (isset($_GET['creator'])) ? $_GET['creator'] : ''; ?>";
+	var company = "<?php echo $company = (isset($_GET['company'])) ? $_GET['company'] : ''; ?>";
+	var month = "<?php echo $month = (isset($_GET['month'])) ? $_GET['month'] : ''; ?>";
+	var year = "<?php echo $year = (isset($_GET['year'])) ? $_GET['year'] : ''; ?>";
 	$('.creator_filter').on('change', function() {
 		creator = $('.creator_filter').val();
 		update_filter()
@@ -183,6 +196,14 @@ $year = substr($date, 0, 4);
 
 	function update_filter() {
 		$('.filter_button').attr("href", '?creator=' + creator + '&company=' + company + '&year=' + year + '&month=' + month);
+	}
+
+	function view_csv_export() {
+		let creator_str = "?creator=" + "<?php echo $creator = (isset($_GET['creator'])) ? $_GET['creator'] : ''; ?>";
+		let year_str = "&year=" + "<?php echo $year = (isset($_GET['year'])) ? $_GET['year'] : ''; ?>";
+		for (let index = 1; index <= 12; index++) {
+			$('#csv_month').append("<a target='blank' href='/production/export_to/" + index + creator_str + year_str + "' class='btn btn-outline-info'>" + index + "</a>")
+		}
 	}
 
 	function deleteForm(id) {
@@ -227,5 +248,7 @@ $year = substr($date, 0, 4);
 	window.onload = function() {
 		set_years();
 		set_month();
+		view_csv_export();
+		update_filter();
 	}
 </script>

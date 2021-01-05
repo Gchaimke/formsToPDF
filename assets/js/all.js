@@ -308,3 +308,7 @@ function set_month() {
         }
     }
 }
+
+$('#show_csv').click(function() {
+    $('#csv_month').toggle();
+});

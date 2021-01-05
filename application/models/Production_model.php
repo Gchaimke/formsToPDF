@@ -94,22 +94,28 @@ class Production_model extends CI_Model
 		}
 	}
 
-	function searchFormByMonth($search = '1', $userid = '')
+	function getMonthFroms($month = '1', $userid = '', $year = '')
 	{
 		if ($this->db->table_exists('forms')) {
-			if (is_numeric($search)) {
-				$condition = "MONTH(date) = $search";
-				if ($userid != '') {
-					$condition .= " AND creator_id = $userid";
-				}
-				$this->db->where($condition);
-				$this->db->select('*');
-				$this->db->from('forms');
-				$this->db->order_by('date', 'DESC');
-				$this->db->order_by('start_time', 'DESC');
-				$q = $this->db->get();
-				$response = $q->result_array();
+			if (is_numeric($month)) {
+				$this->db->where("MONTH(date) = $month");
 			}
+			if ($userid != '') {
+				$this->db->where("creator_id = $userid");
+			}
+			if ($year != '') {
+				$this->db->where("YEAR(date) = $year");
+			}else{
+				$year = date('Y');
+				$this->db->where("YEAR(date) = $year");
+			}
+
+			$this->db->select('*');
+			$this->db->from('forms');
+			$this->db->order_by('date', 'DESC');
+			$this->db->order_by('start_time', 'DESC');
+			$q = $this->db->get();
+			$response = $q->result_array();
 			return $response;
 		}
 	}

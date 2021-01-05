@@ -43,78 +43,79 @@ if ($users) {
             </center>
         </div>
     </div>
-    <div class="form-row">
-        <div class="form-group col-md-3">
-            <div class="input-group mb-2">
-                <div class="input-group-prepend">
-                    <div class="input-group-text">שם</div>
+    <div class="container rtl col-md-10">
+        <div class="form-row mb-3">
+            <div class="form-group col-md-3">
+                <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">יוצר</div>
+                    </div>
+                    <select class="creator_filter">
+                        <option></option>
+                        <option value="">-בטל סינון-</option>
+                        <?php foreach ($users as $user) {
+                            echo "<option value='{$user['id']}'>{$user['view_name']}</option>";
+                        } ?>
+                    </select>
                 </div>
-                <select class="creator_filter col-md-6">
-                    <option></option>
-                    <?php foreach ($users as $user) {
-                        echo "<option value='{$user['id']}'>{$user['view_name']}</option>";
-                    } ?>
-                </select>
             </div>
-        </div>
-        <div class="form-group col-md-3">
-            <div class="input-group mb-2">
-                <div class="input-group-prepend">
-                    <div class="input-group-text">שנה</div>
+            <div class="form-group col-md-3">
+                <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">שנה</div>
+                    </div>
+                    <select id="yaer-dropdown" class="year_filter">
+                        <option></option>
+                        <option value="">-בטל סינון-</option>
+                    </select>
                 </div>
-                <input type="date" class="date_filter col-md-6">
             </div>
-        </div>
-        <div class="form-group col-md-3">
-            <div class="input-group mb-2">
-                <a href="" class="filter_button btn btn-info" style="color: azure;" onclick=' '>סינון</a>
+            <div class="form-group col-md-3">
+                <div class="input-group">
+                    <a href="" class="filter_button btn btn-info" style="color: azure;" onclick=' '>סינון</a>
+                </div>
             </div>
-        </div>
 
-        <div class="form-group col-md-3">
-            <div class="input-group mb-2">
-                <a href='/admin/view_charts/' class='btn btn-outline-info'>All Users</a>
-                <?php //echo $usersButtons; 
-                ?>
+            <div class="form-group col-md-3">
+                <div class="input-group">
+                    <a href='/admin/view_charts/' class='btn btn-outline-info'>הצג כולם</a>
+                    <?php //echo $usersButtons; 
+                    ?>
+                </div>
             </div>
         </div>
+        <div id="show_csv" class='btn btn-outline-info'><i class="fa fa-file-excel-o"></i></div>
+        <div id="csv_month" style="display:none;">
+        </div>
+        <div id="container" style="position: relative; height:40vh; width:80vw;margin: auto;">
+            <canvas id="canvas" dir="rtl"></canvas>
+        </div>
     </div>
-    <a id="show_csv" href='#' class='btn btn-outline-info'><i class="fa fa-file-excel-o"></i></a>
-    <div id="csv_month" style="display:none;">
-        <?php
-        $csv_user_str = '';
-        if (isset($csv_user)) {
-            $csv_user_str = "?user=$csv_user";
-        }
-        for ($i = 1; $i < 13; $i++) {
-            echo "<a target='blank' href='/production/export_to/$i$csv_user_str' class='btn btn-outline-info'>$i</a>";
-        }
-        ?>
-    </div>
-    <div id="container" style="position: relative; height:40vh; width:80vw;margin: auto;">
-        <canvas id="canvas" dir="rtl"></canvas>
-    </div>
-
 </main>
 <script>
-    var creator = "";
-    var year = '';
+    var creator = "<?php echo $creator = (isset($_GET['creator'])) ? $_GET['creator'] : ''; ?>";
+    var year = "<?php echo $year = (isset($_GET['year'])) ? $_GET['year'] : ''; ?>";
     $('.creator_filter').on('change', function() {
         creator = $('.creator_filter').val();
         update_filter()
     });
 
-    $('.date_filter').on('change', function() {
-        year = $('.date_filter').val();
+    $('.year_filter').on('change', function() {
+        year = $('.year_filter').val();
         update_filter()
     });
 
     function update_filter() {
-        $('.filter_button').attr("href", creator + '?year=' + year);
+        $('.filter_button').attr("href", creator+'?creator='+creator + '&year=' + year);
     }
-    $('#show_csv').click(function() {
-        $('#csv_month').toggle();
-    });
+
+    function view_csv_export() {
+		let creator_str = "?creator=" + "<?php echo $creator = (isset($_GET['creator'])) ? $_GET['creator'] : ''; ?>";
+		let year_str = "&year=" + "<?php echo $creator = (isset($_GET['year'])) ? $_GET['year'] : ''; ?>";
+		for (let index = 1; index <= 12; index++) {
+			$('#csv_month').append("<a target='blank' href='/production/export_to/" + index + creator_str + year_str + "' class='btn btn-outline-info'>" + index + "</a>")
+		}
+	}
 
     window.chartColors = {
         user1: 'rgb(75, 192, 192)', //green
@@ -134,6 +135,10 @@ if ($users) {
     };
 
     window.onload = function() {
+        set_years();
+        set_month();
+        view_csv_export();
+        update_filter();
         var ctx = document.getElementById('canvas').getContext('2d');
         window.myBar = new Chart(ctx, {
             type: 'bar',
