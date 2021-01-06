@@ -51,8 +51,7 @@ if ($users) {
                         <div class="input-group-text">יוצר</div>
                     </div>
                     <select class="creator_filter">
-                        <option></option>
-                        <option value="">-בטל סינון-</option>
+                        <option value="">-ללא סינון-</option>
                         <?php foreach ($users as $user) {
                             echo "<option value='{$user['id']}'>{$user['view_name']}</option>";
                         } ?>
@@ -65,8 +64,7 @@ if ($users) {
                         <div class="input-group-text">שנה</div>
                     </div>
                     <select id="yaer-dropdown" class="year_filter">
-                        <option></option>
-                        <option value="">-בטל סינון-</option>
+                        <option value="">-ללא סינון-</option>
                     </select>
                 </div>
             </div>
@@ -134,11 +132,17 @@ if ($users) {
         datasets: [<?php echo $dataSets ?>]
     };
 
+    function set_options_selected(){
+		$('.creator_filter').val(creator);
+		$('.year_filter').val(year);
+	}
+
     window.onload = function() {
         set_years();
         set_month();
         view_csv_export();
         update_filter();
+        set_options_selected();
         var ctx = document.getElementById('canvas').getContext('2d');
         window.myBar = new Chart(ctx, {
             type: 'bar',

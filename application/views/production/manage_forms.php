@@ -46,8 +46,7 @@ $year = substr($date, 0, 4);
 						<div class="input-group-text">יוצר</div>
 					</div>
 					<select class="creator_filter">
-						<option value=""></option>
-						<option value="">-בטל סינון-</option>
+						<option value="">-ללא סינון-</option>
 						<?php foreach ($users as $user) {
 							echo "<option value='{$user['id']}'>{$user['view_name']}</option>";
 						} ?>
@@ -60,8 +59,7 @@ $year = substr($date, 0, 4);
 						<div class="input-group-text">חברה</div>
 					</div>
 					<select class="company_filter">
-						<option value=""></option>
-						<option value="">-בטל סינון-</option>
+						<option value="">-ללא סינון-</option>
 						<?php foreach ($companies as $company) {
 							echo "<option value='{$company['name']}'>{$company['name']}</option>";
 						} ?>
@@ -74,8 +72,7 @@ $year = substr($date, 0, 4);
 						<div class="input-group-text">חודש</div>
 					</div>
 					<select id="month-dropdown" class="month_filter">
-						<option value=""></option>
-						<option value="">-בטל סינון-</option>
+						<option value="">-ללא סינון-</option>
 					</select>
 				</div>
 			</div>
@@ -85,8 +82,7 @@ $year = substr($date, 0, 4);
 						<div class="input-group-text">שנה</div>
 					</div>
 					<select id="yaer-dropdown" class="year_filter">
-						<option value=""></option>
-						<option value="">-בטל סינון-</option>
+						<option value="">-ללא סינון-</option>
 					</select>
 				</div>
 			</div>
@@ -246,10 +242,18 @@ $year = substr($date, 0, 4);
 		}
 	};
 
+	function set_options_selected(){
+		$('.creator_filter').val(creator);
+		$('.year_filter').val(year);
+		$('.month_filter').val(month);
+		$('.company_filter').val(company);
+	}
+
 	window.onload = function() {
 		set_years();
 		set_month();
 		view_csv_export();
 		update_filter();
+		set_options_selected();
 	}
 </script>
