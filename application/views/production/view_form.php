@@ -289,7 +289,7 @@ if (isset($users)) {
                         <div id="files_column" class="form-group row">
                               <label for="attachments" class="col-sm-2 col-form-label ">קבצים נוספים</label>
                               <div class="col-sm-10">
-                                    <input id="fileupload" style="display:none;" type="file" name="files" data-url="/production/do_upload/" />
+                                    <input id="fileupload" style="display:none;" type="file" name="files" data-url="/production/do_upload/<?=$form_data['id']?>" />
                                     <input id="attachments" type="hidden" class="form-control ltr" name="attachments" value="<?php echo htmlspecialchars($form_data['attachments']) ?>" />
                                     <div id='files'>
                                           <?php $files_arr = explode(',', $form_data['attachments']);
@@ -376,6 +376,7 @@ if (isset($users)) {
 <script>
       $(document).ready(function() {
             //startup scripts here
+            form_id = "<?=$form_data['id']?>";
             startTimer();
             if ($("#sign-canvas").length && $("#client_sign").length) {
                   $("#sign-canvas").jqScribble();

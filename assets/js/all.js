@@ -1,4 +1,5 @@
 var count = 0;
+var form_id = '';
 var autosave = false;
 function showLog(log_data, serial) {
     if (log_data != '') {
@@ -204,7 +205,7 @@ $('#ajax-form').submit(function (event) {
 
 });
 
-function getfolder_name() {
+function getfolder_name_date() {
     var today = new Date();
     var dd = today.getDate();
     var mm = today.getMonth() + 1;
@@ -220,23 +221,21 @@ function getfolder_name() {
 
 
 if ($("#fileupload").length) {
-    var upload_folder = 'Uploads/forms_attachments/' + getfolder_name() + '/';
+    var upload_folder = 'Uploads/forms_attachments/';
     var new_file = '';
-    $("#fileupload").attr('data-url', '/production/do_upload/' + getfolder_name()).fileupload({
+    $("#fileupload").fileupload({
         autoUpload: true,
         add: function (e, data) {
-            new_file = upload_folder + data.files[0].name
+            new_file = upload_folder + form_id + '/' + data.files[0].name
             data.submit();
         },
         progress: function (e, data) {
             //var progress = parseInt((data.loaded / data.total) * 100, 10);
             //data.context.css("background-position-x", 100 - progress + "%");
-            $("#upload_spinner").css("display","inherit");              
+            $("#upload_spinner").css("display", "inherit");
         },
         done: function (e, data) {
-            console.log(data);
-            new_file = upload_folder + data.result;
-            result = data.result.substring(0, 5);
+            new_file = upload_folder + form_id + '/' + data.result;
             if (data.result.includes("error")) {
                 if (data.result.includes("larger")) {
                     alert("אין אפשרות להעלות קובץ גדול מ-2מגה!");
@@ -250,7 +249,7 @@ if ($("#fileupload").length) {
                 setTimeout(function () {
                     data.context = $('<p class="file ltr">').append($('<a target="blank" href="/' + new_file + '">').text(new_file)).appendTo('#files');
                     data.context.addClass("done").append('<a data-file="' + new_file + '" href="#files" class="delete_attachment" onclick="delete_attachment(this)">X</a>');
-                    $("#upload_spinner").css("display","none");
+                    $("#upload_spinner").css("display", "none");
                 }, 2000);
                 if ($('#attachments').val() == '') {
                     $('#attachments').val(new_file);
@@ -258,7 +257,7 @@ if ($("#fileupload").length) {
                     $('#attachments').val($('#attachments').val() + "," + new_file);
                 }
             }
-            
+
         }
     });
 }

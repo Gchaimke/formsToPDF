@@ -194,13 +194,7 @@ if (isset($companie)) {
 
 
                   <div id="files_column" class="form-group row">
-                        <label for="attachments" class="col-sm-2 col-form-label ">קבצים נוספים</label>
-                        <div class="col-sm-10">
-                              <input id="fileupload" style="display:none;" type="file" name="files" data-url="/production/do_upload/<?php echo $companie_name ?>" />
-                              <input type="hidden" id="attachments" value="" name="attachments" />
-                              <div id='files'></div>
-                              <button class="btn btn-outline-secondary col-sm-2 mt-2 mt-md-0" type="button" onclick="document.getElementById('fileupload').click();">העלה</button>
-                        </div>
+                        <label for="attachments" class="col-sm-12 col-form-label ">אין אפשרות להוסיף קבצים טרם שמירת דוח.</label>
                   </div>
                   <hr />
                   <div id="details_column" class="form-row row">
