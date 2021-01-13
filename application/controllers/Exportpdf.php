@@ -125,9 +125,9 @@ class Exportpdf extends CI_Controller
             <td>' . $form['place'] . '</td></tr>';
         }
 
-        if ($print_hours) {
+        if ($form['start_time'] != '00:00:00' || $form['end_time'] != '00:00:00') {
             $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:14px;">שעת התחלה: </td>
-            <td>' . date('G:i', strtotime($form['start_time'])) . '</td></tr>
+            <td>' . date('G:i', strtotime($form['start_time'])) .'</td></tr>
             <tr><td style="width:160px;font-weight:bolder;font-size:14px;">שעת סיום: </td>
             <td>' . date('G:i', strtotime($form['end_time'])) . '</td></tr>';
         }
