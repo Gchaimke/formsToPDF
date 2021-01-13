@@ -226,37 +226,39 @@ if ($("#fileupload").length) {
         autoUpload: true,
         add: function (e, data) {
             new_file = upload_folder + data.files[0].name
-            data.context = $('<p class="file ltr">')
-                .append($('<a target="blank" href="/' + new_file + '">').text(new_file))
-                .appendTo('#files');
             data.submit();
         },
         progress: function (e, data) {
-            var progress = parseInt((data.loaded / data.total) * 100, 10);
-            data.context.css("background-position-x", 100 - progress + "%");
+            //var progress = parseInt((data.loaded / data.total) * 100, 10);
+            //data.context.css("background-position-x", 100 - progress + "%");
+            $("#upload_spinner").css("display","inherit");              
         },
         done: function (e, data) {
+            console.log(data);
             new_file = upload_folder + data.result;
-            result = data.result.substring(0,5);
+            result = data.result.substring(0, 5);
             if (data.result.includes("error")) {
-                if(data.result.includes("larger")){
+                if (data.result.includes("larger")) {
                     alert("אין אפשרות להעלות קובץ גדול מ-2מגה!");
-                }else if(data.result.includes("filetype")){
+                } else if (data.result.includes("filetype")) {
                     alert("אין אפשרות להעלות קובץ מסוג הזה!");
-                }else{
+                } else {
                     alert(data.result.replace(/<\/?[^>]+(>|$)/g, ""));
                 }
                 data.context.addClass("error");
             } else {
                 setTimeout(function () {
+                    data.context = $('<p class="file ltr">').append($('<a target="blank" href="/' + new_file + '">').text(new_file)).appendTo('#files');
                     data.context.addClass("done").append('<a data-file="' + new_file + '" href="#files" class="delete_attachment" onclick="delete_attachment(this)">X</a>');
-                }, 1000);
+                    $("#upload_spinner").css("display","none");
+                }, 2000);
                 if ($('#attachments').val() == '') {
                     $('#attachments').val(new_file);
                 } else {
                     $('#attachments').val($('#attachments').val() + "," + new_file);
                 }
             }
+            
         }
     });
 }
@@ -315,6 +317,6 @@ function set_month() {
     }
 }
 
-$('#show_csv').click(function() {
+$('#show_csv').click(function () {
     $('#csv_month').toggle();
 });

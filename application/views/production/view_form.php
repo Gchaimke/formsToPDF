@@ -300,7 +300,10 @@ if (isset($users)) {
                                           }
                                           ?>
                                     </div>
-                                    <button class="btn btn-outline-success col-sm-2" type="button" onclick="document.getElementById('fileupload').click();">העלה</button>
+                                    <button class="btn btn-outline-success col-sm-2" type="button" onclick="document.getElementById('fileupload').click();">
+                                          <span id="upload_spinner" class="spinner-border spinner-border-sm" style="display: none;" role="status" aria-hidden="true"></span>
+                                          העלה</button>
+
                               </div>
                         </div>
                         <?php if ($user_role == "Admin") { ?>
