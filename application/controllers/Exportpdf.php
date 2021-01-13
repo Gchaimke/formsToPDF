@@ -16,6 +16,7 @@ class Exportpdf extends CI_Controller
 
     public function create($id = '1')
     {
+        $print_hours = false;
         $send_email = false;
         if (isset($_POST['email'])) {
             $send_email = $_POST['email'];
@@ -102,10 +103,11 @@ class Exportpdf extends CI_Controller
         </tr><tr>
         <td style="width:160px;font-weight:bolder;font-size:14px;">טכנאי:</td>
         <td style="direction:rtl;">' . $creator['view_name']  . '</td>
-        </tr><tr>
-        <td style="width:160px;font-weight:bolder;font-size:14px;">מס. לקוח:</td>
-        <td>' . $form['client_num'] . '</td>
         </tr>';
+        if ($form['client_num'] != '') {
+            $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:14px;">מס. לקוח:</td>
+            <td>' . $form['client_num'] . '</td></tr>';
+        }
         if ($form['issue_num'] != '') {
             $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:14px;">מס. פניה\תקלה:</td>
             <td>' . $form['issue_num'] . '</td></tr>';
@@ -122,10 +124,13 @@ class Exportpdf extends CI_Controller
             $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:14px;">מיקום</td>
             <td>' . $form['place'] . '</td></tr>';
         }
-        $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:14px;">שעת התחלה: </td>
-        <td>' . date('G:i', strtotime($form['start_time'])) . '</td></tr>
-        <tr><td style="width:160px;font-weight:bolder;font-size:14px;">שעת סיום: </td>
-        <td>' . date('G:i', strtotime($form['end_time'])) . '</td></tr>';
+
+        if ($print_hours) {
+            $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:14px;">שעת התחלה: </td>
+            <td>' . date('G:i', strtotime($form['start_time'])) . '</td></tr>
+            <tr><td style="width:160px;font-weight:bolder;font-size:14px;">שעת סיום: </td>
+            <td>' . date('G:i', strtotime($form['end_time'])) . '</td></tr>';
+        }
 
         if ($form['manager'] != '') {
             $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:14px;">אחראי</td>
@@ -205,7 +210,7 @@ class Exportpdf extends CI_Controller
                         array_push($attachments, $att);
                     }
                 }
-                $this->SendEmail($attachments, $file_name, $form['email_to'], $id,$form['creator_id']);
+                $this->SendEmail($attachments, $file_name, $form['email_to'], $id, $form['creator_id']);
             } else {
                 print_r('Could not trace file path');
             }
@@ -280,7 +285,7 @@ class Exportpdf extends CI_Controller
                 print_r($msg);
             } else {
                 $error = $this->email->print_debugger();
-                $msg = strtok($error, '.') ;
+                $msg = strtok($error, '.');
                 $this->log_data($msg, $id, 4);
                 print_r($msg);
             }
@@ -329,7 +334,7 @@ class Exportpdf extends CI_Controller
             $form = $this->Production_model->getForm($id);
             $creator =  $this->Users_model->getUser($form[0]['creator_id'])[0];
             $creator_name = $creator['view_name'];
-            $form[0] += [ "creator" => $creator_name ];
+            $form[0] += ["creator" => $creator_name];
             include_once APPPATH . 'third_party/OpenTBS/tbs_plugin_opentbs.php';
             include_once APPPATH . 'third_party/OpenTBS/tbs_class.php';
             $template = './Uploads/DOC/' . $form[0]['company'] . '.docx';
