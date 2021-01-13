@@ -238,8 +238,14 @@ if ($("#fileupload").length) {
         done: function (e, data) {
             new_file = upload_folder + data.result;
             result = data.result.substring(0,5);
-            if (result == 'error') {
-                alert(data.result.replace(/<\/?[^>]+(>|$)/g, ""));
+            if (data.result.includes("error")) {
+                if(data.result.includes("larger")){
+                    alert("אין אפשרות להעלות קובץ גדול מ-2מגה!");
+                }else if(data.result.includes("filetype")){
+                    alert("אין אפשרות להעלות קובץ מסוג הזה!");
+                }else{
+                    alert(data.result.replace(/<\/?[^>]+(>|$)/g, ""));
+                }
                 data.context.addClass("error");
             } else {
                 setTimeout(function () {
