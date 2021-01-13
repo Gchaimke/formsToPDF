@@ -239,7 +239,7 @@ if ($("#fileupload").length) {
             new_file = upload_folder + data.result;
             result = data.result.substring(0,5);
             if (result == 'error') {
-                alert(data.result);
+                alert(data.result.replace(/<\/?[^>]+(>|$)/g, ""));
                 data.context.addClass("error");
             } else {
                 setTimeout(function () {
