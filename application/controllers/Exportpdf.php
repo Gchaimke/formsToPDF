@@ -170,7 +170,7 @@ class Exportpdf extends CI_Controller
             foreach ($form_att_arr as $att) {
                 $attachment_name_array = explode('/', $att);
                 $attachment_name = end($attachment_name_array); //get last array element
-                $html .= '<a target="_blank" href="http://' . $_SERVER['SERVER_NAME'] . '/' . $att . '" dir="ltr">' . $attachment_name . '</a><br/>';
+                $html .= '<a target="blank" href="http://' . $_SERVER['SERVER_NAME'] . '/' . $att . '" dir="ltr">' . $attachment_name . '</a><br/>';
             }
             $html .= '</td></tr>';
         }
