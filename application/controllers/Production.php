@@ -383,15 +383,15 @@ class Production extends CI_Controller
         $config = array(
             'upload_path' => $upload_folder,
             'overwrite' => TRUE,
-            'allowed_types' => '*',
-            'max_size' => "2048000"
+            'allowed_types' => 'png|conf|xml|txt|jpeg|jpg',
+            'max_size' => "700"
         );
         $this->load->library('upload', $config);
         if ($this->upload->do_upload('files')) {
             $data = array('upload_data' => $this->upload->data());
             echo  $data['upload_data']["file_name"];
         } else {
-            $error = array('error' => $this->upload->display_errors() . " " . var_dump($_FILES['files']['type']));
+            $error = "error ". $this->upload->display_errors();
             print_r($error);
         }
     }

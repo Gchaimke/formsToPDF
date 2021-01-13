@@ -237,8 +237,9 @@ if ($("#fileupload").length) {
         },
         done: function (e, data) {
             new_file = upload_folder + data.result;
-            if (~new_file.indexOf("[error]")) {
-                alert('The filetype you are attempting to upload is not allowed.');
+            result = data.result.substring(0,5);
+            if (result == 'error') {
+                alert(data.result);
                 data.context.addClass("error");
             } else {
                 setTimeout(function () {
@@ -250,7 +251,6 @@ if ($("#fileupload").length) {
                     $('#attachments').val($('#attachments').val() + "," + new_file);
                 }
             }
-            console.log(new_file);
         }
     });
 }
