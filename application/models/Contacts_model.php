@@ -19,7 +19,7 @@ class Contacts_model extends CI_Model
             'email' => array(
                 'type' => 'VARCHAR',
                 'constraint' => 250,
-                'unique' => TRUE
+                'null' => TRUE
             ),
             'company' => array(
                 'type' => 'VARCHAR',
@@ -89,7 +89,7 @@ class Contacts_model extends CI_Model
     public function edit($data)
     {
         $where = "id ={$data['id']}";
-        return $this->db->update('contacts', $data, $where);
+        return  $this->db->update('contacts', $data, $where);  
     }
 
     function delete($id)

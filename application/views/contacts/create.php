@@ -9,7 +9,7 @@ if (isset($this->session->userdata['logged_in'])) {
       <div class="jumbotron">
             <div class="container">
                   <center>
-                        <h5>Add Contact</h5>
+                        <h5>הוסף איש קשר</h5>
                   </center>
             </div>
       </div>
@@ -25,11 +25,37 @@ if (isset($this->session->userdata['logged_in'])) {
                   }
                   ?>
 
-                  <?php echo form_open('companies/create', 'class=client-create'); ?>
-                  <label>Contact Name</label><input id='company_name' type='text' class="form-control" name='name' value="">
-                  <label>Contact Email</label><input id='company_name' type='text' class="form-control" name='name' value="" >
-                  <label>Contact Company</label><input id='company_name' type='text' class="form-control" name='name' value="" >
-                  <input type='submit' class="btn btn-info btn-block" name='submit' value='Submit'>
+                  <?php echo form_open('contacts/create', 'class=client-create'); ?>
+                  <div class="form-row">
+				<div class="form-group col-md-4">
+					<div class="input-group mb-2">
+						<div class="input-group-prepend">
+							<div class="input-group-text">שם</div>
+						</div>
+						<input type='text' class="form-control" name='name' value="">
+
+					</div>
+				</div>
+				<div class="form-group col-md-4">
+					<div class="input-group mb-2">
+						<div class="input-group-prepend">
+							<div class="input-group-text">מייל</div>
+						</div>
+						<input type='text' class="form-control" name='email' value="">
+
+					</div>
+				</div>
+				<div class="form-group col-md-4">
+					<div class="input-group mb-2">
+						<div class="input-group-prepend">
+							<div class="input-group-text">חברה</div>
+						</div>
+						<input type='text' class="form-control" name='company' value="">
+
+					</div>
+				</div>
+			</div>
+                  <input type='submit' class="btn btn-info btn-block" name='submit' value='הוסף'>
                   <?php echo form_close(); ?>
             </center>
       </div>

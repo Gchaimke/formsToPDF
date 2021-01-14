@@ -16,10 +16,10 @@ class Contacts extends CI_Controller
         if ($msg != '') {
             $data['message_display'] = $msg;
         }
-        $data['companies'] = $this->Emails_model->getCompanies();
+        $data['contacts'] = $this->Contacts_model->get();
         $this->load->view('header');
         $this->load->view('main_menu');
-        $this->load->view('companies/manage', $data);
+        $this->load->view('contacts/manage', $data);
         $this->load->view('footer');
     }
 
@@ -27,32 +27,28 @@ class Contacts extends CI_Controller
     {
         $msg = array();
         $this->form_validation->set_rules('name', 'Name', 'trim|required|xss_clean');
-        $this->form_validation->set_rules('logo', 'Logo', 'trim|xss_clean');
-        $this->form_validation->set_rules('form_header', 'form_header', 'trim');
-        $this->form_validation->set_rules('form_extra_filds', 'form_extra_filds', 'trim|xss_clean');
-        $this->form_validation->set_rules('form_footer', 'form_footer', 'trim|xss_clean');
+        $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
+        $this->form_validation->set_rules('company', 'company', 'trim|xss_clean');
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('header');
             $this->load->view('main_menu');
-            $this->load->view('companies/create');
+            $this->load->view('contacts/create');
             $this->load->view('footer');
         } else {
             $data = array(
                 'name' => $this->input->post('name'),
-                'logo' => $this->input->post('logo'),
-                'form_header' => $this->input->post('form_header'),
-                'form_extra_filds' => $this->input->post('form_extra_filds'),
-                'form_footer' => $this->input->post('form_footer')
+                'email' => $this->input->post('email'),
+                'company' => $this->input->post('company')
             );
-            $result = $this->Emails_model->addCompany($data);
+            $result = $this->Contacts_model->add($data);
             if ($result == TRUE) {
-                $msg = 'Company added Successfully';
+                $msg = 'איש קשר הוסף בהצלחה';
                 $this->index($msg);
             } else {
-                $msg['message_display'] = 'Company with this name already exist';
+                $msg['message_display'] = 'איש קשר עם מייל כזה כבר קיים';
                 $this->load->view('header');
                 $this->load->view('main_menu');
-                $this->load->view('companies/create', $msg);
+                $this->load->view('contacts', $msg);
                 $this->load->view('footer');
             }
         }
@@ -60,48 +56,31 @@ class Contacts extends CI_Controller
 
     public function edit($id = '', $msg = '')
     {
-        $this->load->dbforge();
-        $col_name = 'view_filds';
-
-        if (!$this->db->field_exists($col_name, 'companies')) {
-            $fields = array($col_name => array('type' => 'TEXT', 'after' => 'logo'));
-            $this->dbforge->add_column('companies', $fields);
-            $sql = array(
-                'id' => $this->input->post('id'),
-            );
-            $this->Emails_model->editCompany($sql);
-        }
-
         if ($msg != '') {
             $data['message_display'] = $msg;
         }
         $data = array();
         $this->form_validation->set_rules('id', 'Id', 'trim|xss_clean');
         $this->form_validation->set_rules('name', 'Name', 'trim|xss_clean');
-        $this->form_validation->set_rules('logo', 'Logo', 'trim|xss_clean');
-        $this->form_validation->set_rules('form_header', 'Form_header', 'trim');
-        $this->form_validation->set_rules('view_filds[]', 'view_filds', 'trim');
-        $this->form_validation->set_rules('form_extra_filds', 'Form_extra_filds', 'trim|xss_clean');
-        $this->form_validation->set_rules('form_footer', 'Form_footer', 'trim|xss_clean');
+        $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
+        $this->form_validation->set_rules('company', 'company', 'trim');
         if ($this->form_validation->run() == TRUE) {
-            $filds = json_encode($this->input->post('view_filds[]'));
             $sql = array(
                 'id' => $this->input->post('id'),
                 'name' => $this->input->post('name'),
-                'logo' => $this->input->post('logo'),
-                'view_filds' => $filds,
-                'form_header' => $this->input->post('form_header'),
-                'form_extra_filds' => $this->input->post('form_extra_filds'),
-                'form_footer' => $this->input->post('form_footer')
+                'email' => $this->input->post('email'),
+                'company' => $this->input->post('company')
             );
-            $this->Emails_model->editCompany($sql);
-            $data['message_display'] = ' Comapny updated Successfully';
+            $this->Contacts_model->edit($sql);
+            $data['message_display'] = 'איש קשר שונה בהצלחה';
+            $this->index($data['message_display']);
+        } else {
+            $data['contacts'] = $this->Contacts_model->get($id)[0];
+            $this->load->view('header');
+            $this->load->view('main_menu');
+            $this->load->view('contacts/edit', $data);
+            $this->load->view('footer');
         }
-        $data['companies'] = $this->Emails_model->getCompanies($id);
-        $this->load->view('header');
-        $this->load->view('main_menu');
-        $this->load->view('companies/edit', $data);
-        $this->load->view('footer');
     }
 
 
@@ -111,7 +90,7 @@ class Contacts extends CI_Controller
         $role = ($this->session->userdata['logged_in']['role']);
         if ($role == "Admin") {
             $id = $_POST['id'];
-            $this->Emails_model->deleteCompany($id);
+            $this->Contacts_model->delete($id);
         }
     }
 }

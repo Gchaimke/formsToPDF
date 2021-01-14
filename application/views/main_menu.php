@@ -35,9 +35,9 @@ if (isset($this->session->userdata['logged_in'])) {
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <?php if ($role == 'Admin') { ?>
-
-            <a class="dropdown-item p-2 px-md-2" href="/companies">חברות</a>
             <a class="dropdown-item p-2 px-md-2" href="/users">משתמשים</a>
+            <a class="dropdown-item p-2 px-md-2" href="/companies">חברות</a>
+            <a class="dropdown-item p-2 px-md-2" href="/contacts">אנשי קשר</a>
             <a class="dropdown-item p-2 px-md-2" href="/admin/settings">הגדרות</a>
           <?php } ?>
           <hr>

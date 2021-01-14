@@ -52,6 +52,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 $route['default_controller'] = 'production';
 $route['users'] = 'users';
 $route['companies'] = 'companies';
+$route['contacts'] = 'contacts';
 $route['exportpdf'] = 'exportpdf';
 $route['(:any)'] = 'pages/view/$1';
 $route['404_override'] = '';
