@@ -7,6 +7,7 @@ class Admin extends CI_Controller
 		$this->load->model('Users_model');
 		$this->load->model('Admin_model');
 		$this->load->model('Production_model');
+		$this->load->model('Companies_model');
 		$this->load->library('pagination');
 	}
 
@@ -59,19 +60,19 @@ class Admin extends CI_Controller
 		$data = array();
 		$data['response'] = '';
 		if (!$this->db->table_exists('users')) {
-			$this->Admin_model->createUsersDb();
+			$this->Users_model->createUsersDb();
 			$data['response'] .= "Table 'users' created!<br>" . PHP_EOL;
 		} else {
 			$data['response'] .= "Table 'users' exists!<br>" . PHP_EOL;
 		}
 		if (!$this->db->table_exists('companies')) {
-			$this->Admin_model->createCompaniesDb();
+			$this->Companies_model->createCompaniesDb();
 			$data['response'] .= "Table 'companies' created!<br>" . PHP_EOL;
 		} else {
 			$data['response'] .= "Table 'companies' exists!<br>" . PHP_EOL;
 		}
 		if (!$this->db->table_exists('forms')) {
-			$this->Admin_model->createFormsDb();
+			$this->Production_model->createFormsDb();
 			$data['response'] .= "Table 'forms' created!<br>" . PHP_EOL;
 		} else {
 			$data['response'] .= "Table 'forms' exists!<br>" . PHP_EOL;

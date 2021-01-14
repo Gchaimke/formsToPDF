@@ -1,7 +1,65 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class users_model extends CI_Model
+class Users_model extends CI_Model
 {
+	function createUsersDb()
+    {
+        $this->load->dbforge();
+        $users = array(
+            'id' => array(
+                'type' => 'INT',
+                'constraint' => 9,
+                'unsigned' => TRUE,
+                'auto_increment' => TRUE
+            ),
+            'name' => array(
+                'type' => 'VARCHAR',
+                'constraint' => 30,
+                'unique' => TRUE
+            ),
+            'view_name' => array(
+                'type' => 'VARCHAR',
+                'constraint' => 100,
+                'null' => TRUE
+            ),
+            'role' => array(
+                'type' => 'VARCHAR',
+                'constraint' => 60
+            ),
+            'password' => array(
+                'type' => 'VARCHAR',
+                'constraint' => 500
+            ),
+            'email' => array(
+                'type' => 'VARCHAR',
+                'constraint' => 100,
+                'null' => TRUE
+            ),
+            'email_to' => array(
+                'type' => 'TEXT',
+                'null' => TRUE
+            ),
+            'log' => array(
+                'type' => 'TEXT',
+                'null' => TRUE
+            )
+        );
+
+        $this->dbforge->add_field($users);
+        // define primary key
+        $this->dbforge->add_key('id', TRUE);
+        // create table
+        $this->dbforge->create_table('users');
+
+        $admin = array(
+            "name" => 'Admin',
+            "role" => 'Admin',
+            "password" => password_hash('Admin', PASSWORD_DEFAULT),
+            'log' => 'New User created! username:Admin, Password:Admin.'
+        );
+        $this->db->insert('users', $admin);
+	}
+	
 	function getusers()
 	{
 		$response = array();

@@ -3,6 +3,124 @@
 class Production_model extends CI_Model
 {
 
+	function createFormsDb()
+    {
+        $this->load->dbforge();
+        $form = array(
+            'id' => array(
+                'type' => 'INT',
+                'constraint' => 9,
+                'unsigned' => TRUE,
+                'auto_increment' => TRUE
+            ),
+            'creator_id' => array(
+                'type' => 'INT',
+                'constraint' => 9,
+                'null' => TRUE
+            ),
+            'creator_name' => array(
+                'type' => 'VARCHAR',
+                'constraint' => 100,
+                'null' => TRUE
+            ),
+            'company' => array(
+                'type' => 'VARCHAR',
+                'constraint' => 500,
+                'null' => TRUE
+            ),
+            'date' => array(
+                'type' => 'DATE',
+                'null' => TRUE
+            ),
+            'client_num' => array(
+                'type' => 'VARCHAR',
+                'constraint' => 50,
+                'null' => TRUE
+            ),
+            'issue_num' => array(
+                'type' => 'VARCHAR',
+                'constraint' => 50,
+                'null' => TRUE
+            ),
+            'client_name' => array(
+                'type' => 'VARCHAR',
+                'constraint' => 60,
+                'null' => TRUE
+            ),
+            'issue_kind' => array(
+                'type' => 'VARCHAR',
+                'constraint' => 500,
+                'null' => TRUE
+            ),
+            'place' => array(
+                'type' => 'VARCHAR',
+                'constraint' => 100,
+                'null' => TRUE
+            ),
+            'start_time' => array(
+                'type' => 'TIME',
+                'null' => TRUE
+            ),
+            'end_time' => array(
+                'type' => 'TIME',
+                'null' => TRUE
+            ),
+            'manager' => array(
+                'type' => 'VARCHAR',
+                'constraint' => 100,
+                'null' => TRUE
+            ),
+            'contact_name' => array(
+                'type' => 'VARCHAR',
+                'constraint' => 100,
+                'null' => TRUE
+            ),
+            'activity_text' => array(
+                'type' => 'TEXT',
+                'null' => TRUE
+            ),
+            'checking_text' => array(
+                'type' => 'TEXT',
+                'null' => TRUE
+            ),
+            'summary_text' => array(
+                'type' => 'TEXT',
+                'null' => TRUE
+            ),
+            'remarks_text' => array(
+                'type' => 'TEXT',
+                'null' => TRUE
+            ),
+            'recommendations_text' => array(
+                'type' => 'TEXT',
+                'null' => TRUE
+            ),
+            'email_to' => array(
+                'type' => 'TEXT',
+                'null' => TRUE
+            ),
+            'client_sign' => array(
+                'type' => 'TEXT',
+                'null' => TRUE
+            ),
+            'attachments' => array(
+                'type' => 'TEXT',
+                'null' => TRUE
+            ),
+            'price' => array(
+                'type' => 'decimal',
+                'null' => TRUE
+            ),
+            'details' => array(
+                'type' => 'TEXT',
+                'null' => TRUE
+            )
+        );
+        $this->dbforge->add_field($form);
+        $this->dbforge->add_key('id', TRUE);
+        $this->dbforge->create_table('forms');
+	}
+	
 	public function add_form($data)
 	{
 		$this->db->insert('forms', $data);
