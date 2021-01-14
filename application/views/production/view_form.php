@@ -265,7 +265,7 @@ if (isset($this->session->userdata['logged_in'])) {
                               echo '<div class="col-sm-5">אין פריטים ברשימת תפוצה של משתמש</div>';
                         }
                               ?>
-                              <input type="text" id="sum" class="form-control ltr mt-3 mr-3 ml-3" name='email_to' value="<?= $form_data['email_to'] ?>">
+                              <input type="text" id="sum" class="form-control ltr mt-3 mr-3 ml-3" name='email_to' value="<?= $form_data['email_to'] ?>" hidden>
                               </div>
                               <hr />
 
