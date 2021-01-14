@@ -9,6 +9,7 @@ class Contacts extends CI_Controller
         parent::__construct();
         $this->load->model('Contacts_model');
         $this->load->model('Users_model');
+        $this->load->model('Companies_model');
     }
 
     public function index($msg = '')
@@ -82,6 +83,7 @@ class Contacts extends CI_Controller
         } else {
             $data['contacts'] = $this->Contacts_model->get($id)[0];
             $data['all_users'] = $this->Users_model->getUsers();
+            $data['companies'] = $this->Companies_model->getCompanies();
             $this->load->view('header');
             $this->load->view('main_menu');
             $this->load->view('contacts/edit', $data);

@@ -9,6 +9,7 @@ class Production extends CI_Controller
         $this->load->model('Production_model');
         $this->load->model('Users_model');
         $this->load->model('Companies_model');
+        $this->load->model('Contacts_model');
     }
 
     public function index()
@@ -28,6 +29,7 @@ class Production extends CI_Controller
             $company = urldecode($company);
         }
         $data['companie'] = $this->Companies_model->getCompanies('', $company)[0];
+        $data['contacts'] = $this->Contacts_model->get();
         $data['hide_filds'] = $this->hide_filds($data['companie']['view_filds']);
         $data['user'] = $this->Users_model->getUser($this->session->userdata['logged_in']['id']);
         $this->load->view('header');
@@ -41,7 +43,7 @@ class Production extends CI_Controller
 
         $creator_id = $this->session->userdata['logged_in']['id'];
         $creator_name = $this->Users_model->getUser($creator_id)[0]['view_name'];
-        $this->form_validation->set_rules('date', 'date', 'trim|xss_clean');
+        $this->form_validation->set_rules('date', 'date', 'trim|required|xss_clean');
         $this->form_validation->set_rules('company', 'company', 'trim|xss_clean');
         $this->form_validation->set_rules('client_num', 'client_num', 'trim|xss_clean');
         $this->form_validation->set_rules('issue_num', 'issue_num', 'trim|xss_clean');
@@ -110,6 +112,7 @@ class Production extends CI_Controller
         $data = array();
         $data['form_data'] = $this->Production_model->getForm($id);
         $data['companies'] = $this->Companies_model->getCompanies();
+        $data['contacts'] = $this->Contacts_model->get();
         $current_company = $this->Companies_model->getCompanies('', $data['form_data'][0]['company'])[0];
         $data['hide_filds'] = $this->hide_filds($current_company['view_filds']);
         $data['logo'] = $current_company['logo'];

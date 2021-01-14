@@ -51,7 +51,7 @@ if (isset($all_users)) {
 				$id = $contacts['id'];
 				$name = $contacts['name'];
 				$email = $contacts['email'];
-				$company = $contacts['company'];
+				$company_name = $contacts['company'];
 			}
 			?>
 			<?php echo form_open("contacts/edit/$id", 'class=user-create'); ?>
@@ -80,7 +80,19 @@ if (isset($all_users)) {
 						<div class="input-group-prepend">
 							<div class="input-group-text">חברה</div>
 						</div>
-						<input type='text' class="form-control" name='company' value="<?php echo $company ?>">
+						<select class='form-control' name='company'>
+							<?php if (isset($companies)) {
+								array_push($companies,array('name' => 'manager'));
+								foreach ($companies as $company) {
+									if ($company['name'] == $company_name) {
+										echo '<option selected>' . htmlspecialchars($company['name']) . '</option>';
+									} else {
+										echo '<option>' . htmlspecialchars($company['name']) . '</option>';
+									}
+								}
+							}
+							?>
+						</select>
 
 					</div>
 				</div>

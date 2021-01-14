@@ -4,14 +4,6 @@ if (isset($this->session->userdata['logged_in'])) {
       $user_name = $this->session->userdata['logged_in']['name'];
       $user_id = $this->session->userdata['logged_in']['id'];
 }
-if (isset($users)) {
-      foreach ($users as $user) {
-            if ($user['id'] == $user_id) {
-                  $user_email = $user['email'];
-                  $emails_arr = preg_split('/\r\n|[\r\n]/', $user['email_to']);
-            }
-      }
-}
 ?>
 <script src="<?php echo base_url('assets/js/jQUpload/jquery.ui.widget.js'); ?>"></script>
 <script src="<?php echo base_url('assets/js/jQUpload/jquery.iframe-transport.js'); ?>"></script>
@@ -102,7 +94,6 @@ if (isset($users)) {
                                                       <?php if (isset($users)) {
                                                             foreach ($users as $user) {
                                                                   if ($user['id'] == $form_data['creator_id']) {
-                                                                        $user_email = $user['email'];
                                                                         echo '<option value="' . $user['id'] . '" selected>' . $user['view_name'] . '</option>';
                                                                   } else {
                                                                         echo '<option value="' . $user['id'] . '" >' . $user['view_name'] . '</option>';
@@ -245,128 +236,120 @@ if (isset($users)) {
                               </div>
                         </div>
                         <hr />
-                        <div class="form-group row" id="emails">
-                              <div class="input-group mb-4">
+                        <?php if (isset($contacts)) { ?>
+                              <div class="form-group row" id="emails">
                                     <label for="email_to" class="col-sm-2 col-form-label ">מכותבים:</label>
-                                    <?php
-                                    $len = count($emails_arr);
-                                    if ($len > 0 && $emails_arr[0] != '') {
-                                          $firsthalf = array_slice($emails_arr, 0, $len / 2);
-                                          $secondhalf = array_slice($emails_arr, $len / 2);
-                                          echo "<div class='col-sm-5'>";
-                                          foreach ($firsthalf as $email) {
-                                                $checked = '';
-                                                if (strpos($form_data['email_to'], $email) !== false) {
-                                                      $checked = 'checked';
-                                                }
-                                                echo "<div class='input-group-text'>
-                                                      <input type='checkbox' value='$email' $checked>
-                                                      <label class='col-sm-2 col-form-label'>$email</label>
-                                                      </div>";
-                                          }
-                                          echo '</div>';
-                                          echo '<div class="col-sm-5">';
-                                          foreach ($secondhalf as $email) {
-                                                $checked = '';
-                                                if (strpos($form_data['email_to'], $email) !== false) {
-                                                      $checked = 'checked';
-                                                }
-                                                echo "<div class='input-group-text'>
-                                                      <input type='checkbox' value='$email' $checked>
-                                                      <label class='col-sm-2 col-form-label'>$email</label>
-                                                      </div>";
-                                          }
-                                          echo '</div>';
-                                    } else {
-                                          echo '<div class="col-sm-5">אין פריטים ברשימת תפוצה של משתמש</div>';
-                                    }
-                                    ?>
-                                    <input type="text" id="sum" class="form-control ltr mt-5 mr-3 ml-3" name='email_to' value="<?php echo $form_data['email_to'] ?>">
-                              </div>
-                        </div>
-                        <hr />
+                              <?php
 
-                        <div id="files_column" class="form-group row">
-                              <label for="attachments" class="col-sm-2 col-form-label ">קבצים נוספים</label>
-                              <div class="col-sm-10">
-                                    <input id="fileupload" style="display:none;" type="file" name="files" data-url="/production/do_upload/<?=$form_data['id']?>" />
-                                    <input id="attachments" type="hidden" class="form-control ltr" name="attachments" value="<?php echo htmlspecialchars($form_data['attachments']) ?>" />
-                                    <div id='files'>
-                                          <?php $files_arr = explode(',', $form_data['attachments']);
-                                          foreach ($files_arr as $file) {
-                                                if (strlen($file) > 1)
-                                                      echo '<p class="file ltr done"><a target="blank" href="/' . htmlspecialchars($file) . '">' . htmlspecialchars($file) . '</a>
+                              foreach ($contacts as $contact) {
+                                    $email_to = explode(',', $form_data['email_to']);
+                                    $users_list = json_decode($contact['users_list']);
+                                    $cheked = (in_array($contact['email'], $email_to, true)) ? "checked" : '';
+                                    if (isset($users_list) && in_array($user_id, $users_list)) {
+                                          if ($contact['company'] == 'manager') {
+                                                echo "<div class='input-group-text ml-2'>
+                                                      <input type='checkbox' value='{$contact['email']}' $cheked>
+                                                      <label class='col-sm-2 col-form-label'>{$contact['name']}</label>
+                                                       </div>";
+                                          }
+
+                                          if ($contact['company'] == $form_data['company']) {
+                                                echo "<div class='input-group-text ml-2'>
+                                                <input type='checkbox' value='{$contact['email']}' $cheked>
+                                                <label class='col-sm-2 col-form-label'>{$contact['name']}</label>
+                                                </div>";
+                                          }
+                                    }
+                              }
+                        } else {
+                              echo '<div class="col-sm-5">אין פריטים ברשימת תפוצה של משתמש</div>';
+                        }
+                              ?>
+                              <input type="text" id="sum" class="form-control ltr mt-3 mr-3 ml-3" name='email_to' value="<?= $form_data['email_to'] ?>">
+                              </div>
+                              <hr />
+
+                              <div id="files_column" class="form-group row">
+                                    <label for="attachments" class="col-sm-2 col-form-label ">קבצים נוספים</label>
+                                    <div class="col-sm-10">
+                                          <input id="fileupload" style="display:none;" type="file" name="files" data-url="/production/do_upload/<?= $form_data['id'] ?>" />
+                                          <input id="attachments" type="hidden" class="form-control ltr" name="attachments" value="<?php echo htmlspecialchars($form_data['attachments']) ?>" />
+                                          <div id='files'>
+                                                <?php $files_arr = explode(',', $form_data['attachments']);
+                                                foreach ($files_arr as $file) {
+                                                      if (strlen($file) > 1)
+                                                            echo '<p class="file ltr done"><a target="blank" href="/' . htmlspecialchars($file) . '">' . htmlspecialchars($file) . '</a>
                                                       <a data-file="' . htmlspecialchars($file) . '" href="#files" class="delete_attachment" onclick="delete_attachment(this)">X</a></p>';
+                                                }
+                                                ?>
+                                          </div>
+                                          <button class="btn btn-outline-success col-sm-2" type="button" onclick="document.getElementById('fileupload').click();">
+                                                <span id="upload_spinner" class="spinner-border spinner-border-sm" style="display: none;" role="status" aria-hidden="true"></span>
+                                                העלה</button>
+
+                                    </div>
+                              </div>
+                              <?php if ($user_role == "Admin") { ?>
+                                    <hr />
+                                    <div class="form-row row">
+                                          <div class="form-group row col-md-9 mr-2 ">
+                                                <label for="details" class="col-sm-2 col-form-label ">הערות (CSV)</label>
+                                                <div class="col-sm-10">
+                                                      <textarea class="form-control" name="details" rows="1"><?php echo $form_data['details'] ?></textarea>
+                                                </div>
+                                          </div>
+                                          <div class="form-group col-md-3">
+                                                <div class="input-group">
+                                                      <div class="input-group-prepend">
+                                                            <div class="input-group-text">מחיר</div>
+                                                      </div>
+                                                      <input type='text' id='price' class="form-control" name='price' value='<?php echo $form_data['price'] ?>'>
+                                                </div>
+                                          </div>
+                                    </div>
+                              <?php } //end if user admin
+                              ?>
+                              <hr />
+
+                              <div class="form-group row client-sign-form">
+                                    <label class="col-sm-2 col-form-label "> חתימת לקוח שמורה:</label>
+                                    <div class="col-sm-4">
+                                          <?php if ($form_data['client_sign']) {
+                                                echo '<img class="sing-image" src="data:image/png;base64, ' . $form_data["client_sign"] . '" />';
+                                          } else {
+                                                echo 'אין חתימה';
                                           }
                                           ?>
                                     </div>
-                                    <button class="btn btn-outline-success col-sm-2" type="button" onclick="document.getElementById('fileupload').click();">
-                                          <span id="upload_spinner" class="spinner-border spinner-border-sm" style="display: none;" role="status" aria-hidden="true"></span>
-                                          העלה</button>
-
                               </div>
-                        </div>
-                        <?php if ($user_role == "Admin") { ?>
+                              <div class="form-row client-sign-form" style="display: none;">
+                                    <div class="form-group col-md-12">
+                                          <div id="sketchpadapp">
+                                                <canvas id="sign-canvas" style="border: 5px solid red;"></canvas>
+                                          </div>
+                                          <input type='text' id="client_sign" name='client_sign' hidden>
+                                          <div id="save_sign" class="btn btn-outline-success btn-sm mt-3">שמור חתימה</div>
+                                          <div class="btn btn-outline-danger btn-sm mt-3" onclick='$("#sign-canvas").data("jqScribble").clear();'>נקה חתימה</div>
+                                          <div class="btn btn-outline-danger btn-sm mt-3" onclick='$(".client-sign-form").toggle();$("#sign-canvas").data("jqScribble").clear();'>X</div>
+                                    </div>
+                              </div>
                               <hr />
-                              <div class="form-row row">
-                                    <div class="form-group row col-md-9 mr-2 ">
-                                          <label for="details" class="col-sm-2 col-form-label ">הערות (CSV)</label>
-                                          <div class="col-sm-10">
-                                                <textarea class="form-control" name="details" rows="1"><?php echo $form_data['details'] ?></textarea>
-                                          </div>
+                              <input type='submit' id='save_btn' class='btn btn-warning' name='submit' value='עדכן דוח'>
+                              <a id="send_email" class="btn btn-success ml-3" href="#send_email" onclick="SendEmail()">שלח דוח</a>
+                              <a target="_blank" class="btn btn-info" href="/exportpdf/create/<?php echo $form_data['id'] ?>">הצג PDF</a>
+                              <a target="_blank" class="btn btn-info ml-3" href="/exportpdf/export_doc/<?php echo $form_data['id'] ?>">הורד DOC</a>
+                              <div class="btn btn-danger my-5 ml-3" style="color: azure;" onclick=' $(".client-sign-form").toggle();'>חתימת לקוח</div>
+                              <a id="show_log_button" href='#show_log_button' class='btn btn-outline-info ml-3' onclick="showLogFile('<?php echo $form_data['id'] ?>')"><i class="fa fa-file"> Log</i></a>
+                              <div id='show-log' style='display:none;'>
+                                    <div id="show-log-header">
+                                          <div id="serial-header"></div>Email Log<button type="button" class="close" aria-label="Close"> <span aria-hidden="true">&times;</span></button>
                                     </div>
-                                    <div class="form-group col-md-3">
-                                          <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                      <div class="input-group-text">מחיר</div>
-                                                </div>
-                                                <input type='text' id='price' class="form-control" name='price' value='<?php echo $form_data['price'] ?>'>
-                                          </div>
-                                    </div>
+                                    <ul class="list-group list-group-flush">
+                                    </ul>
                               </div>
-                        <?php } //end if user admin
-                        ?>
-                        <hr />
+                              <?php echo form_close(); ?>
 
-                        <div class="form-group row client-sign-form">
-                              <label class="col-sm-2 col-form-label "> חתימת לקוח שמורה:</label>
-                              <div class="col-sm-4">
-                                    <?php if ($form_data['client_sign']) {
-                                          echo '<img class="sing-image" src="data:image/png;base64, ' . $form_data["client_sign"] . '" />';
-                                    } else {
-                                          echo 'אין חתימה';
-                                    }
-                                    ?>
-                              </div>
-                        </div>
-                        <div class="form-row client-sign-form" style="display: none;">
-                              <div class="form-group col-md-12">
-                                    <div id="sketchpadapp">
-                                          <canvas id="sign-canvas" style="border: 5px solid red;"></canvas>
-                                    </div>
-                                    <input type='text' id="client_sign" name='client_sign' hidden>
-                                    <div id="save_sign" class="btn btn-outline-success btn-sm mt-3">שמור חתימה</div>
-                                    <div class="btn btn-outline-danger btn-sm mt-3" onclick='$("#sign-canvas").data("jqScribble").clear();'>נקה חתימה</div>
-                                    <div class="btn btn-outline-danger btn-sm mt-3" onclick='$(".client-sign-form").toggle();$("#sign-canvas").data("jqScribble").clear();'>X</div>
-                              </div>
-                        </div>
-                        <hr />
-                        <input type='submit' id='save_btn' class='btn btn-warning' name='submit' value='עדכן דוח'>
-                        <a id="send_email" class="btn btn-success ml-3" href="#send_email" onclick="SendEmail()">שלח דוח</a>
-                        <a target="_blank" class="btn btn-info" href="/exportpdf/create/<?php echo $form_data['id'] ?>">הצג PDF</a>
-                        <a target="_blank" class="btn btn-info ml-3" href="/exportpdf/export_doc/<?php echo $form_data['id'] ?>">הורד DOC</a>
-                        <div class="btn btn-danger my-5 ml-3" style="color: azure;" onclick=' $(".client-sign-form").toggle();'>חתימת לקוח</div>
-                        <a id="show_log_button" href='#show_log_button' class='btn btn-outline-info ml-3' onclick="showLogFile('<?php echo $form_data['id'] ?>')"><i class="fa fa-file"> Log</i></a>
-                        <div id='show-log' style='display:none;'>
-                              <div id="show-log-header">
-                                    <div id="serial-header"></div>Email Log<button type="button" class="close" aria-label="Close"> <span aria-hidden="true">&times;</span></button>
-                              </div>
-                              <ul class="list-group list-group-flush">
-                              </ul>
-                        </div>
-                        <?php echo form_close(); ?>
-
-                  <?php } else {
+                        <?php } else {
                         echo "No Data for this form.";
                   } ?>
             </center>
@@ -376,7 +359,7 @@ if (isset($users)) {
 <script>
       $(document).ready(function() {
             //startup scripts here
-            form_id = "<?=$form_data['id']?>";
+            form_id = "<?= $form_data['id'] ?>";
             startTimer();
             if ($("#sign-canvas").length && $("#client_sign").length) {
                   $("#sign-canvas").jqScribble();

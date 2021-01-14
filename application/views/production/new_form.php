@@ -1,4 +1,7 @@
 <?php
+if (isset($this->session->userdata['logged_in'])) {
+      $user_id = $this->session->userdata['logged_in']['id'];
+}
 $user = $user[0];
 if (isset($companie)) {
       $companie_name = $companie['name'];
@@ -158,77 +161,73 @@ if (isset($companie)) {
                         </div>
                   </div>
                   <hr />
-                  <div class="form-group row" id="emails">
-                        <label for="email_to" class="col-sm-2 col-form-label ">מכותבים:</label>
+                  <?php if (isset($contacts)) { ?>
+                        <div class="form-group row" id="emails">
+                              <label for="email_to" class="col-sm-2 col-form-label ">מכותבים:</label>
                         <?php
-                        $emails_arr = preg_split('/\r\n|[\r\n]/', $user['email_to']);
-                        $len = count($emails_arr);
-                        if ($len > 0 && $emails_arr[0] != '') {
-                              $firsthalf = array_slice($emails_arr, 0, $len / 2);
-                              $secondhalf = array_slice($emails_arr, $len / 2);
-                              echo "<div class='col-sm-5'>";
-                              foreach ($firsthalf as $email) {
-                                    echo "
-                              <div class='input-group-text'>
-                              <input type='checkbox' value='$email'>
-                              <label class='col-sm-2 col-form-label'>$email</label>
-                              </div>";
+
+                        foreach ($contacts as $contact) {
+                              $users_list = json_decode($contact['users_list']);
+                              if (isset($users_list) && in_array($user_id, $users_list)) {
+                                    if ($contact['company'] == 'manager') {
+                                          echo "<div class='input-group-text ml-2'>
+                                    <input type='checkbox' value='{$contact['email']}'>
+                                    <label class='col-sm-2 col-form-label'>{$contact['name']}</label>
+                                    </div>";
+                                    }
+                                    if ($contact['company'] == $companie_name) {
+                                          echo "<div class='input-group-text ml-2'>
+                                                <input type='checkbox' value='{$contact['email']}'>
+                                                <label class='col-sm-2 col-form-label'>{$contact['name']}</label>
+                                                </div>";
+                                    }
                               }
-                              echo '</div>';
-                              echo '<div class="col-sm-5">';
-                              foreach ($secondhalf as $email) {
-                                    echo "
-                              <div class='input-group-text'>
-                              <input type='checkbox' value='$email'>
-                              <label class='col-sm-2 col-form-label'>$email</label>
-                              </div>";
-                              }
-                              echo '</div>';
-                        } else {
-                              echo '<div class="col-sm-5">אין פריטים ברשימת תפוצה של משתמש</div>';
                         }
+                  } else {
+                        echo '<div class="col-sm-5">אין פריטים ברשימת תפוצה של משתמש</div>';
+                  }
                         ?>
                         <input type="text" id="sum" class="form-control ltr mt-3 mr-3 ml-3" name='email_to' value="">
-                  </div>
-                  <hr />
-
-
-                  <div id="files_column" class="form-group row">
-                        <label for="attachments" class="col-sm-12 col-form-label ">אין אפשרות להוסיף קבצים טרם שמירת דוח.</label>
-                  </div>
-                  <hr />
-                  <div id="details_column" class="form-row row">
-                        <div class="form-group row col-md-9 mr-2">
-                              <label for="details" class="col-sm-2 col-form-label ">הערות (CSV)</label>
-                              <div class="col-sm-10">
-                                    <textarea class="form-control" name="details" rows="3"></textarea>
-                              </div>
                         </div>
-                        <div class="form-group col-md-3">
-                              <div class="input-group">
-                                    <div class="input-group-prepend">
-                                          <div class="input-group-text">מחיר</div>
+                        <hr />
+
+
+                        <div id="files_column" class="form-group row">
+                              <label for="attachments" class="col-sm-12 col-form-label ">אין אפשרות להוסיף קבצים טרם שמירת דוח.</label>
+                        </div>
+                        <hr />
+                        <div id="details_column" class="form-row row">
+                              <div class="form-group row col-md-9 mr-2">
+                                    <label for="details" class="col-sm-2 col-form-label ">הערות (CSV)</label>
+                                    <div class="col-sm-10">
+                                          <textarea class="form-control" name="details" rows="3"></textarea>
                                     </div>
-                                    <input type='text' id='price' class="form-control" name='price'>
+                              </div>
+                              <div class="form-group col-md-3">
+                                    <div class="input-group">
+                                          <div class="input-group-prepend">
+                                                <div class="input-group-text">מחיר</div>
+                                          </div>
+                                          <input type='text' id='price' class="form-control" name='price'>
+                                    </div>
                               </div>
                         </div>
-                  </div>
-                  <div class="form-row client-sign-form" style="display: none;">
-                        <div class="form-group col-md-12">
-                              <div id="sketchpadapp">
-                                    <canvas id="sign-canvas" style="border: 5px solid red;"></canvas>
+                        <div class="form-row client-sign-form" style="display: none;">
+                              <div class="form-group col-md-12">
+                                    <div id="sketchpadapp">
+                                          <canvas id="sign-canvas" style="border: 5px solid red;"></canvas>
+                                    </div>
+                                    <input type='text' id="client_sign" name='client_sign' hidden>
+                                    <div class="btn btn-outline-success btn-sm mt-3" onclick=' $(".client-sign-form").toggle();'>שמור חתימה</div>
+                                    <div class="btn btn-outline-danger btn-sm mt-3" onclick='$("#sign-canvas").data("jqScribble").clear();'>נקה חתימה</div>
+                                    <div class="btn btn-outline-danger btn-sm mt-3" onclick='$(".client-sign-form").toggle();$("#sign-canvas").data("jqScribble").clear();'>X</div>
                               </div>
-                              <input type='text' id="client_sign" name='client_sign' hidden>
-                              <div class="btn btn-outline-success btn-sm mt-3" onclick=' $(".client-sign-form").toggle();'>שמור חתימה</div>
-                              <div class="btn btn-outline-danger btn-sm mt-3" onclick='$("#sign-canvas").data("jqScribble").clear();'>נקה חתימה</div>
-                              <div class="btn btn-outline-danger btn-sm mt-3" onclick='$(".client-sign-form").toggle();$("#sign-canvas").data("jqScribble").clear();'>X</div>
                         </div>
-                  </div>
-                  <hr />
-                  <div class="btn btn-info my-5 ml-3" style="color: azure;" onclick=' $(".client-sign-form").toggle();'>חתימת לקוח</div>
-                  <input id='save_form' type='button' class="btn btn-success my-5 ml-3" name='submit' value='שמור'>
-                  <input type='submit' class="btn btn-danger my-5 ml-3" name='submit' value='שמור ושלח לרשימת תפוצה'>
-                  <?php echo form_close(); ?>
+                        <hr />
+                        <div class="btn btn-info my-5 ml-3" style="color: azure;" onclick=' $(".client-sign-form").toggle();'>חתימת לקוח</div>
+                        <input id='save_form' type='button' class="btn btn-success my-5 ml-3" name='submit' value='שמור'>
+                        <input type='submit' class="btn btn-danger my-5 ml-3" name='submit' value='שמור ושלח לרשימת תפוצה'>
+                        <?php echo form_close(); ?>
 
             </center>
       </div>
@@ -246,7 +245,7 @@ if (isset($companie)) {
             $('#emails :checkbox').click(function() {
                   sum = '';
                   $('#emails :checkbox:checked').each(function(idx, elm) {
-                        sum += elm.value + ", ";
+                        sum += elm.value + ",";
                   });
                   $('#sum').val(sum);
             });

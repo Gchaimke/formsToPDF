@@ -35,10 +35,6 @@ class Users_model extends CI_Model
                 'constraint' => 100,
                 'null' => TRUE
             ),
-            'email_to' => array(
-                'type' => 'TEXT',
-                'null' => TRUE
-            ),
             'log' => array(
                 'type' => 'TEXT',
                 'null' => TRUE
