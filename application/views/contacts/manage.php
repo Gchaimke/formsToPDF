@@ -9,7 +9,7 @@ if (isset($this->session->userdata['logged_in'])) {
 	<div class="jumbotron">
 		<div class="container">
 			<center>
-				<h5>חברות</h5>
+				<h5>אנשי קשר</h5>
 			</center>
 		</div>
 	</div>
