@@ -76,17 +76,6 @@ if (isset($this->session->userdata['logged_in'])) {
                                     <input type='text' class="form-control ltr" name='email' required>
                               </div>
                         </div>
-
-                        <div class="form-row">
-                              <div class="input-group mb-2">
-                                    <div class="input-group-prepend">
-                                          <div class="input-group-text">רשימת תפוצה
-                                                <br />
-                                                <div style="font-size:9px;display: contents;">אחד לשורה</div>
-                                          </div>
-                                    </div><textarea class="form-control ltr" name="email_to" cols="10" rows="3"></textarea>
-                              </div>
-                        </div>
                         <input type='submit' class="btn btn-info" name='submit' value='הוסף משתמש'>
                         <?php echo form_close(); ?>
                   </div>

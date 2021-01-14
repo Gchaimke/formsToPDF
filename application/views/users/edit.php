@@ -88,17 +88,6 @@ if (isset($this->session->userdata['logged_in']) && isset($user)) {
 						<input type='text' class="form-control ltr" name='email' value="<?php echo $user['email'] ?>">
 					</div>
 				</div>
-
-				<div class="form-row">
-					<div class="input-group mb-2">
-						<div class="input-group-prepend">
-							<div class="input-group-text">רשימת תפוצה
-								<br />
-								<div style="font-size:9px;display: contents;">אחד לשורה</div>
-							</div>
-						</div><textarea class="form-control ltr" name="email_to" cols="10" rows="3"><?php echo $user['email_to'] ?></textarea>
-					</div>
-				</div>
 				<input type='submit' class="btn btn-info" name='submit' value='עדכן'>
 				<?php echo form_close(); ?>
 			</div>

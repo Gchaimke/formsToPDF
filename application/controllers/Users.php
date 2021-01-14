@@ -35,7 +35,6 @@ class Users extends CI_Controller
             $this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean');
             $this->form_validation->set_rules('view_name', 'view_name', 'trim|xss_clean');
             $this->form_validation->set_rules('email', 'email', 'trim|xss_clean');
-            $this->form_validation->set_rules('email_to', 'email_to', 'trim|xss_clean');
             if ($this->form_validation->run() == FALSE) {
                 $data['settings'] = $this->Admin_model->getSettings();
                 $this->load->view('header');
@@ -48,8 +47,7 @@ class Users extends CI_Controller
                     'view_name' => $this->input->post('view_name'),
                     'role' => $this->input->post('role'),
                     'password' => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
-                    'email' => $this->input->post('email'),
-                    'email_to' => $this->input->post('email_to')
+                    'email' => $this->input->post('email')
                 );
                 $result = $this->Users_model->registration_insert($data);
                 if ($result == TRUE) {
@@ -91,7 +89,6 @@ class Users extends CI_Controller
         $this->form_validation->set_rules('role', 'Role', 'trim|xss_clean');
         $this->form_validation->set_rules('password', 'Password', 'trim|xss_clean');
         $this->form_validation->set_rules('email', 'email', 'trim|xss_clean');
-        $this->form_validation->set_rules('email_to', 'email_to', 'trim|xss_clean');
         if ($this->form_validation->run() == FALSE) {
             $data['user'] =  $this->Users_model->getUser($id);
             $data['settings'] = $this->Admin_model->getSettings();
@@ -106,8 +103,7 @@ class Users extends CI_Controller
                     'name' => $this->input->post('name'),
                     'view_name' => $this->input->post('view_name'),
                     'role' => $this->input->post('role'),
-                    'email' => $this->input->post('email'),
-                    'email_to' => $this->input->post('email_to')
+                    'email' => $this->input->post('email')
                 );
                 if ($this->input->post('password') != '') {
                     $sql += array('password' => $this->input->post('password'));
@@ -117,8 +113,7 @@ class Users extends CI_Controller
                 $sql = array(
                     'id' => $this->input->post('id'),
                     'view_name' => $this->input->post('view_name'),
-                    'email' => $this->input->post('email'),
-                    'email_to' => $this->input->post('email_to')
+                    'email' => $this->input->post('email')
                 );
                 if ($this->input->post('password') != '') {
                     $sql += array('password' => $this->input->post('password'));
@@ -173,8 +168,7 @@ class Users extends CI_Controller
                         'name' => $result[0]->name,
                         'view_name' => $result[0]->view_name,
                         'role' => $result[0]->role,
-                        'email' => $result[0]->email,
-                        'email_to' => $result[0]->email_to
+                        'email' => $result[0]->email
                     );
                     $this->session->set_userdata('logged_in', $session_data);
                     header("location: /");

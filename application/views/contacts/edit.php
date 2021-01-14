@@ -9,7 +9,7 @@ if (isset($all_users)) {
 	$users_list = json_decode($contacts['users_list']);
 	$filds_checks = '<ul>';
 	foreach ($all_users as $user) {
-		$cheked = (in_array($user['id'], $users_list)) ? "checked" : '';
+		$cheked = (isset($users_list) && in_array($user['id'], $users_list)) ? "checked" : '';
 		$filds_checks .= '<li>' . $user['view_name'] . '<input class="m-3" type="checkbox" name="users_list[]" value="' . $user['id'] . '" ' . $cheked . '></li>';
 	}
 	$filds_checks .= '</ul>';
