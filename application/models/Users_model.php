@@ -93,10 +93,9 @@ class Users_model extends CI_Model
 	public function registration_insert($data)
 	{
 		// Query to check whether name already exist or not
-		$condition = "name =" . "'" . $data['name'] . "'";
 		$this->db->select('*');
 		$this->db->from('users');
-		$this->db->where($condition);
+		$this->db->where("name ='{$data['name']}'");
 		$this->db->limit(1);
 		$query = $this->db->get();
 		if ($query->num_rows() == 0) {
@@ -113,10 +112,9 @@ class Users_model extends CI_Model
 	// Read data using name and password
 	public function login($data)
 	{
-		$condition = "name ='" . $data['name'] . "'";
 		$this->db->select('*');
 		$this->db->from('users');
-		$this->db->where($condition);
+		$this->db->where("name ='{$data['name']}'");
 		$this->db->limit(1);
 		$query = $this->db->get();
 		$row = $query->row_array();
@@ -134,8 +132,7 @@ class Users_model extends CI_Model
 	{
 		$this->db->select('*');
 		$this->db->from('users');
-		$condition = "name =" . "'" . $name . "'";
-		$this->db->where($condition);
+		$this->db->where("name ='$name'");
 		$this->db->limit(1);
 		$query = $this->db->get();
 		if ($query->num_rows() == 1) {
@@ -150,8 +147,7 @@ class Users_model extends CI_Model
 		// Select record
 		$this->db->select('*');
 		$this->db->from('users');
-		$condition = "id ='" . $id . "'";
-		$this->db->where($condition);
+		$this->db->where("id ='$id'");
 		$this->db->limit(1);
 		$query = $this->db->get();
 		if ($query->num_rows() == 1) {

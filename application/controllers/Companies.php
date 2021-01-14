@@ -46,10 +46,10 @@ class Companies extends CI_Controller
             );
             $result = $this->Companies_model->addCompany($data);
             if ($result == TRUE) {
-                $msg = 'Company added Successfully !';
+                $msg = 'Company added Successfully';
                 $this->index($msg);
             } else {
-                $msg['message_display'] = 'Client already exist!';
+                $msg['message_display'] = 'Company with this name already exist';
                 $this->load->view('header');
                 $this->load->view('main_menu');
                 $this->load->view('companies/create', $msg);

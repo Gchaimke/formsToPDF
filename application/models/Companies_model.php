@@ -64,10 +64,9 @@ class Companies_model extends CI_Model
     {
         if ($this->db->table_exists('companies')) {
             // Query to check whether username already exist or not
-            $condition = "name ='" . $data['name'] . "'";
             $this->db->select('*');
             $this->db->from('companies');
-            $this->db->where($condition);
+            $this->db->where("name ='{$data['name']}'");
             $this->db->limit(1);
             $query = $this->db->get();
             if ($query->num_rows() == 0) {
@@ -90,13 +89,11 @@ class Companies_model extends CI_Model
             $this->db->select('*');
             $this->db->from('companies');
             if ($id != '') {
-                $condition = "id ='$id'";
-                $this->db->where($condition);
+                $this->db->where("id ='$id'");
                 $this->db->limit(1);
             }
             if ($name != '') {
-                $condition = "name = '$name'";
-                $this->db->where($condition);
+                $this->db->where("name = '$name'");
                 $this->db->limit(1);
             }
             $q = $this->db->get();
@@ -107,7 +104,7 @@ class Companies_model extends CI_Model
 
     public function editCompany($data)
     {
-        $where = "id ='" . $data['id'] . "'";
+        $where = "id ={$data['id']}";
         return $this->db->update('companies', $data, $where);
     }
 

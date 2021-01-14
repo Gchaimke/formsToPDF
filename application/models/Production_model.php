@@ -4,123 +4,123 @@ class Production_model extends CI_Model
 {
 
 	function createFormsDb()
-    {
-        $this->load->dbforge();
-        $form = array(
-            'id' => array(
-                'type' => 'INT',
-                'constraint' => 9,
-                'unsigned' => TRUE,
-                'auto_increment' => TRUE
-            ),
-            'creator_id' => array(
-                'type' => 'INT',
-                'constraint' => 9,
-                'null' => TRUE
-            ),
-            'creator_name' => array(
-                'type' => 'VARCHAR',
-                'constraint' => 100,
-                'null' => TRUE
-            ),
-            'company' => array(
-                'type' => 'VARCHAR',
-                'constraint' => 500,
-                'null' => TRUE
-            ),
-            'date' => array(
-                'type' => 'DATE',
-                'null' => TRUE
-            ),
-            'client_num' => array(
-                'type' => 'VARCHAR',
-                'constraint' => 50,
-                'null' => TRUE
-            ),
-            'issue_num' => array(
-                'type' => 'VARCHAR',
-                'constraint' => 50,
-                'null' => TRUE
-            ),
-            'client_name' => array(
-                'type' => 'VARCHAR',
-                'constraint' => 60,
-                'null' => TRUE
-            ),
-            'issue_kind' => array(
-                'type' => 'VARCHAR',
-                'constraint' => 500,
-                'null' => TRUE
-            ),
-            'place' => array(
-                'type' => 'VARCHAR',
-                'constraint' => 100,
-                'null' => TRUE
-            ),
-            'start_time' => array(
-                'type' => 'TIME',
-                'null' => TRUE
-            ),
-            'end_time' => array(
-                'type' => 'TIME',
-                'null' => TRUE
-            ),
-            'manager' => array(
-                'type' => 'VARCHAR',
-                'constraint' => 100,
-                'null' => TRUE
-            ),
-            'contact_name' => array(
-                'type' => 'VARCHAR',
-                'constraint' => 100,
-                'null' => TRUE
-            ),
-            'activity_text' => array(
-                'type' => 'TEXT',
-                'null' => TRUE
-            ),
-            'checking_text' => array(
-                'type' => 'TEXT',
-                'null' => TRUE
-            ),
-            'summary_text' => array(
-                'type' => 'TEXT',
-                'null' => TRUE
-            ),
-            'remarks_text' => array(
-                'type' => 'TEXT',
-                'null' => TRUE
-            ),
-            'recommendations_text' => array(
-                'type' => 'TEXT',
-                'null' => TRUE
-            ),
-            'email_to' => array(
-                'type' => 'TEXT',
-                'null' => TRUE
-            ),
-            'client_sign' => array(
-                'type' => 'TEXT',
-                'null' => TRUE
-            ),
-            'attachments' => array(
-                'type' => 'TEXT',
-                'null' => TRUE
-            ),
-            'price' => array(
-                'type' => 'decimal',
-                'null' => TRUE
-            ),
-            'details' => array(
-                'type' => 'TEXT',
-                'null' => TRUE
-            )
-        );
-        $this->dbforge->add_field($form);
-        $this->dbforge->add_key('id', TRUE);
-        $this->dbforge->create_table('forms');
+	{
+		$this->load->dbforge();
+		$form = array(
+			'id' => array(
+				'type' => 'INT',
+				'constraint' => 9,
+				'unsigned' => TRUE,
+				'auto_increment' => TRUE
+			),
+			'creator_id' => array(
+				'type' => 'INT',
+				'constraint' => 9,
+				'null' => TRUE
+			),
+			'creator_name' => array(
+				'type' => 'VARCHAR',
+				'constraint' => 100,
+				'null' => TRUE
+			),
+			'company' => array(
+				'type' => 'VARCHAR',
+				'constraint' => 500,
+				'null' => TRUE
+			),
+			'date' => array(
+				'type' => 'DATE',
+				'null' => TRUE
+			),
+			'client_num' => array(
+				'type' => 'VARCHAR',
+				'constraint' => 50,
+				'null' => TRUE
+			),
+			'issue_num' => array(
+				'type' => 'VARCHAR',
+				'constraint' => 50,
+				'null' => TRUE
+			),
+			'client_name' => array(
+				'type' => 'VARCHAR',
+				'constraint' => 60,
+				'null' => TRUE
+			),
+			'issue_kind' => array(
+				'type' => 'VARCHAR',
+				'constraint' => 500,
+				'null' => TRUE
+			),
+			'place' => array(
+				'type' => 'VARCHAR',
+				'constraint' => 100,
+				'null' => TRUE
+			),
+			'start_time' => array(
+				'type' => 'TIME',
+				'null' => TRUE
+			),
+			'end_time' => array(
+				'type' => 'TIME',
+				'null' => TRUE
+			),
+			'manager' => array(
+				'type' => 'VARCHAR',
+				'constraint' => 100,
+				'null' => TRUE
+			),
+			'contact_name' => array(
+				'type' => 'VARCHAR',
+				'constraint' => 100,
+				'null' => TRUE
+			),
+			'activity_text' => array(
+				'type' => 'TEXT',
+				'null' => TRUE
+			),
+			'checking_text' => array(
+				'type' => 'TEXT',
+				'null' => TRUE
+			),
+			'summary_text' => array(
+				'type' => 'TEXT',
+				'null' => TRUE
+			),
+			'remarks_text' => array(
+				'type' => 'TEXT',
+				'null' => TRUE
+			),
+			'recommendations_text' => array(
+				'type' => 'TEXT',
+				'null' => TRUE
+			),
+			'email_to' => array(
+				'type' => 'TEXT',
+				'null' => TRUE
+			),
+			'client_sign' => array(
+				'type' => 'TEXT',
+				'null' => TRUE
+			),
+			'attachments' => array(
+				'type' => 'TEXT',
+				'null' => TRUE
+			),
+			'price' => array(
+				'type' => 'decimal',
+				'null' => TRUE
+			),
+			'details' => array(
+				'type' => 'TEXT',
+				'null' => TRUE
+			)
+		);
+		$this->dbforge->add_field($form);
+		$this->dbforge->add_key('id', TRUE);
+		$this->dbforge->create_table('forms');
 	}
-	
+
 	public function add_form($data)
 	{
 		$this->db->insert('forms', $data);
@@ -137,8 +137,7 @@ class Production_model extends CI_Model
 		// Select record
 		$this->db->select('*');
 		$this->db->from('forms');
-		$condition = "id ='" . $id . "'";
-		$this->db->where($condition);
+		$this->db->where("id =$id");
 		$this->db->limit(1);
 		$query = $this->db->get();
 		return $query->result_array();
@@ -147,45 +146,7 @@ class Production_model extends CI_Model
 	public function update_form($data)
 	{
 		// Query to check whether id already exist or not
-		$where = "id ='" . $data['id'] . "'";
-		return $this->db->update('forms', $data, $where);
-	}
-
-	function getForms($id = '', $company = '')
-	{
-		$response = array();
-		if ($this->db->table_exists('forms')) {
-			// Select record
-			$this->db->select('*');
-			$this->db->from('forms');
-			if ($id != '') {
-				if (strpos($id, ':') == false) {
-					$condition = "id ='$id'";
-					$this->db->where($condition);
-					$this->db->limit(1);
-				} else {
-					$id = str_replace(':', ',', $id);
-					$condition = "id IN ($id)";
-					$this->db->where($condition);
-				}
-			}
-			if ($company != '') {
-				$company = urldecode($company);
-				$condition = "company =\"$company\"";
-				$this->db->where($condition);
-			}
-			$q = $this->db->get();
-			$response = $q->result_array();
-		}
-		return $response;
-	}
-
-	function move_to_trash($data)
-	{
-		$where = "id =" . $data['id'];
-		$data = array(
-			'company' => 'Trash ' . $data['company']
-		);
+		$where = "id ={$data['id']}";
 		return $this->db->update('forms', $data, $where);
 	}
 
@@ -212,25 +173,28 @@ class Production_model extends CI_Model
 		}
 	}
 
-	function getMonthFroms($month = '1', $userid = '', $year = '',$company='')
+	function getMonthFroms($month = '1', $userid = '', $year = '', $company = '')
 	{
 		if ($this->db->table_exists('forms')) {
-			if (is_numeric($month)) {
-				$this->db->where("MONTH(date) = $month");
-			}
+
 			if ($userid != '') {
 				$this->db->where("creator_id = $userid");
-			}
-			if ($year != '') {
-				$this->db->where("YEAR(date) = $year");
-			}else{
-				$year = date('Y');
-				$this->db->where("YEAR(date) = $year");
 			}
 
 			if ($company != '') {
 				$company = urldecode($company);
-				$this->db->where("company =\"$company\"");
+				$this->db->where("company ='$company'");
+			}
+
+			if (is_numeric($month)) {
+				$this->db->where("MONTH(date) = $month");
+			}
+
+			if ($year != '') {
+				$this->db->where("YEAR(date) = $year");
+			} else {
+				$year = date('Y');
+				$this->db->where("YEAR(date) = $year");
 			}
 
 			$this->db->select('*');
@@ -270,7 +234,7 @@ class Production_model extends CI_Model
 
 		if ($company_name != '') {
 			$company = urldecode($company_name);
-			$this->db->where("company = \"$company\"");
+			$this->db->where("company ='$company'");
 		}
 
 		if ($year != '') {
