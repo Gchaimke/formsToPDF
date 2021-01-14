@@ -383,7 +383,7 @@ class Production extends CI_Controller
         $config = array(
             'upload_path' => $upload_folder,
             'overwrite' => TRUE,
-            'allowed_types' => 'png|conf|xml|txt|jpeg|jpg|zip|rar',
+            'allowed_types' => 'png|conf|xml|txt|jpeg|jpg|zip|rar|pdf',
             'max_size' => "2048"
         );
         $this->load->library('upload', $config);
