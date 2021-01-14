@@ -26,6 +26,11 @@ class Contacts_model extends CI_Model
                 'constraint' => 250,
                 'null' => TRUE
             ),
+            'users_list' => array(
+                'type' => 'VARCHAR',
+                'constraint' => 250,
+                'null' => TRUE
+            ),
         );
 
         $this->dbforge->add_field($contact);
@@ -38,6 +43,7 @@ class Contacts_model extends CI_Model
             "name" => 'Yosef',
             "email" => 'Yosef@forms.com',
             "company" => 'Forms',
+            "users_list" => ''
         );
         $this->db->insert('contacts', $cl);
     }

@@ -8,6 +8,7 @@ class Contacts extends CI_Controller
     {
         parent::__construct();
         $this->load->model('Contacts_model');
+        $this->load->model('Users_model');
     }
 
     public function index($msg = '')
@@ -16,6 +17,7 @@ class Contacts extends CI_Controller
         if ($msg != '') {
             $data['message_display'] = $msg;
         }
+        $this->add_field('contacts','users_list'); //one time update db to add new field
         $data['contacts'] = $this->Contacts_model->get();
         $this->load->view('header');
         $this->load->view('main_menu');
@@ -64,18 +66,22 @@ class Contacts extends CI_Controller
         $this->form_validation->set_rules('name', 'Name', 'trim|xss_clean');
         $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
         $this->form_validation->set_rules('company', 'company', 'trim');
+        $this->form_validation->set_rules('users_list[]', 'users_list', 'trim');
         if ($this->form_validation->run() == TRUE) {
+            $users_list = json_encode($this->input->post('users_list[]'));
             $sql = array(
                 'id' => $this->input->post('id'),
                 'name' => $this->input->post('name'),
                 'email' => $this->input->post('email'),
-                'company' => $this->input->post('company')
+                'company' => $this->input->post('company'),
+                'users_list' => $users_list,
             );
             $this->Contacts_model->edit($sql);
             $data['message_display'] = 'איש קשר שונה בהצלחה';
             $this->index($data['message_display']);
         } else {
             $data['contacts'] = $this->Contacts_model->get($id)[0];
+            $data['all_users'] = $this->Users_model->getUsers();
             $this->load->view('header');
             $this->load->view('main_menu');
             $this->load->view('contacts/edit', $data);
@@ -91,6 +97,14 @@ class Contacts extends CI_Controller
         if ($role == "Admin") {
             $id = $_POST['id'];
             $this->Contacts_model->delete($id);
+        }
+    }
+
+    function add_field($col_name,$field_name,$type='VARCHAR',$length = 150){
+        $this->load->dbforge();
+        if (!$this->db->field_exists($field_name, $col_name)) {
+            $fields = array($field_name => array('type' => $type,'constraint'=>$length));
+            $this->dbforge->add_column($col_name, $fields);
         }
     }
 }

@@ -4,6 +4,16 @@ if (isset($this->session->userdata['logged_in'])) {
 		header("location: /");
 	}
 }
+
+if (isset($all_users)) {
+	$users_list = json_decode($contacts['users_list']);
+	$filds_checks = '<ul>';
+	foreach ($all_users as $user) {
+		$cheked = (in_array($user['id'], $users_list)) ? "checked" : '';
+		$filds_checks .= '<li>' . $user['view_name'] . '<input class="m-3" type="checkbox" name="users_list[]" value="' . $user['id'] . '" ' . $cheked . '></li>';
+	}
+	$filds_checks .= '</ul>';
+}
 ?>
 <style>
 	li {
@@ -74,6 +84,10 @@ if (isset($this->session->userdata['logged_in'])) {
 
 					</div>
 				</div>
+			</div>
+			<div class="form-row">
+				<div class="input-group-text">הצג אצל משתמשים</div>
+				<?= $filds_checks ?>
 			</div>
 			<input type='submit' class="btn btn-info btn-block" name='submit' value='שמור'>
 			<?php echo form_close(); ?>
