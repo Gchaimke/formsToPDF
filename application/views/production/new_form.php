@@ -172,13 +172,13 @@ if (isset($companie)) {
                                     if ($contact['company'] == 'manager') {
                                           echo "<div class='input-group-text ml-2'>
                                     <input type='checkbox' value='{$contact['email']}'>
-                                    <label class='col-sm-2 col-form-label'>{$contact['name']}</label>
+                                    <label class='col email-label'>{$contact['name']}</label>
                                     </div>";
                                     }
                                     if ($contact['company'] == $companie_name) {
                                           echo "<div class='input-group-text ml-2'>
                                                 <input type='checkbox' value='{$contact['email']}'>
-                                                <label class='col-sm-2 col-form-label'>{$contact['name']}</label>
+                                                <label class='col email-label'>{$contact['name']}</label>
                                                 </div>";
                                     }
                               }

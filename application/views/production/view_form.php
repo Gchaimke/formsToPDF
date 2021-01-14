@@ -249,14 +249,14 @@ if (isset($this->session->userdata['logged_in'])) {
                                           if ($contact['company'] == 'manager') {
                                                 echo "<div class='input-group-text ml-2'>
                                                       <input type='checkbox' value='{$contact['email']}' $cheked>
-                                                      <label class='col-sm-2 col-form-label'>{$contact['name']}</label>
+                                                      <label class='col email-label'>{$contact['name']}</label>
                                                        </div>";
                                           }
 
                                           if ($contact['company'] == $form_data['company']) {
                                                 echo "<div class='input-group-text ml-2'>
                                                 <input type='checkbox' value='{$contact['email']}' $cheked>
-                                                <label class='col-sm-2 col-form-label'>{$contact['name']}</label>
+                                                <label class='col-sm-2 email-label'>{$contact['name']}</label>
                                                 </div>";
                                           }
                                     }

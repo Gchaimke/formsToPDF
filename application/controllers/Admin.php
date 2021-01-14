@@ -8,6 +8,7 @@ class Admin extends CI_Controller
 		$this->load->model('Admin_model');
 		$this->load->model('Production_model');
 		$this->load->model('Companies_model');
+		$this->load->model('Contacts_model');
 		$this->load->library('pagination');
 	}
 
@@ -76,6 +77,12 @@ class Admin extends CI_Controller
 			$data['response'] .= "Table 'forms' created!<br>" . PHP_EOL;
 		} else {
 			$data['response'] .= "Table 'forms' exists!<br>" . PHP_EOL;
+		}
+		if (!$this->db->table_exists('contacts')) {
+			$this->Contacts_model->create();
+			$data['response'] .= "Table 'contacts' created!<br>" . PHP_EOL;
+		} else {
+			$data['response'] .= "Table 'contacts' exists!<br>" . PHP_EOL;
 		}
 		if (!$this->db->table_exists('settings')) {
 			$this->Admin_model->createSettingsDb();
