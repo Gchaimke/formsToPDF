@@ -380,6 +380,7 @@ if (isset($this->session->userdata['logged_in'])) {
                         sum += elm.value + ',';
                   });
                   $('#sum').val(sum);
+                  $('#save_btn').click();
             });
       });
 
