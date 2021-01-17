@@ -16,7 +16,6 @@ class Exportpdf extends CI_Controller
 
     public function create($id = '1')
     {
-        $print_hours = false;
         $send_email = false;
         if (isset($_POST['email'])) {
             $send_email = $_POST['email'];
@@ -38,8 +37,8 @@ class Exportpdf extends CI_Controller
         $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
         // set document information
-        $form_date = date("d-m-Y", strtotime($form['date']));
-        $file_name = $form_date . '_' . $company['name'] . '_' . $form['client_num'] . '_' . $form['client_name'] . '_' . $form['place'];
+        $form['date'] = date("d-m-Y", strtotime($form['date']));
+        $file_name = $form['date'] . '_' . $company['name'] . '_' . $form['client_num'] . '_' . $form['client_name'] . '_' . $form['place'];
 
         // Remove anything which isn't a word, whitespace, number
         // or any of the following caracters -_~,;[]().
@@ -96,102 +95,57 @@ class Exportpdf extends CI_Controller
         $pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, 'C', true);
 
         $pdf->SetY(40);
-        $html = '<table style="width:950px" cellpadding="5" cellspacing="1" border="1">
-        <tr>
-        <td style="width:160px;font-weight:bolder;font-size:14px;">תאריך:</td>
-        <td style="direction:rtl;">' . $form_date  . '</td>
-        </tr><tr>
-        <td style="width:160px;font-weight:bolder;font-size:14px;">טכנאי:</td>
-        <td style="direction:rtl;">' . $creator['view_name']  . '</td>
-        </tr>';
-        if ($form['client_num'] != '') {
-            $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:14px;">מס. לקוח:</td>
-            <td>' . $form['client_num'] . '</td></tr>';
-        }
-        if ($form['issue_num'] != '') {
-            $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:14px;">מס. פניה\תקלה:</td>
-            <td>' . $form['issue_num'] . '</td></tr>';
-        }
-        if ($form['client_name'] != '') {
-            $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:14px;">שם לקוח: </td>
-            <td>' . $form['client_name'] . '</td></tr>';
-        }
-        if ($form['issue_kind'] != '') {
-            $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:14px;">סוג תקלה\ התקנה: </td>
-            <td>' . $form['issue_kind'] . '</td></tr>';
-        }
-        if ($form['place'] != '') {
-            $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:14px;">מיקום</td>
-            <td>' . $form['place'] . '</td></tr>';
-        }
 
-        if ($form['start_time'] != '00:00:00' || $form['end_time'] != '00:00:00') {
-            $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:14px;">שעת התחלה: </td>
-            <td>' . date('G:i', strtotime($form['start_time'])) . '</td></tr>
-            <tr><td style="width:160px;font-weight:bolder;font-size:14px;">שעת סיום: </td>
-            <td>' . date('G:i', strtotime($form['end_time'])) . '</td></tr>';
-        }
+        $lables_array = array(
+            'date' => 'תאריך:',
+            'creator_name' => 'טכנאי:',
+            'client_num' => 'מס. לקוח:',
+            'issue_num' => 'מס. פניה\תקלה:',
+            'client_name' => 'שם לקוח:',
+            'issue_kind' => 'סוג תקלה\ התקנה:',
+            'place' => 'מיקום',
+            'start_time' => 'שעת התחלה:',
+            'end_time' => 'שעת סיום:',
+            'manager' => 'אחראי',
+            'contact_name' => 'איש קשר:',
+            'activity_text' => 'תיאור תקלה\ התקנה:',
+            'checking_text' => 'תוצאות הבדיקה:',
+            'summary_text' => 'סיכום',
+            'remarks_text' => 'הערות:',
+            'recommendations_text' => 'המלצות:',
+            'attachments' => 'קבצים נוספים להורדה:',
+            'client_sign' => 'חתימת לקוח:',
+        );
 
-        if ($form['manager'] != '') {
-            $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:14px;">אחראי</td>
-            <td>' . $form['manager'] . '</td></tr>';
-        }
-        if ($form['contact_name'] != '') {
-            $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:14px;">איש קשר: </td>
-            <td>' . $form['contact_name'] . '</td></tr>';
-        }
-        if ($form['activity_text'] != '') {
-            $html .= ' <tr><td style="width:160px;font-weight:bolder;font-size:14px;">תיאור תקלה\ התקנה: </td>
-            <td>' . $this->hebrewFix($form['activity_text']) . '</td></tr>';
-        }
-        if ($form['checking_text'] != '') {
-            $html .= ' <tr><td style="width:160px;font-weight:bolder;font-size:14px;">תוצאות הבדיקה: </td>
-            <td>' . $this->hebrewFix($form['checking_text']) . '</td></tr>';
-        }
-        if ($form['summary_text'] != '') {
-            $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:14px;">סיכום</td>
-            <td>' . $this->hebrewFix($form['summary_text']) . '</td></tr>';
-        }
-        if ($form['remarks_text'] != '') {
-            $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:14px;">הערות: </td>
-            <td>' . $this->hebrewFix($form['remarks_text']) . '</td></tr>';
-        }
-
-        if ($form['recommendations_text'] != '') {
-            $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:14px;">המלצות: </td>
-            <td>' . $this->hebrewFix($form['recommendations_text']) . '</td>
-            </tr>';
-        }
-
-        if ($form['attachments'] != '') {
-            $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:14px;">קבצים נוספים להורדה: </td>';
-            $html .= '<td style="text-align:left;">';
-            $form_att_arr = explode(',', $form['attachments']);
-            foreach ($form_att_arr as $att) {
-                $attachment_name_array = explode('/', $att);
-                $attachment_name = end($attachment_name_array); //get last array element
-                $html .= '<a target="blank" href="http://' . $_SERVER['SERVER_NAME'] . '/' . $att . '" dir="ltr">' . $attachment_name . '</a><br/>';
-            }
-            $html .= '</td></tr>';
-        }
-
-        if ($form['client_sign'] != '') {
-            define('TMP_DIR',  FCPATH . '/Uploads/tmp/');
-            if (!file_exists(TMP_DIR)) {
-                mkdir(TMP_DIR, 0770, true);
-            }
-            $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:14px;">חתימת לקוח: </td>';
-            $imgdata = base64_decode($form['client_sign']);
-            $img_base64_encoded = "data:image/png;base64," . $form['client_sign'];
-            $imageContent = file_get_contents($img_base64_encoded);
-            $tmp_image = tempnam(TMP_DIR, 'prefix');
-            file_put_contents($tmp_image, $imageContent);
-            if ($imgdata != '') {
-                $html .= '<td><div style="position:relative;text-align:left;left:0;"><img  style="width:200px;" src="' . $tmp_image . '" alt="client_sign"/></div></td></tr>';
+        $html = '<table style="width:950px" cellpadding="5" cellspacing="1" border="1">';
+        foreach ($lables_array as $key => $row) {
+            if (isset($form[$key]) && $form[$key] != '') {
+                if ($key == 'start_time' || $key == 'end_time') {
+                    if ($form[$key] != '00:00:00') {
+                        $html .= $this->print_time($form);
+                    }
+                    continue;
+                }
+                if ($key == 'activity_text' || $key == 'checking_text' || $key == 'summary_text' || $key == 'remarks_text' || $key == 'recommendations_text') {
+                    $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:14px;">' . $lables_array[$key] . '</td>
+                                <td>' . $this->hebrewFix($form[$key]) . '</td></tr>';
+                    continue;
+                }
+                if ($key == 'attachments') {
+                    $html .= $this->print_attachments($form);
+                    continue;
+                }
+                if ($key == 'client_sign') {
+                    $html .= $this->print_client_sign($form);
+                    continue;
+                }
+                $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:14px;">' . $lables_array[$key] . '</td>
+                    <td style="direction:rtl;">' . $form[$key] . '</td>
+                    </tr>';
             }
         }
-
         $html .= '</table>';
+        //die($html);
         $pdf->writeHTMLCell(0, 0, '', '', $html, 0, 0, 0, true, 'R', true);
 
         if ($send_email) {
@@ -210,7 +164,7 @@ class Exportpdf extends CI_Controller
                         array_push($attachments, $att);
                     }
                 }
-                $this->SendEmail($attachments, $file_name, $form['email_to'], $id, $form['creator_id'], $company['name']);
+                $this->SendEmail($attachments, $file_name,  $form['email_to'], $creator, $id, $company['name']);
             } else {
                 print_r('Could not trace file path');
             }
@@ -220,6 +174,48 @@ class Exportpdf extends CI_Controller
         if (isset($tmp_image) and file_exists($tmp_image)) {
             unlink($tmp_image);
         }
+    }
+
+    function print_time($form)
+    {
+        return '<tr><td style="width:160px;font-weight:bolder;font-size:14px;">שעת התחלה: </td>
+            <td>' . date('G:i', strtotime($form['start_time'])) . '</td></tr>
+            <tr><td style="width:160px;font-weight:bolder;font-size:14px;">שעת סיום: </td>
+            <td>' . date('G:i', strtotime($form['end_time'])) . '</td></tr>';
+    }
+
+    function print_attachments($form)
+    {
+        $html = '';
+        $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:14px;">קבצים נוספים להורדה: </td>';
+        $html .= '<td style="text-align:left;">';
+        $form_att_arr = explode(',', $form['attachments']);
+        foreach ($form_att_arr as $att) {
+            $attachment_name_array = explode('/', $att);
+            $attachment_name = end($attachment_name_array); //get last array element
+            $html .= '<a target="blank" href="http://' . $_SERVER['SERVER_NAME'] . '/' . $att . '" dir="ltr">' . $attachment_name . '</a><br/>';
+        }
+        $html .= '</td></tr>';
+        return $html;
+    }
+
+    function print_client_sign($form)
+    {
+        $html = '';
+        $sign_dir =  FCPATH . '/Uploads/tmp/';
+        if (!file_exists($sign_dir)) {
+            mkdir($sign_dir, 0770, true);
+        }
+        $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:14px;">חתימת לקוח: </td>';
+        $imgdata = base64_decode($form['client_sign']);
+        $img_base64_encoded = "data:image/png;base64," . $form['client_sign'];
+        $imageContent = file_get_contents($img_base64_encoded);
+        $tmp_image = tempnam($sign_dir, 'prefix');
+        file_put_contents($tmp_image, $imageContent);
+        if ($imgdata != '') {
+            $html .= '<td><div style="position:relative;text-align:left;left:0;"><img  style="width:200px;" src="' . $tmp_image . '" alt="client_sign"/></div></td></tr>';
+        }
+        return $html;
     }
 
     function hebrewFix($string)
@@ -247,50 +243,43 @@ class Exportpdf extends CI_Controller
         return $out;
     }
 
-    function SendEmail($attachments, $file_name, $recipients, $id = 1, $form_creator, $company_name = '')
+    function SendEmail($attachments, $file_name, $recipients, $creator, $id = 1, $company_name = '')
     {
-        $user =  $this->Users_model->getUser($form_creator)[0];
+        $this->load->library('email');
         $settings = $this->Admin_model->getSettings()[0];
         $sender = 'yossigorbov@garin.co.il';
-        if ($user['email'] != '') {
-            //$recipients = $user['email'] . ',' . $recipients;
-            if ($recipients == '') {
-                $recipients = $user['email'];
-            }
-            $this->load->library('email');
-            if ($settings['smtp_on'] == 1) {
-                $config['protocol'] = 'smtp';
-                $config['smtp_host'] = $settings['smtp_host'];
-                $config['smtp_user'] = $settings['smtp_user'];
-                $config['smtp_pass'] = $settings['smtp_pass'];
-                $config['smtp_port'] = $settings['smtp_port'];;
-                $this->email->initialize($config);
-
-                $sender = $settings['smtp_user'];
-            }
-            $Subject = $file_name;
-            $Message = '';
-            $this->email
-                ->from($sender, 'דוח חדש - ' . $company_name . ' - ' . $user['view_name'])
-                ->to($recipients)
-                ->subject($Subject)
-                ->message($Message);
-            foreach ($attachments as $att) {
-                $this->email->attach($att);
-            }
-
-            if ($this->email->send()) {
-                $msg = "מייל נשלח ל:  " . $recipients . " בהצלחה!";
-                $this->log_data($msg, $id);
-                print_r($msg);
-            } else {
-                $error = $this->email->print_debugger();
-                $msg = strtok($error, '.');
-                $this->log_data($msg, $id, 4);
-                print_r($msg);
-            }
+        if ($recipients == '') {
+            $recipients = $creator['email'];
+        }
+        if ($settings['smtp_on'] == 1) {
+            $config['protocol'] = 'smtp';
+            $config['smtp_host'] = $settings['smtp_host'];
+            $config['smtp_user'] = $settings['smtp_user'];
+            $config['smtp_pass'] = $settings['smtp_pass'];
+            $config['smtp_port'] = $settings['smtp_port'];;
+            $this->email->initialize($config);
+            $sender = $settings['smtp_user'];
+        }
+        $Subject = $file_name;
+        $Message = '';
+        $this->email
+            ->from($sender, 'דוח חדש - ' . $company_name . ' - ' . $creator['view_name'])
+            ->to($recipients)
+            ->bcc($creator['email'])
+            ->subject($Subject)
+            ->message($Message);
+        foreach ($attachments as $att) {
+            $this->email->attach($att);
+        }
+        if ($this->email->send()) {
+            $msg = "מייל נשלח ל:  " . $recipients . " בהצלחה!";
+            $this->log_data($msg, $id);
+            print_r($msg);
         } else {
-            print_r('לא יכול לשלוח מייל, דואר משתמש לא מוגדר או אין רשימת תפוצה. ');
+            $error = $this->email->print_debugger();
+            $msg = strtok($error, '.');
+            $this->log_data($msg, $id, 4);
+            print_r($msg);
         }
         $this->email->clear(TRUE);
     }
