@@ -39,7 +39,7 @@ class Exportpdf extends CI_Controller
 
         // set document information
         $form_date = date("d-m-Y", strtotime($form['date']));
-        $file_name = $form_date . '_'.$company['name'].'_' . $form['client_num'] . '__' . $form['client_name'] . '__' . $form['place'];
+        $file_name = $form_date . '_' . $company['name'] . '_' . $form['client_num'] . '_' . $form['client_name'] . '_' . $form['place'];
 
         // Remove anything which isn't a word, whitespace, number
         // or any of the following caracters -_~,;[]().
@@ -127,7 +127,7 @@ class Exportpdf extends CI_Controller
 
         if ($form['start_time'] != '00:00:00' || $form['end_time'] != '00:00:00') {
             $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:14px;">שעת התחלה: </td>
-            <td>' . date('G:i', strtotime($form['start_time'])) .'</td></tr>
+            <td>' . date('G:i', strtotime($form['start_time'])) . '</td></tr>
             <tr><td style="width:160px;font-weight:bolder;font-size:14px;">שעת סיום: </td>
             <td>' . date('G:i', strtotime($form['end_time'])) . '</td></tr>';
         }
@@ -210,7 +210,7 @@ class Exportpdf extends CI_Controller
                         array_push($attachments, $att);
                     }
                 }
-                $this->SendEmail($attachments, $file_name, $form['email_to'], $id, $form['creator_id']);
+                $this->SendEmail($attachments, $file_name, $form['email_to'], $id, $form['creator_id'], $company['name']);
             } else {
                 print_r('Could not trace file path');
             }
@@ -247,7 +247,7 @@ class Exportpdf extends CI_Controller
         return $out;
     }
 
-    function SendEmail($attachments, $file_name, $recipients, $id = 1, $form_creator)
+    function SendEmail($attachments, $file_name, $recipients, $id = 1, $form_creator, $company_name = '')
     {
         $user =  $this->Users_model->getUser($form_creator)[0];
         $settings = $this->Admin_model->getSettings()[0];
@@ -271,7 +271,7 @@ class Exportpdf extends CI_Controller
             $Subject = $file_name;
             $Message = '';
             $this->email
-                ->from($sender, 'דוח חדש - ' . $user['view_name'])
+                ->from($sender, 'דוח חדש - ' . $company_name . ' - ' . $user['view_name'])
                 ->to($recipients)
                 ->subject($Subject)
                 ->message($Message);
@@ -350,10 +350,10 @@ class Exportpdf extends CI_Controller
 
             $TBS->LoadTemplate($template, OPENTBS_ALREADY_UTF8);
             $TBS->MergeBlock('c', $form);
-            $save_as =''; //download file, set 1 to save.
+            $save_as = ''; //download file, set 1 to save.
             //$save_as = (isset($_POST['save_as']) && (trim($_POST['save_as']) !== '') && ($_SERVER['SERVER_NAME'] == 'localhost')) ? trim($_POST['save_as']) : '';
             //$output_file_name = str_replace('.', '_' . date('Y-m-d') . $save_as . '.', $template);
-            $output_file_name =  date('Y-m-d') . '_'.$form[0]['company'].'.docx';
+            $output_file_name =  date('Y-m-d') . '_' . $form[0]['company'] . '.docx';
             if ($save_as === '') {
                 // Output the result as a downloadable file (only streaming, no data saved in the server)
                 $TBS->Show(OPENTBS_DOWNLOAD, $output_file_name); // Also merges all [onshow] automatic fields.
