@@ -255,10 +255,12 @@ if ($("#fileupload").length) {
                     $('#attachments').val(new_file);
                 } else {
                     $('#attachments').val($('#attachments').val() + "," + new_file);
+                    
                 }
             }
-
+            $('#save_btn').click();
         }
+        
     });
 }
 
@@ -275,8 +277,10 @@ function delete_attachment(attachment) {
                 $('#attachments').val($('#attachments').val().substring(1, $('#attachments').val().length))
             }
             console.log(o);
+            $('#save_btn').click();
         });
     }
+    
 }
 
 function sleep(milliseconds) {
