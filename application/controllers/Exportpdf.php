@@ -122,7 +122,7 @@ class Exportpdf extends CI_Controller
             if (isset($form[$key]) && $form[$key] != '') {
                 if ($key == 'start_time' || $key == 'end_time') {
                     if ($form['start_time'] != '00:00:00' || $form['end_time'] !='00:00:00') {
-                        $html .= $this->print_time($form[$key]);
+                        $html .= $this->print_time($form[$key],$lables_array[$key]);
                         continue;
                     }else{
                         continue;
@@ -134,11 +134,11 @@ class Exportpdf extends CI_Controller
                     continue;
                 }
                 if ($key == 'attachments') {
-                    $html .= $this->print_attachments($form);
+                    $html .= $this->print_attachments($form[$key],$lables_array[$key]);
                     continue;
                 }
                 if ($key == 'client_sign') {
-                    $html .= $this->print_client_sign($form);
+                    $html .= $this->print_client_sign($form[$key],$lables_array[$key]);
                     continue;
                 }
                 $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:14px;">' . $lables_array[$key] . '</td>
@@ -178,18 +178,18 @@ class Exportpdf extends CI_Controller
         }
     }
 
-    function print_time($time)
+    function print_time($time,$lable)
     {
-        return '<tr><td style="width:160px;font-weight:bolder;font-size:14px;">שעת התחלה: </td>
+        return '<tr><td style="width:160px;font-weight:bolder;font-size:14px;">'.$lable.'</td>
             <td>' . date('G:i', strtotime($time)) . '</td></tr>';
     }
 
-    function print_attachments($form)
+    function print_attachments($attachments,$lable)
     {
         $html = '';
-        $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:14px;">קבצים נוספים להורדה: </td>';
+        $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:14px;">'.$lable.'</td>';
         $html .= '<td style="text-align:left;">';
-        $form_att_arr = explode(',', $form['attachments']);
+        $form_att_arr = explode(',', $attachments);
         foreach ($form_att_arr as $att) {
             $attachment_name_array = explode('/', $att);
             $attachment_name = end($attachment_name_array); //get last array element
@@ -199,16 +199,16 @@ class Exportpdf extends CI_Controller
         return $html;
     }
 
-    function print_client_sign($form)
+    function print_client_sign($client_sign,$lable)
     {
         $html = '';
         $sign_dir =  FCPATH . '/Uploads/tmp/';
         if (!file_exists($sign_dir)) {
             mkdir($sign_dir, 0770, true);
         }
-        $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:14px;">חתימת לקוח: </td>';
-        $imgdata = base64_decode($form['client_sign']);
-        $img_base64_encoded = "data:image/png;base64," . $form['client_sign'];
+        $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:14px;">'.$lable.'</td>';
+        $imgdata = base64_decode($client_sign);
+        $img_base64_encoded = "data:image/png;base64," . $client_sign;
         $imageContent = file_get_contents($img_base64_encoded);
         $tmp_image = tempnam($sign_dir, 'prefix');
         file_put_contents($tmp_image, $imageContent);
