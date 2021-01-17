@@ -121,10 +121,12 @@ class Exportpdf extends CI_Controller
         foreach ($lables_array as $key => $row) {
             if (isset($form[$key]) && $form[$key] != '') {
                 if ($key == 'start_time' || $key == 'end_time') {
-                    if ($form[$key] != '00:00:00') {
-                        $html .= $this->print_time($form);
+                    if ($form['start_time'] != '00:00:00' || $form['end_time'] !='00:00:00') {
+                        $html .= $this->print_time($form[$key]);
+                        continue;
+                    }else{
+                        continue;
                     }
-                    continue;
                 }
                 if ($key == 'activity_text' || $key == 'checking_text' || $key == 'summary_text' || $key == 'remarks_text' || $key == 'recommendations_text') {
                     $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:14px;">' . $lables_array[$key] . '</td>
@@ -176,12 +178,10 @@ class Exportpdf extends CI_Controller
         }
     }
 
-    function print_time($form)
+    function print_time($time)
     {
         return '<tr><td style="width:160px;font-weight:bolder;font-size:14px;">שעת התחלה: </td>
-            <td>' . date('G:i', strtotime($form['start_time'])) . '</td></tr>
-            <tr><td style="width:160px;font-weight:bolder;font-size:14px;">שעת סיום: </td>
-            <td>' . date('G:i', strtotime($form['end_time'])) . '</td></tr>';
+            <td>' . date('G:i', strtotime($time)) . '</td></tr>';
     }
 
     function print_attachments($form)
