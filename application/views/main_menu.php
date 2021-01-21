@@ -4,8 +4,6 @@ if (isset($this->session->userdata['logged_in']) && $this->session->userdata['lo
   $username = ($this->session->userdata['logged_in']['name']);
   $user_view_name = ($this->session->userdata['logged_in']['view_name']);
   $role = ($this->session->userdata['logged_in']['role']);
-} else {
-  header("location: /");
 }
 ?>
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark main-menu rtl">
@@ -14,7 +12,6 @@ if (isset($this->session->userdata['logged_in']) && $this->session->userdata['lo
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarDefault" aria-controls="navbarDefault" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-
   <div class="collapse navbar-collapse" id="navbarDefault">
     <ul class="navbar-nav  my-4 my-md-0">
       <li class="nav-item mx-1 mt-3 mt-md-0 "><a class="nav-link btn btn-sm btn-outline-success" href="/"> דוח חדש</a></li>
