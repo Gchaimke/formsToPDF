@@ -33,9 +33,10 @@ class Contacts extends CI_Controller
         $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
         $this->form_validation->set_rules('company', 'company', 'trim|xss_clean');
         if ($this->form_validation->run() == FALSE) {
+            $data['companies'] = $this->Companies_model->getCompanies();
             $this->load->view('header');
             $this->load->view('main_menu');
-            $this->load->view('contacts/create');
+            $this->load->view('contacts/create',$data);
             $this->load->view('footer');
         } else {
             $data = array(

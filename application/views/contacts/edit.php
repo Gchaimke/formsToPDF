@@ -87,7 +87,6 @@ if (isset($all_users)) {
 							}
 							?>
 						</select>
-
 					</div>
 				</div>
 			</div>
