@@ -17,6 +17,7 @@ class Companies extends CI_Controller
             $data['message_display'] = $msg;
         }
         $data['companies'] = $this->Companies_model->getCompanies();
+        $data['role'] = $this->session->userdata['logged_in']['role'];
         $this->load->view('header');
         $this->load->view('main_menu');
         $this->load->view('companies/manage', $data);
@@ -140,7 +141,6 @@ class Companies extends CI_Controller
     function form_filds()
     {
         $filds = '{
-            "date_column":"1",
             "start_time_column":"1",
             "end_time_column":"1",
             "client_num_column":"1",

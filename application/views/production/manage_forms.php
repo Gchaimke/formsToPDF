@@ -1,7 +1,9 @@
 <?php
-if (isset($this->session->userdata['logged_in'])) {
+if (isset($this->session->userdata['logged_in']) && $this->session->userdata['logged_in']['id'] != '') {
 	$user_role = $this->session->userdata['logged_in']['role'];
 	$user_id = $this->session->userdata['logged_in']['id'];
+}else{
+	header("location: /");
 }
 $creator_id = isset($creator) ? $creator : '';
 $company_name = isset($company) ? $company : '';
@@ -125,8 +127,11 @@ $year = substr($date, 0, 4);
 				<tbody>
 
 					<?php foreach ($results as $data) {
-						if ($user_role != 'Admin' && $data->creator_id != $user_id)
-							continue;
+						if ($user_role != 'Admin' && $user_role != 'Manager') {
+							if ($data->creator_id != $user_id) {
+								continue;
+							}
+						}
 					?>
 						<tr id='<?php echo $data->id ?>'>
 							<td class="align-middle">
@@ -242,7 +247,7 @@ $year = substr($date, 0, 4);
 		}
 	};
 
-	function set_options_selected(){
+	function set_options_selected() {
 		$('.creator_filter').val(creator);
 		$('.year_filter').val(year);
 		$('.month_filter').val(month);

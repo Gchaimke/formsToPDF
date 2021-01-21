@@ -262,13 +262,13 @@ class Production extends CI_Controller
 
     public function form_search()
     {
-        $user_role = $this->session->userdata['logged_in']['role'];
+        $role = $this->session->userdata['logged_in']['role'];
         $this->form_validation->set_rules('search', 'Search', 'trim|xss_clean');
         $data = $this->Production_model->searchForm($this->input->post('search'));
         $str = '';
         $count = 0;
         foreach ($data as $form) {
-            if ($user_role != 'Admin' && $form['creator_id'] != $this->session->userdata['logged_in']['id'])
+            if ($role != 'Admin' && $form['creator_id'] != $this->session->userdata['logged_in']['id'])
                 continue;
             $str .= "<a class='badge badge-info' href='/production/view_form/" . $form["id"] .
                 "?issue=" . $form["issue_num"] . "'>" . urldecode($form["client_name"]) . ": " . date("d-m-Y", strtotime($form["date"])) . "</a>";
@@ -279,9 +279,12 @@ class Production extends CI_Controller
 
     public function delete_form()
     {
+        $role = $this->session->userdata['logged_in']['role'];
         $this->form_validation->set_rules('id', 'Id', 'trim|xss_clean');
         $id = $this->input->post('id');
-        $this->Production_model->deleteForm($id);
+        if ($role == 'Admin') {
+            $this->Production_model->deleteForm($id);
+        }
     }
 
     public function save_photo()
@@ -386,7 +389,7 @@ class Production extends CI_Controller
         $config = array(
             'upload_path' => $upload_folder,
             'overwrite' => TRUE,
-            'allowed_types' => '*',//'png|conf|xml|txt|jpeg|jpg|zip|rar|pdf',
+            'allowed_types' => '*', //'png|conf|xml|txt|jpeg|jpg|zip|rar|pdf',
             'max_size' => "2048"
         );
         $this->load->library('upload', $config);
@@ -394,7 +397,7 @@ class Production extends CI_Controller
             $data = array('upload_data' => $this->upload->data());
             echo  $data['upload_data']["file_name"];
         } else {
-            $error = "error ". $this->upload->display_errors();
+            $error = "error " . $this->upload->display_errors();
             print_r($error);
         }
     }

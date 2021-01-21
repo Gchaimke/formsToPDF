@@ -420,6 +420,11 @@ if (isset($this->session->userdata['logged_in'])) {
                   $('#form-messages').removeClass('alert-info').addClass('alert-success');
                   // Set the message text.
                   $('#form-messages').html(o).fadeIn(1000).delay(5000).fadeOut(1000);
+                  setTimeout(function() {
+                        //window.location.href = "/exportpdf/create/" + id;
+                        //window.location.href = "/production/view_form/" + id;
+                        window.location.href = "/";
+                  }, 3000); //will call the function after 2 secs.
             }).fail(function(o) {
                   $('#form-messages').removeClass('alert-info').addClass('alert-danger');
                   // Set the message text.

@@ -1,19 +1,10 @@
-<?php
-if (isset($this->session->userdata['logged_in']) && isset($user)) {
-	if ($this->session->userdata['logged_in']['id'] != $user[0]['id']) {
-		if ($this->session->userdata['logged_in']['role'] != "Admin") {
-			header("location: /");
-		}
-	}
-}
-?>
 <div id="form-messages" class='alert hidden' role='alert'></div>
 <main role="main">
 	<div class="jumbotron">
 		<div class="container">
 			<center>
 				<h5>ערוך פרטים</h5>
-				
+
 			</center>
 		</div>
 	</div>
@@ -24,16 +15,14 @@ if (isset($this->session->userdata['logged_in']) && isset($user)) {
 				if (validation_errors()) {
 					echo "<div class='alert alert-danger' role='alert'>" . validation_errors() . "</div>";
 				}
-				$user = $user[0]; ?>
+				?>
 				<?php
 				$attributes = ['class' => '', 'id' => 'ajax-form'];
 				echo form_open('users/edit', $attributes); ?>
 				<input type='hidden' name='id' value="<?php echo $user['id'] ?>">
 				<div class="form-row">
 					<div class="input-group mb-2">
-						<?php
-						$current_role = ($this->session->userdata['logged_in']['role']);
-						if ($current_role == "Admin") {
+						<?php if ($role == "Admin") {
 							echo '<div class="input-group-prepend"><div class="input-group-text">תפקיד</div></div>';
 							echo "<select class='form-control' name='role'>";
 							if (isset($settings)) {
@@ -57,9 +46,7 @@ if (isset($this->session->userdata['logged_in']) && isset($user)) {
 						<div class="input-group-prepend">
 							<div class="input-group-text">שם משתמש</div>
 						</div>
-						<input type='text' class="form-control" name='name' value="<?php echo $user['name'] ?>" <?php if ($current_role != "Admin") {
-																																		echo 'disabled';
-																																	} ?>>
+						<input type='text' class="form-control" name='name' value="<?php echo $user['name'] ?>" <?php echo ($role != "Admin") ? 'disabled' : "" ?>>
 					</div>
 				</div>
 				<div class="form-row">

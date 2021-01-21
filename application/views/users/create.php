@@ -1,15 +1,8 @@
-<?php
-if (isset($this->session->userdata['logged_in'])) {
-      if ($this->session->userdata['logged_in']['role'] != "Admin") {
-            header("location: /");
-      }
-}
-?>
 <main role="main">
       <div class="jumbotron">
             <div class="container">
                   <center>
-                        <h5>הוסף משתמש חדש</h5>
+                        <h5>הוסף משתמש חדש</h5> <?=$role?>
                   </center>
             </div>
       </div>
@@ -32,11 +25,13 @@ if (isset($this->session->userdata['logged_in'])) {
                                           <div class="input-group-text">תפקיד</div>
                                     </div>
                                     <select class="form-control" name='role'>
-                                          <?php if (isset($settings)) {
+                                          <?php if (isset($settings) && $role == 'Admin') {
                                                 $arr = explode(",", $settings[0]['roles']);
                                                 foreach ($arr as $role) {
                                                       echo '<option>' . $role . '</option>';
                                                 }
+                                          }else{
+                                                echo '<option>User</option>';
                                           }
                                           ?>
                                     </select>

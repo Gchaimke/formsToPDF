@@ -1,10 +1,4 @@
 <?php
-if (isset($this->session->userdata['logged_in'])) {
-	if ($this->session->userdata['logged_in']['role'] != "Admin") {
-		header("location: /");
-	}
-}
-
 if (isset($all_users)) {
 	$users_list = json_decode($contacts['users_list']);
 	$filds_checks = '<ul>';

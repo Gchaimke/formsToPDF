@@ -1,9 +1,11 @@
 <?php
-if (isset($this->session->userdata['logged_in'])) {
+if (isset($this->session->userdata['logged_in']) && $this->session->userdata['logged_in']['id'] != '') {
   $id = ($this->session->userdata['logged_in']['id']);
   $username = ($this->session->userdata['logged_in']['name']);
   $user_view_name = ($this->session->userdata['logged_in']['view_name']);
   $role = ($this->session->userdata['logged_in']['role']);
+} else {
+  header("location: /");
 }
 ?>
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark main-menu rtl">
@@ -31,17 +33,22 @@ if (isset($this->session->userdata['logged_in'])) {
     <ul class="navbar-nav  pull-right">
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          שלום <?php echo $user_view_name; ?>
+          שלום <?php echo isset($user_view_name) ? $user_view_name : "" ?>
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <?php if ($role == 'Admin') { ?>
+          <?php if ($role == 'Admin' || $role == 'Manager') { ?>
             <a class="dropdown-item p-2 px-md-2" href="/users">משתמשים</a>
             <a class="dropdown-item p-2 px-md-2" href="/companies">חברות</a>
             <a class="dropdown-item p-2 px-md-2" href="/contacts">אנשי קשר</a>
-            <a class="dropdown-item p-2 px-md-2" href="/admin/settings">הגדרות</a>
+            <hr>
           <?php } ?>
-          <hr>
-          <a class="dropdown-item p-2 px-md-2" href="/users/edit/<?php echo $id ?>">עדכן פרטים שלי</a>
+          <?php if ($role == 'Admin') { ?>
+            <a class="dropdown-item p-2 px-md-2" href="/admin/settings">הגדרות</a>
+            <hr>
+          <?php } ?>
+
+
+          <a class="dropdown-item p-2 px-md-2" href="/users/edit/<?php echo isset($id) ? $id : "" ?>">עדכן פרטים שלי</a>
           <a class="dropdown-item p-2 px-md-2" href="/users/logout">צא ממערכת</a>
         </div>
       </li>

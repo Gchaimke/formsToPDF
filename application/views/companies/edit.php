@@ -1,10 +1,3 @@
-<?php
-if (isset($this->session->userdata['logged_in'])) {
-	if ($this->session->userdata['logged_in']['role'] != "Admin") {
-		header("location: /");
-	}
-}
-?>
 <style>
 	li {
 		text-align: left;

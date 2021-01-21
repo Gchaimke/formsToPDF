@@ -10,14 +10,15 @@ class Users extends CI_Controller
         $this->load->model('Admin_model');
     }
 
-    public function index()
+    public function index($msg = '')
     {
         $data = array();
-        $role = ($this->session->userdata['logged_in']['role']);
+        $role = $this->session->userdata['logged_in']['role'];
         $data['users'] = $this->Users_model->getUsers();
+        $data['message_display'] = $msg;
         $this->load->view('header');
         $this->load->view('main_menu');
-        if ($role != "Admin") {
+        if ($role != "Admin" && $role != 'Manager') {
             header("location: /");
         } else {
             $this->load->view('users/manage', $data);
@@ -29,7 +30,7 @@ class Users extends CI_Controller
     {
         $data = array();
         $role = ($this->session->userdata['logged_in']['role']);
-        if ($role == "Admin") {
+        if ($role == "Admin" || $role == 'Manager') {
             $this->form_validation->set_rules('name', 'Name', 'trim|required|xss_clean');
             $this->form_validation->set_rules('role', 'Role', 'trim|required|xss_clean');
             $this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean');
@@ -37,6 +38,7 @@ class Users extends CI_Controller
             $this->form_validation->set_rules('email', 'email', 'trim|xss_clean');
             if ($this->form_validation->run() == FALSE) {
                 $data['settings'] = $this->Admin_model->getSettings();
+                $data['role'] = $role;
                 $this->load->view('header');
                 $this->load->view('main_menu');
                 $this->load->view('users/create', $data);
@@ -51,15 +53,9 @@ class Users extends CI_Controller
                 );
                 $result = $this->Users_model->registration_insert($data);
                 if ($result == TRUE) {
-                    $data['users'] = $this->Users_model->getUsers();
-                    $data['message_display'] = 'User Registration Successfully !';
-                    $this->load->view('header');
-                    $this->load->view('main_menu');
-                    $this->load->view('users/manage', $data);
-                    $this->load->view('footer');
+                    $this->index('User Registration Successfully !');
                 } else {
                     $data['message_display'] = 'Username already exist!';
-                    $data['settings'] = $this->Admin_model->getSettings();
                     $this->load->view('header');
                     $this->load->view('main_menu');
                     $this->load->view('users/create', $data);
@@ -90,10 +86,18 @@ class Users extends CI_Controller
         $this->form_validation->set_rules('password', 'Password', 'trim|xss_clean');
         $this->form_validation->set_rules('email', 'email', 'trim|xss_clean');
         if ($this->form_validation->run() == FALSE) {
-            $data['user'] =  $this->Users_model->getUser($id);
+            $data['user'] =  $this->Users_model->getUser($id)[0];
             $data['settings'] = $this->Admin_model->getSettings();
+            $data['role'] = $role;
+            $user_role = $data['user']['role'];
+            $user_id = $data['user']['id'];
             $this->load->view('header');
             $this->load->view('main_menu');
+            if ($role != "Admin" && $user_role == "Admin") {
+                header("location: /");
+            } else if ($role != "Admin" && $user_role == "Manager" && $id != $user_id) {
+                header("location: /");
+            }
             $this->load->view('users/edit', $data);
             $this->load->view('footer');
         } else {
@@ -105,21 +109,17 @@ class Users extends CI_Controller
                     'role' => $this->input->post('role'),
                     'email' => $this->input->post('email')
                 );
-                if ($this->input->post('password') != '') {
-                    $sql += array('password' => $this->input->post('password'));
-                }
-                print_r($this->Users_model->editUser($sql));
             } else {
                 $sql = array(
                     'id' => $this->input->post('id'),
                     'view_name' => $this->input->post('view_name'),
                     'email' => $this->input->post('email')
                 );
-                if ($this->input->post('password') != '') {
-                    $sql += array('password' => $this->input->post('password'));
-                }
-                print_r($this->Users_model->editUser($sql));
             }
+            if ($this->input->post('password') != '') {
+                $sql += array('password' => $this->input->post('password'));
+            }
+            print_r($this->Users_model->editUser($sql));
         }
     }
 

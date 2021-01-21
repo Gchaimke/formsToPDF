@@ -1,10 +1,3 @@
-<?php
-if (isset($this->session->userdata['logged_in'])) {
-	if ($this->session->userdata['logged_in']['role'] != "Admin") {
-		header("location: /");
-	}
-}
-?>
 <main role="main">
 	<div class="jumbotron">
 		<div class="container">
@@ -27,7 +20,7 @@ if (isset($this->session->userdata['logged_in'])) {
 					<th scope="col">לוגו</th>
 					<th scope="col">שם החברה</th>
 					<th scope="col">ערוך</th>
-					<th scope="col">מחק</th>
+					<?php echo ($role == 'Admin') ? '<th scope="col">מחק</th>' : '' ?>
 				</tr>
 			</thead>
 			<tbody>
@@ -38,8 +31,10 @@ if (isset($this->session->userdata['logged_in'])) {
 						echo  '<td class="align-middle">' . $company['name'] . '</td>';
 						echo '<td class="align-middle"><a href="/companies/edit/' . $company['id'] .
 							'" class="btn btn-info"><i class="fa fa-edit"></i></a></td>';
-						echo '<td class="align-middle"><button id="' . $company['id'] .
-							'" class="btn btn-danger" onclick="deleteClient(this.id)"><i class="fa fa-trash"></i></button></td>';
+						if ($role == 'Admin') {
+							echo '<td class="align-middle"><button id="' . $company['id'] .
+								'" class="btn btn-danger" onclick="deleteClient(this.id)"><i class="fa fa-trash"></i></button></td>';
+						}
 						echo '</tr>';
 					}
 				} ?>
