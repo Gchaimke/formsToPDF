@@ -48,7 +48,7 @@ if (isset($this->session->userdata['logged_in'])) {
         </div>
         <div class="input-group mb-2">
             <div class="input-group-prepend">
-                <div class="input-group-text">תמיד לשלוח לאמיילים הבאים</div>
+                <div class="input-group-text">תמיד לשלוח למיילים הבאים</div>
             </div>
             <input name="emails" class="form-control" style="direction: ltr;" value="<?php echo $settings['emails']; ?>">
         </div>
