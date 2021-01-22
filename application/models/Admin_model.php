@@ -44,6 +44,10 @@ class Admin_model extends CI_Model
             'log' => array(
                 'type' => 'LONGTEXT',
                 'null' => TRUE
+            ),
+            'emails' => array(
+                'type' => 'VARCHAR',
+                'constraint' => 300,
             )
         );
 
@@ -111,10 +115,11 @@ class Admin_model extends CI_Model
         return $this->db->update('forms', $data, $where);
     }
 
-    function add_field($col_name,$field_name,$type='VARCHAR',$length = 150){
+    function add_field($col_name, $field_name, $type = 'VARCHAR', $length = 350)
+    {
         $this->load->dbforge();
         if (!$this->db->field_exists($field_name, $col_name)) {
-            $fields = array($field_name => array('type' => $type,'constraint'=>$length));
+            $fields = array($field_name => array('type' => $type, 'constraint' => $length));
             $this->dbforge->add_column($col_name, $fields);
         }
     }

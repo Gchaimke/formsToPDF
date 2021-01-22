@@ -46,7 +46,14 @@ if (isset($this->session->userdata['logged_in'])) {
             </div>
             <input name="roles" class="form-control" value="<?php echo $settings['roles']; ?>">
         </div>
-
+        <div class="input-group mb-2">
+            <div class="input-group-prepend">
+                <div class="input-group-text">תמיד לשלוח לאמיילים הבאים</div>
+            </div>
+            <input name="emails" class="form-control" style="direction: ltr;" value="<?php echo $settings['emails']; ?>">
+        </div>
+        <label>נא להשתמש בפסיק בין המאיילים (,)</label>
+       <hr>
         <?php
         $checked = '';
         $disabled = '';

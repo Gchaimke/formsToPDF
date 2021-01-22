@@ -14,6 +14,7 @@ class Admin extends CI_Controller
 
 	function settings()
 	{
+		$this->Admin_model->add_field('settings', 'emails'); //one time update db to add new field
 		$data = array();
 		$data['settings'] = '';
 		$this->load->view('header');
@@ -30,13 +31,17 @@ class Admin extends CI_Controller
 	{
 		$smtp_on = 0;
 		$this->form_validation->set_rules('roles', 'Roles', 'trim|xss_clean');
+		$this->form_validation->set_rules('emails', 'emails', 'trim|xss_clean');
 		$this->form_validation->set_rules('smtp_host', 'smtp_host', 'trim|xss_clean');
 		$this->form_validation->set_rules('smtp_user', 'smtp_user', 'trim|xss_clean');
 		$this->form_validation->set_rules('smtp_pass', 'smtp_pass', 'trim|xss_clean');
 		if ($this->form_validation->run() == FALSE) {
 			$this->settings();
 		} else {
-			$data = array('roles' => $this->input->post('roles'));
+			$data = array(
+				'roles' => $this->input->post('roles'),
+				'emails' => $this->input->post('emails')
+			);
 			if (isset($_POST['smtp_on'])) {
 				$smtp_on = 1;
 				$data += array(

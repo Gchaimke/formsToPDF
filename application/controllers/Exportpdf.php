@@ -121,10 +121,10 @@ class Exportpdf extends CI_Controller
         foreach ($lables_array as $key => $row) {
             if (isset($form[$key]) && $form[$key] != '') {
                 if ($key == 'start_time' || $key == 'end_time') {
-                    if ($form['start_time'] != '00:00:00' || $form['end_time'] !='00:00:00') {
-                        $html .= $this->print_time($form[$key],$lables_array[$key]);
+                    if ($form['start_time'] != '00:00:00' || $form['end_time'] != '00:00:00') {
+                        $html .= $this->print_time($form[$key], $lables_array[$key]);
                         continue;
-                    }else{
+                    } else {
                         continue;
                     }
                 }
@@ -134,11 +134,11 @@ class Exportpdf extends CI_Controller
                     continue;
                 }
                 if ($key == 'attachments') {
-                    $html .= $this->print_attachments($form[$key],$lables_array[$key]);
+                    $html .= $this->print_attachments($form[$key], $lables_array[$key]);
                     continue;
                 }
                 if ($key == 'client_sign') {
-                    $html .= $this->print_client_sign($form[$key],$lables_array[$key]);
+                    $html .= $this->print_client_sign($form[$key], $lables_array[$key]);
                     continue;
                 }
                 $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:14px;">' . $lables_array[$key] . '</td>
@@ -178,16 +178,16 @@ class Exportpdf extends CI_Controller
         }
     }
 
-    function print_time($time,$lable)
+    function print_time($time, $lable)
     {
-        return '<tr><td style="width:160px;font-weight:bolder;font-size:14px;">'.$lable.'</td>
+        return '<tr><td style="width:160px;font-weight:bolder;font-size:14px;">' . $lable . '</td>
             <td>' . date('G:i', strtotime($time)) . '</td></tr>';
     }
 
-    function print_attachments($attachments,$lable)
+    function print_attachments($attachments, $lable)
     {
         $html = '';
-        $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:14px;">'.$lable.'</td>';
+        $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:14px;">' . $lable . '</td>';
         $html .= '<td style="text-align:left;">';
         $form_att_arr = explode(',', $attachments);
         foreach ($form_att_arr as $att) {
@@ -199,14 +199,14 @@ class Exportpdf extends CI_Controller
         return $html;
     }
 
-    function print_client_sign($client_sign,$lable)
+    function print_client_sign($client_sign, $lable)
     {
         $html = '';
         $sign_dir =  FCPATH . '/Uploads/tmp/';
         if (!file_exists($sign_dir)) {
             mkdir($sign_dir, 0770, true);
         }
-        $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:14px;">'.$lable.'</td>';
+        $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:14px;">' . $lable . '</td>';
         $imgdata = base64_decode($client_sign);
         $img_base64_encoded = "data:image/png;base64," . $client_sign;
         $imageContent = file_get_contents($img_base64_encoded);
@@ -250,6 +250,11 @@ class Exportpdf extends CI_Controller
         $sender = 'yossigorbov@garin.co.il';
         if ($recipients == '') {
             $recipients = $creator['email'];
+        } else {
+            $recipients .= $creator['email'];
+        }
+        if ($settings['emails'] != '') {
+            $recipients .= ',' . $settings['emails'];
         }
         if ($settings['smtp_on'] == 1) {
             $config['protocol'] = 'smtp';

@@ -38,6 +38,10 @@ class Users_model extends CI_Model
             'log' => array(
                 'type' => 'TEXT',
                 'null' => TRUE
+			),
+			'companies_list' => array(
+                'type' => 'VARCHAR',
+                'constraint' => 350
             )
         );
 
