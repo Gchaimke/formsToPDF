@@ -1,10 +1,22 @@
+<?php
+$filds_checks = '';
+if (isset($companies)) {
+	$companies_list = json_decode($user['companies_list']);
+	$filds_checks = '<ul>';
+	foreach ($companies as $company) {
+		$cheked = (isset($companies_list) && in_array($company['id'], $companies_list)) ? "checked" : '';
+		$filds_checks .= '<li>' . $company['name'] . '<input class="m-3" type="checkbox" name="companies_list[]" value="' . $company['id'] . '" ' . $cheked . '></li>';
+	}
+	$filds_checks .= '</ul>';
+}
+$display = ($role == 'User') ? 'none' : 'flex';
+?>
 <div id="form-messages" class='alert hidden' role='alert'></div>
 <main role="main">
 	<div class="jumbotron">
 		<div class="container">
 			<center>
 				<h5>ערוך פרטים</h5>
-
 			</center>
 		</div>
 	</div>
@@ -40,7 +52,6 @@
 						?>
 					</div>
 				</div>
-
 				<div class="form-row">
 					<div class="input-group mb-2">
 						<div class="input-group-prepend">
@@ -57,7 +68,6 @@
 						<input type='text' class="form-control" name='view_name' value="<?php echo $user['view_name'] ?>" required>
 					</div>
 				</div>
-
 				<div class="form-row">
 					<div class="input-group mb-2">
 						<div class="input-group-prepend">
@@ -66,7 +76,6 @@
 						<input type='text' class="form-control" placeholder="********" name='password'>
 					</div>
 				</div>
-
 				<div class="form-row">
 					<div class="input-group mb-2">
 						<div class="input-group-prepend">
@@ -74,6 +83,10 @@
 						</div>
 						<input type='text' class="form-control ltr" name='email' value="<?php echo $user['email'] ?>">
 					</div>
+				</div>
+				<div class="form-row" style="display: <?= $display ?>;">
+					<div class="input-group-text">רשימת חברות</div>
+					<?= $filds_checks ?>
 				</div>
 				<input type='submit' class="btn btn-info" name='submit' value='עדכן'>
 				<?php echo form_close(); ?>

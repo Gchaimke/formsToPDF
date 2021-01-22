@@ -16,6 +16,7 @@ class Production extends CI_Controller
     {
         $data = array();
         $data['companies'] = $this->Companies_model->getCompanies();
+        $data['user'] = $this->Users_model->getUser($this->session->userdata['logged_in']['id'])[0];
         $this->load->view('header');
         $this->load->view('main_menu');
         $this->load->view('production/dashboard', $data);

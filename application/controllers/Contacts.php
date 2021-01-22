@@ -10,6 +10,7 @@ class Contacts extends CI_Controller
         $this->load->model('Contacts_model');
         $this->load->model('Users_model');
         $this->load->model('Companies_model');
+        $this->load->model('Admin_model');
     }
 
     public function index($msg = '')
@@ -18,7 +19,7 @@ class Contacts extends CI_Controller
         if ($msg != '') {
             $data['message_display'] = $msg;
         }
-        $this->add_field('contacts','users_list'); //one time update db to add new field
+        $this->Admin_model->add_field('contacts','users_list'); //one time update db to add new field
         $data['contacts'] = $this->Contacts_model->get();
         $this->load->view('header');
         $this->load->view('main_menu');
@@ -92,8 +93,6 @@ class Contacts extends CI_Controller
         }
     }
 
-
-
     public function delete()
     {
         $role = ($this->session->userdata['logged_in']['role']);
@@ -103,11 +102,4 @@ class Contacts extends CI_Controller
         }
     }
 
-    function add_field($col_name,$field_name,$type='VARCHAR',$length = 150){
-        $this->load->dbforge();
-        if (!$this->db->field_exists($field_name, $col_name)) {
-            $fields = array($field_name => array('type' => $type,'constraint'=>$length));
-            $this->dbforge->add_column($col_name, $fields);
-        }
-    }
 }

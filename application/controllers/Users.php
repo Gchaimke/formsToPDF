@@ -8,11 +8,14 @@ class Users extends CI_Controller
         parent::__construct();
         $this->load->model('Users_model');
         $this->load->model('Admin_model');
+        $this->load->model('Companies_model');
+        $this->load->model('Production_model');
     }
 
     public function index($msg = '')
     {
         $data = array();
+        $this->Admin_model->add_field('users','companies_list'); //one time update db to add new field
         $role = $this->session->userdata['logged_in']['role'];
         $data['users'] = $this->Users_model->getUsers();
         $data['message_display'] = $msg;
@@ -79,12 +82,14 @@ class Users extends CI_Controller
     public function edit($id = '')
     {
         $role = $this->session->userdata['logged_in']['role'];
+        $data['companies'] = $this->Companies_model->getCompanies();
         $this->form_validation->set_rules('id', 'Id', 'trim|xss_clean');
         $this->form_validation->set_rules('name', 'Name', 'trim|xss_clean');
         $this->form_validation->set_rules('view_name', 'Name', 'trim|xss_clean');
         $this->form_validation->set_rules('role', 'Role', 'trim|xss_clean');
         $this->form_validation->set_rules('password', 'Password', 'trim|xss_clean');
         $this->form_validation->set_rules('email', 'email', 'trim|xss_clean');
+        $this->form_validation->set_rules('companies_list[]', 'companies_list', 'trim');
         if ($this->form_validation->run() == FALSE) {
             $data['user'] =  $this->Users_model->getUser($id)[0];
             $data['settings'] = $this->Admin_model->getSettings();
@@ -101,19 +106,22 @@ class Users extends CI_Controller
             $this->load->view('users/edit', $data);
             $this->load->view('footer');
         } else {
+            $companies_list = json_encode($this->input->post('companies_list[]'));
             if ($role == "Admin") {
                 $sql = array(
                     'id' => $this->input->post('id'),
                     'name' => $this->input->post('name'),
                     'view_name' => $this->input->post('view_name'),
                     'role' => $this->input->post('role'),
-                    'email' => $this->input->post('email')
+                    'email' => $this->input->post('email'),
+                    'companies_list'=>$companies_list
                 );
             } else {
                 $sql = array(
                     'id' => $this->input->post('id'),
                     'view_name' => $this->input->post('view_name'),
-                    'email' => $this->input->post('email')
+                    'email' => $this->input->post('email'),
+                    'companies_list'=>$companies_list
                 );
             }
             if ($this->input->post('password') != '') {
@@ -128,10 +136,6 @@ class Users extends CI_Controller
         $data = array();
         $data['response'] = '';
         if (!$this->db->table_exists('users')) {
-            $this->load->model('Users_model');
-            $this->load->model('Admin_model');
-            $this->load->model('Companies_model');
-            $this->load->model('Production_model');
             $this->Users_model->createUsersDb();
             $this->Admin_model->createSettingsDb();
             $this->Companies_model->createCompaniesDb();

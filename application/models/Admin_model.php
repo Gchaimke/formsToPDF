@@ -110,4 +110,12 @@ class Admin_model extends CI_Model
         );
         return $this->db->update('forms', $data, $where);
     }
+
+    function add_field($col_name,$field_name,$type='VARCHAR',$length = 150){
+        $this->load->dbforge();
+        if (!$this->db->field_exists($field_name, $col_name)) {
+            $fields = array($field_name => array('type' => $type,'constraint'=>$length));
+            $this->dbforge->add_column($col_name, $fields);
+        }
+    }
 }
