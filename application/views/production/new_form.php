@@ -1,6 +1,7 @@
 <?php
 if (isset($this->session->userdata['logged_in'])) {
       $user_id = $this->session->userdata['logged_in']['id'];
+      $user_role = $this->session->userdata['logged_in']['role'];
 }
 $user = $user[0];
 if (isset($companie)) {
@@ -214,22 +215,26 @@ if (isset($companie)) {
                               <label for="attachments" class="col-sm-12 col-form-label ">אין אפשרות להוסיף קבצים טרם שמירת דוח.</label>
                         </div>
                         <hr />
-                        <div id="details_column" class="form-row row">
-                              <div class="form-group row col-md-9 mr-2">
-                                    <label for="details" class="col-sm-2 col-form-label ">הערות (CSV)</label>
-                                    <div class="col-sm-10">
-                                          <textarea class="form-control" name="details" rows="3"></textarea>
-                                    </div>
-                              </div>
-                              <div class="form-group col-md-3">
-                                    <div class="input-group">
-                                          <div class="input-group-prepend">
-                                                <div class="input-group-text">מחיר</div>
+                        <?php if ($user_role == "Admin") { ?>
+                              <hr />
+                              <div class="form-row row">
+                                    <div class="form-group row col-md-9 mr-2 ">
+                                          <label for="details" class="col-sm-2 col-form-label ">הערות (CSV)</label>
+                                          <div class="col-sm-10">
+                                                <textarea class="form-control" name="details" rows="1"><?php echo $form_data['details'] ?></textarea>
                                           </div>
-                                          <input type='text' id='price' class="form-control" name='price'>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                          <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                      <div class="input-group-text">מחיר</div>
+                                                </div>
+                                                <input type='text' id='price' class="form-control" name='price' value='<?php echo $form_data['price'] ?>'>
+                                          </div>
                                     </div>
                               </div>
-                        </div>
+                        <?php } //end if user admin
+                        ?>
                         <div class="form-row client-sign-form" style="display: none;">
                               <div class="form-group col-md-12">
                                     <div id="sketchpadapp">
