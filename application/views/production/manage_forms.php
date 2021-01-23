@@ -98,7 +98,7 @@ $year = substr($date, 0, 4);
 			</div>
 			<div class="form-group ml-2">
 				<div class="input-group">
-					<a href="" class="filter_button btn btn-info" style="color: azure;" onclick=' '>סינון</a>
+					<a href="" class="filter_button btn btn-success" style="color: azure;" onclick=' '>סינון</a>
 				</div>
 			</div>
 			<div class="form-group ml-2">
