@@ -110,12 +110,12 @@ $year = substr($date, 0, 4);
 						<th scope="col">תאריך</th>
 						<th scope="col">יוצר</th>
 						<th scope="col" class="mobile-hide">מספר לקוח</th>
-						<th scope="col">שם הלקוח</th>
+						<th scope="col" class="mobile-hide">שם הלקוח</th>
 						<th scope="col" class="mobile-hide">מיקום</th>
 						<th scope="col" class="mobile-hide">סוג תקלה</th>
 						<th scope="col" class="mobile-hide">חברה נותנת שירות</th>
 						<?php if ($user_role == "Admin") {
-							echo '<th scope="col">מחיר</th>';
+							echo '<th scope="col" class="mobile-hide">מחיר</th>';
 						} ?>
 						<th scope="col">ערוך </th>
 						<?php if ($user_role == "Admin") {
@@ -147,12 +147,12 @@ $year = substr($date, 0, 4);
 								}
 							} ?>
 							<td class="mobile-hide align-middle"><?php echo $data->client_num ?></td>
-							<td class="align-middle"><?php echo $data->client_name ?></td>
+							<td class="mobile-hide align-middle"><?php echo $data->client_name ?></td>
 							<td class="mobile-hide align-middle"><?php echo $data->place ?></td>
 							<td class="mobile-hide align-middle"><?php echo $data->issue_kind ?></td>
 							<td class="mobile-hide align-middle"><?php echo $data->company ?></td>
 							<?php if ($user_role == "Admin") {
-								echo '<td class="align-middle">' . $data->price . '</td>';
+								echo '<td class="mobile-hide align-middle">' . $data->price . '</td>';
 							} ?>
 							<td><a href='/production/view_form/<?php echo $data->id ?>' class='btn btn-outline-info'><i class="fa fa-edit"></i></a></td>
 							<?php if ($user_role == "Admin") {

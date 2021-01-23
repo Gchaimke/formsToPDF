@@ -221,7 +221,7 @@ if (isset($companie)) {
                                     <div class="form-group row col-md-9 mr-2 ">
                                           <label for="details" class="col-sm-2 col-form-label ">הערות (CSV)</label>
                                           <div class="col-sm-10">
-                                                <textarea class="form-control" name="details" rows="1"><?php echo $form_data['details'] ?></textarea>
+                                                <textarea class="form-control" name="details" rows="1"></textarea>
                                           </div>
                                     </div>
                                     <div class="form-group col-md-3">
@@ -229,7 +229,7 @@ if (isset($companie)) {
                                                 <div class="input-group-prepend">
                                                       <div class="input-group-text">מחיר</div>
                                                 </div>
-                                                <input type='text' id='price' class="form-control" name='price' value='<?php echo $form_data['price'] ?>'>
+                                                <input type='text' id='price' class="form-control" name='price' value=''>
                                           </div>
                                     </div>
                               </div>
