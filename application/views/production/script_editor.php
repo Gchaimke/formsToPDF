@@ -36,7 +36,7 @@
                         <div class="input-group-prepend">
                             <div class="input-group-text">שם לקוח</div>
                         </div>
-                        <input type='text' class="form-control" name='client_name' required>
+                        <input type='text' class="form-control" name='client_name' required pattern="[a-zA-Z0-9-\s]{2,}$" title="English only!">
                     </div>
                 </div>
             </div>
