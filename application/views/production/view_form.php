@@ -357,7 +357,7 @@ if (isset($this->session->userdata['logged_in'])) {
                               <input type='submit' id='save_btn' class='btn btn-warning' name='submit' value='עדכן דוח'>
                               <a id="send_email" class="btn btn-success ml-3" href="#send_email" onclick="SendEmail()">שלח דוח</a>
                               <a target="_blank" class="btn btn-info" href="/exportpdf/create/<?php echo $form_data['id'] ?>">הצג PDF</a>
-                              <a target="_blank" class="btn btn-info ml-3 hiden" href="/exportpdf/export_doc/<?php echo $form_data['id'] ?>">הורד DOC</a>
+                              <?php /*<a target="_blank" class="btn btn-info ml-3" href="/exportpdf/export_doc/<?php echo $form_data['id'] ?>">הורד DOC</a>*/?>
                               <div class="btn btn-danger my-5 ml-3" style="color: azure;" onclick=' $(".client-sign-form").toggle();'>חתימת לקוח</div>
                               <a id="show_log_button" href='#show_log_button' class='btn btn-outline-info ml-3' onclick="showLogFile('<?php echo $form_data['id'] ?>')"><i class="fa fa-file"> Log</i></a>
                               <div id='show-log' style='display:none;'>
