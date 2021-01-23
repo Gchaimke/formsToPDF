@@ -342,8 +342,6 @@ class Exportpdf extends CI_Controller
             }
             $TBS = new clsTinyButStrong;
             $TBS->Plugin(TBS_INSTALL, OPENTBS_PLUGIN);
-
-
             $TBS->LoadTemplate($template, OPENTBS_ALREADY_UTF8);
             $TBS->MergeBlock('c', $form);
             $save_as = ''; //download file, set 1 to save.
