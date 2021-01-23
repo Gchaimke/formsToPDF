@@ -53,7 +53,7 @@ if (isset($this->session->userdata['logged_in'])) {
             <input name="emails" class="form-control" style="direction: ltr;" value="<?php echo $settings['emails']; ?>">
         </div>
         <label>נא להשתמש בפסיק בין המאיילים (,)</label>
-       <hr>
+        <hr>
         <?php
         $checked = '';
         $disabled = '';
@@ -108,6 +108,8 @@ if (isset($this->session->userdata['logged_in'])) {
         <button class="btn btn-info" onclick="createDB(0)">לייצר בסיס נתונים</button>
         <a class="btn btn-info" href="/admin/view_log">דוחות מערכת</a>
         <a class="btn btn-info" href="/admin/view_folders">הצג תיקיות</a>
+        <button class="btn btn-success m-3" onclick="backupDB()">Backup DB</button>
+        <a id="last-db" class="m-5" style="display: none;" href="">Download last DB</a>
     </div>
 </main>
 
@@ -134,4 +136,15 @@ if (isset($this->session->userdata['logged_in'])) {
             $('#smtp_pass').prop("disabled", true);
         }
     });
+
+    function backupDB() {
+        $.post("/admin/backupDB", {}).done(function(o) {
+            // Make sure that the formMessages div has the 'success' class.
+            $('#form-messages').addClass('alert-success');
+            // Set the message text.
+            $('#form-messages').html(o).fadeIn(1000).delay(3000).fadeOut(1000);
+            $('#last-db').attr("href", "/" + o);
+            $('#last-db').toggle();
+        });
+    }
 </script>
