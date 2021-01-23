@@ -454,4 +454,65 @@ class Production extends CI_Controller
 
         fclose($fp);
     }
+
+    public function create_script()
+    {
+        $this->load->view('header');
+        $this->load->view('main_menu');
+        $this->load->view('production/script_editor');
+        $this->load->view('footer');
+    }
+
+    function download_conf()
+    {
+        include_once APPPATH . 'third_party/tEditor/Template_editor.php';
+        $this->form_validation->set_rules('client_num', 'client_num', 'trim|xss_clean');
+        $this->form_validation->set_rules('client_name', 'client_name', 'trim|xss_clean');
+        $this->form_validation->set_rules('phone_id', 'phone_id', 'trim|xss_clean');
+        $this->form_validation->set_rules('manbas_ip', 'manbas_ip', 'trim|xss_clean');
+        $this->form_validation->set_rules('pedagogy_ip', 'pedagogy_ip', 'trim|xss_clean');
+        $this->form_validation->set_rules('wi_fi_ip', 'wi_fi_ip', 'trim|xss_clean');
+        $this->form_validation->set_rules('wan_ip', 'wan_ip', 'trim|xss_clean');
+        $this->form_validation->set_rules('clock_mac', 'clock_mac', 'trim|xss_clean');
+        if (!$this->form_validation->run() == FALSE) {
+            $template = new Template_editor(APPPATH . 'third_party/tEditor/template.php');
+            $template->set('client_num', $this->input->post('client_num'));
+            $template->set('client_name', str_replace(' ', '-', $this->input->post('client_name')));
+            $template->set('phone_id', $this->input->post('phone_id'));
+            $template->set('manbas_ip', $this->input->post('manbas_ip'));
+            $template->set('pedagogy_ip', $this->input->post('pedagogy_ip'));
+            $template->set('wi_fi_ip', $this->input->post('wi_fi_ip'));
+            $template->set('wan_ip', $this->input->post('wan_ip'));
+            $template->set('wan_ip_static', $this->prev_ip($this->input->post('wan_ip'))); // wan_ip - 1
+            if ($this->input->post('clock_mac') != '') {
+                $mac = trim(chunk_split($this->input->post('clock_mac'),2, ':'));
+                $template->set('clock_mac', substr($mac, 0, -1));
+            } else {
+                $template->set('clock_mac', '00:17:61:10:00:00');
+            }
+
+            $data = $template->render();
+            $file_name = $this->input->post('client_num') . '_' . $this->input->post('client_name') . '_Template' . '_40F.conf';
+            $myfile = fopen($file_name, "w") or die("Unable to open file!");
+            fwrite($myfile, $data);
+            fclose($myfile);
+            header("Cache-Control: public");
+            header("Content-Description: File Transfer");
+            header("Content-Disposition: attachment; filename=$file_name");
+            header("Content-Type: application/text");
+            header("Content-Transfer-Encoding: binary");
+            // read the file from disk
+            readfile($file_name);
+            unlink($file_name);
+        }
+    }
+
+    function prev_ip($ip = '192.168.1.1')
+    {
+        $ip_arr = explode('.', $ip);
+        end($ip_arr);
+        $ip_arr[key($ip_arr)] -= 1;
+        return implode('.', $ip_arr);
+    }
+
 }

@@ -12,6 +12,7 @@
 			echo "<div class='alert alert-success' role='alert'>";
 			echo $message_display . '</div>';
 		} ?>
+		<a class="btn btn-success" href="/production/create_script">Script Editor</a>
 		<?php
 		echo '<div class="card-columns">';
 		foreach ($companies as $company) {
