@@ -41,9 +41,17 @@ $year = substr($date, 0, 4);
 			</div>
 			<div id='searchResult' class='rtl text-center'></div>
 		</form>
-		<div class="form-row mb-3">
-			<div class="form-group col-md-2">
-				<div class="input-group mb-2">
+		<div class="form-row">
+			<div class="form-group ml-2">
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<div class="input-group-text">יום</div>
+					</div>
+					<input type='date' class="form-control date_filter" name='date'>
+				</div>
+			</div>
+			<div class="form-group ml-2">
+				<div class="input-group">
 					<div class="input-group-prepend">
 						<div class="input-group-text">יוצר</div>
 					</div>
@@ -55,8 +63,8 @@ $year = substr($date, 0, 4);
 					</select>
 				</div>
 			</div>
-			<div class="form-group col-md-2">
-				<div class="input-group mb-2">
+			<div class="form-group ml-2">
+				<div class="input-group">
 					<div class="input-group-prepend">
 						<div class="input-group-text">חברה</div>
 					</div>
@@ -68,8 +76,8 @@ $year = substr($date, 0, 4);
 					</select>
 				</div>
 			</div>
-			<div class="form-group col-md-2">
-				<div class="input-group mb-2">
+			<div class="form-group ml-2">
+				<div class="input-group">
 					<div class="input-group-prepend">
 						<div class="input-group-text">חודש</div>
 					</div>
@@ -78,8 +86,8 @@ $year = substr($date, 0, 4);
 					</select>
 				</div>
 			</div>
-			<div class="form-group col-md-2">
-				<div class="input-group mb-2">
+			<div class="form-group ml-2">
+				<div class="input-group">
 					<div class="input-group-prepend">
 						<div class="input-group-text">שנה</div>
 					</div>
@@ -88,28 +96,17 @@ $year = substr($date, 0, 4);
 					</select>
 				</div>
 			</div>
-			<div class="form-group col-md-1">
+			<div class="form-group ml-2">
 				<div class="input-group">
 					<a href="" class="filter_button btn btn-info" style="color: azure;" onclick=' '>סינון</a>
 				</div>
 			</div>
-			<div class="form-group col-md-1">
+			<div class="form-group ml-2">
 				<div class="input-group">
-					<a href="/production/manage_forms" class="btn btn-info" style="color: azure;" onclick=' '>בטל סינון</a>
+					<a href="/production/manage_forms" class="btn btn-warning" style="color: azure;" onclick=' '>בטל סינון</a>
 				</div>
 			</div>
 		</div>
-		<div class="form-row mb-6">
-			<div class="form-group col-md-3">
-				<div class="input-group mb-2">
-					<div class="input-group-prepend">
-						<div class="input-group-text">יום</div>
-					</div>
-					<input type='date' class="form-control date_filter" name='date'>
-				</div>
-			</div>
-		</div>
-
 		<div id="show_csv" class='btn btn-outline-info'><i class="fa fa-file-excel-o"></i></div>
 		<div id="csv_month" style="display:none;">
 		</div>
@@ -212,7 +209,7 @@ $year = substr($date, 0, 4);
 	});
 
 	function update_filter() {
-		$('.filter_button').attr("href", '?creator=' + creator + '&company=' + company + '&year=' + year + '&month=' + month+ '&date=' + date);
+		$('.filter_button').attr("href", '?creator=' + creator + '&company=' + company + '&year=' + year + '&month=' + month + '&date=' + date);
 	}
 
 	function view_csv_export() {
