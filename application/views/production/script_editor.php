@@ -8,7 +8,7 @@
     <div class="jumbotron">
         <div class="container">
             <center>
-                <h5>Script editor</h5>
+                <h5>יצירת קונפיגורציה - מנב"ס בזק בינלאומי</h5>
             </center>
         </div>
     </div>
@@ -24,7 +24,7 @@
                 <div id="client_num_column" class="form-group col-md-12">
                     <div class="input-group mb-2">
                         <div class="input-group-prepend">
-                            <div class="input-group-text">מספר לקוח <span class="red">*</span></div>
+                            <div class="input-group-text"> סמל מוסד - מספר<span class="red">*</span></div>
                         </div>
                         <input type='text' class="form-control" name='client_num' required>
                     </div>
@@ -34,7 +34,7 @@
             <div id="client_name_column" class="form-group col-md-12">
                     <div class="input-group mb-2">
                         <div class="input-group-prepend">
-                            <div class="input-group-text">שם לקוח <span class="red">*</span></div>
+                            <div class="input-group-text">שם מוסד - בית ספר<span class="red">*</span></div>
                         </div>
                         <input type='text' class="form-control" name='client_name' required pattern="[a-zA-Z0-9-\s]{2,}$" title="English only!">
                     </div>
@@ -44,7 +44,7 @@
                 <div id="phone_id_column" class="form-group col-md-12">
                     <div class="input-group mb-2">
                         <div class="input-group-prepend">
-                            <div class="input-group-text">קוד קו<span class="red">*</span></div>
+                            <div class="input-group-text">קוד קו - סיב אופטי<span class="red">*</span></div>
                         </div>
                         <input type='text' class="form-control" name='phone_id' required placeholder="83-8300654">
                     </div>

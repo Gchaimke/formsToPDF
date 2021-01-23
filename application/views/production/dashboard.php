@@ -25,7 +25,7 @@
 				echo '<div class="card-footer">';
 				echo  "<a href='/production/new_form/$company_name' class='btn btn-primary  btn-block'>מלוי דוח</a>";
 				if($company_name == 'בזק בינלאומי'){
-					echo '<hr><a class="btn btn-success" href="/production/create_script">Script Editor</a>';
+					echo '<hr><a class="btn btn-success" href="/production/create_script">יצירת קונפיגורציה</a>';
 				}
 				echo '</div></center></div>';
 			}
