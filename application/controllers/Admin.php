@@ -344,6 +344,6 @@ class Admin extends CI_Controller
 		$file = $working_dir.'db-'.date("Y-m-d_h-i").'.zip';
 		$success = file_put_contents($file, $backup);
 		// Load the download helper and send the file to your desktop
-		echo $success ? $file : 'Unable to save the file: '.$file;
+		echo $success ? "backup file saved! ".'db-'.date("Y-m-d_h-i").'.zip' : 'Unable to save the backup file!';
 	}
 }
