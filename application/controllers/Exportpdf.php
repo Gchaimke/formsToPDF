@@ -113,7 +113,9 @@ class Exportpdf extends CI_Controller
             'summary_text' => 'סיכום',
             'remarks_text' => 'הערות:',
             'recommendations_text' => 'המלצות:',
-            'attachments' => 'קבצים נוספים להורדה:',
+            'old_serial' => 'מספר סריאלי - ישן',
+            'new_serial' => 'מספר סריאלי - חדש',
+            'attachments' => 'קבצים להורדה:',
             'client_sign' => 'חתימת לקוח:',
         );
 

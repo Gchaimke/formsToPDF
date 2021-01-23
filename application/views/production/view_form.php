@@ -207,7 +207,7 @@ if (isset($this->session->userdata['logged_in'])) {
                               <div id="old_serial_column" class="form-group col-md-6">
                                     <div class="input-group mb-2">
                                           <div class="input-group-prepend">
-                                                <div class="input-group-text">מספר סריאלי של ציוד ישן</div>
+                                                <div class="input-group-text">מספר סריאלי - ישן</div>
                                           </div>
                                           <input type='text' class="form-control" name='old_serial' value="<?php echo htmlspecialchars($form_data['old_serial']) ?>">
                                     </div>
@@ -215,7 +215,7 @@ if (isset($this->session->userdata['logged_in'])) {
                               <div id="new_serial_column" class="form-group col-md-6">
                                     <div class="input-group mb-2">
                                           <div class="input-group-prepend">
-                                                <div class="input-group-text">מספר סריאלי של ציוד חדש</div>
+                                                <div class="input-group-text">מספר סריאלי - חדש</div>
                                           </div>
                                           <input type='text' class="form-control" name='new_serial' value="<?php echo htmlspecialchars($form_data['new_serial']) ?>">
                                     </div>
