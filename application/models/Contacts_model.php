@@ -51,18 +51,10 @@ class Contacts_model extends CI_Model
     public function add($data)
     {
         if ($this->db->table_exists('contacts')) {
-            // Query to check whether username already exist or not
-            $this->db->select('*');
-            $this->db->from('contacts');
-            $this->db->where("email ='{$data['email']}'");
-            $this->db->limit(1);
-            $query = $this->db->get();
-            if ($query->num_rows() == 0) {
-                // Query to insert data in database
-                $this->db->insert('contacts', $data);
-                if ($this->db->affected_rows() > 0) {
-                    return true;
-                }
+            // Query to insert data in database
+            $this->db->insert('contacts', $data);
+            if ($this->db->affected_rows() > 0) {
+                return true;
             } else {
                 return false;
             }
@@ -86,7 +78,7 @@ class Contacts_model extends CI_Model
             }
             $q = $this->db->get();
             $response = $q->result_array();
-        }else{
+        } else {
             $this->create();
         }
         return $response;
@@ -95,7 +87,7 @@ class Contacts_model extends CI_Model
     public function edit($data)
     {
         $where = "id ={$data['id']}";
-        return  $this->db->update('contacts', $data, $where);  
+        return  $this->db->update('contacts', $data, $where);
     }
 
     function delete($id)
