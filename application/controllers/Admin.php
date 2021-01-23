@@ -330,7 +330,7 @@ class Admin extends CI_Controller
 
 	function backupDB()
 	{
-		$working_dir = 'Uploads/Backups/';
+		$working_dir = 'Uploads/Backups/'.date("Y-m")."/";
 		if (!file_exists($working_dir)) {
             mkdir($working_dir, 0770, true);
         }
@@ -340,7 +340,7 @@ class Admin extends CI_Controller
 		$backup = $this->dbutil->backup();
 		// Load the file helper and write the file to your server
 		$this->load->helper('file');
-		$file = $working_dir.'db-'.date("Y-m-d").'.zip';
+		$file = $working_dir.'db-'.date("Y-m-d_h-i").'.zip';
 		$success = file_put_contents($file, $backup);
 		// Load the download helper and send the file to your desktop
 		echo $success ? $file : 'Unable to save the file: '.$file;
