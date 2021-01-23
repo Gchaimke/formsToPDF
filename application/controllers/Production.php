@@ -492,14 +492,14 @@ class Production extends CI_Controller
             $template->set('wan_ip', $this->input->post('wan_ip'));
             $template->set('wan_ip_static', $this->prev_ip($this->input->post('wan_ip'))); // wan_ip - 1
             if ($this->input->post('clock_mac') != '') {
-                $mac = trim(chunk_split($this->input->post('clock_mac'),2, ':'));
+                $mac = trim(chunk_split($this->input->post('clock_mac'), 2, ':'));
                 $template->set('clock_mac', substr($mac, 0, -1));
             } else {
                 $template->set('clock_mac', '00:17:61:10:00:00');
             }
 
             $data = $template->render();
-            $file_name = $this->input->post('client_num') . '_' . $this->input->post('client_name') . '_Template' . '_40F.conf';
+            $file_name = $this->input->post('client_num') . '_' . $this->input->post('client_name') . '_40F.conf';
             $myfile = fopen($file_name, "w") or die("Unable to open file!");
             fwrite($myfile, $data);
             fclose($myfile);
@@ -521,5 +521,4 @@ class Production extends CI_Controller
         $ip_arr[key($ip_arr)] -= 1;
         return implode('.', $ip_arr);
     }
-
 }
