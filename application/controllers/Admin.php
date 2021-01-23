@@ -15,8 +15,8 @@ class Admin extends CI_Controller
 	function settings()
 	{
 		$this->Admin_model->add_field('settings', 'emails'); //one time update db to add new field
-		$this->Admin_model->add_field('forms', 'old_serial','VARCHAR',100); //one time update db to add new field
-		$this->Admin_model->add_field('forms', 'new_serial','VARCHAR',100); //one time update db to add new field
+		$this->Admin_model->add_field('forms', 'old_serial', 'VARCHAR', 100); //one time update db to add new field
+		$this->Admin_model->add_field('forms', 'new_serial', 'VARCHAR', 100); //one time update db to add new field
 		$data = array();
 		$data['settings'] = '';
 		$this->load->view('header');
@@ -331,19 +331,34 @@ class Admin extends CI_Controller
 	function backupDB()
 	{
 		date_default_timezone_set("Asia/Jerusalem");
-		$working_dir = 'Uploads/Backups/'.date("Y-m")."/";
+		$working_dir = 'Uploads/Backups/' . date("Y-m") . "/";
 		if (!file_exists($working_dir)) {
-            mkdir($working_dir, 0770, true);
-        }
+			mkdir($working_dir, 0770, true);
+		}
 		// Load the DB utility class
 		$this->load->dbutil();
 		// Backup your entire database and assign it to a variable
 		$backup = $this->dbutil->backup();
 		// Load the file helper and write the file to your server
 		$this->load->helper('file');
-		$file = $working_dir.'db-'.date("Y-m-d_h-i").'.zip';
+		$file = $working_dir . 'db-' . date("Y-m-d_h-i") . '.zip';
 		$success = file_put_contents($file, $backup);
 		// Load the download helper and send the file to your desktop
-		echo $success ? "backup file saved! ".'db-'.date("Y-m-d_h-i").'.zip' : 'Unable to save the backup file!';
+		echo $success ? "backup file saved! " . 'db-' . date("Y-m-d_h-i") . '.zip' : 'Unable to save the backup file!';
+	}
+
+	function delete_file()
+	{
+		$this->form_validation->set_rules('file', 'file', 'trim|xss_clean');
+		if ($this->form_validation->run() == TRUE) {
+			$file = $this->input->post('file');
+			// Use unlink() function to delete a file  
+			if (!unlink($_SERVER["DOCUMENT_ROOT"] . $file)) {
+				echo ($_SERVER["DOCUMENT_ROOT"] . $file . " cannot be deleted due to an error");
+			} else {
+				echo ($_SERVER["DOCUMENT_ROOT"] . $file . " has been deleted");
+				$this->log_data('deleted ' . $file, 3);
+			}
+		}
 	}
 }

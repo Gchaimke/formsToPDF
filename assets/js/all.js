@@ -320,6 +320,19 @@ function set_month() {
     }
 }
 
+function delFile(file) {
+    var r = confirm("Delete File " + file + "?");
+    if (r == true) {
+        $.post("/admin/delete_file", {
+            file: file
+        }).done(function (o) {
+            console.log('File deleted from the server.');
+            sleep(1000)
+            location.reload();
+        });
+    }
+}
+
 $('#show_csv').click(function () {
     $('#csv_month').toggle();
 });
