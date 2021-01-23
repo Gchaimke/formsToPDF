@@ -330,6 +330,7 @@ class Admin extends CI_Controller
 
 	function backupDB()
 	{
+		date_default_timezone_set("Asia/Jerusalem");
 		$working_dir = 'Uploads/Backups/'.date("Y-m")."/";
 		if (!file_exists($working_dir)) {
             mkdir($working_dir, 0770, true);
