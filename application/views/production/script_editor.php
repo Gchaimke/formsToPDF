@@ -52,9 +52,9 @@
             </div>
             <div class="form-row col-md-6">
                 <div id="wan_ip_column" class="form-group col-md-12">
-                    <div class="input-group mb-2 ltr">
+                    <div class="input-group mb-2">
                         <div class="input-group-prepend">
-                            <div class="input-group-text">WAN IP <span class="red">*</span></div>
+                            <div class="input-group-text">כתובת WAN IP בית ספר<span class="red">*</span></div>
                         </div>
                         <input type='text' class="form-control" name='wan_ip' required pattern="^([0-9]{1,3}\.){3}[0-9]{1,3}$" placeholder="xxx.xxx.xxx.xxx">
                     </div>
@@ -63,9 +63,9 @@
 
             <div class="form-row col-md-6">
                 <div id="manbas_ip_column" class="form-group col-md-12">
-                    <div class="input-group mb-2 ltr">
+                    <div class="input-group mb-2">
                         <div class="input-group-prepend">
-                            <div class="input-group-text">MANBAS IP START <span class="red">*</span></div>
+                            <div class="input-group-text">כתובת IP מנב"ס<span class="red">*</span></div>
                         </div>
                         <input type='text' class="form-control" name='manbas_ip' required pattern="^([0-9]{1,3}\.){2}[0-9]{1,3}$" placeholder="xxx.xxx.xxx">
                     </div>
@@ -73,9 +73,9 @@
             </div>
             <div class="form-row col-md-6">
                 <div id="pedagogy_ip_column" class="form-group col-md-12">
-                    <div class="input-group mb-2 ltr">
+                    <div class="input-group mb-2">
                         <div class="input-group-prepend">
-                            <div class="input-group-text">PEDAGOGY IP START <span class="red">*</span></div>
+                            <div class="input-group-text">כתובת IP פדגוגי<span class="red">*</span></div>
                         </div>
                         <input type='text' class="form-control" name='pedagogy_ip' required pattern="^([0-9]{1,3}\.){2}[0-9]{1,3}$" placeholder="xxx.xxx.xxx">
                     </div>
@@ -83,9 +83,9 @@
             </div>
             <div class="form-row col-md-6">
                 <div id="wi_fi_ip_column" class="form-group col-md-12">
-                    <div class="input-group mb-2 ltr">
+                    <div class="input-group mb-2">
                         <div class="input-group-prepend">
-                            <div class="input-group-text">WIFI IP START <span class="red">*</span></div>
+                            <div class="input-group-text">כתובת Wifi<span class="red">*</span></div>
                         </div>
                         <input type='text' class="form-control" name='wi_fi_ip' required pattern="^([0-9]{1,3}\.){2}[0-9]{1,3}$" placeholder="xxx.xxx.xxx">
                     </div>
@@ -94,9 +94,9 @@
 
             <div class="form-row col-md-6">
                 <div id="clock_mac_column" class="form-group col-md-12">
-                    <div class="input-group mb-2 ltr">
+                    <div class="input-group mb-2">
                         <div class="input-group-prepend">
-                            <div class="input-group-text">Clock MAC</div>
+                            <div class="input-group-text">Mac שעון נוכחות</div>
                         </div>
                         <input id='clock_mac' type='text' class="form-control" name='clock_mac' placeholder="11aa22bb33cc">
                     </div>
