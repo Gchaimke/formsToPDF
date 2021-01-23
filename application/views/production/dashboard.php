@@ -12,7 +12,6 @@
 			echo "<div class='alert alert-success' role='alert'>";
 			echo $message_display . '</div>';
 		} ?>
-		<a class="btn btn-success" href="/production/create_script">Script Editor</a>
 		<?php
 		echo '<div class="card-columns">';
 		foreach ($companies as $company) {
@@ -25,6 +24,9 @@
 				echo '<p class="card-text"></p></div>';
 				echo '<div class="card-footer">';
 				echo  "<a href='/production/new_form/$company_name' class='btn btn-primary  btn-block'>מלוי דוח</a>";
+				if($company_name == 'בזק בינלאומי'){
+					echo '<hr><a class="btn btn-success" href="/production/create_script">Script Editor</a>';
+				}
 				echo '</div></center></div>';
 			}
 		}

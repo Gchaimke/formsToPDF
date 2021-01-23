@@ -57,6 +57,7 @@ config system interface
         set type hard-switch
         set alias "Manbas"
         set stp enable
+        set device-identification enable
         set role lan
         set snmp-index 4
     next

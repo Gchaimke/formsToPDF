@@ -42,9 +42,9 @@
             </div>
             <div class="form-row col-md-6">
                 <div id="phone_id_column" class="form-group col-md-12">
-                    <div class="input-group mb-2 ltr">
+                    <div class="input-group mb-2">
                         <div class="input-group-prepend">
-                            <div class="input-group-text">Phone ID <span class="red">*</span></div>
+                            <div class="input-group-text">קוד קו<span class="red">*</span></div>
                         </div>
                         <input type='text' class="form-control" name='phone_id' required placeholder="83-8300654">
                     </div>

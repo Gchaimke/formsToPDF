@@ -130,7 +130,7 @@ if (isset($companie)) {
                         <div id="old_serial" class="form-group col-md-6">
                               <div class="input-group mb-2">
                                     <div class="input-group-prepend">
-                                          <div class="input-group-text">מספר סריאלי של ציוד ישן</div>
+                                          <div class="input-group-text">מספר סריאלי - ישן</div>
                                     </div>
                                     <input type='text' class="form-control" name='old_serial'>
                               </div>
@@ -138,7 +138,7 @@ if (isset($companie)) {
                         <div id="new_serial" class="form-group col-md-6">
                               <div class="input-group mb-2">
                                     <div class="input-group-prepend">
-                                          <div class="input-group-text">מספר סריאלי של ציוד חדש</div>
+                                          <div class="input-group-text">מספר סריאלי - חדש</div>
                                     </div>
                                     <input type='text' class="form-control" name='new_serial'>
                               </div>

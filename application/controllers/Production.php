@@ -117,9 +117,12 @@ class Production extends CI_Controller
         $data['form_data'] = $this->Production_model->getForm($id);
         $data['companies'] = $this->Companies_model->getCompanies();
         $data['contacts'] = $this->Contacts_model->get();
-        $current_company = $this->Companies_model->getCompanies('', $data['form_data'][0]['company'])[0];
-        $data['hide_filds'] = $this->hide_filds($current_company['view_filds']);
-        $data['logo'] = $current_company['logo'];
+        $current_company = $this->Companies_model->getCompanies('', $data['form_data'][0]['company']);
+        if (count($current_company)>0) {
+            $current_company = $current_company[0];
+            $data['hide_filds'] = $this->hide_filds($current_company['view_filds']);
+            $data['logo'] = $current_company['logo'];
+        }
         $data['users'] = $this->Users_model->getUsers();
         $this->load->view('header');
         $this->load->view('main_menu');
