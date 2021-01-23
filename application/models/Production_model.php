@@ -234,7 +234,7 @@ class Production_model extends CI_Model
 		}
 	}
 
-	public function get_total($creator_id = '', $company_name = '', $year = '', $month = '')
+	public function get_total($creator_id = '', $company_name = '', $year = '', $month = '', $date = '')
 	{
 		if ($creator_id != '') {
 			$this->db->where("creator_id = $creator_id");
@@ -253,11 +253,15 @@ class Production_model extends CI_Model
 			$this->db->where("MONTH(date) = $month");
 		}
 
+		if ($date != '') {
+			$this->db->where("date='$date'");
+		}
+
 		$this->db->from('forms');
 		return $this->db->count_all_results();
 	}
 
-	public function get_current_forms_records($limit, $start, $creator_id = '', $company_name = '', $year = '', $month = '')
+	public function get_current_forms_records($limit, $start, $creator_id = '', $company_name = '', $year = '', $month = '', $date = '')
 	{
 		if ($creator_id != '') {
 			$this->db->where("creator_id = $creator_id");
@@ -274,6 +278,10 @@ class Production_model extends CI_Model
 
 		if ($month != '') {
 			$this->db->where("MONTH(date) = $month");
+		}
+
+		if ($date != '') {
+			$this->db->where("date='$date'");
 		}
 		$this->db->limit($limit, $start);
 		$this->db->order_by('date', 'DESC');

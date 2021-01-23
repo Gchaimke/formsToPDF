@@ -2,7 +2,7 @@
 if (isset($this->session->userdata['logged_in']) && $this->session->userdata['logged_in']['id'] != '') {
 	$user_role = $this->session->userdata['logged_in']['role'];
 	$user_id = $this->session->userdata['logged_in']['id'];
-}else{
+} else {
 	header("location: /");
 }
 $creator_id = isset($creator) ? $creator : '';
@@ -99,6 +99,16 @@ $year = substr($date, 0, 4);
 				</div>
 			</div>
 		</div>
+		<div class="form-row mb-6">
+			<div class="form-group col-md-3">
+				<div class="input-group mb-2">
+					<div class="input-group-prepend">
+						<div class="input-group-text">יום</div>
+					</div>
+					<input type='date' class="form-control date_filter" name='date'>
+				</div>
+			</div>
+		</div>
 
 		<div id="show_csv" class='btn btn-outline-info'><i class="fa fa-file-excel-o"></i></div>
 		<div id="csv_month" style="display:none;">
@@ -175,6 +185,7 @@ $year = substr($date, 0, 4);
 	var company = "<?php echo $company = (isset($_GET['company'])) ? $_GET['company'] : ''; ?>";
 	var month = "<?php echo $month = (isset($_GET['month'])) ? $_GET['month'] : ''; ?>";
 	var year = "<?php echo $year = (isset($_GET['year'])) ? $_GET['year'] : ''; ?>";
+	var date = "<?php echo $date = (isset($_GET['date'])) ? $_GET['date'] : ''; ?>";
 	$('.creator_filter').on('change', function() {
 		creator = $('.creator_filter').val();
 		update_filter()
@@ -190,13 +201,18 @@ $year = substr($date, 0, 4);
 		update_filter()
 	});
 
+	$('.date_filter').on('change', function() {
+		date = $('.date_filter').val();
+		update_filter()
+	});
+
 	$('.company_filter').on('change', function() {
 		company = $('.company_filter').val();
 		update_filter()
 	});
 
 	function update_filter() {
-		$('.filter_button').attr("href", '?creator=' + creator + '&company=' + company + '&year=' + year + '&month=' + month);
+		$('.filter_button').attr("href", '?creator=' + creator + '&company=' + company + '&year=' + year + '&month=' + month+ '&date=' + date);
 	}
 
 	function view_csv_export() {
@@ -251,6 +267,7 @@ $year = substr($date, 0, 4);
 		$('.creator_filter').val(creator);
 		$('.year_filter').val(year);
 		$('.month_filter').val(month);
+		$('.date_filter').val(date);
 		$('.company_filter').val(company);
 	}
 
