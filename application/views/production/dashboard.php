@@ -23,9 +23,9 @@
 				echo '<img id="logo_img" class="img-thumbnail" src="' . $company['logo'] . '" height="100px">';
 				echo '<p class="card-text"></p></div>';
 				echo '<div class="card-footer">';
-				echo  "<a href='/production/new_form/$company_name' class='btn btn-primary  btn-block'>מלוי דוח</a>";
+				echo  "<a href='/production/new_form/$company_name' class='btn btn-primary ml-2'>מלוי דוח</a>";
 				if($company_name == 'בזק בינלאומי'){
-					echo '<hr><a class="btn btn-success" href="/production/create_script">יצירת קונפיגורציה</a>';
+					echo '<a class="btn btn-success" href="/production/create_script">יצירת קונפיגורציה</a>';
 				}
 				echo '</div></center></div>';
 			}
