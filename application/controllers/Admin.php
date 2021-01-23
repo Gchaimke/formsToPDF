@@ -15,6 +15,8 @@ class Admin extends CI_Controller
 	function settings()
 	{
 		$this->Admin_model->add_field('settings', 'emails'); //one time update db to add new field
+		$this->Admin_model->add_field('forms', 'old_serial','VARCHAR',100); //one time update db to add new field
+		$this->Admin_model->add_field('forms', 'new_serial','VARCHAR',100); //one time update db to add new field
 		$data = array();
 		$data['settings'] = '';
 		$this->load->view('header');

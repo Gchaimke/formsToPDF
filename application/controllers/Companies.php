@@ -157,7 +157,9 @@ class Companies extends CI_Controller
             "recommendations_text_column":"1",
             "emails":"1",
             "files_column":"1",
-            "details_column":"1"
+            "details_column":"1",
+            "old_serial":"1",
+            "new_serial":"1"
         }';
         return json_decode($filds);
     }

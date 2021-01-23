@@ -41,7 +41,7 @@
 				$logo = $companies[0]['logo'];
 				$filds = json_decode($companies[0]['view_filds']);
 			}
-
+			$filds_checks ='';
 			if (isset($view_filds)) {
 				$filds_checks = '<ul>';
 				foreach ($view_filds as $fild => $status) {

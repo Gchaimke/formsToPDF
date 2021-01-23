@@ -114,6 +114,14 @@ class Production_model extends CI_Model
 			'details' => array(
 				'type' => 'TEXT',
 				'null' => TRUE
+			),
+			'old_serial' => array(
+				'type' => 'VARCHAR',
+				'constraint' => 100
+			),
+			'new_serial' => array(
+				'type' => 'VARCHAR',
+				'constraint' => 100
 			)
 		);
 		$this->dbforge->add_field($form);

@@ -41,7 +41,6 @@ class Production extends CI_Controller
 
     public function add_form()
     {
-
         $creator_id = $this->session->userdata['logged_in']['id'];
         $creator_name = $this->Users_model->getUser($creator_id)[0]['view_name'];
         $this->form_validation->set_rules('date', 'date', 'trim|required|xss_clean');
@@ -65,6 +64,8 @@ class Production extends CI_Controller
         $this->form_validation->set_rules('price', 'price', 'trim|xss_clean');
         $this->form_validation->set_rules('details', 'details', 'trim|xss_clean');
         $this->form_validation->set_rules('client_sign', 'client_sign', 'trim|xss_clean');
+        $this->form_validation->set_rules('old_serial', 'old_serial', 'trim|xss_clean');
+        $this->form_validation->set_rules('new_serial', 'new_serial', 'trim|xss_clean');
         if (!$this->form_validation->run() == FALSE) {
             $data = array(
                 'date' =>  $this->input->post('date'),
@@ -89,7 +90,9 @@ class Production extends CI_Controller
                 'attachments' => $this->input->post('attachments'),
                 'price' => $this->input->post('price'),
                 'details' => $this->input->post('details'),
-                'client_sign' => $this->input->post('client_sign')
+                'client_sign' => $this->input->post('client_sign'),
+                'old_serial' => $this->input->post('old_serial'),
+                'new_serial' => $this->input->post('new_serial')
             );
             foreach ($data as $key => &$str) {
                 if (!$key == 'client_sign') {
@@ -150,6 +153,8 @@ class Production extends CI_Controller
         $this->form_validation->set_rules('price', 'price', 'trim|xss_clean');
         $this->form_validation->set_rules('details', 'details', 'trim|xss_clean');
         $this->form_validation->set_rules('client_sign', 'client_sign', 'trim|xss_clean');
+        $this->form_validation->set_rules('old_serial', 'old_serial', 'trim|xss_clean');
+        $this->form_validation->set_rules('new_serial', 'new_serial', 'trim|xss_clean');
         if (!$this->form_validation->run() == FALSE) {
             $data = array(
                 'id' =>  $this->input->post('id'),
@@ -174,7 +179,9 @@ class Production extends CI_Controller
                 'email_to' => $this->input->post('email_to'),
                 'attachments' => $this->input->post('attachments'),
                 'price' => $this->input->post('price'),
-                'details' => $this->input->post('details')
+                'details' => $this->input->post('details'),
+                'old_serial' => $this->input->post('old_serial'),
+                'new_serial' => $this->input->post('new_serial')
             );
             foreach ($data as $key => &$str) {
                 if (!$key == 'client_sign') {

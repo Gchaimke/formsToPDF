@@ -126,13 +126,31 @@ if (isset($companie)) {
                               </div>
                         </div>
                   </div>
+                  <div class="form-row">
+                        <div id="old_serial" class="form-group col-md-6">
+                              <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                          <div class="input-group-text">מספר סריאלי של ציוד ישן</div>
+                                    </div>
+                                    <input type='text' class="form-control" name='old_serial'>
+                              </div>
+                        </div>
+                        <div id="new_serial" class="form-group col-md-6">
+                              <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                          <div class="input-group-text">מספר סריאלי של ציוד חדש</div>
+                                    </div>
+                                    <input type='text' class="form-control" name='new_serial'>
+                              </div>
+                        </div>
+                  </div>
+
                   <div id="activity_text_column" class="form-group row">
                         <label for="activity_text" class="col-sm-2 col-form-label ">תיאור תקלה \ פניה</label>
                         <div class="col-sm-10">
                               <textarea class="form-control" name="activity_text" cols="10" rows="6"></textarea>
                         </div>
                   </div>
-
                   <div id="checking_text_column" class="form-group row">
                         <label for="checking_text" class="col-sm-2 col-form-label ">תוצאות הבדיקה</label>
                         <div class="col-sm-10">
