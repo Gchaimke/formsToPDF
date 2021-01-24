@@ -14,7 +14,7 @@
 		<div class="container col-lg-12">
 			<div id="files_column" class="form-group row">
 				<div class="col-sm-12">
-					<input id="xlsxupload" style="display:none;" type="file" name="files" data-url="/production/upload_xlsx/" />
+					<input id="xlsxupload" style="display:none;" type="file" name="files" data-url="/tickets/upload_xlsx/" />
 					<input id="attachments" type="hidden" class="form-control ltr" name="attachments" value="" />
 					<div id='files'>
 					</div>
