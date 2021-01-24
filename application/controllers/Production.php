@@ -118,7 +118,7 @@ class Production extends CI_Controller
         $data['companies'] = $this->Companies_model->getCompanies();
         $data['contacts'] = $this->Contacts_model->get();
         $current_company = $this->Companies_model->getCompanies('', $data['form_data'][0]['company']);
-        if (count($current_company)>0) {
+        if (count($current_company) > 0) {
             $current_company = $current_company[0];
             $data['hide_filds'] = $this->hide_filds($current_company['view_filds']);
             $data['logo'] = $current_company['logo'];
@@ -198,7 +198,7 @@ class Production extends CI_Controller
             if ($response) {
                 echo ' דוח ' .  $this->input->post('id') . ' נשמר בהצלחה! ';
             } else {
-                $msg = "אין אפשרות לשמור את הדוח! " . $this->input->post('id') ;
+                $msg = "אין אפשרות לשמור את הדוח! " . $this->input->post('id');
                 $this->log_data($msg);
                 echo $msg;
             }
@@ -234,9 +234,9 @@ class Production extends CI_Controller
         $limit_per_page = 40;
         $segment = 3;
         $start_index = ($this->uri->segment($segment)) ? $this->uri->segment($segment) : 0;
-        $total_records = $this->Production_model->get_total($params['creator'], $params['company'], $params['year'], $params['month'],$params['date']);
+        $total_records = $this->Production_model->get_total($params['creator'], $params['company'], $params['year'], $params['month'], $params['date']);
         if ($total_records > 0) {
-            $params["results"] = $this->Production_model->get_current_forms_records($limit_per_page, $start_index, $params['creator'], $params['company'], $params['year'], $params['month'],$params['date']);
+            $params["results"] = $this->Production_model->get_current_forms_records($limit_per_page, $start_index, $params['creator'], $params['company'], $params['year'], $params['month'], $params['date']);
             $this->pagination->initialize($this->pagination_config($total_records, $limit_per_page, $url, $segment));
             $params["links"] = $this->pagination->create_links();
         }
@@ -525,5 +525,28 @@ class Production extends CI_Controller
         end($ip_arr);
         $ip_arr[key($ip_arr)] -= 1;
         return implode('.', $ip_arr);
+    }
+
+    public function parse_uploaded_xlsx()
+    {
+        include_once APPPATH . 'third_party/SimpleXLSX.php';
+        if ($xlsx = SimpleXLSX::parse('tiobe-languages-august-2019.xlsx')) {
+            echo '<table><tbody>';
+            $i = 0;
+
+            foreach ($xlsx->rows() as $elt) {
+                if ($i == 0) {
+                    echo "<tr><th>" . $elt[0] . "</th><th>" . $elt[1] . "</th></tr>";
+                } else {
+                    echo "<tr><td>" . $elt[0] . "</td><td>" . $elt[1] . "</td></tr>";
+                }
+
+                $i++;
+            }
+
+            echo "</tbody></table>";
+        } else {
+            echo SimpleXLSX::parseError();
+        }
     }
 }
