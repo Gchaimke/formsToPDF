@@ -54,6 +54,7 @@ $route['users'] = 'users';
 $route['companies'] = 'companies';
 $route['contacts'] = 'contacts';
 $route['exportpdf'] = 'exportpdf';
+$route['tickets'] = 'tickets';
 $route['(:any)'] = 'pages/view/$1';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

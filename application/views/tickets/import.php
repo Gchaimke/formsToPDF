@@ -26,34 +26,50 @@
 			</div>
 			<?php
 			if (isset($message_display)) {
-				echo "<div class='alert alert-success' role='alert'>";
+				echo "<div  class='alert alert-success' role='alert'>";
 				echo $message_display . '</div>';
 			}
 
-			echo '<table><tbody>';
+			echo '<table ><tbody>';
 			$i = 0;
 			if (isset($xlsx)) {
+				$columns = array('מספר לקוח', 'שם לקוח', 'כתובת לקוח', '	משימה למחסן');
+				echo "<tr>";
+				foreach ($columns as $column) {
+					echo "<th>$column</th>";
+				}
+				echo "</tr>";
 				foreach ($xlsx->rows() as $elt) {
-					if ($i == 0) {
-						echo "<tr>";
-						for ($j = 0; $j < 4; $j++) {
-							echo "<th>" . $elt[$j] . "</th>";
-						}
-						echo "</tr>";
-					} else {
-						echo "<tr>";
-						for ($j = 0; $j < 4; $j++) {
-							echo "<td>" . $elt[$j] . "</td>";
-						}
-						echo "</tr>";
+					if ($i != 0) {
+						echo "<form class='tickets'><tr>";
+						echo "<td><input type='hidden' name='client_num' value='{$elt[0]}'>{$elt[0]}</td>
+								<td><input type='hidden' name='client_name' value='{$elt[1]}'>{$elt[1]}</td>
+								<td><input type='hidden' name='address' value='{$elt[2]}'>{$elt[2]}</td>
+								<td><input type='hidden' name='warehouse_num' value='{$elt[3]}'>{$elt[3]}</td>";
+						echo "</tr></form>";
 					}
 					$i++;
 				}
-
 				echo "</tbody></table>";
 			}
 			?>
-		</div>
+			<div class="form-group col-md-4 mt-3">
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<div class="input-group-text">הוסף לחברת</div>
+					</div>
+					<select id="company" class='form-control' name='company'>
+						<?php if (isset($companies)) {
+							foreach ($companies as $company) {
+								echo '<option value="' . htmlspecialchars($company['id']) . '">' . htmlspecialchars($company['name']) . '</option>';
+							}
+						}
+						?>
+					</select>
+					<div id='add_btn' class='btn btn-success mr-2'>הוסף משימות</div>
+				</div>
+
+			</div>
 		</div>
 	</center>
 </main>
@@ -84,4 +100,28 @@
 			}
 		});
 	}
+
+	$("#add_btn").on('click', function() {
+		$(".tickets").each(function() {
+			var current_line = $(this).next();
+			var data_array = $(this).serializeArray();
+			setTimeout(function() {
+				$.ajax({
+					type: 'POST',
+					url: '/tickets/import/' + $("#company").val(),
+					data: data_array
+				}).done(function(response) {
+					if(response == 'success'){
+						current_line.append('<td>הוסף</td>').addClass('alert-success');
+					}else{
+						current_line.append('<td>קיים</td>').addClass('alert-danger');
+					}
+					console.log(response);
+				}).fail(function(response) {
+					current_line.append('<td>'+response+'</td>').addClass('alert-danger');
+					console.log(response);
+				});
+			});
+		}, 2000);
+	});
 </script>

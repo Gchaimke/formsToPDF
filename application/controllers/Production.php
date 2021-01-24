@@ -530,52 +530,5 @@ class Production extends CI_Controller
         $ip_arr[key($ip_arr)] -= 1;
         return implode('.', $ip_arr);
     }
-
-    public function parse_uploaded_xlsx()
-    {
-        $user_id = $this->session->userdata['logged_in']['id'];
-        $file_name = 'Uploads/tmp/'.$user_id.'/last_uploaded.xlsx';
-        if (!file_exists($file_name)) {
-            $file_name ='';
-        }
-        $data = array();
-        $this->load->view('header');
-        $this->load->view('main_menu');
-        include_once APPPATH . 'third_party/SimpleXLSX.php';
-        if ($file_name != '') {
-            if ($xlsx = SimpleXLSX::parse($file_name)) {
-                $data['xlsx'] = $xlsx;
-                $this->load->view('production/tickets_dashboard', $data);
-            } else {
-                echo SimpleXLSX::parseError();
-            }
-        } else {
-            $data['message_display'] = 'Upload File first';
-            $this->load->view('production/tickets_dashboard', $data);
-        }
-        $this->load->view('footer');
-    }
-
-    public function upload_xlsx($upload_folder = 'Uploads/tmp')
-    {
-        $user_id = $this->session->userdata['logged_in']['id'];
-        if (!file_exists($upload_folder.'/'.$user_id)) {
-            mkdir($upload_folder.'/'.$user_id, 0770, true);
-        }
-        $config = array(
-            'upload_path' => $upload_folder.'/'.$user_id,
-            'file_name' => 'last_uploaded',
-            'overwrite' => TRUE,
-            'allowed_types' => 'xlsx|xls',
-            'max_size' => "2048"
-        );
-        $this->load->library('upload', $config);
-        if ($this->upload->do_upload('files')) {
-            $data = array('upload_data' => $this->upload->data());
-            echo  $data['upload_data']["file_name"];
-        } else {
-            $error = "error " . $this->upload->display_errors();
-            echo $error;
-        }
-    }
+    
 }
