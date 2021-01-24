@@ -83,12 +83,15 @@ class Tickets_model extends CI_Model
 		}
 	}
 
-	function get_all()
+	function get_all($user_id = '')
 	{
 		$response = array();
 		// Select record
 		$this->db->select('*');
 		$this->db->from('tickets');
+		if($user_id!=''){
+			$this->db->where("creator_id ='$user_id'");
+		}
 		$q = $this->db->get();
 		$response = $q->result_array();
 		return $response;

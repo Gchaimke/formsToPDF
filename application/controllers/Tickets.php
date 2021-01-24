@@ -16,7 +16,14 @@ class Tickets extends CI_Controller
     public function index()
     {
         $data = array();
-        $data['tickets'] = $this->Tickets_model->get_all();
+        $user_role = $this->session->userdata['logged_in']['role'];
+        $user_id = $this->session->userdata['logged_in']['id'];
+        if($user_role=='User'){
+            $data['tickets'] = $this->Tickets_model->get_all($user_id);
+        }else{
+            $data['tickets'] = $this->Tickets_model->get_all();
+        }
+        
         $data['users'] =  $this->Users_model->getusers();
         $this->load->view('header');
         $this->load->view('main_menu');
