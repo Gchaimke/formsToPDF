@@ -47,7 +47,7 @@ if (isset($this->session->userdata['logged_in'])) {
 							<td class="align-middle"><?= $ticket['warehouse_num'] ?></td>
 
 							<?php if ($ticket['status'] == "new") {
-								echo '<td class="align-middle"><span class="badge badge-info p-2">' . $ticket['status'] . '</span ></td>';
+								echo '<td class="align-middle"><span class="badge badge-primary p-2">' . $ticket['status'] . '</span ></td>';
 								echo '<td class="align-middle"><a href="/tickets/update/' . $ticket['id'] . '" class="btn btn-info"><i class="fa fa-edit"></i></a></td>';
 							} else if ($ticket['status'] == "working") {
 								echo '<td class="align-middle"><span class="badge badge-warning p-2">' . $ticket['status'] . '</span ></td>';
@@ -55,13 +55,13 @@ if (isset($this->session->userdata['logged_in'])) {
 							} else {
 								echo '<td class="align-middle"><span class="badge badge-success p-2">' . $ticket['status'] . '</span ></td>';
 								echo '<td class="align-middle"></td>';
-							} ?>
+							}
 
-							<?php if ($user_role == "Admin" || $user_role == "Manager") {
+							if ($user_role == "Admin" || $user_role == "Manager") {
 								echo "<td class='align-middle'>";
 								echo '<select class="user_selection form-control" name="user"><option></option>';
 								foreach ($users as $user) {
-									if($user['id'] ==  $ticket['creator_id']){
+									if ($user['id'] ==  $ticket['creator_id']) {
 										echo '<option value="' . htmlspecialchars($user['id']) . '" selected>' . htmlspecialchars($user['name']) . '</option>';
 									}
 									echo '<option value="' . htmlspecialchars($user['id']) . '">' . htmlspecialchars($user['name']) . '</option>';
