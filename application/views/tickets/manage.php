@@ -9,7 +9,7 @@ if (isset($this->session->userdata['logged_in'])) {
 	<div class="jumbotron">
 		<div class="container">
 			<center>
-				<h5>Tickets</h5>
+				<h5>משימות</h5>
 			</center>
 		</div>
 	</div>
@@ -56,9 +56,9 @@ if (isset($this->session->userdata['logged_in'])) {
 									'&address=' . urlencode($ticket['address']) . '" class="btn btn-info"><i class="fa fa-edit"></i></a></td>';
 							} else if ($ticket['status'] == "working") {
 								echo '<td class="align-middle"><span class="badge badge-warning p-2">' . $ticket['status'] . '</span ></td>';
-								echo '<td class="align-middle"></td>';
+								echo '<td class="align-middle"><span class="btn btn-success done-ticket"><i class="fa fa-check"></i></span></td>';
 							} else {
-								echo '<td class="align-middle"><span class="badge badge-success p-2">' . $ticket['status'] . '</span ></td>';
+								echo '<td class="align-middle"><span class="revert badge badge-success p-2">' . $ticket['status'] . '</span ></td>';
 								echo '<td class="align-middle"></td>';
 							}
 
@@ -68,8 +68,9 @@ if (isset($this->session->userdata['logged_in'])) {
 								foreach ($users as $user) {
 									if ($user['id'] ==  $ticket['creator_id']) {
 										echo '<option value="' . htmlspecialchars($user['id']) . '" selected>' . htmlspecialchars($user['name']) . '</option>';
+									} else {
+										echo '<option value="' . htmlspecialchars($user['id']) . '">' . htmlspecialchars($user['name']) . '</option>';
 									}
-									echo '<option value="' . htmlspecialchars($user['id']) . '">' . htmlspecialchars($user['name']) . '</option>';
 								}
 								echo '</select>';
 
@@ -112,5 +113,35 @@ if (isset($this->session->userdata['logged_in'])) {
 			});
 		}
 
-	})
+	});
+	$('.done-ticket').on('click', function() {
+		var ticket_id = $(this).closest('tr').attr('id');
+		$.post('/tickets/update/' + ticket_id, {
+			status: 'done'
+		}).done(function(response) {
+			$('#form-messages').addClass('alert-success');
+			$('#form-messages').text(response).fadeIn(1000).delay(3000).fadeOut(1000); //show message
+			console.log(response);
+			location.reload();
+		}).fail(function(response) {
+			$('#form-messages').addClass('alert-danger');
+			$('#form-messages').text('אין אפשרות לשמור שינוים' + response).fadeIn(1000).delay(3000).fadeOut(5000);
+			console.log(response);
+		});
+	});
+	$('.revert').on('click', function() {
+		var ticket_id = $(this).closest('tr').attr('id');
+		$.post('/tickets/update/' + ticket_id, {
+			status: 'working'
+		}).done(function(response) {
+			$('#form-messages').addClass('alert-success');
+			$('#form-messages').text(response).fadeIn(1000).delay(3000).fadeOut(1000); //show message
+			console.log(response);
+			location.reload();
+		}).fail(function(response) {
+			$('#form-messages').addClass('alert-danger');
+			$('#form-messages').text('אין אפשרות לשמור שינוים' + response).fadeIn(1000).delay(3000).fadeOut(5000);
+			console.log(response);
+		});
+	});
 </script>

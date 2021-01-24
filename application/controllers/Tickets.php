@@ -18,12 +18,12 @@ class Tickets extends CI_Controller
         $data = array();
         $user_role = $this->session->userdata['logged_in']['role'];
         $user_id = $this->session->userdata['logged_in']['id'];
-        if($user_role=='User'){
+        if ($user_role == 'User') {
             $data['tickets'] = $this->Tickets_model->get_all($user_id);
-        }else{
+        } else {
             $data['tickets'] = $this->Tickets_model->get_all();
         }
-        
+
         $data['users'] =  $this->Users_model->getusers();
         $this->load->view('header');
         $this->load->view('main_menu');
@@ -106,12 +106,18 @@ class Tickets extends CI_Controller
 
     public function update($id = "")
     {
+        $this->form_validation->set_rules('status', 'status', 'trim|xss_clean');
         $this->form_validation->set_rules('user_id', 'user_id', 'trim|xss_clean');
         if ($id != "") {
             $data = array(
-                'id' => $id,
-                'creator_id' => $this->input->post('user_id')
+                'id' => $id
             );
+            if ($this->input->post('user_id') != '') {
+                $data += array('creator_id' => $this->input->post('user_id'));
+            }
+            if ($this->input->post('status') != '') {
+                $data += array('status' => $this->input->post('status'));
+            }
             if ($this->Tickets_model->update($data)) {
                 echo 'success';
             } else {

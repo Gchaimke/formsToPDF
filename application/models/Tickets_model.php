@@ -114,8 +114,15 @@ class Tickets_model extends CI_Model
 
 	public function update($data)
 	{
-		$where = "id =" . $data['id'];
-		$this->db->update('tickets', $data, $where);
+		if(isset($data['id'])){
+			$where = "id =" . $data['id'];
+			$this->db->update('tickets', $data, $where);
+		}
+		else if(isset($data['client_num'])){
+			$where = "client_num =" . $data['client_num'];
+			$this->db->update('tickets', $data, $where);
+		}
+		
 		if ($this->db->affected_rows() > 0) {
 			return 'עודכנו בעצלחה';
 		}

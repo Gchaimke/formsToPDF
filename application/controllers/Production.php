@@ -10,6 +10,7 @@ class Production extends CI_Controller
         $this->load->model('Users_model');
         $this->load->model('Companies_model');
         $this->load->model('Contacts_model');
+        $this->load->model('Tickets_model');
     }
 
     public function index()
@@ -29,12 +30,12 @@ class Production extends CI_Controller
         if ($company != '') {
             $company = urldecode($company);
             $data['companie'] = $this->Companies_model->getCompanies('', $company)[0];
-        }else if(isset($_GET['company_id'])){
+        } else if (isset($_GET['company_id'])) {
             $data['companie'] = $this->Companies_model->getCompanies($_GET['company_id'])[0];
-        }else{
+        } else {
             $data['companie'] = $this->Companies_model->getCompanies('1')[0];
         }
-        
+
         $data['contacts'] = $this->Contacts_model->get();
         $data['hide_filds'] = $this->hide_filds($data['companie']['view_filds']);
         $data['user'] = $this->Users_model->getUser($this->session->userdata['logged_in']['id']);
@@ -108,6 +109,13 @@ class Production extends CI_Controller
             if ($id > 0 || $id) {
                 $this->log_data(' יצר דוח ' . $id . ' לחברת ' . $this->input->post('company'), $id, 1);
                 echo $id;
+                if ($this->input->post('client_num') != '') {
+                    $data = array(
+                        'client_num' => $this->input->post('client_num'),
+                        'status' => 'working'
+                    );
+                    $this->Tickets_model->update($data);
+                }
             } else {
                 echo "דוח לא נשמר";
             }
@@ -202,6 +210,13 @@ class Production extends CI_Controller
             $response =  $this->Production_model->update_form($data);
             if ($response) {
                 echo ' דוח ' .  $this->input->post('id') . ' נשמר בהצלחה! ';
+                if ($this->input->post('client_num') != '') {
+                    $data = array(
+                        'client_num' => $this->input->post('client_num'),
+                        'status' => 'working'
+                    );
+                    $this->Tickets_model->update($data);
+                }
             } else {
                 $msg = "אין אפשרות לשמור את הדוח! " . $this->input->post('id');
                 $this->log_data($msg);
@@ -535,5 +550,4 @@ class Production extends CI_Controller
         $ip_arr[key($ip_arr)] -= 1;
         return implode('.', $ip_arr);
     }
-    
 }
