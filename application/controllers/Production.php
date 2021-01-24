@@ -392,9 +392,9 @@ class Production extends CI_Controller
         echo file_get_contents($file);
     }
 
-    public function do_upload($folder = '')
+    public function do_upload($id = '')
     {
-        $upload_folder = "./Uploads/forms_attachments/" . $folder;
+        $upload_folder = "./Uploads/forms_attachments/" . $id;
         if (!file_exists($upload_folder)) {
             mkdir($upload_folder, 0770, true);
         }
@@ -428,7 +428,11 @@ class Production extends CI_Controller
 
     function export_to($str = '1')
     {
-        $user = $this->security->xss_clean($this->input->get('creator'));
+        $role = $this->session->userdata['logged_in']['role'];
+        $user = $this->session->userdata['logged_in']['id'];
+        if ($role == 'Admin') {
+            $user = $this->security->xss_clean($this->input->get('creator'));
+        }
         $year = $this->security->xss_clean($this->input->get('year'));
         $company = $this->security->xss_clean($this->input->get('company'));
         $file_name = "froms_month_" . $str . "_" . $year . "_userid_" . $user . "_" . $company . ".csv";
@@ -442,11 +446,16 @@ class Production extends CI_Controller
         echo "\xEF\xBB\xBF";
         $fp = fopen('php://output', 'w');
 
-        $tmp_arr = array(array('תאריך', 'יוצר', 'שם הלקוח', 'מיקום', 'סוג תקלה', 'חברה נותנת שירות', 'שעת התחלת', 'שעת סיום', 'הערות', 'סריאלי ישן', 'סריאלי חדש', 'מחיר'));
+        $tmp_arr = array(array('תאריך', 'יוצר', 'מספר לקוח', 'שם הלקוח', 'מיקום', 'סוג תקלה', 'חברה נותנת שירות', 'שעת התחלת', 'שעת סיום', 'הערות', 'סריאלי ישן', 'סריאלי חדש', 'מחיר'));
+        $price = '';
         foreach ($data as  $line) {
+            if ($role == 'Admin') {
+                $price = $line['price'];
+            }
             array_push($tmp_arr, array(
                 $line['date'],
                 $line['creator_name'],
+                $line['client_num'],
                 $line['client_name'],
                 $line['place'],
                 $line['issue_kind'],
@@ -456,7 +465,7 @@ class Production extends CI_Controller
                 $line['details'],
                 $line['old_serial'],
                 $line['new_serial'],
-                $line['price']
+                $price
             ));
         }
 
@@ -527,26 +536,47 @@ class Production extends CI_Controller
         return implode('.', $ip_arr);
     }
 
-    public function parse_uploaded_xlsx()
+    public function parse_uploaded_xlsx($file_name = '')
     {
+        $data = array();
+        $this->load->view('header');
+        $this->load->view('main_menu');
         include_once APPPATH . 'third_party/SimpleXLSX.php';
-        if ($xlsx = SimpleXLSX::parse('tiobe-languages-august-2019.xlsx')) {
-            echo '<table><tbody>';
-            $i = 0;
-
-            foreach ($xlsx->rows() as $elt) {
-                if ($i == 0) {
-                    echo "<tr><th>" . $elt[0] . "</th><th>" . $elt[1] . "</th></tr>";
-                } else {
-                    echo "<tr><td>" . $elt[0] . "</td><td>" . $elt[1] . "</td></tr>";
-                }
-
-                $i++;
+        $working_dir = 'Uploads/tmp/';
+        if ($file_name != '') {
+            if ($xlsx = SimpleXLSX::parse($working_dir . $file_name)) {
+                $data['xlsx'] = $xlsx;
+                $this->load->view('production/tickets_dashboard', $data);
+            } else {
+                echo SimpleXLSX::parseError();
             }
-
-            echo "</tbody></table>";
         } else {
-            echo SimpleXLSX::parseError();
+            $data['message_display'] = 'Upload File first';
+            $this->load->view('production/tickets_dashboard', $data);
+        }
+
+        $this->load->view('footer');
+    }
+
+    public function upload_xlsx($upload_folder = 'Uploads/tmp')
+    {
+        if (!file_exists($upload_folder)) {
+            mkdir($upload_folder, 0770, true);
+        }
+        $config = array(
+            'upload_path' => $upload_folder,
+            'file_name' => 'last_uploaded',
+            'overwrite' => TRUE,
+            'allowed_types' => 'xlsx|xls',
+            'max_size' => "2048"
+        );
+        $this->load->library('upload', $config);
+        if ($this->upload->do_upload('files')) {
+            $data = array('upload_data' => $this->upload->data());
+            echo  $data['upload_data']["file_name"];
+        } else {
+            $error = "error " . $this->upload->display_errors();
+            echo $error;
         }
     }
 }
