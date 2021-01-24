@@ -429,10 +429,7 @@ class Production extends CI_Controller
     function export_to($str = '1')
     {
         $role = $this->session->userdata['logged_in']['role'];
-        $user = $this->session->userdata['logged_in']['id'];
-        if ($role == 'Admin') {
-            $user = $this->security->xss_clean($this->input->get('creator'));
-        }
+        $user = $this->security->xss_clean($this->input->get('creator'));
         $year = $this->security->xss_clean($this->input->get('year'));
         $company = $this->security->xss_clean($this->input->get('company'));
         $file_name = "froms_month_" . $str . "_" . $year . "_userid_" . $user . "_" . $company . ".csv";

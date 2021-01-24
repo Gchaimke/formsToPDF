@@ -107,73 +107,77 @@ $year = substr($date, 0, 4);
 				</div>
 			</div>
 		</div>
-		<div id="show_csv" class='btn btn-outline-info'><i class="fa fa-file-excel-o"></i></div>
-		<div id="csv_month" style="display:none;">
-		</div>
-		<?php if (isset($results)) { ?>
-			<table class="table">
-				<thead class="thead-dark">
-					<tr>
-						<th scope="col">תאריך</th>
-						<th scope="col">יוצר</th>
-						<th scope="col" class="mobile-hide">מספר לקוח</th>
-						<th scope="col" class="mobile-hide">שם הלקוח</th>
-						<th scope="col" class="mobile-hide">מיקום</th>
-						<th scope="col" class="mobile-hide">סוג תקלה</th>
-						<th scope="col" class="mobile-hide">חברה נותנת שירות</th>
-						<?php if ($user_role == "Admin") {
-							echo '<th scope="col" class="mobile-hide">מחיר</th>';
-						} ?>
-						<th scope="col">ערוך </th>
-						<?php if ($user_role == "Admin") {
-							echo '<th scope="col">מחק</th>';
-						}
-						?>
-					</tr>
-				</thead>
-				<tbody>
+		<?php
+		if ($user_role == 'Admin' || $user_role == 'Manager') { ?>
+			<div id="show_csv" class='btn btn-outline-info'><i class="fa fa-file-excel-o"></i></div>
+			<div id="csv_month" style="display:none;">
+			<?php }	?>
 
-					<?php foreach ($results as $data) {
-						if ($user_role != 'Admin' && $user_role != 'Manager') {
-							if ($data->creator_id != $user_id) {
-								continue;
-							}
-						}
-					?>
-						<tr id='<?php echo $data->id ?>'>
-							<td class="align-middle">
-								<?php
-								echo date("d-m-Y", strtotime($data->date));
-								if ($data->attachments != '') {
-									echo '<i class="mr-1 fa fa-paperclip" aria-hidden="true"></i> ';
-								} ?>
-							</td>
-							<?php foreach ($users as $user) {
-								if ($user['id'] == $data->creator_id) {
-									echo '<td class="align-middle">' . $user['view_name'] . '</td>';
-								}
-							} ?>
-							<td class="mobile-hide align-middle"><?php echo $data->client_num ?></td>
-							<td class="mobile-hide align-middle"><?php echo $data->client_name ?></td>
-							<td class="mobile-hide align-middle"><?php echo $data->place ?></td>
-							<td class="mobile-hide align-middle"><?php echo $data->issue_kind ?></td>
-							<td class="mobile-hide align-middle"><?php echo $data->company ?></td>
+			</div>
+			<?php if (isset($results)) { ?>
+				<table class="table">
+					<thead class="thead-dark">
+						<tr>
+							<th scope="col">תאריך</th>
+							<th scope="col">יוצר</th>
+							<th scope="col" class="mobile-hide">מספר לקוח</th>
+							<th scope="col" class="mobile-hide">שם הלקוח</th>
+							<th scope="col" class="mobile-hide">מיקום</th>
+							<th scope="col" class="mobile-hide">סוג תקלה</th>
+							<th scope="col" class="mobile-hide">חברה נותנת שירות</th>
 							<?php if ($user_role == "Admin") {
-								echo '<td class="mobile-hide align-middle">' . $data->price . '</td>';
+								echo '<th scope="col" class="mobile-hide">מחיר</th>';
 							} ?>
-							<td><a href='/production/view_form/<?php echo $data->id ?>' class='btn btn-outline-info'><i class="fa fa-edit"></i></a></td>
+							<th scope="col">ערוך </th>
 							<?php if ($user_role == "Admin") {
-								echo "<td><button id='" . $data->id . "' class='btn btn-outline-danger' onclick='deleteForm(this.id)'><i class='fa fa-trash'></i></button></td>";
+								echo '<th scope="col">מחק</th>';
 							}
 							?>
-
 						</tr>
-					<?php } ?>
-				</tbody>
-			</table>
-		<?php } else { ?>
-			<div>אין עדיין דוחות</div>
-		<?php } ?>
+					</thead>
+					<tbody>
+
+						<?php foreach ($results as $data) {
+							if ($user_role != 'Admin' && $user_role != 'Manager') {
+								if ($data->creator_id != $user_id) {
+									continue;
+								}
+							}
+						?>
+							<tr id='<?php echo $data->id ?>'>
+								<td class="align-middle">
+									<?php
+									echo date("d-m-Y", strtotime($data->date));
+									if ($data->attachments != '') {
+										echo '<i class="mr-1 fa fa-paperclip" aria-hidden="true"></i> ';
+									} ?>
+								</td>
+								<?php foreach ($users as $user) {
+									if ($user['id'] == $data->creator_id) {
+										echo '<td class="align-middle">' . $user['view_name'] . '</td>';
+									}
+								} ?>
+								<td class="mobile-hide align-middle"><?php echo $data->client_num ?></td>
+								<td class="mobile-hide align-middle"><?php echo $data->client_name ?></td>
+								<td class="mobile-hide align-middle"><?php echo $data->place ?></td>
+								<td class="mobile-hide align-middle"><?php echo $data->issue_kind ?></td>
+								<td class="mobile-hide align-middle"><?php echo $data->company ?></td>
+								<?php if ($user_role == "Admin") {
+									echo '<td class="mobile-hide align-middle">' . $data->price . '</td>';
+								} ?>
+								<td><a href='/production/view_form/<?php echo $data->id ?>' class='btn btn-outline-info'><i class="fa fa-edit"></i></a></td>
+								<?php if ($user_role == "Admin") {
+									echo "<td><button id='" . $data->id . "' class='btn btn-outline-danger' onclick='deleteForm(this.id)'><i class='fa fa-trash'></i></button></td>";
+								}
+								?>
+
+							</tr>
+						<?php } ?>
+					</tbody>
+				</table>
+			<?php } else { ?>
+				<div>אין עדיין דוחות</div>
+			<?php } ?>
 	</div>
 
 </main>
