@@ -465,11 +465,9 @@ class Production extends CI_Controller
                 $price
             ));
         }
-
         foreach ($tmp_arr as $fields) {
             fputcsv($fp, $fields);
         }
-
         fclose($fp);
     }
 
@@ -533,15 +531,19 @@ class Production extends CI_Controller
         return implode('.', $ip_arr);
     }
 
-    public function parse_uploaded_xlsx($file_name = '')
+    public function parse_uploaded_xlsx()
     {
+        $user_id = $this->session->userdata['logged_in']['id'];
+        $file_name = 'Uploads/tmp/'.$user_id.'/last_uploaded.xlsx';
+        if (!file_exists($file_name)) {
+            $file_name ='';
+        }
         $data = array();
         $this->load->view('header');
         $this->load->view('main_menu');
         include_once APPPATH . 'third_party/SimpleXLSX.php';
-        $working_dir = 'Uploads/tmp/';
         if ($file_name != '') {
-            if ($xlsx = SimpleXLSX::parse($working_dir . $file_name)) {
+            if ($xlsx = SimpleXLSX::parse($file_name)) {
                 $data['xlsx'] = $xlsx;
                 $this->load->view('production/tickets_dashboard', $data);
             } else {
@@ -551,17 +553,17 @@ class Production extends CI_Controller
             $data['message_display'] = 'Upload File first';
             $this->load->view('production/tickets_dashboard', $data);
         }
-
         $this->load->view('footer');
     }
 
     public function upload_xlsx($upload_folder = 'Uploads/tmp')
     {
-        if (!file_exists($upload_folder)) {
-            mkdir($upload_folder, 0770, true);
+        $user_id = $this->session->userdata['logged_in']['id'];
+        if (!file_exists($upload_folder.'/'.$user_id)) {
+            mkdir($upload_folder.'/'.$user_id, 0770, true);
         }
         $config = array(
-            'upload_path' => $upload_folder,
+            'upload_path' => $upload_folder.'/'.$user_id,
             'file_name' => 'last_uploaded',
             'overwrite' => TRUE,
             'allowed_types' => 'xlsx|xls',

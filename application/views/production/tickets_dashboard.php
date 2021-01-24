@@ -36,13 +36,13 @@
 				foreach ($xlsx->rows() as $elt) {
 					if ($i == 0) {
 						echo "<tr>";
-						for ($j = 0; $j < 8; $j++) {
+						for ($j = 0; $j < 4; $j++) {
 							echo "<th>" . $elt[$j] . "</th>";
 						}
 						echo "</tr>";
 					} else {
 						echo "<tr>";
-						for ($j = 0; $j < 8; $j++) {
+						for ($j = 0; $j < 4; $j++) {
 							echo "<td>" . $elt[$j] . "</td>";
 						}
 						echo "</tr>";
@@ -78,19 +78,7 @@
 					}
 					data.context.addClass("error");
 				} else {
-					setTimeout(function() {
-						console.log(data);
-						console.log(e);
-						data.context = $('<p class="file ltr">').append($('<a target="blank" href="/production/parse_uploaded_xlsx/' + data.result + '">').text('Parse file')).appendTo('#files');
-						data.context.addClass("done");
-						$("#upload_spinner").css("display", "none");
-					}, 2000);
-					if ($('#attachments').val() == '') {
-						$('#attachments').val(ndata.result);
-					} else {
-						$('#attachments').val($('#attachments').val() + "," + data.result);
-
-					}
+					location.reload();
 				}
 				$('#save_btn').click();
 			}
