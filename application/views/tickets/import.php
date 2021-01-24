@@ -122,6 +122,6 @@
 					console.log(response);
 				});
 			});
-		}, 2000);
+		}, 3000);
 	});
 </script>
