@@ -108,11 +108,12 @@
 			$.ajax({
 				type: 'POST',
 				url: '/tickets/import/' + $("#company").val(),
-				data: data_array
-			}).success(function(response) {
-				setTimeout(function() {
-					delaySuccess(data);
-				}, 3000);
+				data: data_array,
+				success: function(response) {
+					setTimeout(function() {
+						delaySuccess(data);
+					}, 3000);
+				}
 			}).done(function(response) {
 				if (response == 'success') {
 					current_line.append('<td>הוסף</td>').addClass('alert-success');
