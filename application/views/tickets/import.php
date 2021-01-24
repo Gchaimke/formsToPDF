@@ -107,25 +107,25 @@
 			var data_array = $(this).serializeArray();
 			$.ajax({
 				type: 'POST',
+				async: true,
+				timeout: 5000,
 				url: '/tickets/import/' + $("#company").val(),
 				data: data_array,
 				success: function(response) {
-					setTimeout(function() {
-						delaySuccess(data);
-					}, 3000);
-				}
-			}).done(function(response) {
-				if (response == 'success') {
-					current_line.append('<td>הוסף</td>').addClass('alert-success');
-				} else {
-					current_line.append('<td>קיים</td>').addClass('alert-danger');
-				}
-				console.log(response);
-			}).fail(function(response) {
-				current_line.append('<td>' + response + '</td>').addClass('alert-danger');
-				console.log(response);
+					if (response == 'success') {
+						current_line.append('<td>הוסף</td>').addClass('alert-success');
+					} else {
+						current_line.append('<td>קיים</td>').addClass('alert-danger');
+					}
+					console.log(response);
+				},
+				error: function(response) {
+					current_line.append('<td>' + response + '</td>').addClass('alert-danger');
+					console.log(response);
+				},
+				
 			});
-		});
 
+		});
 	});
 </script>
