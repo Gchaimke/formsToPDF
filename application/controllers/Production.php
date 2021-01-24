@@ -28,8 +28,13 @@ class Production extends CI_Controller
         $data = array();
         if ($company != '') {
             $company = urldecode($company);
+            $data['companie'] = $this->Companies_model->getCompanies('', $company)[0];
+        }else if(isset($_GET['company_id'])){
+            $data['companie'] = $this->Companies_model->getCompanies($_GET['company_id'])[0];
+        }else{
+            $data['companie'] = $this->Companies_model->getCompanies('1')[0];
         }
-        $data['companie'] = $this->Companies_model->getCompanies('', $company)[0];
+        
         $data['contacts'] = $this->Contacts_model->get();
         $data['hide_filds'] = $this->hide_filds($data['companie']['view_filds']);
         $data['user'] = $this->Users_model->getUser($this->session->userdata['logged_in']['id']);

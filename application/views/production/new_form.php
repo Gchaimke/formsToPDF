@@ -7,6 +7,10 @@ $user = $user[0];
 if (isset($companie)) {
       $companie_name = $companie['name'];
 }
+
+$client_num = (isset($_GET['client_num']))?$_GET['client_num']:"";
+$client_name = (isset($_GET['client_name']))?htmlspecialchars($_GET['client_name']):"";
+$address = (isset($_GET['address']))?htmlspecialchars($_GET['address']):"";
 ?>
 
 <script src="<?php echo base_url('assets/js/jQUpload/jquery.ui.widget.js'); ?>"></script>
@@ -69,7 +73,7 @@ if (isset($companie)) {
                                     <div class="input-group-prepend">
                                           <div class="input-group-text">מספר לקוח</div>
                                     </div>
-                                    <input type='text' class="form-control" name='client_num'>
+                                    <input type='text' class="form-control" name='client_num' value="<?=$client_num?>">
                               </div>
                         </div>
                         <div id="issue_num_column" class="form-group col-md-4">
@@ -96,7 +100,7 @@ if (isset($companie)) {
                                     <div class="input-group-prepend">
                                           <div class="input-group-text">שם לקוח</div>
                                     </div>
-                                    <input type='text' class="form-control" name='client_name'>
+                                    <input type='text' class="form-control" name='client_name' value="<?=$client_name?>">
                               </div>
                         </div>
                         <div id="place_column" class="form-group col-md-6">
@@ -104,7 +108,7 @@ if (isset($companie)) {
                                     <div class="input-group-prepend">
                                           <div class="input-group-text">מיקום</div>
                                     </div>
-                                    <input type='text' class="form-control" name='place'>
+                                    <input type='text' class="form-control" name='place' value="<?=$address?>">
                               </div>
                         </div>
                   </div>
