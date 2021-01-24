@@ -105,23 +105,26 @@
 		$(".tickets").each(function() {
 			var current_line = $(this).next();
 			var data_array = $(this).serializeArray();
-			setTimeout(function() {
-				$.ajax({
-					type: 'POST',
-					url: '/tickets/import/' + $("#company").val(),
-					data: data_array
-				}).done(function(response) {
-					if(response == 'success'){
-						current_line.append('<td>הוסף</td>').addClass('alert-success');
-					}else{
-						current_line.append('<td>קיים</td>').addClass('alert-danger');
-					}
-					console.log(response);
-				}).fail(function(response) {
-					current_line.append('<td>'+response+'</td>').addClass('alert-danger');
-					console.log(response);
-				});
+			$.ajax({
+				type: 'POST',
+				url: '/tickets/import/' + $("#company").val(),
+				data: data_array
+			}).success(function(response) {
+				setTimeout(function() {
+					delaySuccess(data);
+				}, 3000);
+			}).done(function(response) {
+				if (response == 'success') {
+					current_line.append('<td>הוסף</td>').addClass('alert-success');
+				} else {
+					current_line.append('<td>קיים</td>').addClass('alert-danger');
+				}
+				console.log(response);
+			}).fail(function(response) {
+				current_line.append('<td>' + response + '</td>').addClass('alert-danger');
+				console.log(response);
 			});
-		}, 3000);
+		});
+
 	});
 </script>
