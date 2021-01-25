@@ -76,9 +76,9 @@ if (isset($this->session->userdata['logged_in'])) {
 								echo '<select class="user_selection form-control" name="user"><option value="-1"></option>';
 								foreach ($users as $user) {
 									if ($user['id'] ==  $ticket['creator_id']) {
-										echo '<option value="' . htmlspecialchars($user['id']) . '" selected>' . htmlspecialchars($user['name']) . '</option>';
+										echo '<option value="' . htmlspecialchars($user['id']) . '" selected>' . htmlspecialchars($user['view_name']) . '</option>';
 									} else {
-										echo '<option value="' . htmlspecialchars($user['id']) . '">' . htmlspecialchars($user['name']) . '</option>';
+										echo '<option value="' . htmlspecialchars($user['id']) . '">' . htmlspecialchars($user['view_name']) . '</option>';
 									}
 								}
 								echo '</select>';
