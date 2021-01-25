@@ -175,7 +175,7 @@ class Users extends CI_Controller
                         'email' => $result[0]->email
                     );
                     $this->session->set_userdata('logged_in', $session_data);
-                    header("location: /");
+                    header("location: /tickets");
                 }
             } else {
                 $data = array(
