@@ -105,28 +105,26 @@
 		$(".tickets").each(function() {
 			var current_line = $(this).next();
 			var data_array = $(this).serializeArray();
-			setTimeout(function() {
-				$.ajax({
-					type: 'POST',
-					async: true,
-					url: '/tickets/import/' + $("#company").val(),
-					data: data_array,
-					timeout: 3000,
-					success: function(response) {
-						if (response == 'success') {
-							current_line.append('<td>הוסף</td>').addClass('alert-success');
-						} else {
-							current_line.append('<td>קיים</td>').addClass('alert-danger');
-						}
-						console.log(response);
-					},
-					error: function(response) {
-						current_line.append('<td>' + response + '</td>').addClass('alert-danger');
-						console.log(response);
-					},
+			$.ajax({
+				type: 'POST',
+				async: false,
+				url: '/tickets/import/' + $("#company").val(),
+				data: data_array,
+				timeout: 3000,
+				success: function(response) {
+					if (response == 'success') {
+						current_line.append('<td>הוסף</td>').addClass('alert-success');
+					} else {
+						current_line.append('<td>קיים</td>').addClass('alert-danger');
+					}
+					console.log(response);
+				},
+				error: function(response) {
+					current_line.append('<td>' + response + '</td>').addClass('alert-danger');
+					console.log(response);
+				},
 
-				});
-			}, 2000);
+			});
 		});
 	});
 </script>
