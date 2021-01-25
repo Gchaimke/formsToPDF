@@ -11,7 +11,7 @@
 	</div>
 
 	<center>
-		<div class="container col-lg-12">
+		<div class="container col-lg-6">
 			<div id="files_column" class="form-group row">
 				<div class="col-sm-12">
 					<input id="xlsxupload" style="display:none;" type="file" name="files" data-url="/tickets/upload_xlsx/" />
@@ -30,15 +30,15 @@
 				echo $message_display . '</div>';
 			}
 
-			echo '<table ><tbody>';
+			echo '<table class="table"><thead class="thead-dark">';
 			$i = 0;
 			if (isset($xlsx)) {
 				$columns = array('מספר לקוח', 'שם לקוח', 'כתובת לקוח', '	משימה למחסן');
-				echo "<tr>";
+				echo "<tr id='table_header'>";
 				foreach ($columns as $column) {
 					echo "<th>$column</th>";
 				}
-				echo "</tr>";
+				echo "</tr></thead><tbody>";
 				foreach ($xlsx->rows() as $elt) {
 					if ($i != 0) {
 						echo "<form class='tickets'><tr>";
@@ -53,7 +53,7 @@
 				echo "</tbody></table>";
 			}
 			?>
-			<div class="form-group col-md-4 mt-3">
+			<div class="form-group col-md-6 mt-3">
 				<div class="input-group">
 					<div class="input-group-prepend">
 						<div class="input-group-text">הוסף לחברת</div>
@@ -102,6 +102,7 @@
 	}
 
 	$("#add_btn").on('click', function() {
+		$('#table_header').append('<th>סטטוס</th>');
 		$(".tickets").each(function() {
 			var current_line = $(this).next();
 			var data_array = $(this).serializeArray();
