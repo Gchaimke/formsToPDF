@@ -56,6 +56,7 @@ class Production extends CI_Controller
         $this->form_validation->set_rules('client_name', 'client_name', 'trim|xss_clean');
         $this->form_validation->set_rules('issue_kind', 'issue_kind', 'trim|xss_clean');
         $this->form_validation->set_rules('place', 'place', 'trim|xss_clean');
+        $this->form_validation->set_rules('city', 'city', 'trim|xss_clean');
         $this->form_validation->set_rules('start_time', 'start_time', 'trim|xss_clean');
         $this->form_validation->set_rules('end_time', 'end_time', 'trim|xss_clean');
         $this->form_validation->set_rules('manager', 'manager', 'trim|xss_clean');
@@ -83,6 +84,7 @@ class Production extends CI_Controller
                 'client_name' => $this->input->post('client_name'),
                 'issue_kind' => $this->input->post('issue_kind'),
                 'place' => $this->input->post('place'),
+                'city' => $this->input->post('city'),
                 'start_time' => $this->input->post('start_time'),
                 'end_time' => $this->input->post('end_time'),
                 'manager' => $this->input->post('manager'),
@@ -155,6 +157,7 @@ class Production extends CI_Controller
         $this->form_validation->set_rules('client_name', 'client_name', 'trim|xss_clean');
         $this->form_validation->set_rules('issue_kind', 'issue_kind', 'trim|xss_clean');
         $this->form_validation->set_rules('place', 'place', 'trim|xss_clean');
+        $this->form_validation->set_rules('city', 'city', 'trim|xss_clean');
         $this->form_validation->set_rules('start_time', 'start_time', 'trim|xss_clean');
         $this->form_validation->set_rules('end_time', 'end_time', 'trim|xss_clean');
         $this->form_validation->set_rules('manager', 'manager', 'trim|xss_clean');
@@ -183,6 +186,7 @@ class Production extends CI_Controller
                 'client_name' => $this->input->post('client_name'),
                 'issue_kind' => $this->input->post('issue_kind'),
                 'place' => $this->input->post('place'),
+                'city' => $this->input->post('city'),
                 'start_time' => $this->input->post('start_time'),
                 'end_time' => $this->input->post('end_time'),
                 'manager' => $this->input->post('manager'),

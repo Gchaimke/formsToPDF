@@ -64,7 +64,8 @@ if (isset($this->session->userdata['logged_in'])) {
 								echo '<td class="align-middle"><a href="/production/new_form?company_id=' . $ticket['company_id'] .
 									'&client_num=' . $ticket['client_num'] .
 									'&client_name=' . urlencode($ticket['client_name']) .
-									'&address=' . urlencode($ticket['address']) . '" class="btn btn-info"><i class="fa fa-edit"></i></a></td>';
+									'&address=' . urlencode($ticket['address']) . 
+									'&city=' . urlencode($ticket['city']) . '" class="btn btn-info"><i class="fa fa-edit"></i></a></td>';
 							} else if ($ticket['status'] == "working") {
 								echo '<td class="align-middle"><span class="badge badge-warning p-2">' . $ticket['status'] . '</span ></td>';
 								echo '<td class="align-middle"><span class="btn btn-success done-ticket"><i class="fa fa-check"></i></span></td>';

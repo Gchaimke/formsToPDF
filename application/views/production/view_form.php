@@ -167,7 +167,7 @@ if (isset($this->session->userdata['logged_in'])) {
                         </div>
 
                         <div class="form-row">
-                              <div id="client_name_column" class="form-group col-md-6">
+                              <div id="client_name_column" class="form-group col-md-4">
                                     <div class="input-group mb-2">
                                           <div class="input-group-prepend">
                                                 <div class="input-group-text">שם לקוח</div>
@@ -175,14 +175,22 @@ if (isset($this->session->userdata['logged_in'])) {
                                           <input type='text' class="form-control" name='client_name' value="<?php echo htmlspecialchars($form_data['client_name']) ?>">
                                     </div>
                               </div>
-                              <div id="place_column" class="form-group col-md-6">
+                              <div id="place_column" class="form-group col-md-4">
                                     <div class="input-group mb-2">
                                           <div class="input-group-prepend">
-                                                <div class="input-group-text">מיקום</div>
+                                                <div class="input-group-text">כתובת</div>
                                           </div>
                                           <input type='text' class="form-control" name='place' value="<?php echo htmlspecialchars($form_data['place']) ?>">
                                     </div>
                               </div>
+                              <div id="city_column" class="form-group col-md-4">
+                              <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                          <div class="input-group-text">עיר</div>
+                                    </div>
+                                    <input type='text' class="form-control" name='city' value="<?php echo htmlspecialchars($form_data['city']) ?>">
+                              </div>
+                        </div>
                         </div>
 
                         <div class="form-row">
