@@ -7,7 +7,7 @@ if (isset($this->session->userdata['logged_in']) && $this->session->userdata['lo
 }
 ?>
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark main-menu rtl">
-  <a class="navbar-brand btn btn-sm btn-outline-primary" href="/">דוחות v1.9</a>
+  <a class="navbar-brand btn btn-sm btn-outline-primary" href="/">דוחות v2.0</a>
   <span class="navbar-text mx-2"><?php echo $_SERVER['SERVER_NAME']; ?></span>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarDefault" aria-controls="navbarDefault" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
