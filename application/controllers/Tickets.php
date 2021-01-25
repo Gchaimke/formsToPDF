@@ -25,6 +25,7 @@ class Tickets extends CI_Controller
         }
 
         $data['users'] =  $this->Users_model->getusers();
+        $data['companies'] =  $this->Companies_model->getCompanies();
         $this->load->view('header');
         $this->load->view('main_menu');
         $this->load->view('tickets/manage', $data);

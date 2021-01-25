@@ -31,6 +31,7 @@ if (isset($this->session->userdata['logged_in'])) {
 					<th scope="col">שם לקוח</th>
 					<th scope="col">כתובת לקוח</th>
 					<th scope="col">משימה למחסן</th>
+					<th scope="col">חברה</th>
 					<th scope="col">סטטוס</th>
 					<th scope="col">יצרת דוח</th>
 					<?php if ($user_role == "Admin" || $user_role == "Manager") {
@@ -47,6 +48,14 @@ if (isset($this->session->userdata['logged_in'])) {
 							<td class="align-middle"><?= $ticket['client_name'] ?></td>
 							<td class="align-middle"><?= $ticket['address'] ?></td>
 							<td class="align-middle"><?= $ticket['warehouse_num'] ?></td>
+							<td class="align-middle"><?php
+														if (isset($companies)) {
+															foreach ($companies as $company) {
+																if ($company['id'] == $ticket['company_id']) {
+																	echo $company['name'];
+																}
+															}
+														} ?></td>
 
 							<?php if ($ticket['status'] == "new") {
 								echo '<td class="align-middle"><span class="badge badge-primary p-2">' . $ticket['status'] . '</span ></td>';
