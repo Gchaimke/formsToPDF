@@ -216,8 +216,8 @@ config system ha
     set override disable
 end
 config system dns
-    set primary 208.91.112.53
-    set secondary 208.91.112.52
+    set primary 192.168.181.97
+    set secondary 192.168.83.17
 end
 config system replacemsg-image
     edit "logo_fnet"
