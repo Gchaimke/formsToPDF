@@ -148,6 +148,7 @@ class Companies extends CI_Controller
             "issue_kind_column":"1",
             "client_name_column":"1",
             "place_column":"1",
+            "city_column":"1",
             "manager_column":"1",
             "contact_name_column":"1",
             "activity_text_column":"1",
