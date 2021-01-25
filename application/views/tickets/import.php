@@ -33,7 +33,7 @@
 			echo '<table class="table"><thead class="thead-dark">';
 			$i = 0;
 			if (isset($xlsx)) {
-				$columns = array('מספר לקוח', 'שם לקוח', 'כתובת לקוח', '	משימה למחסן');
+				$columns = array('מספר לקוח', 'שם לקוח', 'כתובת לקוח','עיר', 'משימה למחסן');
 				echo "<tr id='table_header'>";
 				foreach ($columns as $column) {
 					echo "<th>$column</th>";
@@ -45,7 +45,8 @@
 						echo "<td><input type='hidden' name='client_num' value='{$elt[0]}'>{$elt[0]}</td>
 								<td><input type='hidden' name='client_name' value='{$elt[1]}'>{$elt[1]}</td>
 								<td><input type='hidden' name='address' value='{$elt[2]}'>{$elt[2]}</td>
-								<td><input type='hidden' name='warehouse_num' value='{$elt[3]}'>{$elt[3]}</td>";
+								<td><input type='hidden' name='city' value='{$elt[3]}'>{$elt[3]}</td>
+								<td><input type='hidden' name='warehouse_num' value='{$elt[4]}'>{$elt[4]}</td>";
 						echo "</tr></form>";
 					}
 					$i++;
