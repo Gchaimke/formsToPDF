@@ -64,7 +64,7 @@ if (isset($this->session->userdata['logged_in'])) {
 
 							if ($user_role == "Admin" || $user_role == "Manager") {
 								echo "<td class='align-middle'>";
-								echo '<select class="user_selection form-control" name="user"><option></option>';
+								echo '<select class="user_selection form-control" name="user"><option value="-1"></option>';
 								foreach ($users as $user) {
 									if ($user['id'] ==  $ticket['creator_id']) {
 										echo '<option value="' . htmlspecialchars($user['id']) . '" selected>' . htmlspecialchars($user['name']) . '</option>';
@@ -97,22 +97,19 @@ if (isset($this->session->userdata['logged_in'])) {
 		}
 	}
 	$('.user_selection').on('change', function() {
-		if ($(this).val() != "") {
-			var user_id = $(this).val();
-			var ticket_id = $(this).closest('tr').attr('id');
-			$.post('/tickets/update/' + ticket_id, {
-				user_id: user_id
-			}).done(function(response) {
-				$('#form-messages').addClass('alert-success');
-				$('#form-messages').text(response).fadeIn(1000).delay(3000).fadeOut(1000); //show message
-				console.log(response);
-			}).fail(function(response) {
-				$('#form-messages').addClass('alert-danger');
-				$('#form-messages').text('אין אפשרות לשמור שינוים' + response).fadeIn(1000).delay(3000).fadeOut(5000);
-				console.log(response);
-			});
-		}
-
+		var user_id = $(this).val();
+		var ticket_id = $(this).closest('tr').attr('id');
+		$.post('/tickets/update/' + ticket_id, {
+			user_id: user_id
+		}).done(function(response) {
+			$('#form-messages').addClass('alert-success');
+			$('#form-messages').text(response).fadeIn(1000).delay(3000).fadeOut(1000); //show message
+			console.log(response);
+		}).fail(function(response) {
+			$('#form-messages').addClass('alert-danger');
+			$('#form-messages').text('אין אפשרות לשמור שינוים' + response).fadeIn(1000).delay(3000).fadeOut(5000);
+			console.log(response);
+		});
 	});
 	$('.done-ticket').on('click', function() {
 		var ticket_id = $(this).closest('tr').attr('id');
