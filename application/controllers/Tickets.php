@@ -83,24 +83,29 @@ class Tickets extends CI_Controller
 
     public function import($company_num = "")
     {
-        $this->form_validation->set_rules('client_num', 'client_num', 'trim|xss_clean');
-        $this->form_validation->set_rules('client_name', 'client_name', 'trim|xss_clean');
-        $this->form_validation->set_rules('address', 'address', 'trim|xss_clean');
-        $this->form_validation->set_rules('warehouse_num', 'warehouse_num', 'trim|xss_clean');
-        if ($company_num != "") {
-            $data = array(
-                'client_num' =>  $this->input->post('client_num'),
-                'client_name' =>  $this->input->post('client_name'),
-                'address' =>  $this->input->post('address'),
-                'warehouse_num' =>  $this->input->post('warehouse_num'),
-                'company_id' => $company_num,
-                'status' =>  'new'
-            );
-            if ($this->Tickets_model->add($data)) {
-                echo 'success';
-            } else {
-                echo 'error';
+        $this->form_validation->set_rules('items_array', 'items_array', 'trim|xss_clean');
+        $items = array();
+        $tmp_s = '';
+        $tmp_f = '';
+        if (isset($_POST['items_array']) && $company_num != "") {
+            foreach ($_POST['items_array'] as $line) {
+                $sql_data = array();
+                foreach ($line as $column) {
+                    $sql_data += array($column['name'] => $column['value']);
+                }
+                $sql_data += array(
+                    'company_id' => $company_num,
+                    'status' =>  'new'
+                );
+                if ($this->Tickets_model->add($sql_data)) {
+                    $tmp_s .= $sql_data['client_num'].',';
+                } else {
+                    $tmp_f .= $sql_data['client_num'].',';
+                }
             }
+            $items['success'] = explode(',', $tmp_s);
+            $items['fail'] = explode(',', $tmp_f);
+            print_r(json_encode($items));
         }
     }
 

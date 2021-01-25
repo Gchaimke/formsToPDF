@@ -41,7 +41,7 @@
 				echo "</tr></thead><tbody>";
 				foreach ($xlsx->rows() as $elt) {
 					if ($i != 0) {
-						echo "<form class='tickets'><tr>";
+						echo "<form class='tickets'><tr id='$elt[0]' class='column'>";
 						echo "<td><input type='hidden' name='client_num' value='{$elt[0]}'>{$elt[0]}</td>
 								<td><input type='hidden' name='client_name' value='{$elt[1]}'>{$elt[1]}</td>
 								<td><input type='hidden' name='address' value='{$elt[2]}'>{$elt[2]}</td>
@@ -103,30 +103,30 @@
 
 	$("#add_btn").on('click', function() {
 		$('#table_header').append('<th>סטטוס</th>');
+		var post_array = [];
 		$(".tickets").each(function() {
-			var current_line = $(this).next();
-			var data_array = $(this).serializeArray();
-			setTimeout(function() {
-				$.ajax({
-					type: 'POST',
-					async: false,
-					url: '/tickets/import/' + $("#company").val(),
-					data: data_array,
-					success: function(response) {
-						if (response == 'success') {
-							current_line.append('<td>הוסף</td>').addClass('alert-success');
-						} else {
-							current_line.append('<td>קיים</td>').addClass('alert-danger');
-						}
-						console.log(response);
-					},
-					error: function(response) {
-						current_line.append('<td>' + response + '</td>').addClass('alert-danger');
-						console.log(response);
-					},
-
-				});
-			}, 1000);
+			var line_array = $(this).serializeArray();
+			post_array.push(line_array);
 		});
+		//console.log(post_array);
+		post_items(post_array);
+
 	});
+
+	function post_items(post_array) {
+		$.post('/tickets/import/' + $("#company").val(), {
+			items_array: post_array
+		}).done(function(response) {
+			var ajax_data = JSON.parse(response);
+			$("tr.column").each(function() {
+				if ($(this).attr('id') != '' && ajax_data.success.includes($(this).attr('id'))) {
+					$(this).append('<td>הוסף</td>').addClass('alert-success');
+				} else {
+					$(this).append('<td>קיים</td>').addClass('alert-danger');
+				}
+			});
+		}).fail(function(response) {
+			$(this).append('<td>ERROR</td>').addClass('alert-danger');
+		});
+	}
 </script>
