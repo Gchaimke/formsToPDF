@@ -49,12 +49,12 @@ if (isset($this->session->userdata['logged_in'])) {
 
 						}
 						?>
-							<td class="align-middle" style="width: 100px;"><?= $ticket['client_num'] ?></td>
+							<td class="align-middle" style="width: 100px;"><a href=""><?= $ticket['client_num'] ?></a></td>
 							<td class="align-middle mobile-hide"><?= $ticket['client_name'] ?></td>
 							<td class="align-middle mobile-hide"><?= $ticket['address'] ?></td>
-							<td class="align-middle" style="width: 100px;"><?= $ticket['city'] ?></td>
+							<td class="align-middle" ><?= $ticket['city'] ?></td>
 							<td class="align-middle mobile-hide"><?= $ticket['warehouse_num'] ?></td>
-							<td class="align-middle"><?php
+							<td class="align-middle" style="width: 150px;"><?php
 														if (isset($companies)) {
 															foreach ($companies as $company) {
 																if ($company['id'] == $ticket['company_id']) {

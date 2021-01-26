@@ -260,7 +260,8 @@ class Production extends CI_Controller
         $start_index = ($this->uri->segment($segment)) ? $this->uri->segment($segment) : 0;
         $total_records = $this->Production_model->get_total($params['creator'], $params['company'], $params['year'], $params['month'], $params['date']);
         if ($total_records > 0) {
-            $params["results"] = $this->Production_model->get_current_forms_records($limit_per_page, $start_index, $params['creator'], $params['company'], $params['year'], $params['month'], $params['date']);
+            $results = $this->Production_model->get_current_forms_records($limit_per_page, $start_index, $params['creator'], $params['company'], $params['year'], $params['month'], $params['date']);
+            $params["html_table"] = $this->build_forms_table($results);
             $this->pagination->initialize($this->pagination_config($total_records, $limit_per_page, $url, $segment));
             $params["links"] = $this->pagination->create_links();
         }
@@ -270,6 +271,64 @@ class Production extends CI_Controller
         $this->load->view('main_menu', $params);
         $this->load->view('production/manage_forms', $params);
         $this->load->view('footer');
+    }
+
+    function build_forms_table($results)
+    {
+        $user_role = $this->session->userdata['logged_in']['role'];
+        $user_id = $this->session->userdata['logged_in']['id'];
+        $users = $this->Users_model->getUsers();
+        $html_table =  '<table class="table"><thead class="thead-dark"><tr>
+						<th scope="col">תאריך</th>
+						<th scope="col">יוצר</th>
+						<th scope="col" class="mobile-hide">מספר לקוח</th>
+						<th scope="col" class="mobile-hide">שם הלקוח</th>
+						<th scope="col" class="mobile-hide">מיקום</th>
+						<th scope="col" class="mobile-hide">סוג תקלה</th>
+						<th scope="col" class="mobile-hide">חברה נותנת שירות</th>';
+        if ($user_role == "Admin") {
+            $html_table .= '<th scope="col" class="mobile-hide">מחיר</th>';
+        }
+        $html_table .= '<th scope="col">ערוך </th>';
+        if ($user_role == "Admin") {
+            $html_table .= '<th scope="col">מחק</th>';
+        }
+        $html_table .= '</tr></thead><tbody>';
+
+        foreach ($results as $data) {
+            if ($user_role != 'Admin' && $user_role != 'Manager') {
+                if ($data->creator_id != $user_id) {
+                    continue;
+                }
+            }
+            $html_table .= "<tr id='$data->id'>
+							<td class='align-middle'>";
+            $html_table .= date("d-m-Y", strtotime($data->date));
+            if ($data->attachments != '') {
+                $html_table .= '<i class="mr-1 fa fa-paperclip" aria-hidden="true"></i> ';
+            }
+            $html_table .= '</td>';
+            foreach ($users as $user) {
+                if ($user['id'] == $data->creator_id) {
+                    $html_table .= '<td class="align-middle">' . $user['view_name'] . '</td>';
+                }
+            }
+            $html_table .= '<td class="mobile-hide align-middle">' . $data->client_num . '</td>
+							<td class="mobile-hide align-middle">' . $data->client_name . '</td>
+							<td class="mobile-hide align-middle">' . $data->place . '</td>
+							<td class="mobile-hide align-middle">' . $data->issue_kind . '</td>
+							<td class="mobile-hide align-middle">' . $data->company . '</td>';
+            if ($user_role == "Admin") {
+                $html_table .= '<td class="mobile-hide align-middle">' . $data->price . '</td>';
+            }
+            $html_table .= "<td><a href='/production/view_form/$data->id' class='btn btn-outline-info'><i class='fa fa-edit'></i></a></td>";
+            if ($user_role == "Admin") {
+                $html_table .= "<td><button id='" . $data->id . "' class='btn btn-outline-danger' onclick='deleteForm(this.id)'><i class='fa fa-trash'></i></button></td>";
+            }
+            $html_table .= '</tr>';
+        }
+        $html_table .= '</tbody></table>';
+        return $html_table;
     }
 
     function pagination_config($total_records, $limit_per_page, $url, $segment)
@@ -296,21 +355,33 @@ class Production extends CI_Controller
         return $config;
     }
 
-    public function form_search()
+    public function form_search($search = '')
     {
         $role = $this->session->userdata['logged_in']['role'];
+        $user_id = $this->session->userdata['logged_in']['id'];
         $this->form_validation->set_rules('search', 'Search', 'trim|xss_clean');
-        $data = $this->Production_model->searchForm($this->input->post('search'));
+        if ($this->input->post('search') != '') {
+            $search = $this->input->post('search');
+        }
+        $data = $this->Production_model->searchForm($search);
         $str = '';
         $count = 0;
+        $this->load->view('header');
+        $this->load->view('main_menu');
+
+        echo '<div class="jumbotron">
+		<div class="container">
+			<center><h5></h5></center>
+		</div></div>';
         foreach ($data as $form) {
-            if ($role != 'Admin' && $form['creator_id'] != $this->session->userdata['logged_in']['id'])
+            if ($role != 'Admin' && $form['creator_id'] != $user_id)
                 continue;
-            $str .= "<a class='badge badge-info' href='/production/view_form/" . $form["id"] .
-                "?issue=" . $form["issue_num"] . "'>" . urldecode($form["client_name"]) . ": " . date("d-m-Y", strtotime($form["date"])) . "</a>";
+            $str .= "<div class='container'><center><a class='badge badge-info' href='/production/view_form/" . $form["id"] .
+                "'>" . urldecode($form["client_name"]) . ": " . date("d-m-Y", strtotime($form["date"])) . "</a>";
             $count++;
         }
-        echo "<h2>מצאתי " . $count . " דוחות.</h2>" . $str;
+        echo "<h2>מצאתי " . $count . " דוחות.</h2></center></div>" . $str;
+        $this->load->view('footer');
     }
 
     public function delete_form()
@@ -501,7 +572,7 @@ class Production extends CI_Controller
         $data = array();
         $this->load->view('header');
         $this->load->view('main_menu');
-        $data['company_id']=$company_id;
+        $data['company_id'] = $company_id;
         if (!file_exists('Uploads/tEditor/' . $company_id . '/template.txt')) {
             $data['no_template'] = true;
         }
