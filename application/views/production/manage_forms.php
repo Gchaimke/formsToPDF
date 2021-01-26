@@ -28,7 +28,7 @@ $is_hiden = $hide_filter?'hidden':'';
 			echo $message_display . '</div>';
 		}
 		?>
-		<nav aria-label="Checklist navigation">
+		<nav aria-label="Checklist navigation" class="<?=$is_hiden?>">
 			<?php if (isset($links)) {
 				echo $links;
 			} ?>
