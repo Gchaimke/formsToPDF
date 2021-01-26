@@ -139,7 +139,11 @@ if (isset($this->session->userdata['logged_in'])) {
 									echo '<td class="align-middle"></td>';
 								}
 							} else {
-								echo '<td class="align-middle"><span class="revert badge badge-success p-2">' . $ticket['status'] . '</span ></td>';
+								if ($user_role == "Admin" || $user_role == "Manager") {
+									echo '<td class="align-middle"><span class="revert badge badge-success p-2">' . $ticket['status'] . '</span ></td>';
+								} else {
+									echo '<td class="align-middle"><span class="badge badge-success p-2">' . $ticket['status'] . '</span ></td>';
+								}
 								echo '<td class="align-middle"></td>';
 							}
 
