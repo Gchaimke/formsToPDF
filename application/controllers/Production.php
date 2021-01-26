@@ -256,15 +256,28 @@ class Production extends CI_Controller
         $params['month'] = isset($_GET['month']) ? $_GET['month'] : '';
         $params['date'] = isset($_GET['date']) ? $_GET['date'] : '';
         $params["hide_filter"] = false;
-        $limit_per_page = 40;
+        $user_role = $this->session->userdata['logged_in']['role'];
+        $user_id = $this->session->userdata['logged_in']['id'];
+        $limit_per_page = 5;
         $segment = 3;
         $start_index = ($this->uri->segment($segment)) ? $this->uri->segment($segment) : 0;
-        $total_records = $this->Production_model->get_total($params['creator'], $params['company'], $params['year'], $params['month'], $params['date']);
+        if ($user_role == 'Admin' || $user_role == 'Manager') {
+            $total_records = $this->Production_model->get_total($params['creator'], $params['company'], $params['year'], $params['month'], $params['date']);
+        } else {
+            $total_records = $this->Production_model->get_total($user_id, $params['company'], $params['year'], $params['month'], $params['date']);
+        }
         if ($total_records > 0) {
-            $results = $this->Production_model->get_current_forms_records($limit_per_page, $start_index, $params['creator'], $params['company'], $params['year'], $params['month'], $params['date']);
-            $params["html_table"] = $this->build_forms_table($results);
-            $this->pagination->initialize($this->pagination_config($total_records, $limit_per_page, $url, $segment));
-            $params["links"] = $this->pagination->create_links();
+            if ($user_role == 'Admin' || $user_role == 'Manager') {
+                $results = $this->Production_model->get_current_forms_records($limit_per_page, $start_index,$params['creator'] , $params['company'], $params['year'], $params['month'], $params['date']);
+                $params["html_table"] = $this->build_forms_table($results);
+                $this->pagination->initialize($this->pagination_config($total_records, $limit_per_page, $url, $segment));
+                $params["links"] = $this->pagination->create_links();
+            } else {
+                $results = $this->Production_model->get_current_forms_records($limit_per_page, $start_index, $user_id, $params['company'], $params['year'], $params['month'], $params['date']);
+                $params["html_table"] = $this->build_forms_table($results);
+                $this->pagination->initialize($this->pagination_config($total_records, $limit_per_page, $url, $segment));
+                $params["links"] = $this->pagination->create_links();
+            }
         }
         $params['users'] = $this->Users_model->getUsers();
         $params['companies'] = $this->Companies_model->getCompanies();
@@ -328,7 +341,7 @@ class Production extends CI_Controller
                 }
                 $html_table .= '</tr>';
             }
-        }else{
+        } else {
             $html_table .= 'אין תוצאות';
         }
         $html_table .= '</tbody></table>';

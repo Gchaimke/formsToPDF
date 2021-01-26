@@ -294,7 +294,6 @@ class Production_model extends CI_Model
 		$this->db->order_by('date', 'DESC');
 		$this->db->order_by('start_time', 'DESC');
 		$query = $this->db->get("forms");
-
 		if ($query->num_rows() > 0) {
 			foreach ($query->result() as $row) {
 				$data[] = $row;
