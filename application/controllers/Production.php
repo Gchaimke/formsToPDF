@@ -245,7 +245,7 @@ class Production extends CI_Controller
         return $hide_filds;
     }
 
-    public function manage_forms()
+    public function manage_forms($html_table ='')
     {
         $this->load->library('pagination');
         $url = 'production/manage_forms/';
@@ -255,13 +255,20 @@ class Production extends CI_Controller
         $params['year'] = isset($_GET['year']) ? $_GET['year'] : '';
         $params['month'] = isset($_GET['month']) ? $_GET['month'] : '';
         $params['date'] = isset($_GET['date']) ? $_GET['date'] : '';
+        $params["hide_filter"] = false;
         $limit_per_page = 40;
         $segment = 3;
         $start_index = ($this->uri->segment($segment)) ? $this->uri->segment($segment) : 0;
         $total_records = $this->Production_model->get_total($params['creator'], $params['company'], $params['year'], $params['month'], $params['date']);
         if ($total_records > 0) {
             $results = $this->Production_model->get_current_forms_records($limit_per_page, $start_index, $params['creator'], $params['company'], $params['year'], $params['month'], $params['date']);
-            $params["html_table"] = $this->build_forms_table($results);
+            if($html_table==''){
+                $params["html_table"] = $this->build_forms_table($results);
+            }else{
+                $params["html_table"] = $html_table;
+                $params["hide_filter"] = true;
+            }
+            
             $this->pagination->initialize($this->pagination_config($total_records, $limit_per_page, $url, $segment));
             $params["links"] = $this->pagination->create_links();
         }
@@ -278,7 +285,7 @@ class Production extends CI_Controller
         $user_role = $this->session->userdata['logged_in']['role'];
         $user_id = $this->session->userdata['logged_in']['id'];
         $users = $this->Users_model->getUsers();
-        $html_table =  '<table class="table"><thead class="thead-dark"><tr>
+        $html_table =  '<table class="table mb-4"><thead class="thead-dark"><tr>
 						<th scope="col">תאריך</th>
 						<th scope="col">יוצר</th>
 						<th scope="col" class="mobile-hide">מספר לקוח</th>
@@ -357,31 +364,14 @@ class Production extends CI_Controller
 
     public function form_search($search = '')
     {
-        $role = $this->session->userdata['logged_in']['role'];
-        $user_id = $this->session->userdata['logged_in']['id'];
-        $this->form_validation->set_rules('search', 'Search', 'trim|xss_clean');
-        if ($this->input->post('search') != '') {
-            $search = $this->input->post('search');
+        $results = $this->Production_model->searchForm($search);
+        $html_table ='';
+        if ($results) {
+            $html_table =  $this->build_forms_table($results);
+            $this->manage_forms($html_table);
+        } else {
+            $this->manage_forms('אין תוצאות חיפוש');
         }
-        $data = $this->Production_model->searchForm($search);
-        $str = '';
-        $count = 0;
-        $this->load->view('header');
-        $this->load->view('main_menu');
-
-        echo '<div class="jumbotron">
-		<div class="container">
-			<center><h5></h5></center>
-		</div></div>';
-        foreach ($data as $form) {
-            if ($role != 'Admin' && $form['creator_id'] != $user_id)
-                continue;
-            $str .= "<div class='container'><center><a class='badge badge-info' href='/production/view_form/" . $form["id"] .
-                "'>" . urldecode($form["client_name"]) . ": " . date("d-m-Y", strtotime($form["date"])) . "</a>";
-            $count++;
-        }
-        echo "<h2>מצאתי " . $count . " דוחות.</h2></center></div>" . $str;
-        $this->load->view('footer');
     }
 
     public function delete_form()

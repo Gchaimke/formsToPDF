@@ -10,6 +10,7 @@ $company_name = isset($company) ? $company : '';
 $date = isset($date) ? $date : '';
 $month = substr($date, 5, 2);
 $year = substr($date, 0, 4);
+$is_hiden = $hide_filter?'hidden':'';
 ?>
 <main role="main">
 	<div class="jumbotron">
@@ -41,7 +42,7 @@ $year = substr($date, 0, 4);
 			</div>
 			<div id='searchResult' class='rtl text-center'></div>
 		</form>
-		<div class="form-row">
+		<div class="form-row <?=$is_hiden?>">
 			<div class="form-group ml-2">
 				<div class="input-group">
 					<div class="input-group-prepend">
@@ -177,22 +178,7 @@ $year = substr($date, 0, 4);
 
 	function formSearch() {
 		var search = document.getElementById("inputSearch").value;
-		if (search.length >= 3) {
-			$.post("/production/form_search", {
-				search: search
-			}).done(function(e) {
-				if (e.length > 0) {
-					$('#searchResult').empty();
-					$('#searchResult').append(e);
-				} else {
-					$('#searchResult').empty();
-					$('#searchResult').append("<h2>Form: " + search + " not found!</h2>");
-				}
-			});
-		} else {
-			$('#searchResult').empty();
-			$('#searchResult').append("<h2>Search must be munimum 3 simbols</h2>")
-		}
+		location = "/production/form_search/"+search;
 	}
 
 	document.onkeydown = function(e) {

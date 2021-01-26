@@ -174,9 +174,16 @@ class Production_model extends CI_Model
 				$this->db->from('forms');
 				$this->db->order_by('date', 'DESC');
 				$this->db->order_by('start_time', 'DESC');
-				$q = $this->db->get();
-				$response = $q->result_array();
-				return $response;
+				$query = $this->db->get();
+				//$response = $query->result_array();
+
+				if ($query->num_rows() > 0) {
+					foreach ($query->result() as $row) {
+						$data[] = $row;
+					}
+					return $data;
+				}
+				return false;
 			}
 		}
 	}
@@ -229,7 +236,6 @@ class Production_model extends CI_Model
 			$this->db->order_by('start_time', 'DESC');
 			$q = $this->db->get();
 			$response = $q->result_array();
-
 			return $response;
 		}
 	}
