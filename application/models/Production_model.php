@@ -242,8 +242,13 @@ class Production_model extends CI_Model
 
 	public function get_total($creator_id = '', $company_name = '', $year = '', $month = '', $date = '')
 	{
-		if ($creator_id != '') {
-			$this->db->where("creator_id = $creator_id");
+		$user_role = $this->session->userdata['logged_in']['role'];
+		$user_id = $this->session->userdata['logged_in']['id'];
+		if ($user_role !='Admin') {
+			$this->db->where("creator_id = $user_id");
+		}
+		if($creator_id!=''){
+			$this->db->where("creator_id = $user_id");
 		}
 
 		if ($company_name != '') {

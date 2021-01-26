@@ -245,7 +245,7 @@ class Production extends CI_Controller
         return $hide_filds;
     }
 
-    public function manage_forms($html_table ='')
+    public function manage_forms()
     {
         $this->load->library('pagination');
         $url = 'production/manage_forms/';
@@ -262,13 +262,7 @@ class Production extends CI_Controller
         $total_records = $this->Production_model->get_total($params['creator'], $params['company'], $params['year'], $params['month'], $params['date']);
         if ($total_records > 0) {
             $results = $this->Production_model->get_current_forms_records($limit_per_page, $start_index, $params['creator'], $params['company'], $params['year'], $params['month'], $params['date']);
-            if($html_table==''){
-                $params["html_table"] = $this->build_forms_table($results);
-            }else{
-                $params["html_table"] = $html_table;
-                $params["hide_filter"] = true;
-            }
-            
+            $params["html_table"] = $this->build_forms_table($results);
             $this->pagination->initialize($this->pagination_config($total_records, $limit_per_page, $url, $segment));
             $params["links"] = $this->pagination->create_links();
         }
@@ -365,10 +359,14 @@ class Production extends CI_Controller
     public function form_search($search = '')
     {
         $results = $this->Production_model->searchForm($search);
-        $html_table ='';
+        $params =array();
         if ($results) {
-            $html_table =  $this->build_forms_table($results);
-            $this->manage_forms($html_table);
+            $params['html_table'] =  $this->build_forms_table($results);
+            $params['hide_filter']=true;
+            $this->load->view('header');
+            $this->load->view('main_menu', $params);
+            $this->load->view('production/manage_forms', $params);
+            $this->load->view('footer');
         } else {
             $this->manage_forms('אין תוצאות חיפוש');
         }

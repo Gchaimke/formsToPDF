@@ -96,7 +96,7 @@ if (isset($this->session->userdata['logged_in'])) {
 								echo '</select>';
 
 								echo "</td>";
-								echo '<td class="align-middle"><button id="' . $ticket['id'] . '" class="btn btn-danger" onclick="deleteClient(this.id)"><i class="fa fa-trash"></i></button></td>';
+								echo '<td class="align-middle"><button id="' . $ticket['id'] . '" class="btn btn-danger" onclick="deleteTicket(this.id)"><i class="fa fa-trash"></i></button></td>';
 							} ?>
 						</tr>
 				<?php }
@@ -106,7 +106,7 @@ if (isset($this->session->userdata['logged_in'])) {
 	</div>
 </main>
 <script>
-	function deleteClient(id) {
+	function deleteTicket(id) {
 		var r = confirm("Delete ticket with id: " + id + "?");
 		if (r == true) {
 			$.post("/tickets/delete", {
