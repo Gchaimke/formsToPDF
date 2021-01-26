@@ -103,7 +103,14 @@ if (isset($this->session->userdata['logged_in'])) {
 			</thead>
 			<tbody>
 				<?php if (isset($tickets)) {
-					foreach ($tickets as $ticket) { ?>
+					foreach ($tickets as $ticket) {
+						if (isset($companies)) {
+							foreach ($companies as $company) {
+								if ($company['id'] == $ticket['company_id']) {
+									$company_name =  $company['name'];
+								}
+							}
+						} ?>
 						<tr id="<?= $ticket['id'] ?>">
 							<?php if ($ticket['status'] != "new") : ?>
 								<td class="align-middle"><a href='/production/form_search/<?= $ticket['client_num'] ?>'><?= $ticket['client_num'] ?></a></td>
@@ -115,15 +122,7 @@ if (isset($this->session->userdata['logged_in'])) {
 							<td class="align-middle mobile-hide"><?= $ticket['address'] ?></td>
 							<td class="align-middle"><?= $ticket['city'] ?></td>
 							<td class="align-middle mobile-hide"><?= $ticket['warehouse_num'] ?></td>
-							<td class="align-middle"><?php
-														if (isset($companies)) {
-															foreach ($companies as $company) {
-																if ($company['id'] == $ticket['company_id']) {
-																	echo $company['name'];
-																}
-															}
-														} ?></td>
-
+							<td class="align-middle"><?=$company_name?></td>
 							<?php
 							if ($ticket['status'] == "new") {
 								echo '<td class="align-middle"><span class="badge badge-primary p-2">' . $ticket['status'] . '</span ></td>';
@@ -146,7 +145,6 @@ if (isset($this->session->userdata['logged_in'])) {
 								} else {
 									echo '<td class="align-middle"></td>';
 								}
-								
 							}
 
 							if ($user_role == "Admin" || $user_role == "Manager") {
