@@ -89,7 +89,7 @@ class Tickets_model extends CI_Model
 		// Select record
 		$this->db->select('*');
 		$this->db->from('tickets');
-		if($user_id!=''){
+		if ($user_id != '') {
 			$this->db->where("creator_id ='$user_id'");
 		}
 		$q = $this->db->get();
@@ -114,15 +114,15 @@ class Tickets_model extends CI_Model
 
 	public function update($data)
 	{
-		if(isset($data['id'])){
+		if (isset($data['id'])) {
 			$where = "id =" . $data['id'];
 			$this->db->update('tickets', $data, $where);
-		}
-		else if(isset($data['client_num'])){
+		} else if (isset($data['client_num']) && $data['status'] != 'done') {
 			$where = "client_num =" . $data['client_num'];
+			$where = "status != done";
 			$this->db->update('tickets', $data, $where);
 		}
-		
+
 		if ($this->db->affected_rows() > 0) {
 			return 'עודכנו בעצלחה';
 		}

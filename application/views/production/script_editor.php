@@ -27,7 +27,7 @@
             if ($this->session->userdata['logged_in']['role'] == "Admin") { ?>
                 <div id="files_column" class="form-group row">
                     <div class="col-sm-12">
-                        <input id="upload" style="display:none;" type="file" name="files" data-url="/production/upload_template/" />
+                        <input id="upload" style="display:none;" type="file" name="files" data-url="/production/upload_template/<?=$company_id?>" />
                         <input id="attachments" type="hidden" class="form-control ltr" name="attachments" value="" />
                         <div id='files'>
                         </div>

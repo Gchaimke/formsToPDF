@@ -496,28 +496,28 @@ class Production extends CI_Controller
         fclose($fp);
     }
 
-    public function create_script()
+    public function create_script($company_id = 1)
     {
         $data = array();
         $this->load->view('header');
         $this->load->view('main_menu');
-        $user_id = $this->session->userdata['logged_in']['id'];
-        if (!file_exists('Uploads/tEditor/' . $user_id . '/template.txt')) {
+        $data['company_id']=$company_id;
+        if (!file_exists('Uploads/tEditor/' . $company_id . '/template.txt')) {
             $data['no_template'] = true;
         }
         $this->load->view('production/script_editor', $data);
         $this->load->view('footer');
     }
 
-    public function upload_template($upload_folder = 'Uploads/tEditor')
+    public function upload_template($company_id = 1)
     {
-        $user_id = $this->session->userdata['logged_in']['id'];
-        if (!file_exists($upload_folder . '/' . $user_id)) {
-            mkdir($upload_folder . '/' . $user_id, 0770, true);
-            copy('application/index.html', $upload_folder . '/' . $user_id . 'index.html');
+        $upload_folder = 'Uploads/tEditor';
+        if (!file_exists($upload_folder . '/' . $company_id)) {
+            mkdir($upload_folder . '/' . $company_id, 0770, true);
+            copy('application/index.html', $upload_folder . '/' . $company_id . 'index.html');
         }
         $config = array(
-            'upload_path' => $upload_folder . '/' . $user_id,
+            'upload_path' => $upload_folder . '/' . $company_id,
             'file_name' => 'template',
             'overwrite' => TRUE,
             'allowed_types' => 'txt|conf',
