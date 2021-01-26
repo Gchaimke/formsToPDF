@@ -23,7 +23,7 @@ if (isset($this->session->userdata['logged_in'])) {
 		}
 		?>
 		<?php if ($user_role == "Admin" || $user_role == "Manager") {
-			echo '<a href="/tickets/uploader" class="btn btn-outline-info"><i class="fa fa-file-excel-o"> לעלות קובץ משימות </i></a>';
+			echo '<a href="/tickets/uploader" class="btn btn-outline-info"><i class="fa fa-file-excel-o"> להעלות קובץ משימות </i></a>';
 		} ?>
 		<div class="form-row">
 			<div class="form-group ml-2">
