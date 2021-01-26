@@ -255,12 +255,40 @@ if ($("#fileupload").length) {
                     $('#attachments').val(new_file);
                 } else {
                     $('#attachments').val($('#attachments').val() + "," + new_file);
-                    
+
                 }
             }
             $('#save_btn').click();
         }
-        
+
+    });
+}
+
+//Uploader for scripts and tickets
+if ($("#upload").length) {
+    $("#upload").fileupload({
+        autoUpload: true,
+        add: function (e, data) {
+            data.submit();
+        },
+        progress: function () {
+            $("#upload_spinner").css("display", "inherit");
+        },
+        done: function (e, data) {
+            if (data.result.includes("error")) {
+                if (data.result.includes("larger")) {
+                    alert("אין אפשרות להעלות קובץ גדול מ-2מגה!");
+                } else if (data.result.includes("filetype")) {
+                    alert("אין אפשרות להעלות קובץ מסוג הזה!");
+                } else {
+                    alert(data.result.replace(/<\/?[^>]+(>|$)/g, ""));
+                }
+                data.context.addClass("error");
+            } else {
+                location.reload();
+            }
+            $('#save_btn').click();
+        }
     });
 }
 
@@ -280,7 +308,7 @@ function delete_attachment(attachment) {
             $('#save_btn').click();
         });
     }
-    
+
 }
 
 function sleep(milliseconds) {

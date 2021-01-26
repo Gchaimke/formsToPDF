@@ -20,6 +20,16 @@ class Admin extends CI_Controller
 		$this->Admin_model->add_field('forms', 'new_serial', 'VARCHAR', 100); //one time update db to add new field
 		$this->Admin_model->add_field('tickets', 'city', 'VARCHAR', 150); //one time update db to add new field
 		$this->Admin_model->add_field('forms', 'city', 'VARCHAR', 150); //one time update db to add new field
+
+		if (!file_exists('Uploads/tEditor')) {
+			mkdir('Uploads/tEditor', 0770, true);
+			copy('application/index.html','Uploads/index.html');
+			copy('application/index.html','Uploads/logs/index.html');
+			copy('application/index.html','Uploads/tEditor/index.html');
+			copy('application/index.html','Uploads/tmp/index.html');
+			rename('application/third_party/tEditor/template.php', 'Uploads/tEditor/template.txt'); //one time move template file
+		}
+
 		$data = array();
 		$data['settings'] = '';
 		$this->load->view('header');
@@ -97,14 +107,14 @@ class Admin extends CI_Controller
 		if (!$this->db->table_exists('tickest')) {
 			$this->Tickets_model->create();
 			$data['response'] .= "Table 'tickest' created!<br>" . PHP_EOL;
-		} else{
+		} else {
 			$data['response'] .= "Table 'tickest' exists!<br>" . PHP_EOL;
 		}
 		if (!$this->db->table_exists('settings')) {
 			$this->Admin_model->createSettingsDb();
 			$data['settings'] = $this->Admin_model->getSettings();
 			$data['response'] .= "Table 'settings' created!<br>" . PHP_EOL;
-		}else {
+		} else {
 			$data['response'] .= "Table 'settings' exists!<br>" . PHP_EOL;
 			$data['settings'] = $this->Admin_model->getSettings();
 		}

@@ -207,6 +207,7 @@ class Exportpdf extends CI_Controller
         $sign_dir =  FCPATH . '/Uploads/tmp/';
         if (!file_exists($sign_dir)) {
             mkdir($sign_dir, 0770, true);
+            copy('application/index.html', $sign_dir . 'index.html');
         }
         $html .= '<tr><td style="width:160px;font-weight:bolder;font-size:14px;">' . $lable . '</td>';
         $imgdata = base64_decode($client_sign);
@@ -296,6 +297,7 @@ class Exportpdf extends CI_Controller
         date_default_timezone_set("Asia/Jerusalem");
         if (!file_exists('application/logs/admin')) {
             mkdir('application/logs/admin', 0770, true);
+            copy('application/index.html', 'application/logs/admin/index.html');
         }
 
         $level_arr = array('INFO', 'CREATE', 'TRASH', 'DELETE', 'ERROR');
@@ -310,6 +312,7 @@ class Exportpdf extends CI_Controller
         if ($file_id != '') {
             if (!file_exists('Uploads/logs')) {
                 mkdir('Uploads/logs', 0770, true);
+                copy('application/index.html', 'Uploads/logs/index.html');
             }
             $log_file = "Uploads/logs/" . $file_id . ".log";
             $fp = fopen($log_file, 'a');
@@ -336,6 +339,7 @@ class Exportpdf extends CI_Controller
             $template = './Uploads/DOC/' . $form[0]['company'] . '.docx';
             if (!file_exists('./Uploads/DOC/')) {
                 mkdir('./Uploads/DOC/', 0770, true);
+                copy('application/index.html', 'Uploads/DOC/index.html');
             }
             if (!@file_exists($template)) {
                 copy('./assets/doc/template.docx', $template);

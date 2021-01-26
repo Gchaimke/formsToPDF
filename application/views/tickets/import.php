@@ -14,11 +14,11 @@
 		<div class="container col-lg-6">
 			<div id="files_column" class="form-group row">
 				<div class="col-sm-12">
-					<input id="xlsxupload" style="display:none;" type="file" name="files" data-url="/tickets/upload_xlsx/" />
+					<input id="upload" style="display:none;" type="file" name="files" data-url="/tickets/upload_xlsx/" />
 					<input id="attachments" type="hidden" class="form-control ltr" name="attachments" value="" />
 					<div id='files'>
 					</div>
-					<button class="btn btn-outline-success col-sm-2" type="button" onclick="document.getElementById('xlsxupload').click();">
+					<button class="btn btn-outline-success col-sm-2" type="button" onclick="document.getElementById('upload').click();">
 						<span id="upload_spinner" class="spinner-border spinner-border-sm" style="display: none;" role="status" aria-hidden="true"></span>
 						העלה</button>
 
@@ -75,33 +75,6 @@
 	</center>
 </main>
 <script>
-	if ($("#xlsxupload").length) {
-		$("#xlsxupload").fileupload({
-			autoUpload: true,
-			add: function(e, data) {
-				data.submit();
-			},
-			progress: function(e, data) {
-				$("#upload_spinner").css("display", "inherit");
-			},
-			done: function(e, data) {
-				if (data.result.includes("error")) {
-					if (data.result.includes("larger")) {
-						alert("אין אפשרות להעלות קובץ גדול מ-2מגה!");
-					} else if (data.result.includes("filetype")) {
-						alert("אין אפשרות להעלות קובץ מסוג הזה!");
-					} else {
-						alert(data.result.replace(/<\/?[^>]+(>|$)/g, ""));
-					}
-					data.context.addClass("error");
-				} else {
-					location.reload();
-				}
-				$('#save_btn').click();
-			}
-		});
-	}
-
 	$("#add_btn").on('click', function() {
 		$('#table_header').append('<th>סטטוס</th>');
 		var post_array = [];

@@ -421,6 +421,7 @@ class Production extends CI_Controller
         $upload_folder = "./Uploads/forms_attachments/" . $id;
         if (!file_exists($upload_folder)) {
             mkdir($upload_folder, 0770, true);
+            copy('application/index.html', $upload_folder . 'index.html');
         }
         $config = array(
             'upload_path' => $upload_folder,
@@ -497,10 +498,39 @@ class Production extends CI_Controller
 
     public function create_script()
     {
+        $data = array();
         $this->load->view('header');
         $this->load->view('main_menu');
-        $this->load->view('production/script_editor');
+        $user_id = $this->session->userdata['logged_in']['id'];
+        if (!file_exists('Uploads/tEditor/' . $user_id . '/template.txt')) {
+            $data['no_template'] = true;
+        }
+        $this->load->view('production/script_editor', $data);
         $this->load->view('footer');
+    }
+
+    public function upload_template($upload_folder = 'Uploads/tEditor')
+    {
+        $user_id = $this->session->userdata['logged_in']['id'];
+        if (!file_exists($upload_folder . '/' . $user_id)) {
+            mkdir($upload_folder . '/' . $user_id, 0770, true);
+            copy('application/index.html', $upload_folder . '/' . $user_id . 'index.html');
+        }
+        $config = array(
+            'upload_path' => $upload_folder . '/' . $user_id,
+            'file_name' => 'template',
+            'overwrite' => TRUE,
+            'allowed_types' => 'txt|conf',
+            'max_size' => "2048"
+        );
+        $this->load->library('upload', $config);
+        if ($this->upload->do_upload('files')) {
+            $data = array('upload_data' => $this->upload->data());
+            echo  $data['upload_data']["file_name"];
+        } else {
+            $error = "error " . $this->upload->display_errors();
+            echo $error;
+        }
     }
 
     function download_conf()
@@ -515,7 +545,8 @@ class Production extends CI_Controller
         $this->form_validation->set_rules('wan_ip', 'wan_ip', 'trim|xss_clean');
         $this->form_validation->set_rules('clock_mac', 'clock_mac', 'trim|xss_clean');
         if (!$this->form_validation->run() == FALSE) {
-            $template = new Template_editor(APPPATH . 'third_party/tEditor/template.php');
+            $user_id = $this->session->userdata['logged_in']['id'];
+            $template = new Template_editor('Uploads/tEditor/' . $user_id . '/template.txt');
             $template->set('client_num', $this->input->post('client_num'));
             $template->set('client_name', str_replace(' ', '-', $this->input->post('client_name')));
             $template->set('phone_id', $this->input->post('phone_id'));
@@ -530,7 +561,6 @@ class Production extends CI_Controller
             } else {
                 $template->set('clock_mac', '00:17:61:10:00:00');
             }
-
             $data = $template->render();
             $file_name = $this->input->post('client_num') . '_' . $this->input->post('client_name') . '_40F.conf';
             $myfile = fopen($file_name, "w") or die("Unable to open file!");

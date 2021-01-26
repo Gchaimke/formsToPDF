@@ -131,6 +131,7 @@ class Companies extends CI_Controller
         }
         if (!file_exists(UPLOAD_DIR)) {
             mkdir(UPLOAD_DIR, 0770, true);
+            copy('application/index.html',UPLOAD_DIR.'index.html');
         }
         $file = UPLOAD_DIR . $file_name . ".$type";
         $success = file_put_contents($file, $img);

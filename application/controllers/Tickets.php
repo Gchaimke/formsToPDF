@@ -64,6 +64,7 @@ class Tickets extends CI_Controller
         $user_id = $this->session->userdata['logged_in']['id'];
         if (!file_exists($upload_folder . '/' . $user_id)) {
             mkdir($upload_folder . '/' . $user_id, 0770, true);
+            copy('application/index.html', $upload_folder . '/' . $user_id . 'index.html');
         }
         $config = array(
             'upload_path' => $upload_folder . '/' . $user_id,
