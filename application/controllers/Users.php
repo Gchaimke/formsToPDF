@@ -15,7 +15,7 @@ class Users extends CI_Controller
     public function index($msg = '')
     {
         $data = array();
-        $this->Admin_model->add_field('users','companies_list'); //one time update db to add new field
+        $this->Admin_model->add_field('users', 'companies_list'); //one time update db to add new field
         $role = $this->session->userdata['logged_in']['role'];
         $data['users'] = $this->Users_model->getUsers();
         $data['message_display'] = $msg;
@@ -114,14 +114,14 @@ class Users extends CI_Controller
                     'view_name' => $this->input->post('view_name'),
                     'role' => $this->input->post('role'),
                     'email' => $this->input->post('email'),
-                    'companies_list'=>$companies_list
+                    'companies_list' => $companies_list
                 );
             } else {
                 $sql = array(
                     'id' => $this->input->post('id'),
                     'view_name' => $this->input->post('view_name'),
                     'email' => $this->input->post('email'),
-                    'companies_list'=>$companies_list
+                    'companies_list' => $companies_list
                 );
             }
             if ($this->input->post('password') != '') {
@@ -136,10 +136,12 @@ class Users extends CI_Controller
         $data = array();
         $data['response'] = '';
         if (!$this->db->table_exists('users')) {
-            $this->Users_model->createUsersDb();
-            $this->Admin_model->createSettingsDb();
-            $this->Companies_model->createCompaniesDb();
-            $this->Production_model->createFormsDb();
+            $this->Users_model->create();
+            $this->Admin_model->create();
+            $this->Companies_model->create();
+            $this->Production_model->create();
+            $this->Contacts_model->create();
+            $this->Tickets_model->create();
             $data['response'] .= "New DB created!<br> username:Admin <br> Password:Admin.";
         }
         $this->load->view('users/login', $data);

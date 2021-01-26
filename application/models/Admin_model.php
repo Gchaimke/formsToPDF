@@ -2,7 +2,7 @@
 
 class Admin_model extends CI_Model
 {
-    function createSettingsDb()
+    function create()
     {
         $this->load->dbforge();
         $settings = array(

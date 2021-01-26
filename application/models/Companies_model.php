@@ -2,7 +2,7 @@
 
 class Companies_model extends CI_Model
 {
-    function createCompaniesDb()
+    function create()
     {
         $this->load->dbforge();
         $company = array(

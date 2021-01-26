@@ -81,19 +81,19 @@ class Admin extends CI_Controller
 		$data = array();
 		$data['response'] = '';
 		if (!$this->db->table_exists('users')) {
-			$this->Users_model->createUsersDb();
+			$this->Users_model->create();
 			$data['response'] .= "Table 'users' created!<br>" . PHP_EOL;
 		} else {
 			$data['response'] .= "Table 'users' exists!<br>" . PHP_EOL;
 		}
 		if (!$this->db->table_exists('companies')) {
-			$this->Companies_model->createCompaniesDb();
+			$this->Companies_model->create();
 			$data['response'] .= "Table 'companies' created!<br>" . PHP_EOL;
 		} else {
 			$data['response'] .= "Table 'companies' exists!<br>" . PHP_EOL;
 		}
 		if (!$this->db->table_exists('forms')) {
-			$this->Production_model->createFormsDb();
+			$this->Production_model->create();
 			$data['response'] .= "Table 'forms' created!<br>" . PHP_EOL;
 		} else {
 			$data['response'] .= "Table 'forms' exists!<br>" . PHP_EOL;
@@ -111,7 +111,7 @@ class Admin extends CI_Controller
 			$data['response'] .= "Table 'tickest' exists!<br>" . PHP_EOL;
 		}
 		if (!$this->db->table_exists('settings')) {
-			$this->Admin_model->createSettingsDb();
+			$this->Admin_model->create();
 			$data['settings'] = $this->Admin_model->getSettings();
 			$data['response'] .= "Table 'settings' created!<br>" . PHP_EOL;
 		} else {

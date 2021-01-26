@@ -3,7 +3,7 @@
 class Production_model extends CI_Model
 {
 
-	function createFormsDb()
+	function create()
 	{
 		$this->load->dbforge();
 		$form = array(
