@@ -27,6 +27,11 @@ class Tickets_model extends CI_Model
 				'constraint' => 200,
 				'null' => TRUE
 			),
+			'city' => array(
+				'type' => 'VARCHAR',
+				'constraint' => 200,
+				'null' => TRUE
+			),
 			'warehouse_num' => array(
 				'type' => 'VARCHAR',
 				'constraint' => 100,
@@ -83,7 +88,7 @@ class Tickets_model extends CI_Model
 		}
 	}
 
-	function get_all($user_id = '')
+	function get_all($user_id = '', $company_id = '', $city = '', $status = '')
 	{
 		$response = array();
 		// Select record
@@ -91,6 +96,17 @@ class Tickets_model extends CI_Model
 		$this->db->from('tickets');
 		if ($user_id != '') {
 			$this->db->where("creator_id ='$user_id'");
+		}
+		if ($company_id != '') {
+			$company = urldecode($company_id);
+			$this->db->where("company_id ='$company_id'");
+		}
+		if ($city != '') {
+			$city = urldecode($city);
+			$this->db->where("city LIKE '%$city%'");
+		}
+		if ($status != '') {
+			$this->db->where("status ='$status'");
 		}
 		$q = $this->db->get();
 		$response = $q->result_array();
@@ -118,7 +134,7 @@ class Tickets_model extends CI_Model
 			$where = "id =" . $data['id'];
 			$this->db->update('tickets', $data, $where);
 		} else if (isset($data['client_num'])) {
-			$where = "client_num =" . $data['client_num']." AND status != 'done'";
+			$where = "client_num =" . $data['client_num'] . " AND status != 'done'";
 			$this->db->update('tickets', $data, $where);
 		}
 

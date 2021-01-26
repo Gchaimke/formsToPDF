@@ -1,5 +1,5 @@
 <?php
-if (isset($this->session->userdata['logged_in']) && $this->session->userdata['logged_in']['id'] != '') {
+if (isset($this->session->userdata['logged_in'])) {
 	$user_role = $this->session->userdata['logged_in']['role'];
 	$user_id = $this->session->userdata['logged_in']['id'];
 } else {
@@ -10,7 +10,7 @@ $company_name = isset($company) ? $company : '';
 $date = isset($date) ? $date : '';
 $month = substr($date, 5, 2);
 $year = substr($date, 0, 4);
-$is_hiden = $hide_filter?'hidden':'';
+$is_hiden = $hide_filter ? 'hidden' : '';
 ?>
 <main role="main">
 	<div class="jumbotron">
@@ -28,7 +28,7 @@ $is_hiden = $hide_filter?'hidden':'';
 			echo $message_display . '</div>';
 		}
 		?>
-		<nav aria-label="Checklist navigation" class="<?=$is_hiden?>">
+		<nav aria-label="Checklist navigation" class="<?= $is_hiden ?>">
 			<?php if (isset($links)) {
 				echo $links;
 			} ?>
@@ -42,7 +42,7 @@ $is_hiden = $hide_filter?'hidden':'';
 			</div>
 			<div id='searchResult' class='rtl text-center'></div>
 		</form>
-		<div class="form-row <?=$is_hiden?>">
+		<div class="form-row <?= $is_hiden ?>">
 			<div class="form-group ml-2">
 				<div class="input-group">
 					<div class="input-group-prepend">
@@ -178,7 +178,7 @@ $is_hiden = $hide_filter?'hidden':'';
 
 	function formSearch() {
 		var search = document.getElementById("inputSearch").value;
-		location = "/production/form_search/"+search;
+		location = "/production/form_search/" + search;
 	}
 
 	document.onkeydown = function(e) {

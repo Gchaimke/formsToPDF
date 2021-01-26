@@ -16,14 +16,17 @@ class Tickets extends CI_Controller
     public function index()
     {
         $data = array();
+        $data['creator'] = isset($_GET['creator']) ?  $_GET['creator'] : '';
+        $data['company'] = isset($_GET['company']) ? $_GET['company'] : '';
+        $data['city'] = isset($_GET['city']) ? $_GET['city'] : '';
+        $data['status'] = isset($_GET['status']) ? $_GET['status'] : '';
         $user_role = $this->session->userdata['logged_in']['role'];
         $user_id = $this->session->userdata['logged_in']['id'];
         if ($user_role == 'User') {
-            $data['tickets'] = $this->Tickets_model->get_all($user_id);
+            $data['tickets'] = $this->Tickets_model->get_all($user_id, $data['company'], $data['city'], $data['status']);
         } else {
-            $data['tickets'] = $this->Tickets_model->get_all();
+            $data['tickets'] = $this->Tickets_model->get_all($data['creator'], $data['company'], $data['city'], $data['status']);
         }
-
         $data['users'] =  $this->Users_model->getusers();
         $data['companies'] =  $this->Companies_model->getCompanies();
         $this->load->view('header');

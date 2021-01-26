@@ -1,9 +1,10 @@
 <?php
 if (isset($this->session->userdata['logged_in'])) {
 	$user_role = $this->session->userdata['logged_in']['role'];
-	$user_name = $this->session->userdata['logged_in']['name'];
 	$user_id = $this->session->userdata['logged_in']['id'];
 }
+
+// משימות סינון לפי: שם טכנאי, חברה, עיר, סטטוס
 ?>
 <main role="main">
 	<div class="jumbotron">
@@ -24,15 +25,74 @@ if (isset($this->session->userdata['logged_in'])) {
 		<?php if ($user_role == "Admin" || $user_role == "Manager") {
 			echo '<a href="/tickets/uploader" class="btn btn-outline-info"><i class="fa fa-file-excel-o"> לעלות קובץ משימות </i></a>';
 		} ?>
+		<div class="form-row">
+			<div class="form-group ml-2">
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<div class="input-group-text">יוצר</div>
+					</div>
+					<select class="creator_filter">
+						<option value="">-ללא סינון-</option>
+						<?php foreach ($users as $user) {
+							echo "<option value='{$user['id']}'>{$user['view_name']}</option>";
+						} ?>
+					</select>
+				</div>
+			</div>
+			<div class="form-group ml-2">
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<div class="input-group-text">חברה</div>
+					</div>
+					<select class="company_filter" name="company">
+						<option value="">-ללא סינון-</option>
+						<?php foreach ($companies as $company) {
+							echo "<option value='{$company['id']}'>{$company['name']}</option>";
+						} ?>
+					</select>
+				</div>
+			</div>
+			<div class="form-group ml-2">
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<div class="input-group-text">עיר</div>
+					</div>
+					<input class="city_filter" name="city">
+				</div>
+			</div>
+			<div class="form-group ml-2">
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<div class="input-group-text">סטטוס</div>
+					</div>
+					<select class="status_filter">
+						<option value="">-ללא סינון-</option>
+						<option value="new">new</option>
+						<option value="working">working</option>
+						<option value="done">done</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group ml-2">
+				<div class="input-group">
+					<a href="" class="filter_button btn btn-success" style="color: azure;" onclick=' '>סינון</a>
+				</div>
+			</div>
+			<div class="form-group ml-2">
+				<div class="input-group">
+					<a href="/tickets" class="btn btn-warning" style="color: azure;" onclick=' '>בטל סינון</a>
+				</div>
+			</div>
+		</div>
 		<table class="table">
 			<thead class="thead-dark">
 				<tr>
 					<th scope="col">מספר לקוח</th>
 					<th scope="col" class="mobile-hide">שם לקוח</th>
-					<th scope="col" class="mobile-hide">כתובת לקוח</th>
-					<th scope="col">עיר</th>
+					<th scope="col" class="mobile-hide" style="width: 150px;">כתובת לקוח</th>
+					<th scope="col" style="width: 100px;">עיר</th>
 					<th scope="col" class="mobile-hide">משימה למחסן</th>
-					<th scope="col">חברה</th>
+					<th scope="col" style="width: 150px;">חברה</th>
 					<th scope="col">סטטוס</th>
 					<th scope="col">יצרת דוח</th>
 					<?php if ($user_role == "Admin" || $user_role == "Manager") {
@@ -46,23 +106,23 @@ if (isset($this->session->userdata['logged_in'])) {
 					foreach ($tickets as $ticket) { ?>
 						<tr id="<?= $ticket['id'] ?>">
 							<?php if ($ticket['status'] != "new") : ?>
-								<td class="align-middle" style="width: 100px;"><a href='/production/form_search/<?= $ticket['client_num'] ?>'><?= $ticket['client_num'] ?></a></td>
+								<td class="align-middle"><a href='/production/form_search/<?= $ticket['client_num'] ?>'><?= $ticket['client_num'] ?></a></td>
 							<?php else : ?>
-								<td class="align-middle" style="width: 100px;"><?= $ticket['client_num'] ?></td>
+								<td class="align-middle"><?= $ticket['client_num'] ?></td>
 							<?php endif ?>
 
 							<td class="align-middle mobile-hide"><?= $ticket['client_name'] ?></td>
 							<td class="align-middle mobile-hide"><?= $ticket['address'] ?></td>
 							<td class="align-middle"><?= $ticket['city'] ?></td>
 							<td class="align-middle mobile-hide"><?= $ticket['warehouse_num'] ?></td>
-							<td class="align-middle" style="width: 150px;"><?php
-																			if (isset($companies)) {
-																				foreach ($companies as $company) {
-																					if ($company['id'] == $ticket['company_id']) {
-																						echo $company['name'];
-																					}
-																				}
-																			} ?></td>
+							<td class="align-middle"><?php
+														if (isset($companies)) {
+															foreach ($companies as $company) {
+																if ($company['id'] == $ticket['company_id']) {
+																	echo $company['name'];
+																}
+															}
+														} ?></td>
 
 							<?php if ($ticket['status'] == "new") {
 								echo '<td class="align-middle"><span class="badge badge-primary p-2">' . $ticket['status'] . '</span ></td>';
@@ -106,6 +166,47 @@ if (isset($this->session->userdata['logged_in'])) {
 	</div>
 </main>
 <script>
+	var creator = "<?php echo $creator = (isset($_GET['creator'])) ? $_GET['creator'] : ''; ?>";
+	var company = "<?php echo $company = (isset($_GET['company'])) ? $_GET['company'] : ''; ?>";
+	var city = "<?php echo $city = (isset($_GET['city'])) ? $_GET['city'] : ''; ?>";
+	var status = "<?php echo $status = (isset($_GET['status'])) ? $_GET['status'] : ''; ?>";
+
+	$('.creator_filter').on('change', function() {
+		creator = $('.creator_filter').val();
+		update_filter()
+	});
+
+	$('.company_filter').on('change', function() {
+		company = $('.company_filter').val();
+		update_filter()
+	});
+
+	$('.city_filter').on('change', function() {
+		city = $('.city_filter').val();
+		update_filter()
+	});
+
+	$('.status_filter').on('change', function() {
+		status = $('.status_filter').val();
+		update_filter()
+	});
+
+	function update_filter() {
+		$('.filter_button').attr("href", '?creator=' + creator + '&company=' + company + '&city=' + city + '&status=' + status);
+	}
+
+	function set_options_selected() {
+		$('.creator_filter').val(creator);
+		$('.company_filter').val(company);
+		$('.status_filter').val(status);
+		$('.city_filter').val(city);
+	}
+
+	window.onload = function() {
+		update_filter();
+		set_options_selected();
+	}
+
 	function deleteTicket(id) {
 		var r = confirm("Delete ticket with id: " + id + "?");
 		if (r == true) {
