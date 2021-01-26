@@ -295,38 +295,41 @@ class Production extends CI_Controller
             $html_table .= '<th scope="col">מחק</th>';
         }
         $html_table .= '</tr></thead><tbody>';
-
-        foreach ($results as $data) {
-            if ($user_role != 'Admin' && $user_role != 'Manager') {
-                if ($data->creator_id != $user_id) {
-                    continue;
+        if ($results) {
+            foreach ($results as $data) {
+                if ($user_role != 'Admin' && $user_role != 'Manager') {
+                    if ($data->creator_id != $user_id) {
+                        continue;
+                    }
                 }
-            }
-            $html_table .= "<tr id='$data->id'>
+                $html_table .= "<tr id='$data->id'>
 							<td class='align-middle'>";
-            $html_table .= date("d-m-Y", strtotime($data->date));
-            if ($data->attachments != '') {
-                $html_table .= '<i class="mr-1 fa fa-paperclip" aria-hidden="true"></i> ';
-            }
-            $html_table .= '</td>';
-            foreach ($users as $user) {
-                if ($user['id'] == $data->creator_id) {
-                    $html_table .= '<td class="align-middle">' . $user['view_name'] . '</td>';
+                $html_table .= date("d-m-Y", strtotime($data->date));
+                if ($data->attachments != '') {
+                    $html_table .= '<i class="mr-1 fa fa-paperclip" aria-hidden="true"></i> ';
                 }
-            }
-            $html_table .= '<td class="mobile-hide align-middle">' . $data->client_num . '</td>
+                $html_table .= '</td>';
+                foreach ($users as $user) {
+                    if ($user['id'] == $data->creator_id) {
+                        $html_table .= '<td class="align-middle">' . $user['view_name'] . '</td>';
+                    }
+                }
+                $html_table .= '<td class="mobile-hide align-middle">' . $data->client_num . '</td>
 							<td class="mobile-hide align-middle">' . $data->client_name . '</td>
 							<td class="mobile-hide align-middle">' . $data->place . '</td>
 							<td class="mobile-hide align-middle">' . $data->issue_kind . '</td>
 							<td class="mobile-hide align-middle">' . $data->company . '</td>';
-            if ($user_role == "Admin") {
-                $html_table .= '<td class="mobile-hide align-middle">' . $data->price . '</td>';
+                if ($user_role == "Admin") {
+                    $html_table .= '<td class="mobile-hide align-middle">' . $data->price . '</td>';
+                }
+                $html_table .= "<td><a href='/production/view_form/$data->id' class='btn btn-outline-info'><i class='fa fa-edit'></i></a></td>";
+                if ($user_role == "Admin") {
+                    $html_table .= "<td><button id='" . $data->id . "' class='btn btn-outline-danger' onclick='deleteForm(this.id)'><i class='fa fa-trash'></i></button></td>";
+                }
+                $html_table .= '</tr>';
             }
-            $html_table .= "<td><a href='/production/view_form/$data->id' class='btn btn-outline-info'><i class='fa fa-edit'></i></a></td>";
-            if ($user_role == "Admin") {
-                $html_table .= "<td><button id='" . $data->id . "' class='btn btn-outline-danger' onclick='deleteForm(this.id)'><i class='fa fa-trash'></i></button></td>";
-            }
-            $html_table .= '</tr>';
+        }else{
+            $html_table .= 'אין תוצאות';
         }
         $html_table .= '</tbody></table>';
         return $html_table;
@@ -359,10 +362,10 @@ class Production extends CI_Controller
     public function form_search($search = '')
     {
         $results = $this->Production_model->searchForm($search);
-        $params =array();
+        $params = array();
         if ($results) {
             $params['html_table'] =  $this->build_forms_table($results);
-            $params['hide_filter']=true;
+            $params['hide_filter'] = true;
             $this->load->view('header');
             $this->load->view('main_menu', $params);
             $this->load->view('production/manage_forms', $params);
