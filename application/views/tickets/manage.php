@@ -124,7 +124,8 @@ if (isset($this->session->userdata['logged_in'])) {
 															}
 														} ?></td>
 
-							<?php if ($ticket['status'] == "new") {
+							<?php
+							if ($ticket['status'] == "new") {
 								echo '<td class="align-middle"><span class="badge badge-primary p-2">' . $ticket['status'] . '</span ></td>';
 								echo '<td class="align-middle"><a href="/production/new_form?company_id=' . $ticket['company_id'] .
 									'&client_num=' . $ticket['client_num'] .
@@ -139,12 +140,13 @@ if (isset($this->session->userdata['logged_in'])) {
 									echo '<td class="align-middle"></td>';
 								}
 							} else {
+								echo '<td class="align-middle"><span class="badge badge-success p-2">' . $ticket['status'] . '</span ></td>';
 								if ($user_role == "Admin" || $user_role == "Manager") {
-									echo '<td class="align-middle"><span class="revert badge badge-success p-2">' . $ticket['status'] . '</span ></td>';
+									echo '<td class="align-middle"><span class="revert badge badge-warning p-2"><i class="fa fa-undo"></i></span></td>';
 								} else {
-									echo '<td class="align-middle"><span class="badge badge-success p-2">' . $ticket['status'] . '</span ></td>';
+									echo '<td class="align-middle"></td>';
 								}
-								echo '<td class="align-middle"></td>';
+								
 							}
 
 							if ($user_role == "Admin" || $user_role == "Manager") {
