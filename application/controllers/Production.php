@@ -258,7 +258,7 @@ class Production extends CI_Controller
         $params["hide_filter"] = false;
         $user_role = $this->session->userdata['logged_in']['role'];
         $user_id = $this->session->userdata['logged_in']['id'];
-        $limit_per_page = 5;
+        $limit_per_page = 50;
         $segment = 3;
         $start_index = ($this->uri->segment($segment)) ? $this->uri->segment($segment) : 0;
         if ($user_role == 'Admin' || $user_role == 'Manager') {
