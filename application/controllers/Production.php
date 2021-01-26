@@ -298,7 +298,7 @@ class Production extends CI_Controller
 						<th scope="col" class="mobile-hide">מספר לקוח</th>
 						<th scope="col" class="mobile-hide">שם הלקוח</th>
 						<th scope="col" class="mobile-hide">מיקום</th>
-						<th scope="col" class="mobile-hide">סוג תקלה</th>
+						<th scope="col" class="mobile-hide">עיר</th>
 						<th scope="col" class="mobile-hide">חברה נותנת שירות</th>';
         if ($user_role == "Admin") {
             $html_table .= '<th scope="col" class="mobile-hide">מחיר</th>';
@@ -330,7 +330,7 @@ class Production extends CI_Controller
                 $html_table .= '<td class="mobile-hide align-middle">' . $data->client_num . '</td>
 							<td class="mobile-hide align-middle">' . $data->client_name . '</td>
 							<td class="mobile-hide align-middle">' . $data->place . '</td>
-							<td class="mobile-hide align-middle">' . $data->issue_kind . '</td>
+							<td class="mobile-hide align-middle">' . $data->city . '</td>
 							<td class="mobile-hide align-middle">' . $data->company . '</td>';
                 if ($user_role == "Admin") {
                     $html_table .= '<td class="mobile-hide align-middle">' . $data->price . '</td>';
