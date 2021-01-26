@@ -57,7 +57,7 @@ if (isset($this->session->userdata['logged_in'])) {
 					<div class="input-group-prepend">
 						<div class="input-group-text">עיר</div>
 					</div>
-					<input class="city_filter" name="city">
+					<input type="text" class="city_filter" name="city">
 				</div>
 			</div>
 			<div class="form-group ml-2">

@@ -93,10 +93,10 @@
 		}).done(function(response) {
 			var ajax_data = JSON.parse(response);
 			$("tr.column").each(function() {
-				if ($(this).attr('id') != '' && ajax_data.success.includes($(this).attr('id'))) {
+				if ($(this).attr('id') != '' && ajax_data.inserted.includes($(this).attr('id'))) {
 					$(this).append('<td>הוסף</td>').addClass('alert-success');
 				} else {
-					$(this).append('<td>קיים</td>').addClass('alert-danger');
+					$(this).append('<td>עודכן</td>').addClass('alert-warning');
 				}
 			});
 		}).fail(function(response) {

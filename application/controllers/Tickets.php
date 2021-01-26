@@ -108,8 +108,8 @@ class Tickets extends CI_Controller
                     $tmp_f .= $sql_data['client_num'].',';
                 }
             }
-            $items['success'] = explode(',', $tmp_s);
-            $items['fail'] = explode(',', $tmp_f);
+            $items['inserted'] = explode(',', $tmp_s);
+            $items['updated'] = explode(',', $tmp_f);
             print_r(json_encode($items));
         }
     }

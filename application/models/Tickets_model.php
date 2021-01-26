@@ -83,6 +83,9 @@ class Tickets_model extends CI_Model
 					return true;
 				}
 			} else {
+				unset($data['status']);
+				$where = "client_num ={$data['client_num']}";
+				$this->db->update('tickets', $data, $where);
 				return false;
 			}
 		}
