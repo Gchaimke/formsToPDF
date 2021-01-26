@@ -13,7 +13,7 @@ if (isset($this->session->userdata['logged_in'])) {
 			</center>
 		</div>
 	</div>
-	<div class="container">
+	<div class="container col-md-11">
 		<div id="form-messages"></div>
 		<?php
 		if (isset($message_display)) {
@@ -28,10 +28,10 @@ if (isset($this->session->userdata['logged_in'])) {
 			<thead class="thead-dark">
 				<tr>
 					<th scope="col">מספר לקוח</th>
-					<th scope="col">שם לקוח</th>
-					<th scope="col">כתובת לקוח</th>
+					<th scope="col" class="mobile-hide">שם לקוח</th>
+					<th scope="col" class="mobile-hide">כתובת לקוח</th>
 					<th scope="col">עיר</th>
-					<th scope="col">משימה למחסן</th>
+					<th scope="col" class="mobile-hide">משימה למחסן</th>
 					<th scope="col">חברה</th>
 					<th scope="col">סטטוס</th>
 					<th scope="col">יצרת דוח</th>
@@ -45,11 +45,15 @@ if (isset($this->session->userdata['logged_in'])) {
 				<?php if (isset($tickets)) {
 					foreach ($tickets as $ticket) { ?>
 						<tr id="<?= $ticket['id'] ?>">
+							<? if ($ticket['status'] != "new"){
+
+						}
+						?>
 							<td class="align-middle" style="width: 100px;"><?= $ticket['client_num'] ?></td>
-							<td class="align-middle"><?= $ticket['client_name'] ?></td>
-							<td class="align-middle"><?= $ticket['address'] ?></td>
-							<td class="align-middle"><?= $ticket['city'] ?></td>
-							<td class="align-middle"><?= $ticket['warehouse_num'] ?></td>
+							<td class="align-middle mobile-hide"><?= $ticket['client_name'] ?></td>
+							<td class="align-middle mobile-hide"><?= $ticket['address'] ?></td>
+							<td class="align-middle" style="width: 100px;"><?= $ticket['city'] ?></td>
+							<td class="align-middle mobile-hide"><?= $ticket['warehouse_num'] ?></td>
 							<td class="align-middle"><?php
 														if (isset($companies)) {
 															foreach ($companies as $company) {
