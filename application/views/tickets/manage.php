@@ -45,23 +45,24 @@ if (isset($this->session->userdata['logged_in'])) {
 				<?php if (isset($tickets)) {
 					foreach ($tickets as $ticket) { ?>
 						<tr id="<?= $ticket['id'] ?>">
-							<? if ($ticket['status'] != "new"){
+							<?php if ($ticket['status'] != "new") : ?>
+								<td class="align-middle" style="width: 100px;"><a href='/production/form_search/<?= $ticket['client_num'] ?>'><?= $ticket['client_num'] ?></a></td>
+							<?php else : ?>
+								<td class="align-middle" style="width: 100px;"><?= $ticket['client_num'] ?></td>
+							<?php endif ?>
 
-						}
-						?>
-							<td class="align-middle" style="width: 100px;"><a href=""><?= $ticket['client_num'] ?></a></td>
 							<td class="align-middle mobile-hide"><?= $ticket['client_name'] ?></td>
 							<td class="align-middle mobile-hide"><?= $ticket['address'] ?></td>
-							<td class="align-middle" ><?= $ticket['city'] ?></td>
+							<td class="align-middle"><?= $ticket['city'] ?></td>
 							<td class="align-middle mobile-hide"><?= $ticket['warehouse_num'] ?></td>
 							<td class="align-middle" style="width: 150px;"><?php
-														if (isset($companies)) {
-															foreach ($companies as $company) {
-																if ($company['id'] == $ticket['company_id']) {
-																	echo $company['name'];
-																}
-															}
-														} ?></td>
+																			if (isset($companies)) {
+																				foreach ($companies as $company) {
+																					if ($company['id'] == $ticket['company_id']) {
+																						echo $company['name'];
+																					}
+																				}
+																			} ?></td>
 
 							<?php if ($ticket['status'] == "new") {
 								echo '<td class="align-middle"><span class="badge badge-primary p-2">' . $ticket['status'] . '</span ></td>';
