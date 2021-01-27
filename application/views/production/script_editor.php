@@ -40,7 +40,7 @@
                 echo 'קובץ לא קיים במערכת, נא להתקשר לאחראי';
             } ?>
             <?php echo form_open("production/download_conf/"); ?>
-            <input type="hidden" name="company" value="<?= $company_id ?>">
+            <input type="hidden" name="company_id" value="<?= $company_id ?>">
             <center class="<?= $hiden ?>">
 
                 <div class="form-row col-md-6">

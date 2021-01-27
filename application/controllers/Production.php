@@ -623,7 +623,7 @@ class Production extends CI_Controller
         
         if (!$this->form_validation->run() == FALSE) {
             $company_id = $this->input->post('company_id');
-            $template = new Template_editor('Uploads/tEditor/6/template.txt');
+            $template = new Template_editor('Uploads/tEditor/' . $company_id . '/template.txt');
             $template->set('client_num', $this->input->post('client_num'));
             $template->set('client_name', str_replace(' ', '-', $this->input->post('client_name')));
             $template->set('phone_id', $this->input->post('phone_id'));
