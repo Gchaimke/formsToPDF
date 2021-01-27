@@ -608,7 +608,7 @@ class Production extends CI_Controller
         }
     }
 
-    function download_conf()
+    function download_conf($company_id=1)
     {
         include_once APPPATH . 'third_party/tEditor/Template_editor.php';
         $this->form_validation->set_rules('client_num', 'client_num', 'trim|xss_clean');
@@ -620,8 +620,7 @@ class Production extends CI_Controller
         $this->form_validation->set_rules('wan_ip', 'wan_ip', 'trim|xss_clean');
         $this->form_validation->set_rules('clock_mac', 'clock_mac', 'trim|xss_clean');
         if (!$this->form_validation->run() == FALSE) {
-            $user_id = $this->session->userdata['logged_in']['id'];
-            $template = new Template_editor('Uploads/tEditor/' . $user_id . '/template.txt');
+            $template = new Template_editor('Uploads/tEditor/' . $company_id . '/template.txt');
             $template->set('client_num', $this->input->post('client_num'));
             $template->set('client_name', str_replace(' ', '-', $this->input->post('client_name')));
             $template->set('phone_id', $this->input->post('phone_id'));

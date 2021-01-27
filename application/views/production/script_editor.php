@@ -39,7 +39,7 @@
             <?php }else if(isset($no_template)){
                 echo 'קובץ לא קיים במערכת, נא להתקשר לאחראי';
             } ?>
-            <?php echo form_open("production/download_conf"); ?>
+            <?php echo form_open("production/download_conf/<?=$company_id?>"); ?>
             <center class="<?=$hiden?>">
                 <div class="form-row col-md-6">
                     <div id="client_num_column" class="form-group col-md-12">
