@@ -292,6 +292,22 @@ if ($("#upload").length) {
     });
 }
 
+if ($(".view_name").length) {
+    $("tr.data-row").each(function (indexInArray, valueOfElement) {
+        var view_name = $(this).find(".view_name");
+        var mobile_hide = $(this).find(".mobile-data");
+        var new_span = $("<span class='mobile-view'></span>");
+        mobile_hide.each(function () {
+            if ($(this).text() != "") {
+                var p = $("<p></p>").text($(this).text());
+                new_span.append(p);
+            }
+        });
+        console.log(new_span)
+        view_name.append(new_span);
+    });
+}
+
 function delete_attachment(attachment) {
     var data_file = $(attachment).attr('data-file');
     var r = confirm("Delete File " + data_file + "?");

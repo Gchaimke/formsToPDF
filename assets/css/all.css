@@ -19,7 +19,7 @@ main {
     color: red;
 }
 
-.email-label{
+.email-label {
     margin: 0;
 }
 
@@ -286,6 +286,11 @@ div#form-messages {
     .mobile-hide {
         display: none;
     }
+    .mobile-view {
+        display: initial;
+        line-height: 0.6em;
+        font-size: 0.8em;
+    }
     .table th, .table td {
         padding: 0.45rem;
     }
@@ -300,6 +305,9 @@ div#form-messages {
 @media (min-width: 991.98px) {
     .mobile-hide {
         display: table-cell;
+    }
+    .mobile-view {
+        display: none;
     }
     .table th, .table td {
         padding: 0.45rem;

@@ -130,7 +130,7 @@ if (isset($this->session->userdata['logged_in'])) {
 									'&client_num=' . $ticket['client_num'] .
 									'&client_name=' . urlencode($ticket['client_name']) .
 									'&address=' . urlencode($ticket['address']) .
-									'&city=' . urlencode($ticket['city']) . '" class="btn btn-info"><i class="fa fa-edit"></i></a></td>';
+									'&city=' . urlencode($ticket['city']) . '" class="btn btn-outline-info"><i class="fa fa-edit"></i></a></td>';
 							} else if ($ticket['status'] == "working") {
 								echo '<td class="align-middle"><span class="badge badge-warning p-2">' . $ticket['status'] . '</span ></td>';
 								if ($user_role == "Admin" || $user_role == "Manager") {
@@ -160,7 +160,7 @@ if (isset($this->session->userdata['logged_in'])) {
 								echo '</select>';
 
 								echo "</td>";
-								echo '<td class="align-middle"><button id="' . $ticket['id'] . '" class="btn btn-danger" onclick="deleteTicket(this.id)"><i class="fa fa-trash"></i></button></td>';
+								echo '<td class="align-middle"><button id="' . $ticket['id'] . '" class="btn btn-outline-danger" onclick="deleteTicket(this.id)"><i class="fa fa-trash"></i></button></td>';
 							} ?>
 						</tr>
 				<?php }

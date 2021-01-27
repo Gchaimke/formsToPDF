@@ -315,8 +315,7 @@ class Production extends CI_Controller
                         continue;
                     }
                 }
-                $html_table .= "<tr id='$data->id'>
-							<td class='align-middle'>";
+                $html_table .= "<tr id='$data->id' class='data-row'><td class='align-middle'>";
                 $html_table .= date("d-m-Y", strtotime($data->date));
                 if ($data->attachments != '') {
                     $html_table .= '<i class="mr-1 fa fa-paperclip" aria-hidden="true"></i> ';
@@ -324,20 +323,20 @@ class Production extends CI_Controller
                 $html_table .= '</td>';
                 foreach ($users as $user) {
                     if ($user['id'] == $data->creator_id) {
-                        $html_table .= '<td class="align-middle">' . $user['view_name'] . '</td>';
+                        $html_table .= '<td class="align-middle view_name"></span>' . $user['view_name'] . '</td>';
                     }
                 }
-                $html_table .= '<td class="mobile-hide align-middle">' . $data->client_num . '</td>
-							<td class="mobile-hide align-middle">' . $data->client_name . '</td>
-							<td class="mobile-hide align-middle">' . $data->place . '</td>
-							<td class="mobile-hide align-middle">' . $data->city . '</td>
+                $html_table .= '<td class="mobile-hide mobile-data align-middle">' . $data->client_num . '</td>
+							<td class="mobile-hide mobile-data align-middle">' . $data->client_name . '</td>
+							<td class="mobile-hide mobile-data align-middle">' . $data->place . '</td>
+							<td class="mobile-hide mobile-data align-middle">' . $data->city . '</td>
 							<td class="mobile-hide align-middle">' . $data->company . '</td>';
                 if ($user_role == "Admin") {
                     $html_table .= '<td class="mobile-hide align-middle">' . $data->price . '</td>';
                 }
-                $html_table .= "<td><a href='/production/view_form/$data->id' class='btn btn-outline-info'><i class='fa fa-edit'></i></a></td>";
+                $html_table .= "<td class='align-middle'><a href='/production/view_form/$data->id' class='btn btn-outline-info'><i class='fa fa-edit'></i></a></td>";
                 if ($user_role == "Admin") {
-                    $html_table .= "<td><button id='" . $data->id . "' class='btn btn-outline-danger' onclick='deleteForm(this.id)'><i class='fa fa-trash'></i></button></td>";
+                    $html_table .= "<td class='align-middle'><button id='" . $data->id . "' class='btn btn-outline-danger' onclick='deleteForm(this.id)'><i class='fa fa-trash'></i></button></td>";
                 }
                 $html_table .= '</tr>';
             }
