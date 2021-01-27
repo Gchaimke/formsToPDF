@@ -22,7 +22,7 @@ if ($user_role == "Admin" || $user_role == "Manager") {
 			</center>
 		</div>
 	</div>
-	<div class="container col-md-11">
+	<div class="container col-md-10">
 		<div id="form-messages"></div>
 		<?php
 		if (isset($message_display)) {
@@ -31,10 +31,10 @@ if ($user_role == "Admin" || $user_role == "Manager") {
 		}
 		?>
 		<div id="buttons-section">
-			<div id="show_filters" class='btn btn-outline-info <?= $is_hiden ?>'><i class="fa fa-filter"></i></div>
+			<div id="show_filters" class='btn btn-outline-info'><i class="fa fa-filter"></i></div>
 			<?= $u_button_html ?>
 		</div>
-		<div class="form-row hidden" id="filters_section">
+		<div class="form-row" id="filters_section" style="display:none;">
 			<div class="form-group ml-2">
 				<div class="input-group">
 					<div class="input-group-prepend">

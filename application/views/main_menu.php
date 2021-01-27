@@ -6,13 +6,13 @@ if (isset($this->session->userdata['logged_in']) && $this->session->userdata['lo
   $role = ($this->session->userdata['logged_in']['role']);
 }
 ?>
-<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark main-menu rtl">
-  <a class="navbar-brand btn btn-sm btn-outline-primary" href="/">דוחות v2.0</a>
-  <span class="navbar-text mx-2"><?php echo $_SERVER['SERVER_NAME']; ?></span>
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark main-menu ltr">
+  <a class="navbar-brand btn btn-sm btn-outline-primary rtl" href="/">דוחות v2.1</a>
+  <span class="navbar-text mr-4"><?php echo $_SERVER['SERVER_NAME']; ?></span>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarDefault" aria-controls="navbarDefault" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <div class="collapse navbar-collapse" id="navbarDefault">
+  <div class="collapse navbar-collapse rtl" id="navbarDefault">
     <ul class="navbar-nav  my-4 my-md-0">
       <li class="nav-item mx-1 mt-1 mt-md-0 "><a class="nav-link btn btn-sm btn-outline-warning" href="/tickets">משימות</a></li>
       <li class="nav-item mx-1 mt-1 mt-md-0 "><a class="nav-link btn btn-sm btn-outline-success" href="/"> דוח חדש</a></li>
@@ -23,12 +23,8 @@ if (isset($this->session->userdata['logged_in']) && $this->session->userdata['lo
     </ul>
   </div>
 
-  <div class="collapse navbar-collapse" id="navbarDefault">
-    <ul class="navbar-nav mr-auto">
-
-    </ul>
-
-    <ul class="navbar-nav  pull-right">
+  <div class="collapse navbar-collapse rtl" id="navbarDefault">
+    <ul class="navbar-nav">
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           שלום <?php echo isset($user_view_name) ? $user_view_name : "" ?>
