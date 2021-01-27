@@ -5,7 +5,7 @@ if (isset($this->session->userdata['logged_in'])) {
 }
 if ($user_role == "Admin" || $user_role == "Manager") {
 	$u_button_html = '<a href="/tickets/uploader" class="btn btn-outline-info"><i class="fa fa-file-excel-o"> להעלות קובץ משימות </i></a>';
-	$tb_header_html = '<th scope="col">טכנאי</th><th scope="col">מחק</th>';
+	$tb_header_html = '<th scope="col" style="min-width:140px;">טכנאי</th><th scope="col">מחק</th>';
 	$btn_done = '<td class="align-middle"><span class="btn btn-success done-ticket"><i class="fa fa-check"></i></span></td>';
 	$btn_revert = '<td class="align-middle"><span class="revert p-2"><i class="fa fa-undo"></i></span></td>';
 } else {
@@ -97,14 +97,14 @@ if ($user_role == "Admin" || $user_role == "Manager") {
 			<table class="table">
 				<thead class="thead-dark">
 					<tr>
-						<th scope="col" style="width: 200px;">מספר לקוח</th>
+						<th scope="col" style="min-width:105px;">מספר לקוח</th>
 						<th scope="col" class="mobile-hide">שם לקוח</th>
 						<th scope="col" class="mobile-hide" style="width: 170px;">כתובת לקוח</th>
 						<th scope="col" class="mobile-hide" style="width: 100px;">עיר</th>
 						<th scope="col" class="mobile-hide">משימה למחסן</th>
 						<th scope="col" class="mobile-hide" style="width: 150px;">חברה</th>
 						<th scope="col" class="mobile-hide">סטטוס</th>
-						<th scope="col" style="width: 100px;">יצרת דוח</th>
+						<th scope="col" style="min-width:90px;">יצרת דוח</th>
 						<?= $tb_header_html ?>
 					</tr>
 				</thead>
