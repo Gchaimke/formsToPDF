@@ -89,7 +89,7 @@ if (isset($this->session->userdata['logged_in'])) {
 				<tr>
 					<th scope="col">מספר לקוח</th>
 					<th scope="col" class="mobile-hide">שם לקוח</th>
-					<th scope="col" class="mobile-hide" style="width: 150px;">כתובת לקוח</th>
+					<th scope="col" class="mobile-hide" style="width: 170px;">כתובת לקוח</th>
 					<th scope="col" style="width: 100px;">עיר</th>
 					<th scope="col" class="mobile-hide">משימה למחסן</th>
 					<th scope="col" style="width: 150px;">חברה</th>
