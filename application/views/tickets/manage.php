@@ -75,12 +75,12 @@ if (isset($this->session->userdata['logged_in'])) {
 			</div>
 			<div class="form-group ml-2">
 				<div class="input-group">
-					<a href="" class="filter_button btn btn-success" style="color: azure;" onclick=' '>סינון</a>
+					<a href="" class="filter_button btn btn-success hidden" style="color: azure;" onclick=' '>סינון</a>
 				</div>
 			</div>
 			<div class="form-group ml-2">
 				<div class="input-group">
-					<a href="/tickets" class="btn btn-warning" style="color: azure;" onclick=' '>בטל סינון</a>
+					<a href="/tickets" class="btn btn-outline-success" style="color: red;" onclick=' '>בטל סינון</a>
 				</div>
 			</div>
 		</div>
@@ -177,26 +177,31 @@ if (isset($this->session->userdata['logged_in'])) {
 
 	$('.creator_filter').on('change', function() {
 		creator = $('.creator_filter').val();
-		update_filter()
+		update_filter();
+		location = $('.filter_button').attr("href");
 	});
 
 	$('.company_filter').on('change', function() {
 		company = $('.company_filter').val();
-		update_filter()
+		update_filter();
+		location = $('.filter_button').attr("href");
 	});
 
 	$('.city_filter').on('change', function() {
 		city = $('.city_filter').val();
-		update_filter()
+		update_filter();
+		location = $('.filter_button').attr("href");
 	});
 
 	$('.status_filter').on('change', function() {
 		status = $('.status_filter').val();
-		update_filter()
+		update_filter();
+		location = $('.filter_button').attr("href");
 	});
 
 	function update_filter() {
 		$('.filter_button').attr("href", '?creator=' + creator + '&company=' + company + '&city=' + city + '&status=' + status);
+		
 	}
 
 	function set_options_selected() {
