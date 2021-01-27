@@ -2,6 +2,10 @@ body {
     background-color: #e4f1f9;
 }
 
+hr {
+    margin: 5px;
+}
+
 .input-group-text {
     background-color: #d0eaff;
     font-weight: bolder;

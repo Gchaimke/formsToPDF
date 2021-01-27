@@ -93,80 +93,80 @@ if ($user_role == "Admin" || $user_role == "Manager") {
 				</div>
 			</div>
 		</div>
-		<table class="table">
-			<thead class="thead-dark">
-				<tr>
-					<th scope="col" style="width: 200px;">מספר לקוח</th>
-					<th scope="col" class="mobile-hide">שם לקוח</th>
-					<th scope="col" class="mobile-hide" style="width: 170px;">כתובת לקוח</th>
-					<th scope="col" class="mobile-hide" style="width: 100px;">עיר</th>
-					<th scope="col" class="mobile-hide">משימה למחסן</th>
-					<th scope="col" class="mobile-hide" style="width: 150px;">חברה</th>
-					<th scope="col" class="mobile-hide">סטטוס</th>
-					<th scope="col" style="width: 100px;">יצרת דוח</th>
-					<?= $tb_header_html ?>
-				</tr>
-			</thead>
-			<tbody>
-				<?php if (isset($tickets)) {
-					foreach ($tickets as $ticket) {
-						if (isset($companies)) {
-							foreach ($companies as $company) {
-								if ($company['id'] == $ticket['company_id']) {
-									$company_name =  $company['name'];
-								}
-							}
-						} ?>
-						<tr id="<?= $ticket['id'] ?>" class="data-row">
-							<?php if ($ticket['status'] != "new") : ?>
-								<td class="align-middle view_name"><a href='/production/form_search/<?= $ticket['client_num'] ?>'><?= $ticket['client_num'] ?></a></td>
-							<?php else : ?>
-								<td class="align-middle view_name"><?= $ticket['client_num'] ?></td>
-							<?php endif ?>
-
-							<td class="align-middle mobile-hide mobile-data"><?= $ticket['client_name'] ?></td>
-							<td class="align-middle mobile-hide"><?= $ticket['address'] ?></td>
-							<td class="align-middle mobile-hide mobile-data"><?= $ticket['city'] ?></td>
-							<td class="align-middle mobile-hide"><?= $ticket['warehouse_num'] ?></td>
-							<td class="align-middle mobile-hide mobile-data"><?= $company_name ?></td>
-							<?php
-							if ($ticket['status'] == "new") {
-								echo '<td class="align-middle mobile-hide mobile-data"><span class="badge badge-primary p-2">' . $ticket['status'] . '</span ></td>';
-								echo '<td class="align-middle"><a href="/production/new_form?company_id=' . $ticket['company_id'] .
-									'&client_num=' . $ticket['client_num'] .
-									'&client_name=' . urlencode($ticket['client_name']) .
-									'&address=' . urlencode($ticket['address']) .
-									'&city=' . urlencode($ticket['city']) . '" class="btn btn-outline-info"><i class="fa fa-edit"></i></a></td>';
-							} else if ($ticket['status'] == "working") {
-								echo '<td class="align-middle mobile-hide mobile-data"><span class="badge badge-warning p-2">' . $ticket['status'] . '</span ></td>';
-								echo $btn_done;
-							} else {
-								echo '<td class="align-middle mobile-hide mobile-data"><span class="badge badge-success p-2">' . $ticket['status'] . '</span ></td>';
-								echo $btn_revert;
-							}
-
-							if ($user_role == "Admin" || $user_role == "Manager") {
-								echo "<td class='align-middle'>";
-								echo '<select class="user_selection form-control" name="user"><option value="-1"></option>';
-								foreach ($users as $user) {
-									if ($user['id'] ==  $ticket['creator_id']) {
-										echo '<option value="' . $user['id'] . '" selected>' . htmlspecialchars($user['view_name']) . '</option>';
-									} else {
-										echo '<option value="' . $user['id'] . '">' . htmlspecialchars($user['view_name']) . '</option>';
+		<div class="table-responsive">
+			<table class="table">
+				<thead class="thead-dark">
+					<tr>
+						<th scope="col" style="width: 200px;">מספר לקוח</th>
+						<th scope="col" class="mobile-hide">שם לקוח</th>
+						<th scope="col" class="mobile-hide" style="width: 170px;">כתובת לקוח</th>
+						<th scope="col" class="mobile-hide" style="width: 100px;">עיר</th>
+						<th scope="col" class="mobile-hide">משימה למחסן</th>
+						<th scope="col" class="mobile-hide" style="width: 150px;">חברה</th>
+						<th scope="col" class="mobile-hide">סטטוס</th>
+						<th scope="col" style="width: 100px;">יצרת דוח</th>
+						<?= $tb_header_html ?>
+					</tr>
+				</thead>
+				<tbody>
+					<?php if (isset($tickets)) {
+						foreach ($tickets as $ticket) {
+							if (isset($companies)) {
+								foreach ($companies as $company) {
+									if ($company['id'] == $ticket['company_id']) {
+										$company_name =  $company['name'];
 									}
 								}
-								echo '</select></td>';
-								echo '<td class="align-middle">
+							} ?>
+							<tr id="<?= $ticket['id'] ?>" class="data-row">
+								<?php if ($ticket['status'] != "new") : ?>
+									<td class="align-middle view_name"><a href='/production/form_search/<?= $ticket['client_num'] ?>'><?= $ticket['client_num'] ?></a></td>
+								<?php else : ?>
+									<td class="align-middle view_name"><?= $ticket['client_num'] ?></td>
+								<?php endif ?>
+
+								<td class="align-middle mobile-hide mobile-data"><?= $ticket['client_name'] ?></td>
+								<td class="align-middle mobile-hide"><?= $ticket['address'] ?></td>
+								<td class="align-middle mobile-hide mobile-data"><?= $ticket['city'] ?></td>
+								<td class="align-middle mobile-hide"><?= $ticket['warehouse_num'] ?></td>
+								<td class="align-middle mobile-hide mobile-data"><?= $company_name ?></td>
+								<?php
+								if ($ticket['status'] == "new") {
+									echo '<td class="align-middle mobile-hide mobile-data"><span class="badge badge-primary p-2">' . $ticket['status'] . '</span ></td>';
+									echo '<td class="align-middle"><a href="/production/new_form?company_id=' . $ticket['company_id'] .
+										'&client_num=' . $ticket['client_num'] .
+										'&client_name=' . urlencode($ticket['client_name']) .
+										'&address=' . urlencode($ticket['address']) .
+										'&city=' . urlencode($ticket['city']) . '" class="btn btn-outline-info"><i class="fa fa-edit"></i></a></td>';
+								} else if ($ticket['status'] == "working") {
+									echo '<td class="align-middle mobile-hide mobile-data"><span class="badge badge-warning p-2">' . $ticket['status'] . '</span ></td>';
+									echo $btn_done;
+								} else {
+									echo '<td class="align-middle mobile-hide mobile-data"><span class="badge badge-success p-2">' . $ticket['status'] . '</span ></td>';
+									echo $btn_revert;
+								}
+
+								if ($user_role == "Admin" || $user_role == "Manager") {
+									echo "<td class='align-middle'>";
+									echo '<select class="user_selection form-control" name="user"><option value="-1"></option>';
+									foreach ($users as $user) {
+										if ($user['id'] ==  $ticket['creator_id']) {
+											echo '<option value="' . $user['id'] . '" selected>' . htmlspecialchars($user['view_name']) . '</option>';
+										} else {
+											echo '<option value="' . $user['id'] . '">' . htmlspecialchars($user['view_name']) . '</option>';
+										}
+									}
+									echo '</select></td>';
+									echo '<td class="align-middle">
 									 <button id="' . $ticket['id'] . '" class="btn btn-outline-danger" onclick="deleteTicket(this.id)">
 									 <i class="fa fa-trash"></i></button></td>';
-							} ?>
-						</tr>
-				<?php }
-				} ?>
-			</tbody>
-		</table>
-	</div>
-	</div>
+								} ?>
+							</tr>
+					<?php }
+					} ?>
+				</tbody>
+			</table>
+		</div>
 	</div>
 </main>
 <script>

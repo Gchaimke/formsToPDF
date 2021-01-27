@@ -14,11 +14,11 @@ if (isset($this->session->userdata['logged_in']) && $this->session->userdata['lo
   </button>
   <div class="collapse navbar-collapse" id="navbarDefault">
     <ul class="navbar-nav  my-4 my-md-0">
-      <li class="nav-item mx-1 mt-3 mt-md-0 "><a class="nav-link btn btn-sm btn-outline-warning" href="/tickets">משימות</a></li>
-      <li class="nav-item mx-1 mt-3 mt-md-0 "><a class="nav-link btn btn-sm btn-outline-success" href="/"> דוח חדש</a></li>
-      <li class="nav-item mx-1 mt-3 mt-md-0 "><a class="nav-link btn btn-sm btn-outline-info" href="/production/manage_forms"> רשימת דוחות</a></li>
+      <li class="nav-item mx-1 mt-1 mt-md-0 "><a class="nav-link btn btn-sm btn-outline-warning" href="/tickets">משימות</a></li>
+      <li class="nav-item mx-1 mt-1 mt-md-0 "><a class="nav-link btn btn-sm btn-outline-success" href="/"> דוח חדש</a></li>
+      <li class="nav-item mx-1 mt-1 mt-md-0 "><a class="nav-link btn btn-sm btn-outline-info" href="/production/manage_forms"> רשימת דוחות</a></li>
       <?php if ($role == 'Admin') { ?>
-        <li class="nav-item mx-1 mt-3 mt-md-0 "><a class="nav-link btn btn-sm btn-outline-danger" href="/admin/view_charts/<?php echo $id ?>"> כספים </a></li>
+        <li class="nav-item mx-1 mt-1 mt-md-0 "><a class="nav-link btn btn-sm btn-outline-danger" href="/admin/view_charts/<?php echo $id ?>"> כספים </a></li>
       <?php } ?>
     </ul>
   </div>

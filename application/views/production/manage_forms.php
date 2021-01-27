@@ -118,11 +118,13 @@ $is_hiden = $hide_filter ? 'hidden' : '';
 				echo $links;
 			} ?>
 		</nav>
+		<div class="table-responsive">
 		<?php if (isset($html_table)) {
 			echo $html_table;
 		} else {
 			echo '<div>אין עדיין דוחות</div>';
 		} ?>
+		</div>
 	</div>
 
 </main>

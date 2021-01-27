@@ -292,7 +292,7 @@ class Production extends CI_Controller
         $user_role = $this->session->userdata['logged_in']['role'];
         $user_id = $this->session->userdata['logged_in']['id'];
         $users = $this->Users_model->getUsers();
-        $html_table =  '<table class="table mb-4" "><thead class="thead-dark"><tr>
+        $html_table =  '<table class="table table-hover mb-4" "><thead class="thead-dark"><tr>
 						<th scope="col" style="width:100px;">תאריך</th>
 						<th scope="col">יוצר</th>
 						<th scope="col" class="mobile-hide">מספר לקוח</th>
