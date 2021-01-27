@@ -93,16 +93,15 @@ if ($user_role == "Admin" || $user_role == "Manager") {
 		<table class="table">
 			<thead class="thead-dark">
 				<tr>
-					<th scope="col">מספר לקוח</th>
+					<th scope="col" style="width: 200px;">מספר לקוח</th>
 					<th scope="col" class="mobile-hide">שם לקוח</th>
 					<th scope="col" class="mobile-hide" style="width: 170px;">כתובת לקוח</th>
-					<th scope="col" style="width: 100px;">עיר</th>
+					<th scope="col" class="mobile-hide" style="width: 100px;">עיר</th>
 					<th scope="col" class="mobile-hide">משימה למחסן</th>
-					<th scope="col" style="width: 150px;">חברה</th>
-					<th scope="col">סטטוס</th>
-					<th scope="col">יצרת דוח</th>
+					<th scope="col" class="mobile-hide" style="width: 150px;">חברה</th>
+					<th scope="col" class="mobile-hide">סטטוס</th>
+					<th scope="col" style="width: 100px;">יצרת דוח</th>
 					<?= $tb_header_html ?>
-
 				</tr>
 			</thead>
 			<tbody>
@@ -115,31 +114,31 @@ if ($user_role == "Admin" || $user_role == "Manager") {
 								}
 							}
 						} ?>
-						<tr id="<?= $ticket['id'] ?>">
+						<tr id="<?= $ticket['id'] ?>" class="data-row">
 							<?php if ($ticket['status'] != "new") : ?>
-								<td class="align-middle"><a href='/production/form_search/<?= $ticket['client_num'] ?>'><?= $ticket['client_num'] ?></a></td>
+								<td class="align-middle view_name"><a href='/production/form_search/<?= $ticket['client_num'] ?>'><?= $ticket['client_num'] ?></a></td>
 							<?php else : ?>
-								<td class="align-middle"><?= $ticket['client_num'] ?></td>
+								<td class="align-middle view_name"><?= $ticket['client_num'] ?></td>
 							<?php endif ?>
 
-							<td class="align-middle mobile-hide"><?= $ticket['client_name'] ?></td>
+							<td class="align-middle mobile-hide mobile-data"><?= $ticket['client_name'] ?></td>
 							<td class="align-middle mobile-hide"><?= $ticket['address'] ?></td>
-							<td class="align-middle"><?= $ticket['city'] ?></td>
+							<td class="align-middle mobile-hide mobile-data"><?= $ticket['city'] ?></td>
 							<td class="align-middle mobile-hide"><?= $ticket['warehouse_num'] ?></td>
-							<td class="align-middle"><?= $company_name ?></td>
+							<td class="align-middle mobile-hide mobile-data"><?= $company_name ?></td>
 							<?php
 							if ($ticket['status'] == "new") {
-								echo '<td class="align-middle"><span class="badge badge-primary p-2">' . $ticket['status'] . '</span ></td>';
+								echo '<td class="align-middle mobile-hide mobile-data"><span class="badge badge-primary p-2">' . $ticket['status'] . '</span ></td>';
 								echo '<td class="align-middle"><a href="/production/new_form?company_id=' . $ticket['company_id'] .
 									'&client_num=' . $ticket['client_num'] .
 									'&client_name=' . urlencode($ticket['client_name']) .
 									'&address=' . urlencode($ticket['address']) .
 									'&city=' . urlencode($ticket['city']) . '" class="btn btn-outline-info"><i class="fa fa-edit"></i></a></td>';
 							} else if ($ticket['status'] == "working") {
-								echo '<td class="align-middle"><span class="badge badge-warning p-2">' . $ticket['status'] . '</span ></td>';
+								echo '<td class="align-middle mobile-hide mobile-data"><span class="badge badge-warning p-2">' . $ticket['status'] . '</span ></td>';
 								echo $btn_done;
 							} else {
-								echo '<td class="align-middle"><span class="badge badge-success p-2">' . $ticket['status'] . '</span ></td>';
+								echo '<td class="align-middle mobile-hide mobile-data"><span class="badge badge-success p-2">' . $ticket['status'] . '</span ></td>';
 								echo $btn_revert;
 							}
 
@@ -163,7 +162,7 @@ if ($user_role == "Admin" || $user_role == "Manager") {
 				} ?>
 			</tbody>
 		</table>
-	</div>
+	</div></div></div>
 </main>
 <script>
 	var creator = "<?php echo $creator = (isset($_GET['creator'])) ? $_GET['creator'] : ''; ?>";

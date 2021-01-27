@@ -295,9 +295,9 @@ if ($("#upload").length) {
 if ($(".view_name").length) {
     $("tr.data-row").each(function (indexInArray, valueOfElement) {
         var view_name = $(this).find(".view_name");
-        var mobile_hide = $(this).find(".mobile-data");
+        var mobile_data = $(this).find(".mobile-data");
         var new_span = $("<span class='mobile-view'></span>");
-        mobile_hide.each(function () {
+        mobile_data.each(function () {
             if ($(this).text() != "") {
                 var p = $("<p></p>").text($(this).text());
                 new_span.append(p);

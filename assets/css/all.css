@@ -288,7 +288,7 @@ div#form-messages {
     }
     .mobile-view {
         display: initial;
-        line-height: 0.6em;
+        line-height: 1em;
         font-size: 0.8em;
     }
     .table th, .table td {
@@ -299,6 +299,9 @@ div#form-messages {
     }
     .th_serial {
         min-width: min-content;
+    }
+    .dropdown-item {
+        line-height: 0.7em;
     }
 }
 
