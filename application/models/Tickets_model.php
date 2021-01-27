@@ -137,7 +137,7 @@ class Tickets_model extends CI_Model
 			$where = "id =" . $data['id'];
 			$this->db->update('tickets', $data, $where);
 		} else if (isset($data['client_num'])) {
-			$where = "client_num =" . $data['client_num'] . " AND status != 'done'";
+			$where = "client_num ='" . $data['client_num'] . "' AND status != 'done'";
 			$this->db->update('tickets', $data, $where);
 		}
 

@@ -214,7 +214,7 @@ class Production extends CI_Controller
             $response =  $this->Production_model->update_form($data);
             if ($response) {
                 echo ' דוח ' .  $this->input->post('id') . ' נשמר בהצלחה! ';
-                if ($this->input->post('client_num') != '' && is_numeric($this->input->post('client_num'))) {
+                if ($this->input->post('client_num') != '') {
                     $data = array(
                         'client_num' => $this->input->post('client_num'),
                         'status' => 'working'
