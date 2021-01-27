@@ -589,7 +589,7 @@ class Production extends CI_Controller
         $upload_folder = 'Uploads/tEditor';
         if (!file_exists($upload_folder . '/' . $company_id)) {
             mkdir($upload_folder . '/' . $company_id, 0770, true);
-            copy('application/index.html', $upload_folder . '/' . $company_id . 'index.html');
+            copy('application/index.html', $upload_folder . '/' . $company_id . '/index.html');
         }
         $config = array(
             'upload_path' => $upload_folder . '/' . $company_id,
