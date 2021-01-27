@@ -3,8 +3,16 @@ if (isset($this->session->userdata['logged_in'])) {
 	$user_role = $this->session->userdata['logged_in']['role'];
 	$user_id = $this->session->userdata['logged_in']['id'];
 }
+if ($user_role == "Admin" || $user_role == "Manager") {
+	$u_button_html = '<a href="/tickets/uploader" class="btn btn-outline-info"><i class="fa fa-file-excel-o"> להעלות קובץ משימות </i></a>';
+	$tb_header_html = '<th scope="col">טכנאי</th><th scope="col">מחק</th>';
+	$btn_done = '<td class="align-middle"><span class="btn btn-success done-ticket"><i class="fa fa-check"></i></span></td>';
+	$btn_revert = '<td class="align-middle"><span class="revert p-2"><i class="fa fa-undo"></i></span></td>';
+} else {
+	$u_button_html = $tb_header_html = '';
+	$btn_done = $btn_revert = '<td></td>';
+}
 
-// משימות סינון לפי: שם טכנאי, חברה, עיר, סטטוס
 ?>
 <main role="main">
 	<div class="jumbotron">
@@ -22,14 +30,12 @@ if (isset($this->session->userdata['logged_in'])) {
 			echo $message_display . '</div>';
 		}
 		?>
-		<?php if ($user_role == "Admin" || $user_role == "Manager") {
-			echo '<a href="/tickets/uploader" class="btn btn-outline-info"><i class="fa fa-file-excel-o"> להעלות קובץ משימות </i></a>';
-		} ?>
+		<?= $u_button_html ?>
 		<div class="form-row">
 			<div class="form-group ml-2">
 				<div class="input-group">
 					<div class="input-group-prepend">
-						<div class="input-group-text">יוצר</div>
+						<div class="input-group-text">טכנאי</div>
 					</div>
 					<select class="creator_filter">
 						<option value="">-ללא סינון-</option>
@@ -80,7 +86,7 @@ if (isset($this->session->userdata['logged_in'])) {
 			</div>
 			<div class="form-group ml-2">
 				<div class="input-group">
-					<a href="/tickets" class="btn btn-outline-success" style="color: red;" onclick=' '>בטל סינון</a>
+					<a href="/tickets" class="btn btn-outline-success" style="color: #a4e0a3;" onclick=' '>בטל סינון</a>
 				</div>
 			</div>
 		</div>
@@ -95,9 +101,7 @@ if (isset($this->session->userdata['logged_in'])) {
 					<th scope="col" style="width: 150px;">חברה</th>
 					<th scope="col">סטטוס</th>
 					<th scope="col">יצרת דוח</th>
-					<?php if ($user_role == "Admin" || $user_role == "Manager") {
-						echo '<th scope="col">טכנאי</th><th scope="col">מחק</th>';
-					} ?>
+					<?= $tb_header_html ?>
 
 				</tr>
 			</thead>
@@ -122,7 +126,7 @@ if (isset($this->session->userdata['logged_in'])) {
 							<td class="align-middle mobile-hide"><?= $ticket['address'] ?></td>
 							<td class="align-middle"><?= $ticket['city'] ?></td>
 							<td class="align-middle mobile-hide"><?= $ticket['warehouse_num'] ?></td>
-							<td class="align-middle"><?=$company_name?></td>
+							<td class="align-middle"><?= $company_name ?></td>
 							<?php
 							if ($ticket['status'] == "new") {
 								echo '<td class="align-middle"><span class="badge badge-primary p-2">' . $ticket['status'] . '</span ></td>';
@@ -133,18 +137,10 @@ if (isset($this->session->userdata['logged_in'])) {
 									'&city=' . urlencode($ticket['city']) . '" class="btn btn-outline-info"><i class="fa fa-edit"></i></a></td>';
 							} else if ($ticket['status'] == "working") {
 								echo '<td class="align-middle"><span class="badge badge-warning p-2">' . $ticket['status'] . '</span ></td>';
-								if ($user_role == "Admin" || $user_role == "Manager") {
-									echo '<td class="align-middle"><span class="btn btn-success done-ticket"><i class="fa fa-check"></i></span></td>';
-								} else {
-									echo '<td class="align-middle"></td>';
-								}
+								echo $btn_done;
 							} else {
 								echo '<td class="align-middle"><span class="badge badge-success p-2">' . $ticket['status'] . '</span ></td>';
-								if ($user_role == "Admin" || $user_role == "Manager") {
-									echo '<td class="align-middle"><span class="revert p-2"><i class="fa fa-undo"></i></span></td>';
-								} else {
-									echo '<td class="align-middle"></td>';
-								}
+								echo $btn_revert;
 							}
 
 							if ($user_role == "Admin" || $user_role == "Manager") {
@@ -152,15 +148,15 @@ if (isset($this->session->userdata['logged_in'])) {
 								echo '<select class="user_selection form-control" name="user"><option value="-1"></option>';
 								foreach ($users as $user) {
 									if ($user['id'] ==  $ticket['creator_id']) {
-										echo '<option value="' . htmlspecialchars($user['id']) . '" selected>' . htmlspecialchars($user['view_name']) . '</option>';
+										echo '<option value="' . $user['id'] . '" selected>' . htmlspecialchars($user['view_name']) . '</option>';
 									} else {
-										echo '<option value="' . htmlspecialchars($user['id']) . '">' . htmlspecialchars($user['view_name']) . '</option>';
+										echo '<option value="' . $user['id'] . '">' . htmlspecialchars($user['view_name']) . '</option>';
 									}
 								}
-								echo '</select>';
-
-								echo "</td>";
-								echo '<td class="align-middle"><button id="' . $ticket['id'] . '" class="btn btn-outline-danger" onclick="deleteTicket(this.id)"><i class="fa fa-trash"></i></button></td>';
+								echo '</select></td>';
+								echo '<td class="align-middle">
+									 <button id="' . $ticket['id'] . '" class="btn btn-outline-danger" onclick="deleteTicket(this.id)">
+									 <i class="fa fa-trash"></i></button></td>';
 							} ?>
 						</tr>
 				<?php }
@@ -201,7 +197,7 @@ if (isset($this->session->userdata['logged_in'])) {
 
 	function update_filter() {
 		$('.filter_button').attr("href", '?creator=' + creator + '&company=' + company + '&city=' + city + '&status=' + status);
-		
+
 	}
 
 	function set_options_selected() {
