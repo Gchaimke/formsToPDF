@@ -27,20 +27,22 @@
             if ($this->session->userdata['logged_in']['role'] == "Admin") { ?>
                 <div id="files_column" class="form-group row">
                     <div class="col-sm-12">
-                        <input id="upload" style="display:none;" type="file" name="files" data-url="/production/upload_template/<?=$company_id?>" />
+                        <input id="upload" style="display:none;" type="file" name="files" data-url="/production/upload_template/<?= $company_id ?>" />
                         <input id="attachments" type="hidden" class="form-control ltr" name="attachments" value="" />
                         <div id='files'>
                         </div>
                         <button class="btn btn-outline-success col-sm-2" type="button" onclick="document.getElementById('upload').click();">
                             <span id="upload_spinner" class="spinner-border spinner-border-sm" style="display: none;" role="status" aria-hidden="true"></span>
-                            <?=$button?></button>
+                            <?= $button ?></button>
                     </div>
                 </div>
-            <?php }else if(isset($no_template)){
+            <?php } else if (isset($no_template)) {
                 echo 'קובץ לא קיים במערכת, נא להתקשר לאחראי';
             } ?>
-            <?php echo form_open("production/download_conf/<?=$company_id?>"); ?>
-            <center class="<?=$hiden?>">
+            <?php echo form_open("production/download_conf/"); ?>
+            <input type="hidden" name="company" value="<?= $company_id ?>">
+            <center class="<?= $hiden ?>">
+
                 <div class="form-row col-md-6">
                     <div id="client_num_column" class="form-group col-md-12">
                         <div class="input-group mb-2">
