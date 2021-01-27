@@ -303,7 +303,6 @@ if ($(".view_name").length) {
                 new_span.append(p);
             }
         });
-        console.log(new_span)
         view_name.append(new_span);
     });
 }
@@ -379,4 +378,8 @@ function delFile(file) {
 
 $('#show_csv').click(function () {
     $('#csv_month').toggle();
+});
+
+$('#show_filters').click(function () {
+    $('#filters_section').toggle();
 });

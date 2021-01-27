@@ -28,21 +28,26 @@ $is_hiden = $hide_filter ? 'hidden' : '';
 			echo $message_display . '</div>';
 		}
 		?>
-		<nav aria-label="Checklist navigation" class="<?= $is_hiden ?>">
-			<?php if (isset($links)) {
-				echo $links;
-			} ?>
-		</nav>
-		<form id="form" class='ltr'>
-			<div class="input-group mb-3">
-				<input id='inputSearch' type="text" class="form-control" placeholder="מספר תקלה,מספר לקוח,שם לקוח,יוצר" aria-label="Search in forms" aria-describedby="basic-addon2" autofocus>
-				<div class="input-group-append">
-					<button class="btn btn-outline-primary" type="button" onclick="formSearch()">חפש</button>
+		<div id="buttons-section">
+			<div id="show_filters" class='btn btn-outline-info <?= $is_hiden ?>'><i class="fa fa-filter"></i></div>
+			<?php
+			if ($user_role == 'Admin' || $user_role == 'Manager') { ?>
+				<div id="show_csv" class='btn btn-outline-info'><i class="fa fa-file-excel-o"></i></div>
+				<div id="csv_month" style="display:none;"></div>
+			<?php }	?>
+		</div>
+		<div id="search_section" class="hidden">
+			<form id="form" class='ltr'>
+				<div class="input-group mb-3">
+					<input id='inputSearch' type="text" class="form-control" placeholder="מספר תקלה,מספר לקוח,שם לקוח,יוצר" aria-label="Search in forms" aria-describedby="basic-addon2" autofocus>
+					<div class="input-group-append">
+						<button class="btn btn-outline-primary" type="button" onclick="formSearch()">חפש</button>
+					</div>
 				</div>
-			</div>
-			<div id='searchResult' class='rtl text-center'></div>
-		</form>
-		<div class="form-row <?= $is_hiden ?>">
+				<div id='searchResult' class='rtl text-center'></div>
+			</form>
+		</div>
+		<div id="filters_section" class="form-row" style="display:none;">
 			<div class="form-group ml-2">
 				<div class="input-group">
 					<div class="input-group-prepend">
@@ -99,7 +104,7 @@ $is_hiden = $hide_filter ? 'hidden' : '';
 			</div>
 			<div class="form-group ml-2">
 				<div class="input-group">
-					<a href="" class="filter_button btn btn-success" style="color: azure;" onclick=' '>סינון</a>
+					<a href="" class="filter_button btn btn-success hidden" style="color: azure;" onclick=' '>סינון</a>
 				</div>
 			</div>
 			<div class="form-group ml-2">
@@ -108,11 +113,11 @@ $is_hiden = $hide_filter ? 'hidden' : '';
 				</div>
 			</div>
 		</div>
-		<?php
-		if ($user_role == 'Admin' || $user_role == 'Manager') { ?>
-			<div id="show_csv" class='btn btn-outline-info'><i class="fa fa-file-excel-o"></i></div>
-			<div id="csv_month" style="display:none;"></div>
-		<?php }	?>
+		<nav aria-label="Checklist navigation" class="<?= $is_hiden ?>">
+			<?php if (isset($links)) {
+				echo $links;
+			} ?>
+		</nav>
 		<?php if (isset($html_table)) {
 			echo $html_table;
 		} else {
@@ -129,27 +134,32 @@ $is_hiden = $hide_filter ? 'hidden' : '';
 	var date = "<?php echo $date = (isset($_GET['date'])) ? $_GET['date'] : ''; ?>";
 	$('.creator_filter').on('change', function() {
 		creator = $('.creator_filter').val();
-		update_filter()
+		update_filter();
+		location = $('.filter_button').attr("href");
 	});
 
 	$('.year_filter').on('change', function() {
 		year = $('.year_filter').val();
-		update_filter()
+		update_filter();
+		location = $('.filter_button').attr("href");
 	});
 
 	$('.month_filter').on('change', function() {
 		month = $('.month_filter').val();
-		update_filter()
+		update_filter();
+		location = $('.filter_button').attr("href");
 	});
 
 	$('.date_filter').on('change', function() {
 		date = $('.date_filter').val();
-		update_filter()
+		update_filter();
+		location = $('.filter_button').attr("href");
 	});
 
 	$('.company_filter').on('change', function() {
 		company = $('.company_filter').val();
-		update_filter()
+		update_filter();
+		location = $('.filter_button').attr("href");
 	});
 
 	function update_filter() {

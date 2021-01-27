@@ -147,9 +147,9 @@ a.fa {
 
 #csv_month {
     position: relative;
-    left: -48px;
+    left: -90px;
     top: -43px;
-    width: 90%;
+    width: 75%;
 }
 
 #csv_month a {
@@ -166,8 +166,15 @@ a#edit_checklist {
     margin: 0 25px;
 }
 
+div#buttons-section {
+    margin-top: -25px;
+    margin-bottom: 10px;
+}
+
 ul.pagination.right {
-    float: right;
+    margin: 0;
+    margin-top: 10px;
+    margin-right: -40px;
 }
 
 ul.pagination.left {

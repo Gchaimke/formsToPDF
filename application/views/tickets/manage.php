@@ -30,8 +30,11 @@ if ($user_role == "Admin" || $user_role == "Manager") {
 			echo $message_display . '</div>';
 		}
 		?>
-		<?= $u_button_html ?>
-		<div class="form-row">
+		<div id="buttons-section">
+			<div id="show_filters" class='btn btn-outline-info <?= $is_hiden ?>'><i class="fa fa-filter"></i></div>
+			<?= $u_button_html ?>
+		</div>
+		<div class="form-row hidden" id="filters_section">
 			<div class="form-group ml-2">
 				<div class="input-group">
 					<div class="input-group-prepend">
@@ -162,7 +165,9 @@ if ($user_role == "Admin" || $user_role == "Manager") {
 				} ?>
 			</tbody>
 		</table>
-	</div></div></div>
+	</div>
+	</div>
+	</div>
 </main>
 <script>
 	var creator = "<?php echo $creator = (isset($_GET['creator'])) ? $_GET['creator'] : ''; ?>";
