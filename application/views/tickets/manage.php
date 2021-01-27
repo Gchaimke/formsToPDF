@@ -141,7 +141,7 @@ if (isset($this->session->userdata['logged_in'])) {
 							} else {
 								echo '<td class="align-middle"><span class="badge badge-success p-2">' . $ticket['status'] . '</span ></td>';
 								if ($user_role == "Admin" || $user_role == "Manager") {
-									echo '<td class="align-middle"><span class="revert badge badge-warning p-2"><i class="fa fa-undo"></i></span></td>';
+									echo '<td class="align-middle"><span class="revert p-2"><i class="fa fa-undo"></i></span></td>';
 								} else {
 									echo '<td class="align-middle"></td>';
 								}
