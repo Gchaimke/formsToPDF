@@ -306,6 +306,9 @@ div#form-messages {
         line-height: 1em;
         font-size: 0.8em;
     }
+    .mobile-view > p {
+        margin-bottom: 4px;
+    }
     .table th, .table td {
         padding: 0.45rem;
     }
@@ -316,7 +319,7 @@ div#form-messages {
         min-width: min-content;
     }
     .dropdown-item {
-        line-height: 0.7em;
+        line-height: 1em;
     }
 }
 
