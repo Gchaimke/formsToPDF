@@ -30,8 +30,9 @@
 				echo $message_display . '</div>';
 			}
 
-			echo '<table class="table"><thead class="thead-dark">';
+			echo '<div class="table-responsive"><table class="table"><thead class="thead-dark">';
 			$i = 0;
+			$count = 0;
 			if (isset($xlsx)) {
 				$columns = array('מספר לקוח', 'שם לקוח', 'כתובת לקוח', 'עיר', 'משימה למחסן');
 				echo "<tr id='table_header'>";
@@ -40,20 +41,20 @@
 				}
 				echo "</tr></thead><tbody>";
 				foreach ($xlsx->rows() as $row) {
-					if ($i != 0 && count($row)>4) {
+					if ($i != 0 && count($row) > 4) {
 						echo "<form class='tickets'><tr id='$row[0]' class='column'>";
-						echo "<td><input type='hidden' name='client_num' value='{$row[0]}'>{$row[0]}</td>
-								<td><input type='hidden' name='client_name' value='{$row[1]}'>{$row[1]}</td>
-								<td><input type='hidden' name='address' value='{$row[2]}'>{$row[2]}</td>
-								<td><input type='hidden' name='city' value='{$row[3]}'>{$row[3]}</td>
-								<td><input type='hidden' name='warehouse_num' value='{$row[4]}'>{$row[4]}</td>";
+						echo "<td style='min-width:100px'><input type='hidden' name='client_num' value='{$row[0]}'>{$row[0]}</td>
+								<td style='min-width:120px'><input type='hidden' name='client_name' value='{$row[1]}'>{$row[1]}</td>
+								<td style='min-width:110px'><input type='hidden' name='address' value='{$row[2]}'>{$row[2]}</td>
+								<td style='min-width:100px'><input type='hidden' name='city' value='{$row[3]}'>{$row[3]}</td>
+								<td style='min-width:100px'><input type='hidden' name='warehouse_num' value='{$row[4]}'>{$row[4]}</td>";
 						echo "</tr></form>";
-					}else{
-						$msg = 'פומרט של קובץ לא נכון, נא לבדוק קמות של פריטים בשורה';
+						$count++;
 					}
 					$i++;
 				}
-				echo "</tbody></table>".$msg;
+				$msg = $count > 0 ? '' : 'פומרט של קובץ לא נכון, נא לבדוק קמות של פריטים בשורה';
+				echo "</tbody></table></div>" . $msg;
 			}
 			?>
 			<div class="form-group col-md-8 mt-3">
