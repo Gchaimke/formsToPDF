@@ -31,7 +31,6 @@ class Admin extends CI_Controller
 		$this->Admin_model->add_field('forms', 'city', 'VARCHAR', 150); //one time update db to add new field
 		$this->Admin_model->add_field('users', 'companies_list'); //one time update db to add new field
 		$this->Admin_model->add_field('contacts', 'users_list'); //one time update db to add new field
-
 		if (!file_exists('Uploads/tEditor')) {
 			mkdir('Uploads/tEditor', 0770, true);
 			copy('application/index.html','Uploads/index.html');

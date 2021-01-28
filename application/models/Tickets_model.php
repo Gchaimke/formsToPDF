@@ -48,8 +48,8 @@ class Tickets_model extends CI_Model
 				'null' => TRUE
 			),
 			'status' => array(
-				'type' => 'VARCHAR',
-				'constraint' => 30,
+				'type' => 'INT',
+				'constraint' => 2,
 				'null' => TRUE
 			)
 		);
@@ -63,7 +63,7 @@ class Tickets_model extends CI_Model
 		$admin = array(
 			"client_num" => '12345',
 			"client_name" => 'Client',
-			"status" => 'new'
+			"status" => '0'
 		);
 		$this->db->insert('tickets', $admin);
 	}
@@ -116,6 +116,14 @@ class Tickets_model extends CI_Model
 		return $response;
 	}
 
+	function update_status_all($str,$value)
+	{
+		$data['status']=$value;
+		$where = "status ='$str'";
+		$q = $this->db->update('tickets', $data, $where);
+		return $q;
+	}
+
 	function get($id)
 	{
 		// Select record
@@ -137,7 +145,7 @@ class Tickets_model extends CI_Model
 			$where = "id =" . $data['id'];
 			$this->db->update('tickets', $data, $where);
 		} else if (isset($data['client_num'])) {
-			$where = "client_num ='" . $data['client_num'] . "' AND status != 'done'";
+			$where = "client_num ='" . $data['client_num'] . "' AND status != 3";
 			$this->db->update('tickets', $data, $where);
 		}
 

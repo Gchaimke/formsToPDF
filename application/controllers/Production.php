@@ -121,7 +121,7 @@ class Production extends CI_Controller
                 if ($this->input->post('client_num') != '') {
                     $data = array(
                         'client_num' => $this->input->post('client_num'),
-                        'status' => 'working'
+                        'status' => '1'
                     );
                     $this->Tickets_model->update($data);
                 }
@@ -224,7 +224,7 @@ class Production extends CI_Controller
                 if ($this->input->post('client_num') != '') {
                     $data = array(
                         'client_num' => $this->input->post('client_num'),
-                        'status' => 'working'
+                        'status' => '1'
                     );
                     $this->Tickets_model->update($data);
                 }

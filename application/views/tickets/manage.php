@@ -244,7 +244,7 @@ if ($user_role == "Admin" || $user_role == "Manager") {
 	$('.done-ticket').on('click', function() {
 		var ticket_id = $(this).closest('tr').attr('id');
 		$.post('/tickets/update/' + ticket_id, {
-			status: 'done'
+			status: 3
 		}).done(function(response) {
 			$('#form-messages').addClass('alert-success');
 			$('#form-messages').text(response).fadeIn(1000).delay(3000).fadeOut(1000); //show message
@@ -259,7 +259,7 @@ if ($user_role == "Admin" || $user_role == "Manager") {
 	$('.revert').on('click', function() {
 		var ticket_id = $(this).closest('tr').attr('id');
 		$.post('/tickets/update/' + ticket_id, {
-			status: 'working'
+			status: '1'
 		}).done(function(response) {
 			$('#form-messages').addClass('alert-success');
 			$('#form-messages').text(response).fadeIn(1000).delay(3000).fadeOut(1000); //show message
