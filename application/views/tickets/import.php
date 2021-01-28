@@ -1,4 +1,6 @@
-<script src="<?php echo base_url('assets/js/jQUpload/jquery.ui.widget.js'); ?>"></script>
+<?php
+$filter_array = array("לא בוצע", "בוצע")
+?><script src="<?php echo base_url('assets/js/jQUpload/jquery.ui.widget.js'); ?>"></script>
 <script src="<?php echo base_url('assets/js/jQUpload/jquery.iframe-transport.js'); ?>"></script>
 <script src="<?php echo base_url('assets/js/jQUpload/jquery.fileupload.js'); ?>"></script>
 <main role="main">
@@ -33,6 +35,7 @@
 			echo '<div class="table-responsive"><table class="table"><thead class="thead-dark">';
 			$i = 0;
 			$count = 0;
+			$row_nums = array();
 			if (isset($xlsx)) {
 				$columns = array('מספר לקוח', 'שם לקוח', 'כתובת לקוח', 'עיר', 'משימה למחסן');
 				echo "<tr id='table_header'>";
@@ -41,15 +44,46 @@
 				}
 				echo "</tr></thead><tbody>";
 				foreach ($xlsx->rows() as $row) {
-					if ($i != 0 && count($row) > 4) {
+					if ($i != 0 && count($row_nums) > 4) {
+
+						if (1 === preg_match('~[0-9]~', $row[$row_nums['warehouse_num']])) {
+							preg_match_all('!\d+!', $row[$row_nums['warehouse_num']], $matches);
+							$row[$row_nums['warehouse_num']] = $matches[0][0];
+						} else {
+							continue;
+						}
+
 						echo "<form class='tickets'><tr id='$row[0]' class='column'>";
-						echo "<td style='min-width:100px'><input type='hidden' name='client_num' value='{$row[0]}'>{$row[0]}</td>
-								<td style='min-width:120px'><input type='hidden' name='client_name' value='{$row[1]}'>{$row[1]}</td>
-								<td style='min-width:110px'><input type='hidden' name='address' value='{$row[2]}'>{$row[2]}</td>
-								<td style='min-width:100px'><input type='hidden' name='city' value='{$row[3]}'>{$row[3]}</td>
-								<td style='min-width:100px'><input type='hidden' name='warehouse_num' value='{$row[4]}'>{$row[4]}</td>";
+						echo "<td style='min-width:100px'>
+								<input type='hidden' name='client_num' value='{$row[$row_nums['client_num']]}'>{$row[$row_nums['client_num']]}</td>
+								<td style='min-width:120px'>
+								<input type='hidden' name='client_name' value='{$row[$row_nums['client_name']]}'>{$row[$row_nums['client_name']]}</td>
+								<td style='min-width:110px'>
+								<input type='hidden' name='address' value='{$row[$row_nums['address']]}'>{$row[$row_nums['address']]}</td>
+								<td style='min-width:100px'>
+								<input type='hidden' name='city' value='{$row[$row_nums['city']]}'>{$row[$row_nums['city']]}</td>
+								<td style='min-width:100px'>
+								<input type='hidden' name='warehouse_num' value='{$row[$row_nums['warehouse_num']]}'>{$row[$row_nums['warehouse_num']]}</td>";
 						echo "</tr></form>";
 						$count++;
+					} else {
+						foreach ($row as $key => $column) {
+							if ($column == "סמל מוסד") {
+								$row_nums['client_num'] = $key;
+							}
+							if ($column == "שם מוסד") {
+								$row_nums['client_name'] = $key;
+							}
+							if ($column == "כתובת גאוגרפית") {
+								$row_nums['address'] = $key;
+							}
+							if ($column == "שם ישוב") {
+								$row_nums['city'] = $key;
+							}
+							if ($column == "בבל") {
+								$row_nums['warehouse_num'] = $key;
+							}
+						}
 					}
 					$i++;
 				}
