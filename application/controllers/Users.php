@@ -13,8 +13,6 @@ class Users extends CI_Controller
         $this->load->model('Production_model');
         if (isset($this->session->userdata['logged_in'])) {
             $this->user = $this->session->userdata['logged_in'];
-        } else {
-            header("location: /users/logout");
         }
     }
 
