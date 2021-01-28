@@ -298,6 +298,10 @@ div#form-messages {
     .badge-info, .badge-danger {
         font-size: 12px;
     }
+    .mobile-no-hide{
+        display: initial;
+    }
+
     .mobile-hide {
         display: none;
     }
@@ -324,6 +328,12 @@ div#form-messages {
 }
 
 @media (min-width: 991.98px) {
+    #filters_section {
+		display: flex;
+    }
+    .mobile-no-hide{
+        display: none;
+    }
     .mobile-hide {
         display: table-cell;
     }

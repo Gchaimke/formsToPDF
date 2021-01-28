@@ -5,14 +5,20 @@ if (isset($this->session->userdata['logged_in'])) {
 if ($user_role == "Admin" || $user_role == "Manager") {
 	$u_button_html = '<a href="/tickets/uploader" class="btn btn-outline-info"><i class="fa fa-file-excel-o"> להעלות קובץ משימות </i></a>';
 	$tb_header_html = '<th scope="col" style="min-width:140px;">טכנאי</th><th scope="col">מחק</th>';
-	$btn_done = '<td class="align-middle"><span class="btn btn-success done-ticket"><i class="fa fa-check"></i></span></td>';
-	$btn_revert = '<td class="align-middle"><span class="revert p-2"><i class="fa fa-undo"></i></span></td>';
+	$btn_done = '<span class="done-ticket btn btn-outline-success"><i class="fa fa-check"></i></span>';
+	$btn_revert = '<span class="revert btn btn-outline-secondary"><i class="fa fa-undo"></i></span>';
 } else {
 	$u_button_html = $tb_header_html = '';
-	$btn_done = $btn_revert = '<td></td>';
+	$btn_done = $btn_revert = '';
 }
 
 ?>
+<style>
+	span.btn {
+		padding: 0px 13px;
+		margin-right: 5px;
+	}
+</style>
 <main role="main">
 	<div class="jumbotron">
 		<div class="container">
@@ -30,12 +36,12 @@ if ($user_role == "Admin" || $user_role == "Manager") {
 		}
 		?>
 		<div id="buttons-section">
-				<div id="show_filters" class='btn btn-outline-info'><i class="fa fa-filter"></i></div>
-				<a id="no_filters" href="/tickets" class="btn btn-outline-secondary hidden" onclick=' '>בטל סינון</a>
-				<?= $u_button_html ?>
-				<a href="?status=2" class='btn btn-outline-primary'>בוצעו</a>
+			<div id="show_filters" class='btn btn-outline-info mobile-no-hide'><i class="fa fa-filter"></i></div>
+			<a id="no_filters" href="/tickets" class="btn btn-outline-secondary hidden" onclick=' '>בטל סינון</a>
+			<?= $u_button_html ?>
+			<a href="?status=2" class='btn btn-outline-primary'>בוצעו</a>
 		</div>
-		<div class="form-row" id="filters_section" style="display:none;">
+		<div class="form-row mobile-hide" id="filters_section">
 			<div class="form-group ml-2">
 				<div class="input-group">
 					<div class="input-group-prepend">
@@ -101,7 +107,6 @@ if ($user_role == "Admin" || $user_role == "Manager") {
 						<th scope="col" class="mobile-hide">משימה למחסן</th>
 						<th scope="col" class="mobile-hide" style="width: 150px;">חברה</th>
 						<th scope="col" class="mobile-hide">סטטוס</th>
-						<th scope="col" style="min-width:90px;">יצרת דוח</th>
 						<?= $tb_header_html ?>
 					</tr>
 				</thead>
@@ -127,37 +132,38 @@ if ($user_role == "Admin" || $user_role == "Manager") {
 								<td class="align-middle mobile-hide mobile-data"><?= $ticket['city'] ?></td>
 								<td class="align-middle mobile-hide"><?= $ticket['warehouse_num'] ?></td>
 								<td class="align-middle mobile-hide mobile-data"><?= $company_name ?></td>
-								<?php
-								if ($ticket['status'] == 0) {
-									echo '<td class="align-middle mobile-hide mobile-data"><span class="badge badge-primary p-2">חדש</span ></td>';
-									echo '<td class="align-middle"><a href="/production/new_form?company_id=' . $ticket['company_id'] .
-										'&client_num=' . $ticket['client_num'] .
-										'&client_name=' . urlencode($ticket['client_name']) .
-										'&address=' . urlencode($ticket['address']) .
-										'&city=' . urlencode($ticket['city']) . '" class="btn btn-outline-info"><i class="fa fa-edit"></i></a></td>';
-								} else if ($ticket['status'] == 1) {
-									echo '<td class="align-middle mobile-hide mobile-data"><span class="badge badge-warning p-2">בטיפול</span ></td>';
-									echo $btn_done;
-								} else {
-									echo '<td class="align-middle mobile-hide mobile-data"><span class="badge badge-success p-2">בוצע</span ></td>';
-									echo $btn_revert;
-								}
-
-								if ($user_role == "Admin" || $user_role == "Manager") {
-									echo "<td class='align-middle'>";
-									echo '<select class="user_selection form-control" name="user"><option value="-1"></option>';
-									foreach ($users as $user) {
-										if ($user['id'] ==  $ticket['creator_id']) {
-											echo '<option value="' . $user['id'] . '" selected>' . htmlspecialchars($user['view_name']) . '</option>';
-										} else {
-											echo '<option value="' . $user['id'] . '">' . htmlspecialchars($user['view_name']) . '</option>';
-										}
+								<td class="align-middle mobile-hide mobile-data">
+									<?php
+									if ($ticket['status'] == 0) {
+										echo '<span class="badge badge-primary p-2">חדש ';
+										echo '<span class="btn btn-outline-secondary">
+									<a href="/production/new_form?company_id=' . $ticket['company_id'] .
+											'&client_num=' . $ticket['client_num'] .
+											'&client_name=' . urlencode($ticket['client_name']) .
+											'&address=' . urlencode($ticket['address']) .
+											'&city=' . urlencode($ticket['city']) . '" style="color:black;"><i class="fa fa-edit"></i></a></span ></span >';
+									} else if ($ticket['status'] == 1) {
+										echo '<span class="badge badge-warning p-2">בטיפול ' . $btn_done . '</span >';
+									} else {
+										echo '<span class="badge badge-success p-2">בוצע ' . $btn_revert . '</span >';
 									}
-									echo '</select></td>';
-									echo '<td class="align-middle">
+									echo '</td>';
+
+									if ($user_role == "Admin" || $user_role == "Manager") {
+										echo "<td class='align-middle'>";
+										echo '<select class="user_selection form-control" name="user"><option value="-1"></option>';
+										foreach ($users as $user) {
+											if ($user['id'] ==  $ticket['creator_id']) {
+												echo '<option value="' . $user['id'] . '" selected>' . htmlspecialchars($user['view_name']) . '</option>';
+											} else {
+												echo '<option value="' . $user['id'] . '">' . htmlspecialchars($user['view_name']) . '</option>';
+											}
+										}
+										echo '</select></td>';
+										echo '<td class="align-middle">
 									 <button id="' . $ticket['id'] . '" class="btn btn-outline-danger" onclick="deleteTicket(this.id)">
 									 <i class="fa fa-trash"></i></button></td>';
-								} ?>
+									} ?>
 							</tr>
 					<?php }
 					} ?>

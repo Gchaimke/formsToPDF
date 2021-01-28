@@ -26,14 +26,15 @@ $is_hiden = $hide_filter ? 'hidden' : '';
 		}
 		?>
 		<div id="buttons-section">
-			<div id="show_filters" class='btn btn-outline-info <?= $is_hiden ?>'><i class="fa fa-filter"></i></div>
+			<div id="show_filters" class='btn btn-outline-info <?= $is_hiden ?> mobile-no-hide'><i class="fa fa-filter"></i></div>
+			<a id="no_filters" href="/production/manage_forms" class="btn btn-outline-secondary hidden" onclick=' '>בטל סינון</a>
 			<?php
 			if ($user_role == 'Admin' || $user_role == 'Manager') { ?>
 				<div id="show_csv" class='btn btn-outline-info'><i class="fa fa-file-excel-o"></i></div>
 				<div id="csv_month" style="display:none;"></div>
 			<?php }	?>
 		</div>
-		<div id="search_section" class="hidden">
+		<div id="search_section" class="mobile-hide">
 			<form id="form" class='ltr'>
 				<div class="input-group mb-3">
 					<input id='inputSearch' type="text" class="form-control" placeholder="מספר תקלה,מספר לקוח,שם לקוח,יוצר" aria-label="Search in forms" aria-describedby="basic-addon2" autofocus>
@@ -44,7 +45,7 @@ $is_hiden = $hide_filter ? 'hidden' : '';
 				<div id='searchResult' class='rtl text-center'></div>
 			</form>
 		</div>
-		<div id="filters_section" class="form-row" style="display:none;">
+		<div id="filters_section" class="form-row mobile-hide">
 			<div class="form-group ml-2">
 				<div class="input-group">
 					<div class="input-group-prepend">
@@ -104,11 +105,6 @@ $is_hiden = $hide_filter ? 'hidden' : '';
 					<a href="" class="filter_button btn btn-success hidden" style="color: azure;" onclick=' '>סינון</a>
 				</div>
 			</div>
-			<div class="form-group ml-2">
-				<div class="input-group">
-					<a href="/production/manage_forms" class="btn btn-warning" style="color: azure;" onclick=' '>בטל סינון</a>
-				</div>
-			</div>
 		</div>
 		<nav aria-label="Checklist navigation" class="<?= $is_hiden ?>">
 			<?php if (isset($links)) {
@@ -116,11 +112,11 @@ $is_hiden = $hide_filter ? 'hidden' : '';
 			} ?>
 		</nav>
 		<div class="table-responsive">
-		<?php if (isset($html_table)) {
-			echo $html_table;
-		} else {
-			echo '<div>אין עדיין דוחות</div>';
-		} ?>
+			<?php if (isset($html_table)) {
+				echo $html_table;
+			} else {
+				echo '<div>אין עדיין דוחות</div>';
+			} ?>
 		</div>
 	</div>
 
@@ -199,6 +195,9 @@ $is_hiden = $hide_filter ? 'hidden' : '';
 	};
 
 	function set_options_selected() {
+		if (creator != '' || year != '' || month != '' || date != '' || company != '') {
+			$('#no_filters').toggle();
+		}
 		$('.creator_filter').val(creator);
 		$('.year_filter').val(year);
 		$('.month_filter').val(month);
