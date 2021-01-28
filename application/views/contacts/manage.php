@@ -14,32 +14,34 @@
 		}
 		?>
 		<a class="btn btn-success" href="/contacts/create"><i class="fa fa-user-plus"></i></a>
-		<table class="table">
-			<thead class="thead-dark">
-				<tr>
-					<th scope="col">שם</th>
-					<th scope="col">מאייל</th>
-					<th scope="col">חברה</th>
-					<th scope="col">ערוך</th>
-					<th scope="col">מחק</th>
-				</tr>
-			</thead>
-			<tbody>
-				<?php if (isset($contacts)) {
-					foreach ($contacts as $contact) {
-						echo '<tr id="' . $contact['id'] . '">';
-						echo  "<td class=\"align-middle\" style=\"width: 100px;\">{$contact['name']}</td>";
-						echo  '<td class="align-middle">' . $contact['email'] . '</td>';
-						echo  '<td class="align-middle">' . $contact['company'] . '</td>';
-						echo '<td class="align-middle"><a href="/contacts/edit/' . $contact['id'] .
-							'" class="btn btn-info"><i class="fa fa-edit"></i></a></td>';
-						echo '<td class="align-middle"><button id="' . $contact['id'] .
-							'" class="btn btn-danger" onclick="deleteClient(this.id)"><i class="fa fa-trash"></i></button></td>';
-						echo '</tr>';
-					}
-				} ?>
-			</tbody>
-		</table>
+		<div class="table-responsive">
+			<table class="table">
+				<thead class="thead-dark">
+					<tr>
+						<th scope="col" style="min-width: 150px;">שם</th>
+						<th scope="col">מאייל</th>
+						<th scope="col" style="min-width: 150px;">קבוצה</th>
+						<th scope="col">ערוך</th>
+						<th scope="col">מחק</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php if (isset($contacts)) {
+						foreach ($contacts as $contact) {
+							echo '<tr id="' . $contact['id'] . '">';
+							echo  '<td class="align-middle">' . $contact['name'] . '</td>';
+							echo  '<td class="align-middle">' . $contact['email'] . '</td>';
+							echo  '<td class="align-middle">' . $contact['company'] . '</td>';
+							echo '<td class="align-middle"><a href="/contacts/edit/' . $contact['id'] .
+								'" class="btn btn-info"><i class="fa fa-edit"></i></a></td>';
+							echo '<td class="align-middle"><button id="' . $contact['id'] .
+								'" class="btn btn-danger" onclick="deleteClient(this.id)"><i class="fa fa-trash"></i></button></td>';
+							echo '</tr>';
+						}
+					} ?>
+				</tbody>
+			</table>
+		</div>
 	</div>
 </main>
 <script>
