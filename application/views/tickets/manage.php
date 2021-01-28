@@ -18,6 +18,10 @@ if ($user_role == "Admin" || $user_role == "Manager") {
 		padding: 0px 13px;
 		margin-right: 5px;
 	}
+
+	span.badge {
+		width: 100px;
+	}
 </style>
 <main role="main">
 	<div class="jumbotron">
