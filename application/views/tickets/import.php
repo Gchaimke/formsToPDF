@@ -56,7 +56,7 @@
 				echo "</tbody></table>".$msg;
 			}
 			?>
-			<div class="form-group col-md-6 mt-3">
+			<div class="form-group col-md-8 mt-3">
 				<div class="input-group">
 					<div class="input-group-prepend">
 						<div class="input-group-text">הוסף לחברת</div>

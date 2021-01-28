@@ -1,7 +1,6 @@
 <?php
 if (isset($this->session->userdata['logged_in'])) {
 	$user_role = $this->session->userdata['logged_in']['role'];
-	$user_id = $this->session->userdata['logged_in']['id'];
 }
 if ($user_role == "Admin" || $user_role == "Manager") {
 	$u_button_html = '<a href="/tickets/uploader" class="btn btn-outline-info"><i class="fa fa-file-excel-o"> להעלות קובץ משימות </i></a>';

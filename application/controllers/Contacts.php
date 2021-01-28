@@ -4,6 +4,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Contacts extends CI_Controller
 {
 
+    private $user;
     public function __construct()
     {
         parent::__construct();
@@ -11,6 +12,14 @@ class Contacts extends CI_Controller
         $this->load->model('Users_model');
         $this->load->model('Companies_model');
         $this->load->model('Admin_model');
+        if (isset($this->session->userdata['logged_in'])) {
+            $this->user = $this->session->userdata['logged_in'];
+            if ($this->user['role'] != "Admin" && $this->user['role'] != "Manager") {
+                header("location: /");
+            }
+        } else {
+            header("location: /users/logout");
+        }
     }
 
     public function index($msg = '')
@@ -19,7 +28,6 @@ class Contacts extends CI_Controller
         if ($msg != '') {
             $data['message_display'] = $msg;
         }
-        $this->Admin_model->add_field('contacts','users_list'); //one time update db to add new field
         $data['contacts'] = $this->Contacts_model->get();
         $this->load->view('header');
         $this->load->view('main_menu');
@@ -37,7 +45,7 @@ class Contacts extends CI_Controller
             $data['companies'] = $this->Companies_model->getCompanies();
             $this->load->view('header');
             $this->load->view('main_menu');
-            $this->load->view('contacts/create',$data);
+            $this->load->view('contacts/create', $data);
             $this->load->view('footer');
         } else {
             $data = array(
@@ -95,11 +103,9 @@ class Contacts extends CI_Controller
 
     public function delete()
     {
-        $role = ($this->session->userdata['logged_in']['role']);
-        if ($role == "Admin") {
+        if ($this->user['role'] == "Admin") {
             $id = $_POST['id'];
             $this->Contacts_model->delete($id);
         }
     }
-
 }

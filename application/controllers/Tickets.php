@@ -3,6 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Tickets extends CI_Controller
 {
+    private $user;
     public function __construct()
     {
         parent::__construct();
@@ -11,6 +12,11 @@ class Tickets extends CI_Controller
         $this->load->model('Companies_model');
         $this->load->model('Production_model');
         $this->load->model('Tickets_model');
+        if (isset($this->session->userdata['logged_in'])) {
+            $this->user = $this->session->userdata['logged_in'];
+        } else {
+            header("location: /users/logout");
+        }
     }
 
     public function index()
@@ -20,10 +26,8 @@ class Tickets extends CI_Controller
         $data['company'] = isset($_GET['company']) ? $_GET['company'] : '';
         $data['city'] = isset($_GET['city']) ? $_GET['city'] : '';
         $data['status'] = isset($_GET['status']) ? $_GET['status'] : '';
-        $user_role = $this->session->userdata['logged_in']['role'];
-        $user_id = $this->session->userdata['logged_in']['id'];
-        if ($user_role == 'User') {
-            $data['tickets'] = $this->Tickets_model->get_all($user_id, $data['company'], $data['city'], $data['status']);
+        if ($this->user['role'] == 'User') {
+            $data['tickets'] = $this->Tickets_model->get_all($this->user['id'], $data['company'], $data['city'], $data['status']);
         } else {
             $data['tickets'] = $this->Tickets_model->get_all($data['creator'], $data['company'], $data['city'], $data['status']);
         }
@@ -37,8 +41,7 @@ class Tickets extends CI_Controller
 
     public function uploader()
     {
-        $user_id = $this->session->userdata['logged_in']['id'];
-        $file_name = 'Uploads/tmp/' . $user_id . '/last_uploaded.xlsx';
+        $file_name = 'Uploads/tmp/' . $this->user['id'] . '/last_uploaded.xlsx';
         if (!file_exists($file_name)) {
             $file_name = '';
         }
@@ -64,13 +67,12 @@ class Tickets extends CI_Controller
 
     public function upload_xlsx($upload_folder = 'Uploads/tmp')
     {
-        $user_id = $this->session->userdata['logged_in']['id'];
-        if (!file_exists($upload_folder . '/' . $user_id)) {
-            mkdir($upload_folder . '/' . $user_id, 0770, true);
-            copy('application/index.html', $upload_folder . '/' . $user_id . 'index.html');
+        if (!file_exists($upload_folder . '/' . $this->user['id'])) {
+            mkdir($upload_folder . '/' . $this->user['id'], 0770, true);
+            copy('application/index.html', $upload_folder . '/' . $this->user['id'] . 'index.html');
         }
         $config = array(
-            'upload_path' => $upload_folder . '/' . $user_id,
+            'upload_path' => $upload_folder . '/' . $this->user['id'],
             'file_name' => 'last_uploaded',
             'overwrite' => TRUE,
             'allowed_types' => 'xlsx|xls',
@@ -103,9 +105,9 @@ class Tickets extends CI_Controller
                     'status' =>  'new'
                 );
                 if ($this->Tickets_model->add($sql_data)) {
-                    $tmp_s .= $sql_data['client_num'].',';
+                    $tmp_s .= $sql_data['client_num'] . ',';
                 } else {
-                    $tmp_f .= $sql_data['client_num'].',';
+                    $tmp_f .= $sql_data['client_num'] . ',';
                 }
             }
             $items['inserted'] = explode(',', $tmp_s);
@@ -138,8 +140,7 @@ class Tickets extends CI_Controller
 
     public function delete()
     {
-        $role = ($this->session->userdata['logged_in']['role']);
-        if ($role == "Admin") {
+        if ($this->user['role'] == "Admin") {
             $id = $_POST['id'];
             $this->Tickets_model->delete($id);
         }

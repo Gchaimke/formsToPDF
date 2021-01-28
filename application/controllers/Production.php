@@ -3,6 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Production extends CI_Controller
 {
+    private $user;
     public function __construct()
     {
         parent::__construct();
@@ -11,13 +12,20 @@ class Production extends CI_Controller
         $this->load->model('Companies_model');
         $this->load->model('Contacts_model');
         $this->load->model('Tickets_model');
+        if (isset($this->session->userdata['logged_in'])) {
+            $this->user = $this->session->userdata['logged_in'];
+        } else{
+            header("location: /users/logout");
+        }
     }
 
     public function index()
     {
         $data = array();
         $data['companies'] = $this->Companies_model->getCompanies();
-        $data['user'] = $this->Users_model->getUser($this->session->userdata['logged_in']['id'])[0];
+        if (isset($this->user['id'])) {
+            $data['user'] = $this->Users_model->getUser($this->user['id'])[0];
+        }
         $this->load->view('header');
         $this->load->view('main_menu');
         $this->load->view('production/dashboard', $data);
@@ -38,7 +46,7 @@ class Production extends CI_Controller
 
         $data['contacts'] = $this->Contacts_model->get();
         $data['hide_filds'] = $this->hide_filds($data['companie']['view_filds']);
-        $data['user'] = $this->Users_model->getUser($this->session->userdata['logged_in']['id']);
+        $data['user'] = $this->Users_model->getUser($this->user['id']);
         $this->load->view('header');
         $this->load->view('main_menu');
         $this->load->view('production/new_form', $data);
@@ -47,8 +55,7 @@ class Production extends CI_Controller
 
     public function add_form()
     {
-        $creator_id = $this->session->userdata['logged_in']['id'];
-        $creator_name = $this->Users_model->getUser($creator_id)[0]['view_name'];
+        $creator_name = $this->Users_model->getUser($this->user['id'])[0]['view_name'];
         $this->form_validation->set_rules('date', 'date', 'trim|required|xss_clean');
         $this->form_validation->set_rules('company', 'company', 'trim|xss_clean');
         $this->form_validation->set_rules('client_num', 'client_num', 'trim|xss_clean');
@@ -76,7 +83,7 @@ class Production extends CI_Controller
         if (!$this->form_validation->run() == FALSE) {
             $data = array(
                 'date' =>  $this->input->post('date'),
-                'creator_id' =>  $creator_id,
+                'creator_id' =>  $this->user['id'],
                 'creator_name' =>  $creator_name,
                 'company' =>  $this->input->post('company'),
                 'client_num' =>  $this->input->post('client_num'),
@@ -256,24 +263,23 @@ class Production extends CI_Controller
         $params['month'] = isset($_GET['month']) ? $_GET['month'] : '';
         $params['date'] = isset($_GET['date']) ? $_GET['date'] : '';
         $params["hide_filter"] = false;
-        $user_role = $this->session->userdata['logged_in']['role'];
-        $user_id = $this->session->userdata['logged_in']['id'];
+        $user_role = $this->user['role'];
         $limit_per_page = 50;
         $segment = 3;
         $start_index = ($this->uri->segment($segment)) ? $this->uri->segment($segment) : 0;
         if ($user_role == 'Admin' || $user_role == 'Manager') {
             $total_records = $this->Production_model->get_total($params['creator'], $params['company'], $params['year'], $params['month'], $params['date']);
         } else {
-            $total_records = $this->Production_model->get_total($user_id, $params['company'], $params['year'], $params['month'], $params['date']);
+            $total_records = $this->Production_model->get_total($this->user['id'], $params['company'], $params['year'], $params['month'], $params['date']);
         }
         if ($total_records > 0) {
             if ($user_role == 'Admin' || $user_role == 'Manager') {
-                $results = $this->Production_model->get_current_forms_records($limit_per_page, $start_index,$params['creator'] , $params['company'], $params['year'], $params['month'], $params['date']);
+                $results = $this->Production_model->get_current_forms_records($limit_per_page, $start_index, $params['creator'], $params['company'], $params['year'], $params['month'], $params['date']);
                 $params["html_table"] = $this->build_forms_table($results);
                 $this->pagination->initialize($this->pagination_config($total_records, $limit_per_page, $url, $segment));
                 $params["links"] = $this->pagination->create_links();
             } else {
-                $results = $this->Production_model->get_current_forms_records($limit_per_page, $start_index, $user_id, $params['company'], $params['year'], $params['month'], $params['date']);
+                $results = $this->Production_model->get_current_forms_records($limit_per_page, $start_index, $this->user['id'], $params['company'], $params['year'], $params['month'], $params['date']);
                 $params["html_table"] = $this->build_forms_table($results);
                 $this->pagination->initialize($this->pagination_config($total_records, $limit_per_page, $url, $segment));
                 $params["links"] = $this->pagination->create_links();
@@ -289,8 +295,7 @@ class Production extends CI_Controller
 
     function build_forms_table($results)
     {
-        $user_role = $this->session->userdata['logged_in']['role'];
-        $user_id = $this->session->userdata['logged_in']['id'];
+        $user_role = $this->user['role'];
         $users = $this->Users_model->getUsers();
         $html_table =  '<table class="table table-hover mb-4" "><thead class="thead-dark"><tr>
 						<th scope="col" style="width:100px;">תאריך</th>
@@ -311,7 +316,7 @@ class Production extends CI_Controller
         if ($results) {
             foreach ($results as $data) {
                 if ($user_role != 'Admin' && $user_role != 'Manager') {
-                    if ($data->creator_id != $user_id) {
+                    if ($data->creator_id != $this->user['id']) {
                         continue;
                     }
                 }
@@ -389,7 +394,7 @@ class Production extends CI_Controller
 
     public function delete_form()
     {
-        $role = $this->session->userdata['logged_in']['role'];
+        $role = $this->user['role'];
         $this->form_validation->set_rules('id', 'Id', 'trim|xss_clean');
         $id = $this->input->post('id');
         if ($role == 'Admin') {
@@ -460,7 +465,7 @@ class Production extends CI_Controller
         }
 
         $level_arr = array('INFO', 'CREATE', 'TRASH', 'DELETE', 'ERROR');
-        $user = $this->session->userdata['logged_in']['name'];
+        $user = $this->user['name'];
 
         $file_name = date("m-d-Y");
         $log_file = APPPATH . "logs/admin/" . $file_name . ".log";
@@ -527,7 +532,7 @@ class Production extends CI_Controller
 
     function export_to($str = '1')
     {
-        $role = $this->session->userdata['logged_in']['role'];
+        $role = $this->user['role'];
         $user = $this->security->xss_clean($this->input->get('creator'));
         $year = $this->security->xss_clean($this->input->get('year'));
         $company = $this->security->xss_clean($this->input->get('company'));
@@ -619,7 +624,7 @@ class Production extends CI_Controller
         $this->form_validation->set_rules('wan_ip', 'wan_ip', 'trim|xss_clean');
         $this->form_validation->set_rules('clock_mac', 'clock_mac', 'trim|xss_clean');
         $this->form_validation->set_rules('company_id', 'company_id', 'trim|xss_clean');
-        
+
         if (!$this->form_validation->run() == FALSE) {
             $company_id = $this->input->post('company_id');
             $template = new Template_editor('Uploads/tEditor/' . $company_id . '/template.txt');

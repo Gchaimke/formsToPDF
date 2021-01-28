@@ -1,9 +1,8 @@
 <?php
-if (isset($this->session->userdata['logged_in']) && $this->session->userdata['logged_in']['id'] != '') {
-  $id = ($this->session->userdata['logged_in']['id']);
-  $username = ($this->session->userdata['logged_in']['name']);
+if (isset($this->session->userdata['logged_in'])) {
+  $user_id = ($this->session->userdata['logged_in']['id']);
   $user_view_name = ($this->session->userdata['logged_in']['view_name']);
-  $role = ($this->session->userdata['logged_in']['role']);
+  $user_role = ($this->session->userdata['logged_in']['role']);
 }
 ?>
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark main-menu ltr">
@@ -17,8 +16,8 @@ if (isset($this->session->userdata['logged_in']) && $this->session->userdata['lo
       <li class="nav-item mx-1 mt-1 mt-md-0 "><a class="nav-link btn btn-sm btn-outline-warning" href="/tickets">משימות</a></li>
       <li class="nav-item mx-1 mt-1 mt-md-0 "><a class="nav-link btn btn-sm btn-outline-success" href="/"> דוח חדש</a></li>
       <li class="nav-item mx-1 mt-1 mt-md-0 "><a class="nav-link btn btn-sm btn-outline-info" href="/production/manage_forms"> רשימת דוחות</a></li>
-      <?php if ($role == 'Admin') { ?>
-        <li class="nav-item mx-1 mt-1 mt-md-0 "><a class="nav-link btn btn-sm btn-outline-danger" href="/admin/view_charts/<?php echo $id ?>"> כספים </a></li>
+      <?php if ($user_role == 'Admin') { ?>
+        <li class="nav-item mx-1 mt-1 mt-md-0 "><a class="nav-link btn btn-sm btn-outline-danger" href="/admin/view_charts/<?php echo $user_id ?>"> כספים </a></li>
       <?php } ?>
     </ul>
   </div>
@@ -30,19 +29,19 @@ if (isset($this->session->userdata['logged_in']) && $this->session->userdata['lo
           שלום <?php echo isset($user_view_name) ? $user_view_name : "" ?>
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <?php if ($role == 'Admin' || $role == 'Manager') { ?>
+          <?php if ($user_role == 'Admin' || $user_role == 'Manager') { ?>
             <a class="dropdown-item p-2 px-md-2" href="/users">משתמשים</a>
             <a class="dropdown-item p-2 px-md-2" href="/companies">חברות</a>
             <a class="dropdown-item p-2 px-md-2" href="/contacts">אנשי קשר</a>
             <hr>
           <?php } ?>
-          <?php if ($role == 'Admin') { ?>
+          <?php if ($user_role == 'Admin') { ?>
             <a class="dropdown-item p-2 px-md-2" href="/admin/settings">הגדרות</a>
             <hr>
           <?php } ?>
 
 
-          <a class="dropdown-item p-2 px-md-2" href="/users/edit/<?php echo isset($id) ? $id : "" ?>">עדכן פרטים שלי</a>
+          <a class="dropdown-item p-2 px-md-2" href="/users/edit/<?php echo isset($user_id) ? $user_id : "" ?>">עדכן פרטים שלי</a>
           <a class="dropdown-item p-2 px-md-2" href="/users/logout">צא ממערכת</a>
         </div>
       </li>

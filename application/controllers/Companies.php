@@ -3,11 +3,19 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Companies extends CI_Controller
 {
-
+    private $user;
     public function __construct()
     {
         parent::__construct();
         $this->load->model('Companies_model');
+        if (isset($this->session->userdata['logged_in'])) {
+            $this->user = $this->session->userdata['logged_in'];
+            if($this->user['role']!="Admin" && $this->user['role']!="Manager"){
+                header("location: /");
+            }
+        } else{
+            header("location: /users/logout");
+        }
     }
 
     public function index($msg = '')
@@ -17,7 +25,7 @@ class Companies extends CI_Controller
             $data['message_display'] = $msg;
         }
         $data['companies'] = $this->Companies_model->getCompanies();
-        $data['role'] = $this->session->userdata['logged_in']['role'];
+        $data['role'] = $this->user['role'];
         $this->load->view('header');
         $this->load->view('main_menu');
         $this->load->view('companies/manage', $data);

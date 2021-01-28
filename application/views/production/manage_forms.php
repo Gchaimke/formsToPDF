@@ -1,9 +1,6 @@
 <?php
 if (isset($this->session->userdata['logged_in'])) {
 	$user_role = $this->session->userdata['logged_in']['role'];
-	$user_id = $this->session->userdata['logged_in']['id'];
-} else {
-	header("location: /");
 }
 $creator_id = isset($creator) ? $creator : '';
 $company_name = isset($company) ? $company : '';

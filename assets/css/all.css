@@ -42,6 +42,10 @@ main {
     text-align: right;
 }
 
+.dropdown-menu.show {
+    left: auto;
+}
+
 input.form-control {
     text-align: center;
 }

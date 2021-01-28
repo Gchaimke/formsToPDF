@@ -1,6 +1,7 @@
 <?php
 class Admin extends CI_Controller
 {
+	private $user;
 	public function __construct()
 	{
 		parent::__construct();
@@ -11,6 +12,14 @@ class Admin extends CI_Controller
 		$this->load->model('Contacts_model');
 		$this->load->model('Tickets_model');
 		$this->load->library('pagination');
+		if (isset($this->session->userdata['logged_in'])) {
+            $this->user = $this->session->userdata['logged_in'];
+            if($this->user['role']!="Admin"){
+                header("location: /");
+            }
+        } else{
+            header("location: /users/logout");
+        }
 	}
 
 	function settings()
@@ -20,6 +29,8 @@ class Admin extends CI_Controller
 		$this->Admin_model->add_field('forms', 'new_serial', 'VARCHAR', 100); //one time update db to add new field
 		$this->Admin_model->add_field('tickets', 'city', 'VARCHAR', 150); //one time update db to add new field
 		$this->Admin_model->add_field('forms', 'city', 'VARCHAR', 150); //one time update db to add new field
+		$this->Admin_model->add_field('users', 'companies_list'); //one time update db to add new field
+		$this->Admin_model->add_field('contacts', 'users_list'); //one time update db to add new field
 
 		if (!file_exists('Uploads/tEditor')) {
 			mkdir('Uploads/tEditor', 0770, true);
@@ -82,43 +93,45 @@ class Admin extends CI_Controller
 		$data['response'] = '';
 		if (!$this->db->table_exists('users')) {
 			$this->Users_model->create();
-			$data['response'] .= "Table 'users' created!<br>" . PHP_EOL;
+			$data['response'] .= "Table 'users' created! ";
 		} else {
-			$data['response'] .= "Table 'users' exists!<br>" . PHP_EOL;
+			$data['response'] .= "Table 'users' exists! ";
 		}
 		if (!$this->db->table_exists('companies')) {
 			$this->Companies_model->create();
-			$data['response'] .= "Table 'companies' created!<br>" . PHP_EOL;
+			$data['response'] .= "Table 'companies' created! ";
 		} else {
-			$data['response'] .= "Table 'companies' exists!<br>" . PHP_EOL;
+			$data['response'] .= "Table 'companies' exists! ";
 		}
 		if (!$this->db->table_exists('forms')) {
 			$this->Production_model->create();
-			$data['response'] .= "Table 'forms' created!<br>" . PHP_EOL;
+			$data['response'] .= "Table 'forms' created! ";
 		} else {
-			$data['response'] .= "Table 'forms' exists!<br>" . PHP_EOL;
+			$data['response'] .= "Table 'forms' exists! ";
 		}
 		if (!$this->db->table_exists('contacts')) {
 			$this->Contacts_model->create();
-			$data['response'] .= "Table 'contacts' created!<br>" . PHP_EOL;
+			$data['response'] .= "Table 'contacts' created! ";
 		} else {
-			$data['response'] .= "Table 'contacts' exists!<br>" . PHP_EOL;
+			$data['response'] .= "Table 'contacts' exists! ";
 		}
-		if (!$this->db->table_exists('tickest')) {
+		if (!$this->db->table_exists('tickets')) {
 			$this->Tickets_model->create();
-			$data['response'] .= "Table 'tickest' created!<br>" . PHP_EOL;
+			$data['response'] .= "Table 'tickets' created! ";
 		} else {
-			$data['response'] .= "Table 'tickest' exists!<br>" . PHP_EOL;
+			$data['response'] .= "Table 'tickets' exists! ";
 		}
 		if (!$this->db->table_exists('settings')) {
 			$this->Admin_model->create();
 			$data['settings'] = $this->Admin_model->getSettings();
-			$data['response'] .= "Table 'settings' created!<br>" . PHP_EOL;
+			$data['response'] .= "Table 'settings' created! ";
 		} else {
-			$data['response'] .= "Table 'settings' exists!<br>" . PHP_EOL;
+			$data['response'] .= "Table 'settings' exists! ";
 			$data['settings'] = $this->Admin_model->getSettings();
 		}
-		echo $data['response'];
+		$response = $data['response'];
+		$this->log_data(json_encode($response));
+		echo $response;
 	}
 
 	public function view_log()
@@ -227,10 +240,9 @@ class Admin extends CI_Controller
 			mkdir('application/logs/admin', 0770, true);
 		}
 		$level_arr = array('INFO', 'CREATE', 'TRASH', 'DELETE');
-		$user = $this->session->userdata['logged_in']['name'];
 		$log_file = APPPATH . "logs/admin/" . date("m-d-Y") . ".log";
 		$fp = fopen($log_file, 'a');
-		fwrite($fp, $level_arr[$level] . " - " . date("H:i:s") . " --> " . $user . " - " . $msg . PHP_EOL);
+		fwrite($fp, $level_arr[$level] . " - " . date("H:i:s") . " --> " . $this->user['name'] . " - " . $msg . PHP_EOL);
 		fclose($fp);
 	}
 
@@ -344,6 +356,7 @@ class Admin extends CI_Controller
 			$empty &= is_dir($file) && $this->RemoveEmptySubFolders($file);
 		}
 		echo $msg;
+		$this->log_data($msg);
 		return $empty && rmdir($path);
 	}
 
