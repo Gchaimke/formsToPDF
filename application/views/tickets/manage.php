@@ -75,9 +75,9 @@ if ($user_role == "Admin" || $user_role == "Manager") {
 					</div>
 					<select class="status_filter">
 						<option value="">-ללא סינון-</option>
-						<option value="new">new</option>
-						<option value="working">working</option>
-						<option value="done">done</option>
+						<option value=0>new</option>
+						<option value=1>working</option>
+						<option value=2>done</option>
 					</select>
 				</div>
 			</div>
@@ -118,7 +118,7 @@ if ($user_role == "Admin" || $user_role == "Manager") {
 								}
 							} ?>
 							<tr id="<?= $ticket['id'] ?>" class="data-row">
-								<?php if ($ticket['status'] != "new") : ?>
+								<?php if ($ticket['status'] != 0) : ?>
 									<td class="align-middle view_name"><a href='/production/form_search/<?= $ticket['client_num'] ?>'><?= $ticket['client_num'] ?></a></td>
 								<?php else : ?>
 									<td class="align-middle view_name"><?= $ticket['client_num'] ?></td>
@@ -130,18 +130,18 @@ if ($user_role == "Admin" || $user_role == "Manager") {
 								<td class="align-middle mobile-hide"><?= $ticket['warehouse_num'] ?></td>
 								<td class="align-middle mobile-hide mobile-data"><?= $company_name ?></td>
 								<?php
-								if ($ticket['status'] == "new") {
-									echo '<td class="align-middle mobile-hide mobile-data"><span class="badge badge-primary p-2">' . $ticket['status'] . '</span ></td>';
+								if ($ticket['status'] == 0) {
+									echo '<td class="align-middle mobile-hide mobile-data"><span class="badge badge-primary p-2">חדש</span ></td>';
 									echo '<td class="align-middle"><a href="/production/new_form?company_id=' . $ticket['company_id'] .
 										'&client_num=' . $ticket['client_num'] .
 										'&client_name=' . urlencode($ticket['client_name']) .
 										'&address=' . urlencode($ticket['address']) .
 										'&city=' . urlencode($ticket['city']) . '" class="btn btn-outline-info"><i class="fa fa-edit"></i></a></td>';
-								} else if ($ticket['status'] == "working") {
-									echo '<td class="align-middle mobile-hide mobile-data"><span class="badge badge-warning p-2">' . $ticket['status'] . '</span ></td>';
+								} else if ($ticket['status'] == 1) {
+									echo '<td class="align-middle mobile-hide mobile-data"><span class="badge badge-warning p-2">בטיפול</span ></td>';
 									echo $btn_done;
 								} else {
-									echo '<td class="align-middle mobile-hide mobile-data"><span class="badge badge-success p-2">' . $ticket['status'] . '</span ></td>';
+									echo '<td class="align-middle mobile-hide mobile-data"><span class="badge badge-success p-2">בוצע</span ></td>';
 									echo $btn_revert;
 								}
 

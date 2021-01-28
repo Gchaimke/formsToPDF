@@ -37,9 +37,9 @@ class Tickets extends CI_Controller
         $this->load->view('main_menu');
         $this->load->view('tickets/manage', $data);
         $this->load->view('footer');
-        $this->Tickets_model->update_status_all('new',0);
-        $this->Tickets_model->update_status_all('working',1);
-        $this->Tickets_model->update_status_all('done',2);
+        //$this->Tickets_model->update_status_all('new',0);
+        //$this->Tickets_model->update_status_all('working',1);
+        //$this->Tickets_model->update_status_all('done',2);
     }
 
     public function uploader()
