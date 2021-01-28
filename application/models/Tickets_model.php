@@ -100,7 +100,11 @@ class Tickets_model extends CI_Model
 		$this->db->select('*');
 		$this->db->from('tickets');
 		if ($user_id != '') {
-			$this->db->where("creator_id =$user_id");
+			if ($user_id > 0) {
+				$this->db->where("creator_id =$user_id");
+			} else {
+				$this->db->where("creator_id is null");
+			}
 		}
 		if ($user_role == "User") {
 			$this->db->where("creator_id =$current_user_id");

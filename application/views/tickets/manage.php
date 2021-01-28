@@ -43,6 +43,7 @@ if ($user_role == "Admin" || $user_role == "Manager") {
 					</div>
 					<select class="creator_filter">
 						<option value="">-ללא סינון-</option>
+						<option value="0">ללא שיוך</option>
 						<?php foreach ($users as $user) {
 							echo "<option value='{$user['id']}'>{$user['view_name']}</option>";
 						} ?>
