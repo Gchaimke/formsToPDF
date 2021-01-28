@@ -298,7 +298,7 @@ class Production extends CI_Controller
         $user_role = $this->user['role'];
         $users = $this->Users_model->getUsers();
         $html_table =  '<table class="table table-hover mb-4" "><thead class="thead-dark"><tr>
-						<th scope="col" style="width:100px;">תאריך</th>
+						<th scope="col" style="width:115px;">תאריך</th>
 						<th scope="col">יוצר</th>
 						<th scope="col" class="mobile-hide">מספר לקוח</th>
 						<th scope="col" class="mobile-hide">שם הלקוח</th>
