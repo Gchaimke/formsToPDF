@@ -4,7 +4,7 @@ if (isset($this->session->userdata['logged_in'])) {
 }
 if ($user_role == "Admin" || $user_role == "Manager") {
 	$u_button_html = '<a href="/tickets/uploader" class="btn btn-outline-info"><i class="fa fa-file-excel-o"> להעלות קובץ משימות </i></a>';
-	$tb_header_html = '<th scope="col" style="min-width:140px;">טכנאי</th><th scope="col">מחק</th>';
+	$tb_header_html = '<th scope="col" style="min-width:120px;">טכנאי</th><th scope="col">מחק</th>';
 	$btn_done = '<span class="done-ticket btn btn-outline-success"><i class="fa fa-check"></i></span>';
 	$btn_revert = '<span class="revert btn btn-outline-secondary"><i class="fa fa-undo"></i></span>';
 } else {
@@ -106,7 +106,7 @@ if ($user_role == "Admin" || $user_role == "Manager") {
 						<th scope="col" class="mobile-hide" style="width: 100px;">עיר</th>
 						<th scope="col" class="mobile-hide">משימה למחסן</th>
 						<th scope="col" class="mobile-hide" style="width: 150px;">חברה</th>
-						<th scope="col" class="mobile-hide">סטטוס</th>
+						<th scope="col">סטטוס</th>
 						<?= $tb_header_html ?>
 					</tr>
 				</thead>
@@ -132,10 +132,10 @@ if ($user_role == "Admin" || $user_role == "Manager") {
 								<td class="align-middle mobile-hide mobile-data"><?= $ticket['city'] ?></td>
 								<td class="align-middle mobile-hide"><?= $ticket['warehouse_num'] ?></td>
 								<td class="align-middle mobile-hide mobile-data"><?= $company_name ?></td>
-								<td class="align-middle mobile-hide mobile-data">
+								<td class="align-middle">
 									<?php
 									if ($ticket['status'] == 0) {
-										echo '<span class="badge badge-primary p-2">חדש ';
+										echo '<span class="badge badge-primary">חדש ';
 										echo '<span class="btn btn-outline-secondary">
 									<a href="/production/new_form?company_id=' . $ticket['company_id'] .
 											'&client_num=' . $ticket['client_num'] .
@@ -143,9 +143,9 @@ if ($user_role == "Admin" || $user_role == "Manager") {
 											'&address=' . urlencode($ticket['address']) .
 											'&city=' . urlencode($ticket['city']) . '" style="color:black;"><i class="fa fa-edit"></i></a></span ></span >';
 									} else if ($ticket['status'] == 1) {
-										echo '<span class="badge badge-warning p-2">בטיפול ' . $btn_done . '</span >';
+										echo '<span class="badge badge-warning">בטיפול ' . $btn_done . '</span >';
 									} else {
-										echo '<span class="badge badge-success p-2">בוצע ' . $btn_revert . '</span >';
+										echo '<span class="badge badge-success">בוצע ' . $btn_revert . '</span >';
 									}
 									echo '</td>';
 
