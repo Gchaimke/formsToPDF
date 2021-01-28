@@ -547,7 +547,7 @@ class Production extends CI_Controller
         echo "\xEF\xBB\xBF";
         $fp = fopen('php://output', 'w');
 
-        $tmp_arr = array(array('תאריך', 'יוצר', 'מספר לקוח', 'שם הלקוח', 'מיקום', 'סוג תקלה', 'חברה נותנת שירות', 'שעת התחלת', 'שעת סיום', 'הערות', 'סריאלי ישן', 'סריאלי חדש', 'מחיר'));
+        $tmp_arr = array(array('תאריך', 'יוצר', 'מספר לקוח', 'שם הלקוח', 'מיקום', 'עיר', 'סוג תקלה', 'חברה נותנת שירות', 'שעת התחלת', 'שעת סיום', 'הערות', 'סריאלי ישן', 'סריאלי חדש', 'מחיר'));
         $price = '';
         foreach ($data as  $line) {
             if ($role == 'Admin') {
@@ -559,6 +559,7 @@ class Production extends CI_Controller
                 $line['client_num'],
                 $line['client_name'],
                 $line['place'],
+                $line['city'],
                 $line['issue_kind'],
                 $line['company'],
                 $line['start_time'],

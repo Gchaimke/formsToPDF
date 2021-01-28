@@ -382,4 +382,5 @@ $('#show_csv').click(function () {
 
 $('#show_filters').click(function () {
     $('#filters_section').toggle();
+    $('#search_section').toggle();
 });

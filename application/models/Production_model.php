@@ -168,7 +168,7 @@ class Production_model extends CI_Model
 		if ($this->db->table_exists('forms')) {
 			if ($search != "") {
 				$search = urldecode($search);
-				$condition = "issue_num LIKE '%$search%' OR client_num LIKE '%$search%' OR client_name LIKE '%$search%' OR creator_name LIKE '%$search%' OR place LIKE '%$search%'";
+				$condition = "issue_num LIKE '%$search%' OR client_num LIKE '%$search%' OR client_name LIKE '%$search%' OR creator_name LIKE '%$search%' OR place LIKE '%$search%' OR city LIKE '%$search%'";
 				$this->db->where($condition);
 				$this->db->select('*');
 				$this->db->from('forms');

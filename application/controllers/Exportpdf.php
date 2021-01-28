@@ -104,6 +104,7 @@ class Exportpdf extends CI_Controller
             'client_name' => 'שם לקוח:',
             'issue_kind' => 'סוג תקלה\ התקנה:',
             'place' => 'מיקום',
+            'city' => 'עיר',
             'start_time' => 'שעת התחלה:',
             'end_time' => 'שעת סיום:',
             'manager' => 'אחראי',
