@@ -30,8 +30,10 @@ if ($user_role == "Admin" || $user_role == "Manager") {
 		}
 		?>
 		<div id="buttons-section">
-			<div id="show_filters" class='btn btn-outline-info'><i class="fa fa-filter"></i></div>
-			<?= $u_button_html ?>
+				<div id="show_filters" class='btn btn-outline-info'><i class="fa fa-filter"></i></div>
+				<a id="no_filters" href="/tickets" class="btn btn-outline-secondary hidden" onclick=' '>בטל סינון</a>
+				<?= $u_button_html ?>
+				<a href="?status=2" class='btn btn-outline-primary'>בוצעו</a>
 		</div>
 		<div class="form-row" id="filters_section" style="display:none;">
 			<div class="form-group ml-2">
@@ -84,11 +86,6 @@ if ($user_role == "Admin" || $user_role == "Manager") {
 			<div class="form-group ml-2">
 				<div class="input-group">
 					<a href="" class="filter_button btn btn-success hidden" style="color: azure;" onclick=' '>סינון</a>
-				</div>
-			</div>
-			<div class="form-group ml-2">
-				<div class="input-group">
-					<a href="/tickets" class="btn btn-outline-success" style="color: #a4e0a3;" onclick=' '>בטל סינון</a>
 				</div>
 			</div>
 		</div>
@@ -204,6 +201,9 @@ if ($user_role == "Admin" || $user_role == "Manager") {
 	}
 
 	function set_options_selected() {
+		if (creator != '' || company != '' || status != '' || city != '') {
+			$('#no_filters').toggle();
+		}
 		$('.creator_filter').val(creator);
 		$('.company_filter').val(company);
 		$('.status_filter').val(status);
