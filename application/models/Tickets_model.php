@@ -101,7 +101,6 @@ class Tickets_model extends CI_Model
 			$this->db->where("creator_id ='$user_id'");
 		}
 		if ($company_id != '') {
-			$company = urldecode($company_id);
 			$this->db->where("company_id ='$company_id'");
 		}
 		if ($city != '') {
