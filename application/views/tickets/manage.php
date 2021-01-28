@@ -75,9 +75,9 @@ if ($user_role == "Admin" || $user_role == "Manager") {
 					</div>
 					<select class="status_filter">
 						<option value="">-ללא סינון-</option>
-						<option value=0>new</option>
-						<option value=1>working</option>
-						<option value=2>done</option>
+						<option value=0>חדש</option>
+						<option value=1>בטיפול</option>
+						<option value=2>בוצע</option>
 					</select>
 				</div>
 			</div>
@@ -244,7 +244,7 @@ if ($user_role == "Admin" || $user_role == "Manager") {
 	$('.done-ticket').on('click', function() {
 		var ticket_id = $(this).closest('tr').attr('id');
 		$.post('/tickets/update/' + ticket_id, {
-			status: 3
+			status: 2
 		}).done(function(response) {
 			$('#form-messages').addClass('alert-success');
 			$('#form-messages').text(response).fadeIn(1000).delay(3000).fadeOut(1000); //show message

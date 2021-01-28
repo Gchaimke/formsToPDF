@@ -93,12 +93,17 @@ class Tickets_model extends CI_Model
 
 	function get_all($user_id = '', $company_id = '', $city = '', $status = '')
 	{
+		$user_role = $this->session->userdata['logged_in']['role'];
+		$current_user_id = $this->session->userdata['logged_in']['id'];
 		$response = array();
 		// Select record
 		$this->db->select('*');
 		$this->db->from('tickets');
 		if ($user_id != '') {
-			$this->db->where("creator_id ='$user_id'");
+			$this->db->where("creator_id =$user_id");
+		}
+		if ($user_role == "User") {
+			$this->db->where("creator_id =$current_user_id");
 		}
 		if ($company_id != '') {
 			$this->db->where("company_id ='$company_id'");
@@ -108,16 +113,18 @@ class Tickets_model extends CI_Model
 			$this->db->where("city LIKE '%$city%'");
 		}
 		if ($status != '') {
-			$this->db->where("status ='$status'");
+			$this->db->where("status =$status");
+		} else {
+			$this->db->where("status NOT LIKE 2");
 		}
 		$q = $this->db->get();
 		$response = $q->result_array();
 		return $response;
 	}
 
-	function update_status_all($str,$value)
+	function update_status_all($str, $value)
 	{
-		$data['status']=$value;
+		$data['status'] = $value;
 		$where = "status ='$str'";
 		$q = $this->db->update('tickets', $data, $where);
 		return $q;
