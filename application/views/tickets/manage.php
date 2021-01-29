@@ -3,7 +3,7 @@ if (isset($this->session->userdata['logged_in'])) {
 	$user_role = $this->session->userdata['logged_in']['role'];
 }
 if ($user_role == "Admin" || $user_role == "Manager") {
-	$u_button_html = '<a href="/tickets/uploader" class="btn btn-outline-info"><i class="fa fa-file-excel-o"> להעלות קובץ משימות </i></a>';
+	$u_button_html = '<a href="/tickets/import_xlsx" class="btn btn-outline-info"><i class="fa fa-file-excel-o"> להעלות קובץ משימות </i></a>';
 	$tb_header_html = '<th scope="col" style="min-width:120px;">טכנאי</th><th scope="col">מחק</th>';
 	$btn_done = '<span class="done-ticket btn btn-outline-success"><i class="fa fa-check"></i></span>';
 	$btn_revert = '<span class="revert btn btn-outline-secondary"><i class="fa fa-undo"></i></span>';

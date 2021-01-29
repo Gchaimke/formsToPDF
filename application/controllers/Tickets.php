@@ -4,6 +4,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Tickets extends CI_Controller
 {
     private $user;
+    private $file_name;
+    private $fields;
     public function __construct()
     {
         parent::__construct();
@@ -17,6 +19,14 @@ class Tickets extends CI_Controller
         } else {
             header("location: /users/logout");
         }
+        $this->file_name = 'Uploads/tmp/' . $this->user['id'] . '/last_uploaded.xlsx';
+        $this->fields = array(
+            'client_num' => 'מספר לקוח',
+            'client_name' => 'שם לקוח',
+            'address' => 'כתובת לקוח',
+            'city' => 'עיר',
+            'warehouse_num' => 'משימה למחסן'
+        );
     }
 
     public function index()
@@ -35,27 +45,26 @@ class Tickets extends CI_Controller
         $this->load->view('footer');
     }
 
-    public function uploader()
+    public function import_xlsx()
     {
-        $file_name = 'Uploads/tmp/' . $this->user['id'] . '/last_uploaded.xlsx';
-        if (!file_exists($file_name)) {
-            $file_name = '';
+        if (!file_exists($this->file_name)) {
+            $this->file_name = '';
         }
         $data = array();
         $this->load->view('header');
         $this->load->view('main_menu');
         include_once APPPATH . 'third_party/SimpleXLSX.php';
-        if ($file_name != '') {
-            if ($xlsx = SimpleXLSX::parse($file_name)) {
-                $data['xlsx'] = $xlsx;
-                $data['companies'] = $this->Companies_model->getCompanies();
-                $this->load->view('tickets/import', $data);
+        if ($this->file_name != '') {
+            if ($xlsx = SimpleXLSX::parse($this->file_name)) {
+                $data['xlsx_columns'] = $this->get_xlsx_columns($xlsx);
+                $data['fields'] = $this->fields;
+                $this->load->view('tickets/import_xlsx', $data);
             } else {
                 echo SimpleXLSX::parseError();
             }
         } else {
-            $data['message_display'] = 'Upload File first';
-            $this->load->view('tickets/import', $data);
+            $data['message_display'] = 'נא להעלות קובץ XLSX';
+            $this->load->view('tickets/import_xlsx', $data);
         }
         $this->load->view('footer');
     }
@@ -84,9 +93,74 @@ class Tickets extends CI_Controller
         }
     }
 
+    function view_table()
+    {
+        $this->load->view('header');
+        $this->load->view('main_menu');
+        include_once APPPATH . 'third_party/SimpleXLSX.php';
+        $data['companies'] = $this->Companies_model->getCompanies();
+        $row_nums = array();
+        foreach ($this->fields as $key => $value) {
+            $row_nums[$key] = $this->input->post($key);
+        }
+        if ($xlsx = SimpleXLSX::parse($this->file_name)) {
+            $data['html_table'] = $this->build_table($xlsx, $row_nums);
+        }
+        $this->load->view('tickets/import_table', $data);
+        $this->load->view('footer');
+    }
+
+    function build_table($xlsx, $rows)
+    {
+        $html_table = '<div class="table-responsive"><table class="table"><thead class="thead-dark">';
+        $i = 0;
+        $count = 0;
+        if (isset($xlsx)) {
+            $columns = array('מספר לקוח', 'שם לקוח', 'כתובת לקוח', 'עיר', 'משימה למחסן');
+
+            $html_table .= "<tr id='table_header'>";
+            foreach ($columns as $column) {
+                $html_table .= "<th>$column</th>";
+            }
+            $html_table .= "</tr></thead><tbody>";
+            foreach ($xlsx->rows() as $row) {
+                if ($i != 0 && count($rows) > 4) {
+                    if (1 === preg_match('~[0-9]~', $row[$rows['warehouse_num']])) {
+                        preg_match_all('!\d+!', $row[$rows['warehouse_num']], $matches);
+                        $row[$rows['warehouse_num']] = $matches[0][0];
+                    } else {
+                        continue;
+                    }
+                    $html_table .= "<form class='tickets_row'><tr id='$row[0]' class='column'>";
+                    foreach ($rows as $key => $value) {
+                        $html_table .= "<td style='min-width:120px'>
+                            <input type='hidden' name='$key' value='{$row[$value]}'>{$row[$value]}</td>";
+                    }
+                    $html_table .= "</tr></form>";
+                    $count++;
+                }
+                $i++;
+            }
+            $msg = $count > 0 ? '' : 'פומרט של קובץ לא נכון, נא לבדוק קמות של פריטים בשורה';
+            $html_table .= "</tbody></table></div>" . $msg;
+        }
+        return $html_table;
+    }
+
+    function get_xlsx_columns($xlsx)
+    {
+        $all_columns = array();
+        foreach ($xlsx->rows() as $row) {
+            foreach ($row as $key => $column) {
+                $all_columns[$key] = $column;
+            }
+            break;
+        }
+        return $all_columns;
+    }
+
     public function import($company_num = "")
     {
-        $this->form_validation->set_rules('items_array', 'items_array', 'trim|xss_clean');
         $items = array();
         $tmp_s = '';
         $tmp_f = '';
