@@ -1,0 +1,56 @@
+/* RTL START*/
+
+.rtl {
+    direction: rtl;
+    text-align: right;
+}
+
+.ltr {
+    direction: ltr;
+}
+
+.dropdown-item {
+    text-align: right;
+}
+
+.dropdown-menu.show {
+    left: auto;
+}
+
+input.form-control {
+    text-align: center;
+}
+
+.list-group {
+    padding-right: 0;
+}
+
+.input-group>.input-group-prepend>.btn, .input-group>.input-group-prepend>.input-group-text, .input-group>.input-group-append:not(:last-child)>.btn, .input-group>.input-group-append:not(:last-child)>.input-group-text, .input-group>.input-group-append:last-child>.btn:not(:last-child):not(.dropdown-toggle), .input-group>.input-group-append:last-child>.input-group-text:not(:last-child) {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
+}
+
+.input-group>.form-control:not(:first-child), .input-group>.custom-select:not(:first-child) {
+    border-top-left-radius: 0.25rem;
+    border-bottom-left-radius: 0.25rem;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.navbar-nav {
+    padding-left: initial;
+    padding-right: 0;
+}
+
+.show .pull-right {
+    float: left;
+}
+
+ul.pagination.left {
+    float: left;
+}
+
+
+/* RTL END*/

@@ -16,7 +16,7 @@ $display = ($role == 'User') ? 'none' : 'flex';
 	<div class="jumbotron">
 		<div class="container">
 			<center>
-				<h5>ערוך פרטים</h5>
+				<h5><?= lang('edit_details') ?></h5>
 			</center>
 		</div>
 	</div>
@@ -35,15 +35,14 @@ $display = ($role == 'User') ? 'none' : 'flex';
 				<div class="form-row">
 					<div class="input-group mb-2">
 						<?php if ($role == "Admin") {
-							echo '<div class="input-group-prepend"><div class="input-group-text">תפקיד</div></div>';
+							echo '<div class="input-group-prepend"><div class="input-group-text">' . lang('role') . '</div></div>';
 							echo "<select class='form-control' name='role'>";
-							if (isset($settings)) {
-								$arr = explode(",", $settings[0]['roles']);
-								foreach ($arr as $crole) {
-									if ($crole == $user['role']) {
-										echo '<option selected>' . $crole . '</option>';
+							if (isset($user_roles)) {
+								foreach ($user_roles as $c_role) {
+									if ($c_role == $user['role']) {
+										echo "<option value='$c_role' selected>" . lang($c_role) . "</option>";
 									} else {
-										echo '<option>' . $crole . '</option>';
+										echo "<option value='$c_role'>" . lang($c_role) . "</option>";
 									}
 								}
 							}
@@ -55,7 +54,7 @@ $display = ($role == 'User') ? 'none' : 'flex';
 				<div class="form-row">
 					<div class="input-group mb-2">
 						<div class="input-group-prepend">
-							<div class="input-group-text">שם משתמש</div>
+							<div class="input-group-text"><?= lang('username') ?></div>
 						</div>
 						<input type='text' class="form-control" name='name' value="<?php echo $user['name'] ?>" <?php echo ($role != "Admin") ? 'disabled' : "" ?>>
 					</div>
@@ -63,7 +62,7 @@ $display = ($role == 'User') ? 'none' : 'flex';
 				<div class="form-row">
 					<div class="input-group mb-2">
 						<div class="input-group-prepend">
-							<div class="input-group-text">שם יוצג</div>
+							<div class="input-group-text"><?= lang('view_name') ?></div>
 						</div>
 						<input type='text' class="form-control" name='view_name' value="<?php echo $user['view_name'] ?>" required>
 					</div>
@@ -71,7 +70,7 @@ $display = ($role == 'User') ? 'none' : 'flex';
 				<div class="form-row">
 					<div class="input-group mb-2">
 						<div class="input-group-prepend">
-							<div class="input-group-text">סיסמה</div>
+							<div class="input-group-text"><?= lang('password') ?></div>
 						</div>
 						<input type='text' class="form-control" placeholder="********" name='password'>
 					</div>
@@ -79,16 +78,39 @@ $display = ($role == 'User') ? 'none' : 'flex';
 				<div class="form-row">
 					<div class="input-group mb-2">
 						<div class="input-group-prepend">
-							<div class="input-group-text">מייל</div>
+							<div class="input-group-text"><?= lang('email') ?></div>
 						</div>
 						<input type='text' class="form-control ltr" name='email' value="<?php echo $user['email'] ?>">
 					</div>
 				</div>
-				<div class="form-row" style="display: <?= $display ?>;">
-					<div class="input-group-text">רשימת חברות</div>
-					<?= $filds_checks ?>
+				<div class="form-row">
+					<div class="input-group mb-2">
+						<div class="input-group-prepend">
+							<div class="input-group-text"><?= lang('language') ?></div>
+						</div>
+						<select class="form-control" name='language'>
+							<?php if (isset($languages)) {
+								echo "<option value=''>" . lang('default') . "</option>";
+								foreach ($languages as $lang) {
+									if ($user['language'] == $lang) {
+										echo "<option selected>$lang</option>";
+									} else {
+										echo "<option>$lang</option>";
+									}
+								}
+							}
+							?>
+						</select>
+					</div>
 				</div>
-				<input type='submit' class="btn btn-info" name='submit' value='עדכן'>
+				<?php if ($role != "User") {
+					echo '<div class="form-row">';
+					echo '<div class="input-group-text">' . lang('companies_list') . '</div>';
+					echo $filds_checks;
+					echo '</div>';
+				}  ?>
+
+				<input type='submit' class="btn btn-info" name='submit' value='<?= lang('update') ?>'>
 				<?php echo form_close(); ?>
 			</div>
 		</div>

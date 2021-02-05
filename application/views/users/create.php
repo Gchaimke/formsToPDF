@@ -2,7 +2,7 @@
       <div class="jumbotron">
             <div class="container">
                   <center>
-                        <h5>הוסף משתמש חדש</h5> <?=$role?>
+                        <h5><?= lang('add_user') ?></h5>
                   </center>
             </div>
       </div>
@@ -22,13 +22,12 @@
                         <div class="form-row">
                               <div class="input-group mb-2">
                                     <div class="input-group-prepend">
-                                          <div class="input-group-text">תפקיד</div>
+                                          <div class="input-group-text"><?= lang('role') ?></div>
                                     </div>
                                     <select class="form-control" name='role'>
-                                          <?php if (isset($settings) && $role == 'Admin') {
-                                                $arr = explode(",", $settings[0]['roles']);
-                                                foreach ($arr as $role) {
-                                                      echo '<option>' . $role . '</option>';
+                                          <?php if (isset($user_roles) && $role == 'Admin') {
+                                                foreach ($user_roles as $c_role) {
+                                                      echo "<option value='$c_role'>".lang($c_role)."</option>";
                                                 }
                                           }else{
                                                 echo '<option>User</option>';
@@ -40,7 +39,7 @@
                         <div class="form-row">
                               <div class="input-group mb-2">
                                     <div class="input-group-prepend">
-                                          <div class="input-group-text">שם משתמש</div>
+                                          <div class="input-group-text"><?= lang('username') ?></div>
                                     </div>
                                     <input type='text' class="form-control" name='name' required>
                               </div>
@@ -48,7 +47,7 @@
                         <div class="form-row">
                               <div class="input-group mb-2">
                                     <div class="input-group-prepend">
-                                          <div class="input-group-text">שם יוצג</div>
+                                          <div class="input-group-text"><?= lang('view_name') ?></div>
                                     </div>
                                     <input type='text' class="form-control" name='view_name' required>
                               </div>
@@ -57,7 +56,7 @@
                         <div class="form-row">
                               <div class="input-group mb-2">
                                     <div class="input-group-prepend">
-                                          <div class="input-group-text">סיסמה</div>
+                                          <div class="input-group-text"><?= lang('password') ?></div>
                                     </div>
                                     <input type='text' class="form-control" name='password' required>
                               </div>
@@ -66,12 +65,12 @@
                         <div class="form-row">
                               <div class="input-group mb-2">
                                     <div class="input-group-prepend">
-                                          <div class="input-group-text">מייל</div>
+                                          <div class="input-group-text"><?= lang('email') ?></div>
                                     </div>
                                     <input type='text' class="form-control ltr" name='email' required>
                               </div>
                         </div>
-                        <input type='submit' class="btn btn-info" name='submit' value='הוסף משתמש'>
+                        <input type='submit' class="btn btn-info" name='submit' value='<?= lang('add_user') ?>'>
                         <?php echo form_close(); ?>
                   </div>
             </div>

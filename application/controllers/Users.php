@@ -4,6 +4,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Users extends CI_Controller
 {
     private $user;
+    private $user_roles;
+    private $languages;
     public function __construct()
     {
         parent::__construct();
@@ -14,11 +16,15 @@ class Users extends CI_Controller
         if (isset($this->session->userdata['logged_in'])) {
             $this->user = $this->session->userdata['logged_in'];
         }
+        $user_language = $this->session->userdata['logged_in']['language'];
+        $this->lang->load('main', $user_language);
+        $this->user_roles = array("Admin", "Manager", "User");
+        $this->languages = array("english", "hebrew");
     }
 
     public function index($msg = '')
     {
-        if ($this->user['role'] != "Admin" && $this->user['role'] != 'Manager') {
+        if ($this->user['role'] != "Admin" && $this->user['role'] != "Manager") {
             header("location: /");
         }
         $data = array();
@@ -36,13 +42,13 @@ class Users extends CI_Controller
         if ($this->user['role'] != "Admin" && $this->user['role'] != 'Manager') {
             header("location: /");
         }
-        $this->form_validation->set_rules('name', 'Name', 'trim|required|xss_clean');
+        $this->form_validation->set_rules('name', lang('username'), 'trim|required|xss_clean|is_unique[users.name]');
         $this->form_validation->set_rules('role', 'Role', 'trim|required|xss_clean');
         $this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean');
         $this->form_validation->set_rules('view_name', 'view_name', 'trim|xss_clean');
         $this->form_validation->set_rules('email', 'email', 'trim|xss_clean');
         if ($this->form_validation->run() == FALSE) {
-            $data['settings'] = $this->Admin_model->getSettings();
+            $data['user_roles'] = $this->user_roles;
             $data['role'] = $this->user['role'];
             $this->load->view('header');
             $this->load->view('main_menu');
@@ -86,10 +92,12 @@ class Users extends CI_Controller
         $this->form_validation->set_rules('role', 'Role', 'trim|xss_clean');
         $this->form_validation->set_rules('password', 'Password', 'trim|xss_clean');
         $this->form_validation->set_rules('email', 'email', 'trim|xss_clean');
+        $this->form_validation->set_rules('language', 'language', 'trim|xss_clean');
         $this->form_validation->set_rules('companies_list[]', 'companies_list', 'trim');
         if ($this->form_validation->run() == FALSE) {
             $data['user'] =  $this->Users_model->getUser($id)[0];
-            $data['settings'] = $this->Admin_model->getSettings();
+            $data['user_roles'] = $this->user_roles;
+            $data['languages'] = $this->languages;
             $data['role'] = $this->user['role'];
             $user_role = $data['user']['role'];
             $user_id = $data['user']['id'];
@@ -111,6 +119,7 @@ class Users extends CI_Controller
                     'view_name' => $this->input->post('view_name'),
                     'role' => $this->input->post('role'),
                     'email' => $this->input->post('email'),
+                    'language' => $this->input->post('language'),
                     'companies_list' => $companies_list
                 );
             } else {
@@ -118,7 +127,7 @@ class Users extends CI_Controller
                     'id' => $this->input->post('id'),
                     'view_name' => $this->input->post('view_name'),
                     'email' => $this->input->post('email'),
-                    'companies_list' => $companies_list
+                    'language' => $this->input->post('language')
                 );
             }
             if ($this->input->post('password') != '') {
@@ -166,12 +175,14 @@ class Users extends CI_Controller
                 $name = $this->input->post('name');
                 $result = $this->Users_model->read_user_information($name);
                 if ($result != false) {
+                    $language = ($result[0]->language == '') ? $this->config->item('language') : $result[0]->language;
                     $session_data = array(
                         'id' => $result[0]->id,
                         'name' => $result[0]->name,
                         'view_name' => $result[0]->view_name,
                         'role' => $result[0]->role,
-                        'email' => $result[0]->email
+                        'email' => $result[0]->email,
+                        'language' => $language
                     );
                     $this->session->set_userdata('logged_in', $session_data);
                     header("location: /tickets");

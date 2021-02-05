@@ -4,6 +4,9 @@ if (isset($this->session->userdata['logged_in'])) {
   $id = ($this->session->userdata['logged_in']['id']);
   $username = ($this->session->userdata['logged_in']['name']);
   $role = ($this->session->userdata['logged_in']['role']);
+  $user_language = $this->session->userdata['logged_in']['language'];
+
+  $dir = $user_language == 'hebrew' ? 'rtl' : 'ltr';
 } else {
   header("location: /users/login");
 }
@@ -18,17 +21,17 @@ if (isset($this->session->userdata['logged_in'])) {
   <meta name="author" content="Chaim Gorbov">
   <link rel="icon" href="<?php echo base_url('assets/favicon.ico'); ?>">
   <title>
-    <?php
-    if (isset($_GET['sn'])) {
-      echo $_GET['sn'];
-    } else {
-      echo "Online Forms - " . trim($_SERVER['REQUEST_URI'], "/");
-    }
-    ?></title>
+    <?php echo "Online Forms - " . trim($_SERVER['REQUEST_URI'], "/"); ?></title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <!-- Bootstrap core CSS -->
   <link href="<?php echo base_url('assets/css/bootstrap.css'); ?>" rel="stylesheet">
   <link href="<?php echo base_url('assets/css/all.css?' . filemtime('assets/css/all.css')); ?>" rel="stylesheet">
+  <?php
+  if ($dir == 'rtl') {
+    echo '<link href="' . base_url('assets/css/rtl.css?' . filemtime('assets/css/rtl.css')) . '" rel="stylesheet">';
+  }
+
+  ?>
   <!-- Custom styles for this template -->
   <?php
   if (isset($css_to_load)) {
@@ -44,4 +47,4 @@ if (isset($this->session->userdata['logged_in'])) {
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 
-<body class="rtl">
+<body class="<?= $dir ?>">

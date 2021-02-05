@@ -27,6 +27,8 @@ class Tickets extends CI_Controller
             'city' => 'עיר',
             'warehouse_num' => 'משימה למחסן'
         );
+        $language = $this->session->userdata['logged_in']['language'];
+		$this->lang->load('main', $language);
     }
 
     public function index()

@@ -3,12 +3,13 @@
     <div class="jumbotron">
         <div class="container">
             <center>
-                <h5>הגדרות</h5>
+                <h5><?= lang('settings') ?></h5>
             </center>
         </div>
     </div>
     <div class="container">
         <?php
+
         $users_count = 0;
         $companies_count = 0;
         $forms_count = 0;

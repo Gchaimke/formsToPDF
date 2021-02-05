@@ -12,6 +12,8 @@ class Exportpdf extends CI_Controller
         $this->load->model('Users_model');
         $this->load->model('Companies_model');
         $this->load->model('Admin_model');
+        $language = $this->session->userdata['logged_in']['language'];
+		$this->lang->load('main', $language);
     }
 
     public function create($id = '1')

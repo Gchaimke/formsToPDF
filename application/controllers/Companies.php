@@ -16,6 +16,8 @@ class Companies extends CI_Controller
         } else{
             header("location: /users/logout");
         }
+        $language = $this->session->userdata['logged_in']['language'];
+		$this->lang->load('main', $language);
     }
 
     public function index($msg = '')

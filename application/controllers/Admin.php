@@ -13,13 +13,15 @@ class Admin extends CI_Controller
 		$this->load->model('Tickets_model');
 		$this->load->library('pagination');
 		if (isset($this->session->userdata['logged_in'])) {
-            $this->user = $this->session->userdata['logged_in'];
-            if($this->user['role']!="Admin"){
-                header("location: /");
-            }
-        } else{
-            header("location: /users/logout");
-        }
+			$this->user = $this->session->userdata['logged_in'];
+			if ($this->user['role'] != "Admin") {
+				header("location: /");
+			}
+		} else {
+			header("location: /users/logout");
+		}
+		$language = $this->session->userdata['logged_in']['language'];
+		$this->lang->load('main', $language);
 	}
 
 	function settings()
@@ -30,13 +32,14 @@ class Admin extends CI_Controller
 		$this->Admin_model->add_field('tickets', 'city', 'VARCHAR', 150); //one time update db to add new field
 		$this->Admin_model->add_field('forms', 'city', 'VARCHAR', 150); //one time update db to add new field
 		$this->Admin_model->add_field('users', 'companies_list'); //one time update db to add new field
+		$this->Admin_model->add_field('users', 'language'); //one time update db to add new field
 		$this->Admin_model->add_field('contacts', 'users_list'); //one time update db to add new field
 		if (!file_exists('Uploads/tEditor')) {
 			mkdir('Uploads/tEditor', 0770, true);
-			copy('application/index.html','Uploads/index.html');
-			copy('application/index.html','Uploads/logs/index.html');
-			copy('application/index.html','Uploads/tEditor/index.html');
-			copy('application/index.html','Uploads/tmp/index.html');
+			copy('application/index.html', 'Uploads/index.html');
+			copy('application/index.html', 'Uploads/logs/index.html');
+			copy('application/index.html', 'Uploads/tEditor/index.html');
+			copy('application/index.html', 'Uploads/tmp/index.html');
 			rename('application/third_party/tEditor/template.php', 'Uploads/tEditor/template.txt'); //one time move template file
 		}
 

@@ -35,6 +35,11 @@ class Users_model extends CI_Model
 				'constraint' => 100,
 				'null' => TRUE
 			),
+			'language' => array(
+				'type' => 'VARCHAR',
+				'constraint' => 20,
+				'null' => TRUE
+			),
 			'log' => array(
 				'type' => 'TEXT',
 				'null' => TRUE

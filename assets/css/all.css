@@ -27,92 +27,6 @@ main {
     margin: 0;
 }
 
-/* RTL START*/
-
-.rtl {
-    direction: rtl;
-    text-align: right;
-}
-
-.ltr {
-    direction: ltr;
-}
-
-.dropdown-item {
-    text-align: right;
-}
-
-.dropdown-menu.show {
-    left: auto;
-}
-
-input.form-control {
-    text-align: center;
-}
-
-.list-group {
-    padding-right: 0;
-}
-
-.input-group>.input-group-prepend>.btn, .input-group>.input-group-prepend>.input-group-text, .input-group>.input-group-append:not(:last-child)>.btn, .input-group>.input-group-append:not(:last-child)>.input-group-text, .input-group>.input-group-append:last-child>.btn:not(:last-child):not(.dropdown-toggle), .input-group>.input-group-append:last-child>.input-group-text:not(:last-child) {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-    border-top-right-radius: 0.25rem;
-    border-bottom-right-radius: 0.25rem;
-}
-
-.input-group>.form-control:not(:first-child), .input-group>.custom-select:not(:first-child) {
-    border-top-left-radius: 0.25rem;
-    border-bottom-left-radius: 0.25rem;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-}
-
-.navbar-nav {
-    padding-left: initial;
-    padding-right: 0;
-}
-
-.show .pull-right {
-    float: left;
-}
-
-.file {
-    position: relative;
-    background: linear-gradient(to right, lightblue 50%, transparent 50%);
-    background-size: 200% 100%;
-    background-position: right bottom;
-    transition: all 1s ease;
-}
-
-.file.done {
-    background: lightgreen;
-}
-
-.file.error {
-    background: rgb(255, 176, 139);
-}
-
-.file a {
-    display: block;
-    position: relative;
-    padding: 5px;
-    color: black;
-}
-
-.file .delete_attachment {
-    float: right;
-    padding: 5px 15px;
-    background: #ffbf82;
-    z-index: 3;
-    position: absolute;
-    left: 0;
-    top: 0;
-    cursor: pointer;
-}
-
-/* RTL END*/
-
 .jumbotron {
     padding-bottom: 1rem;
 }
@@ -183,10 +97,6 @@ ul.pagination.right {
     margin: 0;
     margin-top: 10px;
     margin-right: -40px;
-}
-
-ul.pagination.left {
-    float: left;
 }
 
 .num-link>a {
@@ -294,14 +204,47 @@ div#form-messages {
     width: 100%;
 }
 
+.file {
+    position: relative;
+    background: linear-gradient(to right, lightblue 50%, transparent 50%);
+    background-size: 200% 100%;
+    background-position: right bottom;
+    transition: all 1s ease;
+}
+
+.file.done {
+    background: lightgreen;
+}
+
+.file.error {
+    background: rgb(255, 176, 139);
+}
+
+.file a {
+    display: block;
+    position: relative;
+    padding: 5px;
+    color: black;
+}
+
+.file .delete_attachment {
+    float: right;
+    padding: 5px 15px;
+    background: #ffbf82;
+    z-index: 3;
+    position: absolute;
+    left: 0;
+    top: 0;
+    cursor: pointer;
+}
+
 @media (min-width: 320px) {
     .badge-info, .badge-danger {
         font-size: 12px;
     }
-    .mobile-no-hide{
+    .mobile-no-hide {
         display: initial;
     }
-
     .mobile-hide {
         display: none;
     }
@@ -310,7 +253,7 @@ div#form-messages {
         line-height: 1em;
         font-size: 0.8em;
     }
-    .mobile-view > p {
+    .mobile-view>p {
         margin-bottom: 4px;
     }
     .table th, .table td {
@@ -329,9 +272,9 @@ div#form-messages {
 
 @media (min-width: 991.98px) {
     #filters_section {
-		display: flex;
+        display: flex;
     }
-    .mobile-no-hide{
+    .mobile-no-hide {
         display: none;
     }
     .mobile-hide {
