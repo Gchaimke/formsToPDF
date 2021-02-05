@@ -5,7 +5,9 @@ if (isset($this->session->userdata['logged_in'])) {
   $username = ($this->session->userdata['logged_in']['name']);
   $role = ($this->session->userdata['logged_in']['role']);
   $user_language = $this->session->userdata['logged_in']['language'];
-
+  if ($user_language == '') {
+    $user_language = $this->Admin_model->getSettings()[0]['language'];
+  }
   $dir = $user_language == 'hebrew' ? 'rtl' : 'ltr';
 } else {
   header("location: /users/login");

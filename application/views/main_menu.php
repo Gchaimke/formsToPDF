@@ -4,6 +4,9 @@ if (isset($this->session->userdata['logged_in'])) {
   $user_view_name = ($this->session->userdata['logged_in']['view_name']);
   $user_role = ($this->session->userdata['logged_in']['role']);
   $user_language = $this->session->userdata['logged_in']['language'];
+  if($user_language==''){
+    $user_language = $this->Admin_model->getSettings()[0]['language'];
+  }
   $dir = $user_language == 'hebrew' ? 'rtl' : 'ltr';
 }
 ?>
