@@ -2,6 +2,7 @@
 class Admin extends CI_Controller
 {
 	private $user;
+	private $languages;
 	public function __construct()
 	{
 		parent::__construct();
@@ -22,17 +23,19 @@ class Admin extends CI_Controller
 		}
 		$language = $this->session->userdata['logged_in']['language'];
 		$this->lang->load('main', $language);
+		$this->languages = array("english", "hebrew");
 	}
 
 	function settings()
 	{
 		$this->Admin_model->add_field('settings', 'emails'); //one time update db to add new field
+		$this->Admin_model->add_field('settings', 'language', 'VARCHAR', 20); //one time update db to add new field
 		$this->Admin_model->add_field('forms', 'old_serial', 'VARCHAR', 100); //one time update db to add new field
 		$this->Admin_model->add_field('forms', 'new_serial', 'VARCHAR', 100); //one time update db to add new field
 		$this->Admin_model->add_field('tickets', 'city', 'VARCHAR', 150); //one time update db to add new field
 		$this->Admin_model->add_field('forms', 'city', 'VARCHAR', 150); //one time update db to add new field
 		$this->Admin_model->add_field('users', 'companies_list'); //one time update db to add new field
-		$this->Admin_model->add_field('users', 'language'); //one time update db to add new field
+		$this->Admin_model->add_field('users', 'language', 'VARCHAR', 20); //one time update db to add new field
 		$this->Admin_model->add_field('contacts', 'users_list'); //one time update db to add new field
 		if (!file_exists('Uploads/tEditor')) {
 			mkdir('Uploads/tEditor', 0770, true);
@@ -51,6 +54,7 @@ class Admin extends CI_Controller
 		if ($this->db->table_exists('settings')) {
 			$data['settings'] = $this->Admin_model->getSettings()[0];
 		}
+		$data['languages'] = $this->languages;
 		$this->load->view('admin/settings', $data);
 		$this->load->view('footer');
 	}
@@ -58,7 +62,7 @@ class Admin extends CI_Controller
 	public function save_settings()
 	{
 		$smtp_on = 0;
-		$this->form_validation->set_rules('roles', 'Roles', 'trim|xss_clean');
+		$this->form_validation->set_rules('language', 'language', 'trim|xss_clean');
 		$this->form_validation->set_rules('emails', 'emails', 'trim|xss_clean');
 		$this->form_validation->set_rules('smtp_host', 'smtp_host', 'trim|xss_clean');
 		$this->form_validation->set_rules('smtp_user', 'smtp_user', 'trim|xss_clean');
@@ -67,7 +71,7 @@ class Admin extends CI_Controller
 			$this->settings();
 		} else {
 			$data = array(
-				'roles' => $this->input->post('roles'),
+				'language' => $this->input->post('language'),
 				'emails' => $this->input->post('emails')
 			);
 			if (isset($_POST['smtp_on'])) {

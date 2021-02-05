@@ -158,6 +158,11 @@ class Users extends CI_Controller
     {
         $this->form_validation->set_rules('name', 'Name', 'trim|required|xss_clean');
         $this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean');
+        if ($this->Admin_model->getSettings()[0]['language'] != '') {
+            $sys_lang = $this->Admin_model->getSettings()[0]['language'];
+        } else {
+            $sys_lang = $this->config->item('language');
+        }
         if ($this->form_validation->run() == FALSE) {
             if (isset($this->session->userdata['logged_in'])) {
                 header("location: /");
@@ -175,7 +180,7 @@ class Users extends CI_Controller
                 $name = $this->input->post('name');
                 $result = $this->Users_model->read_user_information($name);
                 if ($result != false) {
-                    $language = ($result[0]->language == '') ? $this->config->item('language') : $result[0]->language;
+                    $language = ($result[0]->language == '') ? $sys_lang : $result[0]->language;
                     $session_data = array(
                         'id' => $result[0]->id,
                         'name' => $result[0]->name,

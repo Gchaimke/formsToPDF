@@ -34,11 +34,25 @@
             </li>
         </ul><br>
         <?php echo form_open('admin/save_settings', 'id=ajax-form', 'class=user-create'); ?>
-        <div class="input-group mb-2">
-            <div class="input-group-prepend">
-                <div class="input-group-text">תפקידים</div>
+        <div class="form-row">
+            <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                    <div class="input-group-text"><?= lang('language') ?></div>
+                </div>
+                <select class="form-control" name='language'>
+                    <?php if (isset($languages)) {
+                        echo "<option value=''>" . lang('default') . "</option>";
+                        foreach ($languages as $lang) {
+                            if ($settings['language'] == $lang) {
+                                echo "<option selected>$lang</option>";
+                            } else {
+                                echo "<option>$lang</option>";
+                            }
+                        }
+                    }
+                    ?>
+                </select>
             </div>
-            <input name="roles" class="form-control" value="<?php echo $settings['roles']; ?>">
         </div>
         <div class="input-group mb-2">
             <div class="input-group-prepend">
