@@ -15,7 +15,7 @@ class Users extends CI_Controller
         $this->load->model('Production_model');
         if (isset($this->session->userdata['logged_in'])) {
             $this->user = $this->session->userdata['logged_in'];
-            $user_language = $this->session->userdata['logged_in']['language'];
+            $user_language = $this->user['language'];
             $this->lang->load('main', $user_language);
         }
         $this->user_roles = array("Admin", "Manager", "User");

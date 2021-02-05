@@ -14,11 +14,12 @@ class Production extends CI_Controller
         $this->load->model('Tickets_model');
         if (isset($this->session->userdata['logged_in'])) {
             $this->user = $this->session->userdata['logged_in'];
+            $language =$this->user['language'];
+            $this->lang->load('main', $language);
         } else{
             header("location: /users/logout");
         }
-        $language = $this->session->userdata['logged_in']['language'];
-		$this->lang->load('main', $language);
+       
     }
 
     public function index()

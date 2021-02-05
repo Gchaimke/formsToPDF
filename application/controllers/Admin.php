@@ -15,7 +15,7 @@ class Admin extends CI_Controller
 		$this->load->library('pagination');
 		if (isset($this->session->userdata['logged_in'])) {
 			$this->user = $this->session->userdata['logged_in'];
-			$language = $this->session->userdata['logged_in']['language'];
+			$language = $this->user['language'];
 			$this->lang->load('main', $language);
 			if ($this->user['role'] != "Admin") {
 				header("location: /");

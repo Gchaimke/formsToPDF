@@ -10,14 +10,14 @@ class Companies extends CI_Controller
         $this->load->model('Companies_model');
         if (isset($this->session->userdata['logged_in'])) {
             $this->user = $this->session->userdata['logged_in'];
+            $language = $this->session->userdata['logged_in']['language'];
+            $this->lang->load('main', $language);
             if($this->user['role']!="Admin" && $this->user['role']!="Manager"){
                 header("location: /");
             }
         } else{
             header("location: /users/logout");
-        }
-        $language = $this->session->userdata['logged_in']['language'];
-		$this->lang->load('main', $language);
+        }		
     }
 
     public function index($msg = '')

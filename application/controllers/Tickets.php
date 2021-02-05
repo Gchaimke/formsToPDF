@@ -16,6 +16,8 @@ class Tickets extends CI_Controller
         $this->load->model('Tickets_model');
         if (isset($this->session->userdata['logged_in'])) {
             $this->user = $this->session->userdata['logged_in'];
+            $language = $this->user['language'];
+            $this->lang->load('main', $language);
         } else {
             header("location: /users/logout");
         }
@@ -27,8 +29,6 @@ class Tickets extends CI_Controller
             'city' => 'עיר',
             'warehouse_num' => 'משימה למחסן'
         );
-        $language = $this->session->userdata['logged_in']['language'];
-		$this->lang->load('main', $language);
     }
 
     public function index()
