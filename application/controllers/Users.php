@@ -15,9 +15,9 @@ class Users extends CI_Controller
         $this->load->model('Production_model');
         if (isset($this->session->userdata['logged_in'])) {
             $this->user = $this->session->userdata['logged_in'];
+            $user_language = $this->session->userdata['logged_in']['language'];
+            $this->lang->load('main', $user_language);
         }
-        $user_language = $this->session->userdata['logged_in']['language'];
-        $this->lang->load('main', $user_language);
         $this->user_roles = array("Admin", "Manager", "User");
         $this->languages = array("english", "hebrew");
     }
@@ -135,6 +135,7 @@ class Users extends CI_Controller
             }
             print_r($this->Users_model->editUser($sql));
         }
+        $this->set_session_data($this->user['name']);
     }
 
     public function login()
@@ -158,11 +159,7 @@ class Users extends CI_Controller
     {
         $this->form_validation->set_rules('name', 'Name', 'trim|required|xss_clean');
         $this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean');
-        if ($this->Admin_model->getSettings()[0]['language'] != '') {
-            $sys_lang = $this->Admin_model->getSettings()[0]['language'];
-        } else {
-            $sys_lang = $this->config->item('language');
-        }
+
         if ($this->form_validation->run() == FALSE) {
             if (isset($this->session->userdata['logged_in'])) {
                 header("location: /");
@@ -177,21 +174,8 @@ class Users extends CI_Controller
             );
             $result = $this->Users_model->login($data);
             if ($result == true) {
-                $name = $this->input->post('name');
-                $result = $this->Users_model->read_user_information($name);
-                if ($result != false) {
-                    $language = ($result[0]->language == '') ? $sys_lang : $result[0]->language;
-                    $session_data = array(
-                        'id' => $result[0]->id,
-                        'name' => $result[0]->name,
-                        'view_name' => $result[0]->view_name,
-                        'role' => $result[0]->role,
-                        'email' => $result[0]->email,
-                        'language' => $language
-                    );
-                    $this->session->set_userdata('logged_in', $session_data);
-                    header("location: /tickets");
-                }
+                $this->set_session_data($this->input->post('name'));
+                header("location: /tickets");
             } else {
                 $data = array(
                     'error_message' => 'Invalid Username or Password'
@@ -202,11 +186,34 @@ class Users extends CI_Controller
         }
     }
 
+    function set_session_data($user_name = '')
+    {
+        if ($this->Admin_model->getSettings()[0]['language'] != '') {
+            $sys_lang = $this->Admin_model->getSettings()[0]['language'];
+        } else {
+            $sys_lang = $this->config->item('language');
+        }
+        $result = $this->Users_model->read_user_information($user_name);
+        if ($result != false) {
+            $language = ($result[0]->language == 'system') ? $sys_lang : $result[0]->language;
+            $session_data = array(
+                'id' => $result[0]->id,
+                'name' => $result[0]->name,
+                'view_name' => $result[0]->view_name,
+                'role' => $result[0]->role,
+                'email' => $result[0]->email,
+                'language' => $language
+            );
+            $this->session->set_userdata('logged_in', $session_data);
+            session_write_close();
+        }
+    }
+
     public function logout()
     {
         $data = array();
         // Removing session data
-        $this->session->unset_userdata('logged_in', array('name' => ''));
+        $this->session->sess_destroy();
         $data['message_display'] = 'Successfully Logout';
         $this->load->view('users/login', $data);
         $this->load->view('footer');

@@ -90,7 +90,7 @@ $display = ($role == 'User') ? 'none' : 'flex';
 						</div>
 						<select class="form-control" name='language'>
 							<?php if (isset($languages)) {
-								echo "<option value=''>" . lang('default') . "</option>";
+								echo "<option value='system'>" . lang('default') . "</option>";
 								foreach ($languages as $lang) {
 									if ($user['language'] == $lang) {
 										echo "<option selected>$lang</option>";
