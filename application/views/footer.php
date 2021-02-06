@@ -1,6 +1,7 @@
 <footer class="footer">
   <p>
     <center><div>גרעין מערכות&copy; <?php echo date('Y'); ?> |  נוצר על ידי חיים גורבוב</div>
+    <?=$this->input->ip_address()?>
     </center>
   </p>
 </footer>
