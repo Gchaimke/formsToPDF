@@ -1,11 +1,12 @@
 <!doctype html>
 <?php
+$language = $this->config->item('language');
+$this->lang->load('main', $language);
 if (isset($this->session->userdata['logged_in'])) {
     header("location: /users/user_login_process");
 }
 ?>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -58,14 +59,14 @@ if (isset($this->session->userdata['logged_in'])) {
                         <div class="px-2 rtl">
                             <?php echo form_open('users/user_login_process', 'class=justify-content-center'); ?>
                             <div class="form-group">
-                                <label for="inputUser" class="sr-only">שם משתמש</label>
+                                <label for="inputUser" class="sr-only"><?=lang('username')?></label>
                                 <input type="text" name="name" id="name" class="form-control center" placeholder="שם משתמש" required autofocus>
                             </div>
                             <div class="form-group">
-                                <label for="inputPassword" class="sr-only">סיסמה</label>
+                                <label for="inputPassword" class="sr-only"><?=lang('password')?></label>
                                 <input type="password" name="password" id="password" class="form-control center" placeholder="סיסמה" required>
                             </div>
-                            <button type="submit" class="btn btn-primary btn-lg">להתחבר</button>
+                            <button type="submit" class="btn btn-primary btn-lg"><?=lang('connect')?></button>
                             </form>
                         </div>
                     </div>

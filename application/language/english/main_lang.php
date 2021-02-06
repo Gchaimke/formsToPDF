@@ -58,6 +58,7 @@ $lang['add_user']        = 'Add User';
 $lang['edit_details']        = 'Edit Profile';
 $lang['companies_list']        = 'Companies List';
 $lang['default']        = 'default';
+$lang['connect'] = 'Connect';
 
 /**
  * Companies UI

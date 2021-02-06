@@ -58,6 +58,7 @@ $lang['add_user']        = 'הוסף משתמש';
 $lang['edit_details']        = 'ערוך פרטים';
 $lang['companies_list']        = 'רשימת חברות';
 $lang['default']        = 'שפת מערכת';
+$lang['connect'] = 'להתחבר';
 
 /**
  * Companies UI
