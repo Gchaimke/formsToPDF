@@ -48,6 +48,10 @@ class Admin_model extends CI_Model
             'emails' => array(
                 'type' => 'VARCHAR',
                 'constraint' => 300,
+            ),
+            'blocked_ip' => array(
+                'type' => 'LONGTEXT',
+                'null' => TRUE
             )
         );
 

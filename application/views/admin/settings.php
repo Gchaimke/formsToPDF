@@ -17,19 +17,26 @@
             $users_count = $users;
             $companies_count = $companies;
             $forms_count = $forms;
+            $blocked_ip = '';
+            if ($settings['blocked_ip'] != '') {
+                $blocked_ip_array = json_decode($settings['blocked_ip']);
+                foreach ($blocked_ip_array as $ip) {
+                    $blocked_ip .= $ip;
+                }
+            }
         }
         ?>
         <ul class="list-group">
             <li class="list-group-item d-flex justify-content-between align-items-center">
-            <?= lang('users') ?>
+                <?= lang('users') ?>
                 <span class="badge badge-primary badge-pill"><?php echo $users_count ?></span>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
-            <?= lang('companies') ?>
+                <?= lang('companies') ?>
                 <span class="badge badge-primary badge-pill"><?php echo $companies_count ?></span>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
-            <?= lang('forms') ?>
+                <?= lang('forms') ?>
                 <span class="badge badge-primary badge-pill"><?php echo $forms_count ?></span>
             </li>
         </ul><br>
@@ -54,13 +61,13 @@
                 </select>
             </div>
         </div>
+        <label><?= lang('send_req_emails_details') ?></label>
         <div class="input-group mb-2">
             <div class="input-group-prepend">
                 <div class="input-group-text"><?= lang('send_req_emails') ?></div>
             </div>
             <input name="emails" class="form-control" style="direction: ltr;" value="<?php echo $settings['emails']; ?>">
         </div>
-        <label><?= lang('send_req_emails_details') ?></label>
         <hr>
         <?php
         $checked = '';
@@ -111,6 +118,15 @@
                 </div>
             </div>
         </div>
+        <hr>
+        <label><?= lang('blocked_ip_details') ?></label>
+        <div class="input-group mb-2">
+            <div class="input-group-prepend">
+                <div class="input-group-text"><?= lang('blocked_ip') ?></div>
+            </div>
+            <textarea name="blocked_ip" class="form-control" style="direction: ltr;" rows="4"><?= $blocked_ip ?></textarea>
+        </div>
+        <hr>
         <input type='submit' class='btn btn-info' name='submit' value='<?= lang('save') ?>'>
         <?php echo form_close(); ?><br />
         <button class="btn btn-info" onclick="createDB(0)"><?= lang('create_db') ?></button>

@@ -170,7 +170,7 @@ class Users extends CI_Controller
             $result = $this->Users_model->login($sql);
             if ($result == true) {
                 $this->set_session_data($this->input->post('name'));
-                $this->log_data($this->input->post('name').' logined from ip: '.$this->get_client_ip());
+                $this->log_data($this->input->post('name') . ' logined from ip: ' . $this->get_client_ip());
                 header("location: /tickets");
             } else {
                 $data['error_message'] = 'Invalid Username or Password';
@@ -215,7 +215,10 @@ class Users extends CI_Controller
 
     function check_blacklist_ip()
     {
-        $blockIP = array("127.0.0.2");
+        $blockIP = array();
+        if ($this->Admin_model->getSettings()[0]['blocked_ip'] != '') {
+            $blockIP = json_decode($this->Admin_model->getSettings()[0]['blocked_ip']);
+        }
         if (in_array($this->get_client_ip(), $blockIP)) {
             $heading = 'Yor hardware are blocket for 5 invalid logins';
             $message = '<p>You can\'t use this site any more</p>';
@@ -238,14 +241,14 @@ class Users extends CI_Controller
     }
 
     public function log_data($msg, $level = 0)
-	{
-		if (!file_exists('application/logs/admin')) {
-			mkdir('application/logs/admin', 0770, true);
-		}
-		$level_arr = array('INFO', 'ERROR');
-		$log_file = APPPATH . "logs/admin/" . date("m-d-Y") . ".log";
-		$fp = fopen($log_file, 'a');
-		fwrite($fp, $level_arr[$level] . " - " . date("H:i:s") . " --> ". $msg . PHP_EOL);
-		fclose($fp);
-	}
+    {
+        if (!file_exists('application/logs/admin')) {
+            mkdir('application/logs/admin', 0770, true);
+        }
+        $level_arr = array('INFO', 'ERROR');
+        $log_file = APPPATH . "logs/admin/" . date("m-d-Y") . ".log";
+        $fp = fopen($log_file, 'a');
+        fwrite($fp, $level_arr[$level] . " - " . date("H:i:s") . " --> " . $msg . PHP_EOL);
+        fclose($fp);
+    }
 }

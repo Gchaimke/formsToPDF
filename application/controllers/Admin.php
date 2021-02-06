@@ -69,12 +69,16 @@ class Admin extends CI_Controller
 		$this->form_validation->set_rules('smtp_host', 'smtp_host', 'trim|xss_clean');
 		$this->form_validation->set_rules('smtp_user', 'smtp_user', 'trim|xss_clean');
 		$this->form_validation->set_rules('smtp_pass', 'smtp_pass', 'trim|xss_clean');
+		$this->form_validation->set_rules('blocked_ip', 'blocked_ip', 'trim|xss_clean');
 		if ($this->form_validation->run() == FALSE) {
 			$this->settings();
 		} else {
+			$blocked_ip = explode("\n", $this->input->post('blocked_ip'));
+			$blocked_ip = json_encode($blocked_ip);
 			$data = array(
 				'language' => $this->input->post('language'),
-				'emails' => $this->input->post('emails')
+				'emails' => $this->input->post('emails'),
+				'blocked_ip' => $blocked_ip
 			);
 			if (isset($_POST['smtp_on'])) {
 				$smtp_on = 1;
@@ -392,7 +396,6 @@ class Admin extends CI_Controller
 		$this->form_validation->set_rules('file', 'file', 'trim|xss_clean');
 		if ($this->form_validation->run() == TRUE && $this->user['role'] == "Admin") {
 			$file = '/' . $this->input->post('file');
-			// Use unlink() function to delete a file  
 			if (!unlink($_SERVER["DOCUMENT_ROOT"] . $file)) {
 				echo ($_SERVER["DOCUMENT_ROOT"] . $file . " cannot be deleted due to an error");
 			} else {

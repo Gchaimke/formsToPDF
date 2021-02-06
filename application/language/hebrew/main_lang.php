@@ -46,6 +46,8 @@ $lang['update']        = 'עדכן';
 $lang['edit']        = 'ערוך';
 $lang['delete']        = 'מחק';
 $lang['upload']        = 'העלה';
+$lang['blocked_ip']        = 'IP שחוסמו';
+$lang['blocked_ip_details']        = 'שורה חדשה לכל IP';
 
 /**
  * Users UI

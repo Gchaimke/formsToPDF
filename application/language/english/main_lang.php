@@ -46,6 +46,8 @@ $lang['update']        = 'Update';
 $lang['edit']        = 'Edit';
 $lang['delete']        = 'Delete';
 $lang['upload']        = 'Upload';
+$lang['blocked_ip']        = 'Blocked ip';
+$lang['blocked_ip_details']        = 'New line for each ip';
 
 /**
  * Users UI
