@@ -148,5 +148,3 @@ $lang['sending_email']        = 'שולח מייל, נא להמתין...';
 $lang['update_form']        = 'עדכון דוח';
 $lang['send_form']        = 'שלח דוח';
 $lang['show']        = 'הצג';
-
-

@@ -148,4 +148,3 @@ $lang['sending_email']        = 'Sending Email please wait...';
 $lang['update_form']        = 'Update Form';
 $lang['send_form']        = 'Send Form';
 $lang['show']        = 'Show';
-
