@@ -14,12 +14,11 @@ class Production extends CI_Controller
         $this->load->model('Tickets_model');
         if (isset($this->session->userdata['logged_in'])) {
             $this->user = $this->session->userdata['logged_in'];
-            $language =$this->user['language'];
+            $language = $this->user['language'];
             $this->lang->load('main', $language);
-        } else{
+        } else {
             header("location: /users/logout");
         }
-       
     }
 
     public function index()
@@ -187,9 +186,6 @@ class Production extends CI_Controller
         if (!$this->form_validation->run() == FALSE) {
             $data = array(
                 'id' =>  $this->input->post('id'),
-                'creator_id' =>  $this->input->post('creator_id'),
-                'creator_name' =>  $this->input->post('creator_name'),
-                'company' =>  $this->input->post('company'),
                 'date' =>  $this->input->post('date'),
                 'client_num' =>  $this->input->post('client_num'),
                 'issue_num' => $this->input->post('issue_num'),
@@ -213,6 +209,13 @@ class Production extends CI_Controller
                 'old_serial' => $this->input->post('old_serial'),
                 'new_serial' => $this->input->post('new_serial')
             );
+            if ($this->user['role'] == 'Admin') {
+                $data += array(
+                    'creator_id' =>  $this->input->post('creator_id'),
+                    'creator_name' =>  $this->input->post('creator_name'),
+                    'company' =>  $this->input->post('company')
+                );
+            }
             foreach ($data as $key => &$str) {
                 if (!$key == 'client_sign') {
                     $str = $this->cleanStr($str);

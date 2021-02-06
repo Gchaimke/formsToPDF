@@ -44,7 +44,7 @@ if (isset($this->session->userdata['logged_in'])) {
       <div class="jumbotron">
             <div class="container">
                   <center>
-                        <h5>עדכון דוח </h5>
+                        <h5><?= lang('update_form') ?></h5>
                         <?php if (isset($logo)) : ?>
                               <img class="logo" src="<?php echo $logo ?>" />
                         <?php endif ?>
@@ -63,36 +63,32 @@ if (isset($this->session->userdata['logged_in'])) {
                         $attributes = ['id' => 'ajax-form'];
                         echo form_open("production/update_form", $attributes); ?>
                         <input type='num' class="form-control" name='id' value="<?php echo $form_data['id'] ?>" hidden>
-                        <div class="form-row">
-                              <div class="form-group col-md-6">
-                                    <div class="input-group mb-2">
-                                          <div class="input-group-prepend">
-                                                <div class="input-group-text">תופס שייך לחברת</div>
-                                          </div>
-                                          <select class='form-control' name='company'>
-                                                <?php if (isset($companies)) {
-                                                      foreach ($companies as $company) {
-                                                            if ($company['name'] == $form_data['company']) {
-                                                                  echo '<option selected>' . htmlspecialchars($company['name']) . '</option>';
-                                                            } else {
-                                                                  echo '<option>' . htmlspecialchars($company['name']) . '</option>';
+                        <?php if ($user_role == "Admin") : ?>
+                              <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                          <div class="input-group mb-2">
+                                                <div class="input-group-prepend">
+                                                      <div class="input-group-text"><?= lang('company') ?></div>
+                                                </div>
+                                                <select class='form-control' name='company'>
+                                                      <?php if (isset($companies)) {
+                                                            foreach ($companies as $company) {
+                                                                  if ($company['name'] == $form_data['company']) {
+                                                                        echo '<option selected>' . htmlspecialchars($company['name']) . '</option>';
+                                                                  } else {
+                                                                        echo '<option>' . htmlspecialchars($company['name']) . '</option>';
+                                                                  }
                                                             }
                                                       }
-                                                }
-                                                ?>
-                                          </select>
-                                    </div>
-                              </div>
-                              <div class="form-group col-md-6">
-                                    <div class="input-group mb-2">
-                                          <div class="input-group-prepend">
-                                                <div class="input-group-text">יוצר</div>
+                                                      ?>
+                                                </select>
                                           </div>
-                                          <?php if ($user_role != "Admin") : ?>
-                                                <input type="hidden" id='creator_id' name='creator_id' value="<?php echo $form_data['creator_id'] ?>">
-                                                <input type='hidden' id='creator_name' name='creator_name' value="<?php echo $form_data['creator_name'] ?>">
-                                                <div class='form-control'><?php echo $form_data['creator_name'] ?></div>
-                                          <?php else : ?>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                          <div class="input-group mb-2">
+                                                <div class="input-group-prepend">
+                                                      <div class="input-group-text"><?= lang('technician') ?></div>
+                                                </div>
                                                 <select id='creator_id' class='form-control' name='creator_id'>
                                                       <?php if (isset($users)) {
                                                             foreach ($users as $user) {
@@ -106,16 +102,17 @@ if (isset($this->session->userdata['logged_in'])) {
                                                       ?>
                                                 </select>
                                                 <input type='hidden' id='creator_name' class="form-control" name='creator_name' value="<?php echo $form_data['creator_name'] ?>">
-                                          <?php endif ?>
+
+                                          </div>
                                     </div>
                               </div>
-                        </div>
+                        <?php endif ?>
 
                         <div class="form-row">
                               <div id="date_column" class="form-group col-md-4">
                                     <div class="input-group mb-2">
                                           <div class="input-group-prepend">
-                                                <div class="input-group-text">תאריך</div>
+                                                <div class="input-group-text"><?= lang('date') ?></div>
                                           </div>
                                           <input type='date' class="form-control" name='date' value="<?php echo $form_data['date'] ?>">
 
@@ -124,7 +121,7 @@ if (isset($this->session->userdata['logged_in'])) {
                               <div id="start_time_column" class="form-group col-md-4">
                                     <div class="input-group mb-2">
                                           <div class="input-group-prepend">
-                                                <div class="input-group-text">שעת התחלה</div>
+                                                <div class="input-group-text"><?= lang('start_time_column') ?></div>
                                           </div>
                                           <input type='time' class="form-control" name='start_time' value="<?php echo $form_data['start_time'] ?>">
                                     </div>
@@ -132,7 +129,7 @@ if (isset($this->session->userdata['logged_in'])) {
                               <div id="end_time_column" class="form-group col-md-4">
                                     <div class="input-group mb-2">
                                           <div class="input-group-prepend">
-                                                <div class="input-group-text">שעת סיום</div>
+                                                <div class="input-group-text"><?= lang('end_time_column') ?></div>
                                           </div>
                                           <input type='time' class="form-control" name='end_time' value="<?php echo $form_data['end_time'] ?>">
                                     </div>
@@ -143,7 +140,7 @@ if (isset($this->session->userdata['logged_in'])) {
                               <div id="client_num_column" class="form-group col-md-4">
                                     <div class="input-group mb-2">
                                           <div class="input-group-prepend">
-                                                <div class="input-group-text">מספר לקוח</div>
+                                                <div class="input-group-text"><?= lang('client_num_column') ?></div>
                                           </div>
                                           <input type='text' class="form-control" name='client_num' value="<?php echo htmlspecialchars($form_data['client_num']) ?>">
                                     </div>
@@ -151,7 +148,7 @@ if (isset($this->session->userdata['logged_in'])) {
                               <div id="issue_num_column" class="form-group col-md-4">
                                     <div class="input-group mb-2">
                                           <div class="input-group-prepend">
-                                                <div class="input-group-text">מספר פניה \ תקלה</div>
+                                                <div class="input-group-text"><?= lang('issue_num_column') ?></div>
                                           </div>
                                           <input type='text' class="form-control" name='issue_num' value="<?php echo htmlspecialchars($form_data['issue_num']) ?>">
                                     </div>
@@ -159,7 +156,7 @@ if (isset($this->session->userdata['logged_in'])) {
                               <div id="issue_kind_column" class="form-group col-md-4">
                                     <div class="input-group mb-2">
                                           <div class="input-group-prepend">
-                                                <div class="input-group-text">סוג תקלה \ התקנה</div>
+                                                <div class="input-group-text"><?= lang('issue_kind_column') ?></div>
                                           </div>
                                           <input type='text' class="form-control" name='issue_kind' value="<?php echo htmlspecialchars($form_data['issue_kind']) ?>">
                                     </div>
@@ -170,7 +167,7 @@ if (isset($this->session->userdata['logged_in'])) {
                               <div id="client_name_column" class="form-group col-md-4">
                                     <div class="input-group mb-2">
                                           <div class="input-group-prepend">
-                                                <div class="input-group-text">שם לקוח</div>
+                                                <div class="input-group-text"><?= lang('client_name_column') ?></div>
                                           </div>
                                           <input type='text' class="form-control" name='client_name' value="<?php echo htmlspecialchars($form_data['client_name']) ?>">
                                     </div>
@@ -178,26 +175,26 @@ if (isset($this->session->userdata['logged_in'])) {
                               <div id="place_column" class="form-group col-md-4">
                                     <div class="input-group mb-2">
                                           <div class="input-group-prepend">
-                                                <div class="input-group-text">כתובת</div>
+                                                <div class="input-group-text"><?= lang('place_column') ?></div>
                                           </div>
                                           <input type='text' class="form-control" name='place' value="<?php echo htmlspecialchars($form_data['place']) ?>">
                                     </div>
                               </div>
                               <div id="city_column" class="form-group col-md-4">
-                              <div class="input-group mb-2">
-                                    <div class="input-group-prepend">
-                                          <div class="input-group-text">עיר</div>
+                                    <div class="input-group mb-2">
+                                          <div class="input-group-prepend">
+                                                <div class="input-group-text"><?= lang('city_column') ?></div>
+                                          </div>
+                                          <input type='text' class="form-control" name='city' value="<?php echo htmlspecialchars($form_data['city']) ?>">
                                     </div>
-                                    <input type='text' class="form-control" name='city' value="<?php echo htmlspecialchars($form_data['city']) ?>">
                               </div>
-                        </div>
                         </div>
 
                         <div class="form-row">
                               <div id="manager_column" class="form-group col-md-6">
                                     <div class="input-group mb-2">
                                           <div class="input-group-prepend">
-                                                <div class="input-group-text">אחראי</div>
+                                                <div class="input-group-text"><?= lang('manager_column') ?></div>
                                           </div>
                                           <input type='text' class="form-control" name='manager' value="<?php echo htmlspecialchars($form_data['manager']) ?>">
                                     </div>
@@ -205,7 +202,7 @@ if (isset($this->session->userdata['logged_in'])) {
                               <div id="contact_name_column" class="form-group col-md-6">
                                     <div class="input-group mb-2">
                                           <div class="input-group-prepend">
-                                                <div class="input-group-text">איש קשר</div>
+                                                <div class="input-group-text"><?= lang('contact_name_column') ?></div>
                                           </div>
                                           <input type='text' class="form-control" name='contact_name' value="<?php echo htmlspecialchars($form_data['contact_name']) ?>">
                                     </div>
@@ -215,7 +212,7 @@ if (isset($this->session->userdata['logged_in'])) {
                               <div id="old_serial" class="form-group col-md-6">
                                     <div class="input-group mb-2">
                                           <div class="input-group-prepend">
-                                                <div class="input-group-text">מספר סריאלי - ישן</div>
+                                                <div class="input-group-text"><?= lang('old_serial') ?></div>
                                           </div>
                                           <input type='text' class="form-control" name='old_serial' value="<?php echo htmlspecialchars($form_data['old_serial']) ?>">
                                     </div>
@@ -223,50 +220,50 @@ if (isset($this->session->userdata['logged_in'])) {
                               <div id="new_serial" class="form-group col-md-6">
                                     <div class="input-group mb-2">
                                           <div class="input-group-prepend">
-                                                <div class="input-group-text">מספר סריאלי - חדש</div>
+                                                <div class="input-group-text"><?= lang('new_serial') ?></div>
                                           </div>
                                           <input type='text' class="form-control" name='new_serial' value="<?php echo htmlspecialchars($form_data['new_serial']) ?>">
                                     </div>
                               </div>
                         </div>
                         <div id="activity_text_column" class="form-group row">
-                              <label for="activity_text" class="col-sm-2 col-form-label ">תיאור תקלה \ פניה</label>
+                              <label for="activity_text" class="col-sm-2 col-form-label "><?= lang('activity_text_column') ?></label>
                               <div class="col-sm-10">
-                                    <textarea class="form-control" name="activity_text" cols="10" rows="6" placeholder="תיאור תקלה \ פניה"><?php echo $form_data['activity_text'] ?></textarea>
+                                    <textarea class="form-control" name="activity_text" cols="10" rows="6"><?php echo $form_data['activity_text'] ?></textarea>
                               </div>
                         </div>
 
                         <div id="checking_text_column" class="form-group row">
-                              <label for="checking_text" class="col-sm-2 col-form-label ">תוצאות הבדיקה</label>
+                              <label for="checking_text" class="col-sm-2 col-form-label "><?= lang('checking_text_column') ?></label>
                               <div class="col-sm-10">
-                                    <textarea class="form-control" name="checking_text" cols="10" rows="2" placeholder="תוצאות הבדיקה"><?php echo $form_data['checking_text'] ?></textarea>
+                                    <textarea class="form-control" name="checking_text" cols="10" rows="2"><?php echo $form_data['checking_text'] ?></textarea>
                               </div>
                         </div>
 
                         <div id="summary_text_column" class="form-group row">
-                              <label for="summary_text" class="col-sm-2 col-form-label ">סיכום</label>
+                              <label for="summary_text" class="col-sm-2 col-form-label "><?= lang('summary_text_column') ?></label>
                               <div class="col-sm-10">
-                                    <textarea class="form-control" name="summary_text" cols="10" rows="2" placeholder="סיכום"><?php echo $form_data['summary_text'] ?></textarea>
+                                    <textarea class="form-control" name="summary_text" cols="10" rows="2"><?php echo $form_data['summary_text'] ?></textarea>
                               </div>
                         </div>
 
                         <div id="remarks_text_column" class="form-group row">
-                              <label for="remarks_text" class="col-sm-2 col-form-label ">הערות</label>
+                              <label for="remarks_text" class="col-sm-2 col-form-label "><?= lang('remarks_text_column') ?></label>
                               <div class="col-sm-10">
-                                    <textarea class="form-control" name="remarks_text" cols="10" rows="2" placeholder="הערות"><?php echo $form_data['remarks_text'] ?></textarea>
+                                    <textarea class="form-control" name="remarks_text" cols="10" rows="2"><?php echo $form_data['remarks_text'] ?></textarea>
                               </div>
                         </div>
 
                         <div id="recommendations_text_column" class="form-group row">
-                              <label for="recommendations_text" class="col-sm-2 col-form-label ">המלצות</label>
+                              <label for="recommendations_text" class="col-sm-2 col-form-label "><?= lang('recommendations_text_column') ?></label>
                               <div class="col-sm-10">
-                                    <textarea class="form-control" name="recommendations_text" cols="10" rows="2" placeholder="המלצות"><?php echo $form_data['recommendations_text'] ?></textarea>
+                                    <textarea class="form-control" name="recommendations_text" cols="10" rows="2"><?php echo $form_data['recommendations_text'] ?></textarea>
                               </div>
                         </div>
                         <hr />
                         <?php if (isset($contacts)) { ?>
                               <div class="form-group row" id="emails">
-                                    <label for="email_to" class="col-sm-2 col-form-label ">מכותבים:</label>
+                                    <label for="email_to" class="col-sm-2 col-form-label "><?= lang('emails') ?></label>
                               <?php
 
                               foreach ($contacts as $contact) {
@@ -290,7 +287,7 @@ if (isset($this->session->userdata['logged_in'])) {
                                     }
                               }
                         } else {
-                              echo '<div class="col-sm-5">אין פריטים ברשימת תפוצה של משתמש</div>';
+                              echo '<div class="col-sm-5">' . lang('no_emails') . '></div>';
                         }
                               ?>
                               <input type="text" id="sum" class="form-control ltr mt-3 mr-3 ml-3" name='email_to' value="<?= $form_data['email_to'] ?>" hidden>
@@ -298,7 +295,7 @@ if (isset($this->session->userdata['logged_in'])) {
                               <hr />
 
                               <div id="files_column" class="form-group row">
-                                    <label for="attachments" class="col-sm-2 col-form-label ">קבצים נוספים</label>
+                                    <label for="attachments" class="col-sm-2 col-form-label "><?= lang('files_column') ?></label>
                                     <div class="col-sm-10">
                                           <input id="fileupload" style="display:none;" type="file" name="files" data-url="/production/do_upload/<?= $form_data['id'] ?>" />
                                           <input id="attachments" type="hidden" class="form-control ltr" name="attachments" value="<?php echo htmlspecialchars($form_data['attachments']) ?>" />
@@ -313,23 +310,23 @@ if (isset($this->session->userdata['logged_in'])) {
                                           </div>
                                           <button class="btn btn-outline-success col-sm-2" type="button" onclick="document.getElementById('fileupload').click();">
                                                 <span id="upload_spinner" class="spinner-border spinner-border-sm" style="display: none;" role="status" aria-hidden="true"></span>
-                                                העלה</button>
+                                                <?= lang('upload') ?></button>
 
                                     </div>
                               </div>
                               <?php if ($user_role == "Admin") { ?>
                                     <hr />
-                                    <div class="form-row row">
+                                    <div class="form-row row" id='details_column'>
                                           <div class="form-group row col-md-9 mr-2 ">
-                                                <label for="details" class="col-sm-2 col-form-label ">הערות (CSV)</label>
+                                                <label for="details" class="col-sm-2 col-form-label "><?= lang('details_column') ?></label>
                                                 <div class="col-sm-10">
                                                       <textarea class="form-control" name="details" rows="1"><?php echo $form_data['details'] ?></textarea>
                                                 </div>
                                           </div>
-                                          <div class="form-group col-md-3">
+                                          <div class="form-group col-md-3" id='price'>
                                                 <div class="input-group">
                                                       <div class="input-group-prepend">
-                                                            <div class="input-group-text">מחיר</div>
+                                                            <div class="input-group-text"><?= lang('price') ?></div>
                                                       </div>
                                                       <input type='text' id='price' class="form-control" name='price' value='<?php echo $form_data['price'] ?>'>
                                                 </div>
@@ -340,12 +337,12 @@ if (isset($this->session->userdata['logged_in'])) {
                               <hr />
 
                               <div class="form-group row client-sign-form">
-                                    <label class="col-sm-2 col-form-label "> חתימת לקוח שמורה:</label>
+                                    <label class="col-sm-2 col-form-label "><?= lang('saved_sign') ?></label>
                                     <div class="col-sm-4">
                                           <?php if ($form_data['client_sign']) {
                                                 echo '<img class="sing-image" src="data:image/png;base64, ' . $form_data["client_sign"] . '" />';
                                           } else {
-                                                echo 'אין חתימה';
+                                                echo lang('no_sign');
                                           }
                                           ?>
                                     </div>
@@ -356,17 +353,17 @@ if (isset($this->session->userdata['logged_in'])) {
                                                 <canvas id="sign-canvas" style="border: 5px solid red;"></canvas>
                                           </div>
                                           <input type='text' id="client_sign" name='client_sign' hidden>
-                                          <div id="save_sign" class="btn btn-outline-success btn-sm mt-3">שמור חתימה</div>
-                                          <div class="btn btn-outline-danger btn-sm mt-3" onclick='$("#sign-canvas").data("jqScribble").clear();'>נקה חתימה</div>
+                                          <div id="save_sign" class="btn btn-outline-success btn-sm mt-3"><?= lang('save_sign') ?></div>
+                                          <div class="btn btn-outline-danger btn-sm mt-3" onclick='$("#sign-canvas").data("jqScribble").clear();'><?= lang('clean_sign') ?></div>
                                           <div class="btn btn-outline-danger btn-sm mt-3" onclick='$(".client-sign-form").toggle();$("#sign-canvas").data("jqScribble").clear();'>X</div>
                                     </div>
                               </div>
                               <hr />
-                              <input type='submit' id='save_btn' class='btn btn-warning' name='submit' value='עדכן דוח'>
-                              <a id="send_email" class="btn btn-success ml-3" href="#send_email" onclick="SendEmail()">שלח דוח</a>
-                              <a target="_blank" class="btn btn-info" href="/exportpdf/create/<?php echo $form_data['id'] ?>">הצג PDF</a>
+                              <input type='submit' id='save_btn' class='btn btn-warning' name='submit' value='<?= lang('update_form') ?>'>
+                              <a id="send_email" class="btn btn-success ml-3" href="#send_email" onclick="SendEmail()"><?= lang('send_form') ?></a>
+                              <a target="_blank" class="btn btn-info" href="/exportpdf/create/<?php echo $form_data['id'] ?>"><?= lang('show') ?> PDF</a>
                               <?php /*<a target="_blank" class="btn btn-info ml-3" href="/exportpdf/export_doc/<?php echo $form_data['id'] ?>">הורד DOC</a>*/ ?>
-                              <div class="btn btn-danger my-5 ml-3" style="color: azure;" onclick=' $(".client-sign-form").toggle();'>חתימת לקוח</div>
+                              <div class="btn btn-danger my-5 ml-3" style="color: azure;" onclick=' $(".client-sign-form").toggle();'><?= lang('client_sign') ?></div>
                               <a id="show_log_button" href='#show_log_button' class='btn btn-outline-info ml-3' onclick="showLogFile('<?php echo $form_data['id'] ?>')"><i class="fa fa-file"> Log</i></a>
                               <div id='show-log' style='display:none;'>
                                     <div id="show-log-header">
@@ -429,33 +426,20 @@ if (isset($this->session->userdata['logged_in'])) {
       }
 
       function SendEmail() {
-            var ans = 'no';
-            //var r = confirm("לשלוח עם קבצים נוספים?");
-            //if (r == true) {
-            //      var ans = 'yes';
-            //} else {
-            //      ans = 'no';
-            //}
-            // Make sure that the formMessages div has the 'success' class.
+            var add_attachments = 'no';
             $('#form-messages').addClass('alert-info');
-            // Set the message text.
-            $('#form-messages').html("שולח מייל, נא להמתין...").fadeIn(1000);
+            $('#form-messages').html("<?= lang('sending_email') ?>").fadeIn(1000);
             $.post("/exportpdf/create/<?php echo $form_data['id'] ?>", {
                   email: true,
-                  add_attachments: ans
+                  add_attachments: add_attachments
             }).done(function(o) {
-                  // Make sure that the formMessages div has the 'success' class.
                   $('#form-messages').removeClass('alert-info').addClass('alert-success');
-                  // Set the message text.
                   $('#form-messages').html(o).fadeIn(1000).delay(5000).fadeOut(1000);
                   setTimeout(function() {
-                        //window.location.href = "/exportpdf/create/" + id;
-                        //window.location.href = "/production/view_form/" + id;
                         window.location.href = "/";
-                  }, 3000); //will call the function after 2 secs.
+                  }, 3000);
             }).fail(function(o) {
                   $('#form-messages').removeClass('alert-info').addClass('alert-danger');
-                  // Set the message text.
                   $('#form-messages').html(o).fadeIn(1000);
             });
       }

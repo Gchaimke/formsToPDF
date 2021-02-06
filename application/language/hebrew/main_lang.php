@@ -90,8 +90,9 @@ $lang += array(
     "emails" => "מכותבים",
     "files_column" => "קבצים",
     "details_column" => "הערות (CSV) ",
+    "new_serial" => "מספר סריאלי - חדש",
     "old_serial" => "מספר סריאלי - ישן",
-    "new_serial" => "מספר סריאלי - חדש"
+    "price" => "מחיר"
 );
 
 /**
@@ -133,3 +134,19 @@ $lang['added']        = 'הוסף';
  */
 $lang['new_form']        = 'מלוי דוח';
 $lang['new_config']        = 'יצירת קונפיגורציה';
+$lang['date']        = 'תאריך';
+$lang['no_emails']        = 'אין פריטים ברשימת תפוצה של משתמש';
+$lang['cant_add_files']        = 'אין אפשרות להוסיף קבצים טרם שמירת דוח.';
+$lang['save_sign']        = 'שמור חתימה';
+$lang['saved_sign']        = 'חתימת לקוח שמורה:';
+$lang['clean_sign']        = 'נקה חתימה';
+$lang['client_sign']        = 'חתימת לקוח';
+$lang['no_sign']        = 'אין חתימה';
+$lang['save_and_send']        = 'שמור ושלח לרשימת תפוצה';
+$lang['cant_save']        = 'אין אפשרות לשמור את שינוים';
+$lang['sending_email']        = 'שולח מייל, נא להמתין...';
+$lang['update_form']        = 'עדכון דוח';
+$lang['send_form']        = 'שלח דוח';
+$lang['show']        = 'הצג';
+
+
