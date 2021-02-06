@@ -304,19 +304,19 @@ class Production extends CI_Controller
         $user_role = $this->user['role'];
         $users = $this->Users_model->getUsers();
         $html_table =  '<table class="table table-hover mb-4" "><thead class="thead-dark"><tr>
-						<th scope="col" style="width:115px;">תאריך</th>
-						<th scope="col">יוצר</th>
-						<th scope="col" class="mobile-hide">מספר לקוח</th>
-						<th scope="col" class="mobile-hide">שם הלקוח</th>
-						<th scope="col" class="mobile-hide">מיקום</th>
-						<th scope="col" class="mobile-hide">עיר</th>
-						<th scope="col" class="mobile-hide">חברה נותנת שירות</th>';
+						<th scope="col" style="width:115px;">'.lang('date').'</th>
+						<th scope="col">'.lang('technician').'</th>
+						<th scope="col" class="mobile-hide">'.lang('client_num_column').'</th>
+						<th scope="col" class="mobile-hide">'.lang('client_name_column').'</th>
+						<th scope="col" class="mobile-hide">'.lang('place_column').'</th>
+						<th scope="col" class="mobile-hide">'.lang('city_column').'</th>
+						<th scope="col" class="mobile-hide">'.lang('company').'</th>';
         if ($user_role == "Admin") {
-            $html_table .= '<th scope="col" class="mobile-hide">מחיר</th>';
+            $html_table .= '<th scope="col" class="mobile-hide">'.lang('price').'</th>';
         }
-        $html_table .= '<th scope="col">ערוך </th>';
+        $html_table .= '<th scope="col">'.lang('edit').'</th>';
         if ($user_role == "Admin") {
-            $html_table .= '<th scope="col">מחק</th>';
+            $html_table .= '<th scope="col">'.lang('delete').'</th>';
         }
         $html_table .= '</tr></thead><tbody>';
         if ($results) {
@@ -352,7 +352,7 @@ class Production extends CI_Controller
                 $html_table .= '</tr>';
             }
         } else {
-            $html_table .= 'אין תוצאות';
+            $html_table .= lang('no_forms');
         }
         $html_table .= '</tbody></table>';
         return $html_table;

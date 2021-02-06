@@ -13,7 +13,7 @@ $is_hiden = $hide_filter ? 'hidden' : '';
 	<div class="jumbotron">
 		<div class="container">
 			<center>
-				<h5>דוחות</h5>
+				<h5><?= lang('forms') ?></h5>
 			</center>
 		</div>
 	</div>
@@ -27,19 +27,19 @@ $is_hiden = $hide_filter ? 'hidden' : '';
 		?>
 		<div id="buttons-section">
 			<div id="show_filters" class='btn btn-outline-info <?= $is_hiden ?> mobile-no-hide'><i class="fa fa-filter"></i></div>
-			<a id="no_filters" href="/production/manage_forms" class="btn btn-outline-secondary hidden" onclick=' '>בטל סינון</a>
+			<a id="no_filters" href="/production/manage_forms" class="btn btn-outline-secondary hidden" onclick=' '><?= lang('reset_filter') ?></a>
 			<?php
 			if ($user_role == 'Admin' || $user_role == 'Manager') { ?>
 				<div id="show_csv" class='btn btn-outline-info'><i class="fa fa-file-excel-o"></i></div>
 				<div id="csv_month" style="display:none;"></div>
 			<?php }	?>
 		</div>
-		<div id="search_section" class="mobile-hide">
-			<form id="form" class='ltr'>
+		<div id="search_section">
+			<form id="form" class='mobile-hide ltr'>
 				<div class="input-group mb-3">
-					<input id='inputSearch' type="text" class="form-control" placeholder="מספר תקלה,מספר לקוח,שם לקוח,יוצר" aria-label="Search in forms" aria-describedby="basic-addon2" autofocus>
+					<input id='inputSearch' type="text" class="form-control" placeholder="<?= lang('search_placeholder') ?>" aria-label="Search in forms" aria-describedby="basic-addon2" autofocus>
 					<div class="input-group-append">
-						<button class="btn btn-outline-primary" type="button" onclick="formSearch()">חפש</button>
+						<button class="btn btn-outline-primary" type="button" onclick="formSearch()"><?= lang('search') ?></button>
 					</div>
 				</div>
 				<div id='searchResult' class='rtl text-center'></div>
@@ -49,7 +49,7 @@ $is_hiden = $hide_filter ? 'hidden' : '';
 			<div class="form-group ml-2">
 				<div class="input-group">
 					<div class="input-group-prepend">
-						<div class="input-group-text">יום</div>
+						<div class="input-group-text"><?= lang('day') ?></div>
 					</div>
 					<input type='date' class="form-control date_filter" name='date'>
 				</div>
@@ -57,10 +57,10 @@ $is_hiden = $hide_filter ? 'hidden' : '';
 			<div class="form-group ml-2">
 				<div class="input-group">
 					<div class="input-group-prepend">
-						<div class="input-group-text">יוצר</div>
+						<div class="input-group-text"><?= lang('technician') ?></div>
 					</div>
 					<select class="creator_filter">
-						<option value="">-ללא סינון-</option>
+						<option value=""><?= lang('no_filter') ?></option>
 						<?php foreach ($users as $user) {
 							echo "<option value='{$user['id']}'>{$user['view_name']}</option>";
 						} ?>
@@ -70,10 +70,10 @@ $is_hiden = $hide_filter ? 'hidden' : '';
 			<div class="form-group ml-2">
 				<div class="input-group">
 					<div class="input-group-prepend">
-						<div class="input-group-text">חברה</div>
+						<div class="input-group-text"><?= lang('company') ?></div>
 					</div>
 					<select class="company_filter">
-						<option value="">-ללא סינון-</option>
+						<option value=""><?= lang('no_filter') ?></option>
 						<?php foreach ($companies as $company) {
 							echo "<option value='{$company['name']}'>{$company['name']}</option>";
 						} ?>
@@ -83,26 +83,26 @@ $is_hiden = $hide_filter ? 'hidden' : '';
 			<div class="form-group ml-2">
 				<div class="input-group">
 					<div class="input-group-prepend">
-						<div class="input-group-text">חודש</div>
+						<div class="input-group-text"><?= lang('month') ?></div>
 					</div>
 					<select id="month-dropdown" class="month_filter">
-						<option value="">-ללא סינון-</option>
+						<option value=""><?= lang('no_filter') ?></option>
 					</select>
 				</div>
 			</div>
 			<div class="form-group ml-2">
 				<div class="input-group">
 					<div class="input-group-prepend">
-						<div class="input-group-text">שנה</div>
+						<div class="input-group-text"><?= lang('year') ?></div>
 					</div>
 					<select id="yaer-dropdown" class="year_filter">
-						<option value="">-ללא סינון-</option>
+						<option value=""><?= lang('no_filter') ?></option>
 					</select>
 				</div>
 			</div>
 			<div class="form-group ml-2">
 				<div class="input-group">
-					<a href="" class="filter_button btn btn-success hidden" style="color: azure;" onclick=' '>סינון</a>
+					<a href="" class="filter_button btn btn-success hidden" style="color: azure;" onclick=' '><?= lang('filter') ?></a>
 				</div>
 			</div>
 		</div>
@@ -115,7 +115,7 @@ $is_hiden = $hide_filter ? 'hidden' : '';
 			<?php if (isset($html_table)) {
 				echo $html_table;
 			} else {
-				echo '<div>אין עדיין דוחות</div>';
+				echo '<div>'.lang('no_forms').'</div>';
 			} ?>
 		</div>
 	</div>

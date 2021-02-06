@@ -280,6 +280,9 @@ div#form-messages {
     .mobile-hide {
         display: table-cell;
     }
+    #search_section>.mobile-hide {
+        display: block;
+    }
     .mobile-view {
         display: none;
     }
