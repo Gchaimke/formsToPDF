@@ -106,18 +106,18 @@ $is_hiden = $hide_filter ? 'hidden' : '';
 				</div>
 			</div>
 		</div>
+		<div class="table-responsive">
+			<?php if (isset($html_table)) {
+				echo $html_table;
+			} else {
+				echo '<div>' . lang('no_forms') . '</div>';
+			} ?>
+		</div>
 		<nav aria-label="Checklist navigation" class="<?= $is_hiden ?>">
 			<?php if (isset($links)) {
 				echo $links;
 			} ?>
 		</nav>
-		<div class="table-responsive">
-			<?php if (isset($html_table)) {
-				echo $html_table;
-			} else {
-				echo '<div>'.lang('no_forms').'</div>';
-			} ?>
-		</div>
 	</div>
 
 </main>
