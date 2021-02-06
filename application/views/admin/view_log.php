@@ -38,7 +38,7 @@
 	</div>
 	<div id='show-log' style='display:none;'>
 		<div id="show-log-header">
-			<div id="serial-header"></div>Click here to move<button type="button" class="close" aria-label="Close"> <span aria-hidden="true">&times;</span></button>
+			<div id="serial-header"></div><button type="button" class="close" aria-label="Close"> <span aria-hidden="true">&times;</span></button>
 		</div>
 		<ul class="list-group list-group-flush">
 		</ul>

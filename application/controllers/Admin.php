@@ -31,6 +31,7 @@ class Admin extends CI_Controller
 	{
 		$this->Admin_model->add_field('settings', 'emails'); //one time update db to add new field
 		$this->Admin_model->add_field('settings', 'language', 'VARCHAR', 20); //one time update db to add new field
+		$this->Admin_model->add_field('settings', 'blocked_ip', 'LONGTEXT', null); //one time update db to add new field
 		$this->Admin_model->add_field('forms', 'old_serial', 'VARCHAR', 100); //one time update db to add new field
 		$this->Admin_model->add_field('forms', 'new_serial', 'VARCHAR', 100); //one time update db to add new field
 		$this->Admin_model->add_field('tickets', 'city', 'VARCHAR', 150); //one time update db to add new field

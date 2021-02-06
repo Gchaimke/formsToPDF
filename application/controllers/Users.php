@@ -139,10 +139,10 @@ class Users extends CI_Controller
         $this->set_session_data($this->user['name']);
     }
 
-    public function login()
+    public function user_login_process()
     {
+        $this->check_blacklist_ip();
         $data = array();
-        $data['response'] = '';
         if (!$this->db->table_exists('users')) {
             $this->Users_model->create();
             $this->Admin_model->create();
@@ -150,14 +150,8 @@ class Users extends CI_Controller
             $this->Production_model->create();
             $this->Contacts_model->create();
             $this->Tickets_model->create();
-            $data['response'] .= "New DB created!<br> username:Admin <br> Password:Admin.";
+            $data['error_message'] .= "New DB created!<br> username:Admin <br> Password:Admin.";
         }
-        $this->load->view('users/login', $data);
-        $this->load->view('footer');
-    }
-
-    public function user_login_process()
-    {
         $this->form_validation->set_rules('name', 'Name', 'trim|required|xss_clean');
         $this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean');
 
@@ -169,18 +163,16 @@ class Users extends CI_Controller
                 $this->load->view('footer');
             }
         } else {
-            $data = array(
+            $sql = array(
                 'name' => $this->input->post('name'),
                 'password' => $this->input->post('password')
             );
-            $result = $this->Users_model->login($data);
+            $result = $this->Users_model->login($sql);
             if ($result == true) {
                 $this->set_session_data($this->input->post('name'));
                 header("location: /tickets");
             } else {
-                $data = array(
-                    'error_message' => 'Invalid Username or Password'
-                );
+                $data['error_message'] = 'Invalid Username or Password';
                 $this->load->view('/users/login', $data);
                 $this->load->view('footer');
             }
@@ -219,4 +211,42 @@ class Users extends CI_Controller
         $this->load->view('users/login', $data);
         $this->load->view('footer');
     }
+
+    function check_blacklist_ip()
+    {
+        $blockIP = array("127.0.0.2", "192.168.0.2");
+        if (in_array($this->get_client_ip(), $blockIP)) {
+            $heading = 'Yor hardware are blocket for 5 invalid logins';
+            $message = '<p>You can\'t use this site any more</p>';
+            show_error($message, 404, $heading);
+            $this->log_data($this->get_client_ip() . ' are blocked out!', 1);
+            exit();
+        } else {
+            $this->log_data($this->get_client_ip() . ' view your site.');
+        }
+    }
+
+    function get_client_ip()
+    {
+        if (!empty($_SERVER['HTTP_CLIENT_IP'])) {   //check ip from share internet
+            $ip = $_SERVER['HTTP_CLIENT_IP'];
+        } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {   //to check ip is pass from proxy
+            $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        } else {
+            $ip = $_SERVER['REMOTE_ADDR'];
+        }
+        return $ip;
+    }
+
+    public function log_data($msg, $level = 0)
+	{
+		if (!file_exists('application/logs/admin')) {
+			mkdir('application/logs/admin', 0770, true);
+		}
+		$level_arr = array('INFO', 'ERROR');
+		$log_file = APPPATH . "logs/admin/" . date("m-d-Y") . ".log";
+		$fp = fopen($log_file, 'a');
+		fwrite($fp, $level_arr[$level] . " - " . date("H:i:s") . " --> ". $msg . PHP_EOL);
+		fclose($fp);
+	}
 }

@@ -119,7 +119,11 @@ class Admin_model extends CI_Model
     {
         $this->load->dbforge();
         if (!$this->db->field_exists($field_name, $col_name)) {
-            $fields = array($field_name => array('type' => $type, 'constraint' => $length));
+            if($length==null){
+                $fields = array($field_name => array('type' => $type));
+            }else{
+                $fields = array($field_name => array('type' => $type, 'constraint' => $length));
+            }
             $this->dbforge->add_column($col_name, $fields);
         }
     }
