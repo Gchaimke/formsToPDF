@@ -85,12 +85,12 @@ if ($user_role == "Admin" || $user_role == "Manager") {
 					</select>
 				</div>
 			</div>
-			<div class="form-group ml-2">
+			<div class="form-group ml-2 ">
 				<div class="input-group">
 					<div class="input-group-prepend">
 						<div class="input-group-text"><?= lang('search') ?></div>
 					</div>
-					<input type="text" class="city_filter" name="city">
+					<input type="text" class="search_filter" name="search">
 				</div>
 			</div>
 			<div class="form-group ml-2">
@@ -144,7 +144,7 @@ if ($user_role == "Admin" || $user_role == "Manager") {
 											'&client_num=' . $ticket['client_num'] .
 											'&client_name=' . urlencode($ticket['client_name']) .
 											'&address=' . urlencode($ticket['address']) .
-											'&city=' . urlencode($ticket['city']) . '" style="color:black;"><i class="fa fa-edit"></i></a></span ></span >';
+											'&search=' . urlencode($ticket['city']) . '" style="color:black;"><i class="fa fa-edit"></i></a></span ></span >';
 									} else if ($ticket['status'] == 1) {
 										echo '<span class="badge badge-warning">' . lang('working') . ' ' . $btn_done . '</span >';
 									} else {
@@ -178,7 +178,7 @@ if ($user_role == "Admin" || $user_role == "Manager") {
 <script>
 	var creator = "<?php echo $creator = (isset($_GET['creator'])) ? $_GET['creator'] : ''; ?>";
 	var company = "<?php echo $company = (isset($_GET['company'])) ? $_GET['company'] : ''; ?>";
-	var city = "<?php echo $city = (isset($_GET['city'])) ? $_GET['city'] : ''; ?>";
+	var search = "<?php echo $search = (isset($_GET['search'])) ? $_GET['search'] : ''; ?>";
 	var status = "<?php echo $status = (isset($_GET['status'])) ? $_GET['status'] : ''; ?>";
 
 	$('.creator_filter').on('change', function() {
@@ -193,8 +193,8 @@ if ($user_role == "Admin" || $user_role == "Manager") {
 		location = $('.filter_button').attr("href");
 	});
 
-	$('.city_filter').on('change', function() {
-		city = $('.city_filter').val();
+	$('.search_filter').on('change', function() {
+		search = $('.search_filter').val();
 		update_filter();
 		location = $('.filter_button').attr("href");
 	});
@@ -206,18 +206,18 @@ if ($user_role == "Admin" || $user_role == "Manager") {
 	});
 
 	function update_filter() {
-		$('.filter_button').attr("href", '?creator=' + creator + '&company=' + company + '&city=' + city + '&status=' + status);
+		$('.filter_button').attr("href", '?creator=' + creator + '&company=' + company + '&search=' + search + '&status=' + status);
 
 	}
 
 	function set_options_selected() {
-		if (creator != '' || company != '' || status != '' || city != '') {
+		if (creator != '' || company != '' || status != '' || search != '') {
 			$('#no_filters').toggle();
 		}
 		$('.creator_filter').val(creator);
 		$('.company_filter').val(company);
 		$('.status_filter').val(status);
-		$('.city_filter').val(city);
+		$('.city_filter').val(search);
 	}
 
 	window.onload = function() {

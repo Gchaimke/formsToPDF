@@ -91,7 +91,7 @@ class Tickets_model extends CI_Model
 		}
 	}
 
-	function get_all($user_id = '', $company_id = '', $city = '', $status = '')
+	function get_all($user_id = '', $company_id = '', $search = '', $status = '')
 	{
 		$user_role = $this->session->userdata['logged_in']['role'];
 		$current_user_id = $this->session->userdata['logged_in']['id'];
@@ -112,9 +112,13 @@ class Tickets_model extends CI_Model
 		if ($company_id != '') {
 			$this->db->where("company_id ='$company_id'");
 		}
-		if ($city != '') {
-			$city = urldecode($city);
-			$this->db->where("city LIKE '%$city%'");
+		if ($search != '') {
+			$city = urldecode($search);
+			$this->db->where("city LIKE '%$search%' 
+								OR client_num LIKE '%$search%' 
+								OR client_name LIKE '%$search%' 
+								OR address LIKE '%$search%' 
+								OR warehouse_num LIKE '%$search%'");
 		}
 		if ($status != '') {
 			$this->db->where("status =$status");

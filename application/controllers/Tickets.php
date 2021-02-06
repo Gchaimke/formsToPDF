@@ -36,9 +36,9 @@ class Tickets extends CI_Controller
         $data = array();
         $data['creator'] = isset($_GET['creator']) ?  $_GET['creator'] : '';
         $data['company'] = isset($_GET['company']) ? $_GET['company'] : '';
-        $data['city'] = isset($_GET['city']) ? $_GET['city'] : '';
+        $data['search'] = isset($_GET['search']) ? $_GET['search'] : '';
         $data['status'] = isset($_GET['status']) ? $_GET['status'] : '';
-        $data['tickets'] = $this->Tickets_model->get_all($data['creator'], $data['company'], $data['city'], $data['status']);
+        $data['tickets'] = $this->Tickets_model->get_all($data['creator'], $data['company'], $data['search'], $data['status']);
         $data['users'] =  $this->Users_model->getusers();
         $data['companies'] =  $this->Companies_model->getCompanies();
         $this->load->view('header');
