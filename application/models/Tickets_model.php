@@ -113,7 +113,7 @@ class Tickets_model extends CI_Model
 			$this->db->where("company_id ='$company_id'");
 		}
 		if ($search != '') {
-			$city = urldecode($search);
+			$search = urldecode($search);
 			$this->db->where("city LIKE '%$search%' 
 								OR client_num LIKE '%$search%' 
 								OR client_name LIKE '%$search%' 
