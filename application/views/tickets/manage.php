@@ -43,20 +43,18 @@ if ($user_role == "Admin" || $user_role == "Manager") {
 			<div id="show_filters" class='btn btn-outline-info mobile-no-hide'><i class="fa fa-filter"></i></div>
 			<a id="no_filters" href="/tickets" class="btn btn-outline-secondary hidden" onclick=' '><?= lang('reset_filter') ?></a>
 			<?= $u_button_html ?>
-			<a href="?status=2" class='btn btn-outline-primary'><?= lang('dones') ?></a>
 		</div>
 		<div class="form-row mobile-hide" id="filters_section">
 			<div class="form-group ml-2">
 				<div class="input-group">
 					<div class="input-group-prepend">
-						<div class="input-group-text"><?= lang('technician') ?></div>
+						<div class="input-group-text"><?= lang('status') ?></div>
 					</div>
-					<select class="creator_filter">
+					<select class="status_filter">
 						<option value=""><?= lang('no_filter') ?></option>
-						<option value="0"><?= lang('unresolved') ?></option>
-						<?php foreach ($users as $user) {
-							echo "<option value='{$user['id']}'>{$user['view_name']}</option>";
-						} ?>
+						<option value=0><?= lang('new') ?></option>
+						<option value=1><?= lang('working') ?></option>
+						<option value=2><?= lang('done') ?></option>
 					</select>
 				</div>
 			</div>
@@ -76,22 +74,23 @@ if ($user_role == "Admin" || $user_role == "Manager") {
 			<div class="form-group ml-2">
 				<div class="input-group">
 					<div class="input-group-prepend">
-						<div class="input-group-text"><?= lang('city_column') ?></div>
+						<div class="input-group-text"><?= lang('technician') ?></div>
 					</div>
-					<input type="text" class="city_filter" name="city">
+					<select class="creator_filter">
+						<option value=""><?= lang('no_filter') ?></option>
+						<option value="0"><?= lang('unresolved') ?></option>
+						<?php foreach ($users as $user) {
+							echo "<option value='{$user['id']}'>{$user['view_name']}</option>";
+						} ?>
+					</select>
 				</div>
 			</div>
 			<div class="form-group ml-2">
 				<div class="input-group">
 					<div class="input-group-prepend">
-						<div class="input-group-text"><?= lang('status') ?></div>
+						<div class="input-group-text"><?= lang('search') ?></div>
 					</div>
-					<select class="status_filter">
-						<option value=""><?= lang('no_filter') ?></option>
-						<option value=0><?= lang('new') ?></option>
-						<option value=1><?= lang('working') ?></option>
-						<option value=2><?= lang('done') ?></option>
-					</select>
+					<input type="text" class="city_filter" name="city">
 				</div>
 			</div>
 			<div class="form-group ml-2">
