@@ -170,6 +170,7 @@ class Users extends CI_Controller
             $result = $this->Users_model->login($sql);
             if ($result == true) {
                 $this->set_session_data($this->input->post('name'));
+                $this->log_data($this->input->post('name').' logined from ip: '.$this->get_client_ip());
                 header("location: /tickets");
             } else {
                 $data['error_message'] = 'Invalid Username or Password';
@@ -214,15 +215,13 @@ class Users extends CI_Controller
 
     function check_blacklist_ip()
     {
-        $blockIP = array("127.0.0.2", "192.168.0.2");
+        $blockIP = array("127.0.0.2");
         if (in_array($this->get_client_ip(), $blockIP)) {
             $heading = 'Yor hardware are blocket for 5 invalid logins';
             $message = '<p>You can\'t use this site any more</p>';
             show_error($message, 404, $heading);
             $this->log_data($this->get_client_ip() . ' are blocked out!', 1);
             exit();
-        } else {
-            $this->log_data($this->get_client_ip() . ' view your site.');
         }
     }
 

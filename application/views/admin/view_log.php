@@ -25,7 +25,7 @@
 						<tr>
 							<?php
 							$log_name = basename($file['name']);
-							echo "<td><a href='#' onclick=showLogFile('$log_name') >$log_name</a></td>";
+							echo "<td class='ltr'><a href='#' onclick=showLogFile('$log_name') >$log_name</a></td>";
 							echo '<td>', human_filesize($file['size']), '</td>';
 							?>
 						</tr>
