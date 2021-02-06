@@ -15,7 +15,8 @@
 		<?php
 		echo '<div class="card-columns">';
 		foreach ($companies as $company) {
-			$companies_list = json_decode($user['companies_list']);
+			
+			$companies_list = isset($user)?json_decode($user['companies_list']):'';
 			if (isset($companies_list) && in_array($company['id'], $companies_list)) {
 				$company_name = $company['name'];
 				echo '<div id="' . $company_name . '" class="card"><center><div class="card-body">

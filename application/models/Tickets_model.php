@@ -93,8 +93,12 @@ class Tickets_model extends CI_Model
 
 	function get_all($user_id = '', $company_id = '', $search = '', $status = '')
 	{
-		$user_role = $this->session->userdata['logged_in']['role'];
-		$current_user_id = $this->session->userdata['logged_in']['id'];
+		$user_role ='';
+		$current_user_id = '';
+		if(isset($this->session->userdata['logged_in'])){
+			$user_role =$this->session->userdata['logged_in']['role'];
+			$current_user_id = $this->session->userdata['logged_in']['id'];
+		}
 		$response = array();
 		// Select record
 		$this->db->select('*');

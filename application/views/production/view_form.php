@@ -1,7 +1,7 @@
 <?php
+$user_role = $user_id = '';
 if (isset($this->session->userdata['logged_in'])) {
       $user_role = $this->session->userdata['logged_in']['role'];
-      $user_name = $this->session->userdata['logged_in']['name'];
       $user_id = $this->session->userdata['logged_in']['id'];
 }
 ?>

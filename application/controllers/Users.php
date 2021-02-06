@@ -13,18 +13,19 @@ class Users extends CI_Controller
         $this->load->model('Admin_model');
         $this->load->model('Companies_model');
         $this->load->model('Production_model');
+        $language = $this->config->item('language');
         if (isset($this->session->userdata['logged_in'])) {
             $this->user = $this->session->userdata['logged_in'];
-            $user_language = $this->user['language'];
-            $this->lang->load('main', $user_language);
+            $language = $this->user['language'];
         }
+        $this->lang->load('main', $language);
         $this->user_roles = array("Admin", "Manager", "User");
         $this->languages = array("english", "hebrew");
     }
 
     public function index($msg = '')
     {
-        if ($this->user['role'] != "Admin" && $this->user['role'] != "Manager") {
+        if (isset($this->user) && $this->user['role'] == "User") {
             header("location: /");
         }
         $data = array();

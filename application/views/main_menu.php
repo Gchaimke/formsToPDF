@@ -1,14 +1,16 @@
 <?php
+$user_role='';
+$user_language = $this->config->item('language');
 if (isset($this->session->userdata['logged_in'])) {
   $user_id = ($this->session->userdata['logged_in']['id']);
   $user_view_name = ($this->session->userdata['logged_in']['view_name']);
   $user_role = ($this->session->userdata['logged_in']['role']);
   $user_language = $this->session->userdata['logged_in']['language'];
   if($user_language==''){
-    $user_language = $this->Admin_model->getSettings()[0]['language'];
+    $user_language = $this->config->item('language');;
   }
-  $dir = $user_language == 'hebrew' ? 'rtl' : 'ltr';
 }
+$dir = $user_language == 'hebrew' ? 'rtl' : 'ltr';
 ?>
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark main-menu ltr">
   <a class="navbar-brand btn btn-sm btn-outline-primary <?=$dir?>" href="/"><?= lang('forms') ?> v2.2</a>

@@ -1,5 +1,6 @@
 <?php
-if (isset($this->session->userdata['logged_in']) && ($this->session->userdata['logged_in']['id']) != '') {
+$role ='';
+if (isset($this->session->userdata['logged_in'])) {
     $id = ($this->session->userdata['logged_in']['id']);
     $username = ($this->session->userdata['logged_in']['name']);
     $role = ($this->session->userdata['logged_in']['role']);

@@ -1,5 +1,6 @@
 <!doctype html>
 <?php
+$user_language = $this->config->item('language');
 if (isset($this->session->userdata['logged_in'])) {
   $id = ($this->session->userdata['logged_in']['id']);
   $username = ($this->session->userdata['logged_in']['name']);
@@ -8,13 +9,13 @@ if (isset($this->session->userdata['logged_in'])) {
   if ($user_language == '') {
     $user_language = $this->config->item('language');
   }
-  $dir = $user_language == 'hebrew' ? 'rtl' : 'ltr';
 } else {
   header("location: /users/login");
 }
+$dir = $user_language == 'hebrew' ? 'rtl' : 'ltr';
+$this->lang->load('main', $user_language);
 ?>
 <html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
-
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="Content-Language" content="en">

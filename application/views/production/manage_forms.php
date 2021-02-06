@@ -1,4 +1,5 @@
 <?php
+$user_role = '';
 if (isset($this->session->userdata['logged_in'])) {
 	$user_role = $this->session->userdata['logged_in']['role'];
 }
@@ -50,8 +51,11 @@ $is_hiden = $hide_filter ? 'hidden' : '';
 					</div>
 					<select class="creator_filter">
 						<option value=""><?= lang('no_filter') ?></option>
-						<?php foreach ($users as $user) {
-							echo "<option value='{$user['id']}'>{$user['view_name']}</option>";
+						<?php
+						if (isset($users)) {
+							foreach ($users as $user) {
+								echo "<option value='{$user['id']}'>{$user['view_name']}</option>";
+							}
 						} ?>
 					</select>
 				</div>
@@ -63,8 +67,11 @@ $is_hiden = $hide_filter ? 'hidden' : '';
 					</div>
 					<select class="company_filter">
 						<option value=""><?= lang('no_filter') ?></option>
-						<?php foreach ($companies as $company) {
-							echo "<option value='{$company['name']}'>{$company['name']}</option>";
+						<?php
+						if (isset($companies)) {
+							foreach ($companies as $company) {
+								echo "<option value='{$company['name']}'>{$company['name']}</option>";
+							}
 						} ?>
 					</select>
 				</div>

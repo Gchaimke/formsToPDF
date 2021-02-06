@@ -12,13 +12,14 @@ class Production extends CI_Controller
         $this->load->model('Companies_model');
         $this->load->model('Contacts_model');
         $this->load->model('Tickets_model');
+        $language = $this->config->item('language');
         if (isset($this->session->userdata['logged_in'])) {
             $this->user = $this->session->userdata['logged_in'];
             $language = $this->user['language'];
-            $this->lang->load('main', $language);
         } else {
             header("location: /users/logout");
         }
+        $this->lang->load('main', $language);
     }
 
     public function index()
@@ -269,14 +270,15 @@ class Production extends CI_Controller
         $params['month'] = isset($_GET['month']) ? $_GET['month'] : '';
         $params['date'] = isset($_GET['date']) ? $_GET['date'] : '';
         $params["hide_filter"] = false;
-        $user_role = $this->user['role'];
+        $user_role = isset($this->user) ? $this->user['role'] : 'User';
         $limit_per_page = 50;
         $segment = 3;
         $start_index = ($this->uri->segment($segment)) ? $this->uri->segment($segment) : 0;
+        $user_id = isset($this->user) ? $this->user['id'] : '0';
         if ($user_role == 'Admin' || $user_role == 'Manager') {
             $total_records = $this->Production_model->get_total($params['creator'], $params['company'], $params['year'], $params['month'], $params['date']);
         } else {
-            $total_records = $this->Production_model->get_total($this->user['id'], $params['company'], $params['year'], $params['month'], $params['date']);
+            $total_records = $this->Production_model->get_total($user_id, $params['company'], $params['year'], $params['month'], $params['date']);
         }
         if ($total_records > 0) {
             if ($user_role == 'Admin' || $user_role == 'Manager') {
@@ -285,7 +287,7 @@ class Production extends CI_Controller
                 $this->pagination->initialize($this->pagination_config($total_records, $limit_per_page, $url, $segment));
                 $params["links"] = $this->pagination->create_links();
             } else {
-                $results = $this->Production_model->get_current_forms_records($limit_per_page, $start_index, $this->user['id'], $params['company'], $params['year'], $params['month'], $params['date']);
+                $results = $this->Production_model->get_current_forms_records($limit_per_page, $start_index, $user_id, $params['company'], $params['year'], $params['month'], $params['date']);
                 $params["html_table"] = $this->build_forms_table($results);
                 $this->pagination->initialize($this->pagination_config($total_records, $limit_per_page, $url, $segment));
                 $params["links"] = $this->pagination->create_links();
@@ -301,28 +303,28 @@ class Production extends CI_Controller
 
     function build_forms_table($results)
     {
-        $user_role = $this->user['role'];
+        $user_role = isset($this->user) ? $this->user['role'] : 'User';
         $users = $this->Users_model->getUsers();
         $html_table =  '<table class="table table-hover mb-4" "><thead class="thead-dark"><tr>
-						<th scope="col" style="width:115px;">'.lang('date').'</th>
-						<th scope="col">'.lang('technician').'</th>
-						<th scope="col" class="mobile-hide">'.lang('client_num_column').'</th>
-						<th scope="col" class="mobile-hide">'.lang('client_name_column').'</th>
-						<th scope="col" class="mobile-hide">'.lang('place_column').'</th>
-						<th scope="col" class="mobile-hide">'.lang('city_column').'</th>
-						<th scope="col" class="mobile-hide">'.lang('company').'</th>';
+						<th scope="col" style="width:115px;">' . lang('date') . '</th>
+						<th scope="col">' . lang('technician') . '</th>
+						<th scope="col" class="mobile-hide">' . lang('client_num_column') . '</th>
+						<th scope="col" class="mobile-hide">' . lang('client_name_column') . '</th>
+						<th scope="col" class="mobile-hide">' . lang('place_column') . '</th>
+						<th scope="col" class="mobile-hide">' . lang('city_column') . '</th>
+						<th scope="col" class="mobile-hide">' . lang('company') . '</th>';
         if ($user_role == "Admin") {
-            $html_table .= '<th scope="col" class="mobile-hide">'.lang('price').'</th>';
+            $html_table .= '<th scope="col" class="mobile-hide">' . lang('price') . '</th>';
         }
-        $html_table .= '<th scope="col">'.lang('edit').'</th>';
+        $html_table .= '<th scope="col">' . lang('edit') . '</th>';
         if ($user_role == "Admin") {
-            $html_table .= '<th scope="col">'.lang('delete').'</th>';
+            $html_table .= '<th scope="col">' . lang('delete') . '</th>';
         }
         $html_table .= '</tr></thead><tbody>';
         if ($results) {
             foreach ($results as $data) {
                 if ($user_role != 'Admin' && $user_role != 'Manager') {
-                    if ($data->creator_id != $this->user['id']) {
+                    if (isset($this->user) && $data->creator_id != $this->user['id']) {
                         continue;
                     }
                 }

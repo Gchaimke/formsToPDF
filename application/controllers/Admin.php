@@ -13,17 +13,17 @@ class Admin extends CI_Controller
 		$this->load->model('Contacts_model');
 		$this->load->model('Tickets_model');
 		$this->load->library('pagination');
+		$language = $this->config->item('language');
 		if (isset($this->session->userdata['logged_in'])) {
 			$this->user = $this->session->userdata['logged_in'];
 			$language = $this->user['language'];
-			$this->lang->load('main', $language);
 			if ($this->user['role'] != "Admin") {
 				header("location: /");
 			}
 		} else {
 			header("location: /users/logout");
 		}
-
+		$this->lang->load('main', $language);
 		$this->languages = array("english", "hebrew");
 	}
 

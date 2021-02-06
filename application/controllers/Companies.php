@@ -8,16 +8,17 @@ class Companies extends CI_Controller
     {
         parent::__construct();
         $this->load->model('Companies_model');
+        $language = $this->config->item('language');
         if (isset($this->session->userdata['logged_in'])) {
             $this->user = $this->session->userdata['logged_in'];
             $language = $this->session->userdata['logged_in']['language'];
-            $this->lang->load('main', $language);
-            if($this->user['role']!="Admin" && $this->user['role']!="Manager"){
+            if ($this->user['role'] != "Admin" && $this->user['role'] != "Manager") {
                 header("location: /");
             }
-        } else{
+        } else {
             header("location: /users/logout");
-        }		
+        }
+        $this->lang->load('main', $language);
     }
 
     public function index($msg = '')
@@ -27,7 +28,7 @@ class Companies extends CI_Controller
             $data['message_display'] = $msg;
         }
         $data['companies'] = $this->Companies_model->getCompanies();
-        $data['role'] = $this->user['role'];
+        $data['role'] = isset($this->user) ? $this->user['role'] : 'User';
         $this->load->view('header');
         $this->load->view('main_menu');
         $this->load->view('companies/manage', $data);
@@ -141,7 +142,7 @@ class Companies extends CI_Controller
         }
         if (!file_exists(UPLOAD_DIR)) {
             mkdir(UPLOAD_DIR, 0770, true);
-            copy('application/index.html',UPLOAD_DIR.'index.html');
+            copy('application/index.html', UPLOAD_DIR . 'index.html');
         }
         $file = UPLOAD_DIR . $file_name . ".$type";
         $success = file_put_contents($file, $img);

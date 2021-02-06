@@ -14,14 +14,15 @@ class Tickets extends CI_Controller
         $this->load->model('Companies_model');
         $this->load->model('Production_model');
         $this->load->model('Tickets_model');
+        $language =$this->config->item('language');
         if (isset($this->session->userdata['logged_in'])) {
             $this->user = $this->session->userdata['logged_in'];
+            $this->file_name = 'Uploads/tmp/' . $this->user['id'] . '/last_uploaded.xlsx';
             $language = $this->user['language'];
-            $this->lang->load('main', $language);
         } else {
             header("location: /users/logout");
         }
-        $this->file_name = 'Uploads/tmp/' . $this->user['id'] . '/last_uploaded.xlsx';
+        $this->lang->load('main', $language);
         $this->fields = array(
             'client_num' => lang('client_num_column'),
             'client_name' => lang('client_name_column'),

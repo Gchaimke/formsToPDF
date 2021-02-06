@@ -12,16 +12,17 @@ class Contacts extends CI_Controller
         $this->load->model('Users_model');
         $this->load->model('Companies_model');
         $this->load->model('Admin_model');
+        $language = $this->config->item('language');
         if (isset($this->session->userdata['logged_in'])) {
             $this->user = $this->session->userdata['logged_in'];
             $language = $this->user['language'];
-            $this->lang->load('main', $language);
             if ($this->user['role'] != "Admin" && $this->user['role'] != "Manager") {
                 header("location: /");
             }
         } else {
             header("location: /users/logout");
         }
+        $this->lang->load('main', $language);
     }
 
     public function index($msg = '')

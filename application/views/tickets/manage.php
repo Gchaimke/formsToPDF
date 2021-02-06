@@ -1,4 +1,5 @@
 <?php
+$user_role='';
 if (isset($this->session->userdata['logged_in'])) {
 	$user_role = $this->session->userdata['logged_in']['role'];
 }
