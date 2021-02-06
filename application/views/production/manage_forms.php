@@ -34,17 +34,6 @@ $is_hiden = $hide_filter ? 'hidden' : '';
 				<div id="csv_month" style="display:none;"></div>
 			<?php }	?>
 		</div>
-		<div id="search_section">
-			<form id="form" class='mobile-hide ltr'>
-				<div class="input-group mb-3">
-					<input id='inputSearch' type="text" class="form-control" placeholder="<?= lang('search_placeholder') ?>" aria-label="Search in forms" aria-describedby="basic-addon2" autofocus>
-					<div class="input-group-append">
-						<button class="btn btn-outline-primary" type="button" onclick="formSearch()"><?= lang('search') ?></button>
-					</div>
-				</div>
-				<div id='searchResult' class='rtl text-center'></div>
-			</form>
-		</div>
 		<div id="filters_section" class="form-row mobile-hide">
 			<div class="form-group ml-2">
 				<div class="input-group">
@@ -105,6 +94,17 @@ $is_hiden = $hide_filter ? 'hidden' : '';
 					<a href="" class="filter_button btn btn-success hidden" style="color: azure;" onclick=' '><?= lang('filter') ?></a>
 				</div>
 			</div>
+		</div>
+		<div id="search_section">
+			<form id="form" class='mobile-hide ltr'>
+				<div class="input-group mb-3">
+					<input id='inputSearch' type="text" class="form-control" placeholder="<?= lang('search_placeholder') ?>" aria-label="Search in forms" aria-describedby="basic-addon2" autofocus>
+					<div class="input-group-append">
+						<button class="btn btn-outline-primary" type="button" onclick="formSearch()"><?= lang('search') ?></button>
+					</div>
+				</div>
+				<div id='searchResult' class='rtl text-center'></div>
+			</form>
 		</div>
 		<div class="table-responsive">
 			<?php if (isset($html_table)) {
