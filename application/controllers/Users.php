@@ -138,6 +138,23 @@ class Users extends CI_Controller
         }
         $this->set_session_data($this->user['name']);
     }
+    
+    public function login()
+    {
+        $data = array();
+        $data['response'] = '';
+        if (!$this->db->table_exists('users')) {
+            $this->Users_model->create();
+            $this->Admin_model->create();
+            $this->Companies_model->create();
+            $this->Production_model->create();
+            $this->Contacts_model->create();
+            $this->Tickets_model->create();
+            $data['response'] .= "New DB created!<br> username:Admin <br> Password:Admin.";
+        }
+        $this->load->view('users/login', $data);
+        $this->load->view('footer');
+    }
 
     public function user_login_process()
     {
