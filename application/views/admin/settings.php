@@ -21,15 +21,15 @@
         ?>
         <ul class="list-group">
             <li class="list-group-item d-flex justify-content-between align-items-center">
-                משתמשים
+            <?= lang('users') ?>
                 <span class="badge badge-primary badge-pill"><?php echo $users_count ?></span>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
-                חברות
+            <?= lang('companies') ?>
                 <span class="badge badge-primary badge-pill"><?php echo $companies_count ?></span>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
-                דוחות
+            <?= lang('forms') ?>
                 <span class="badge badge-primary badge-pill"><?php echo $forms_count ?></span>
             </li>
         </ul><br>
@@ -56,11 +56,11 @@
         </div>
         <div class="input-group mb-2">
             <div class="input-group-prepend">
-                <div class="input-group-text">תמיד לשלוח למיילים הבאים</div>
+                <div class="input-group-text"><?= lang('send_req_emails') ?></div>
             </div>
             <input name="emails" class="form-control" style="direction: ltr;" value="<?php echo $settings['emails']; ?>">
         </div>
-        <label>נא להשתמש בפסיק בין המאיילים (,)</label>
+        <label><?= lang('send_req_emails_details') ?></label>
         <hr>
         <?php
         $checked = '';
@@ -74,14 +74,14 @@
         <div class="input-group mb-2">
             <div class='input-group-text'>
                 <input type='checkbox' id='smtp_on' name='smtp_on' <?php echo $checked ?>>
-                <label class='col-sm-2 col-form-label'>להשתמש ב-SMTP </label>
+                <label class='col-sm-2 col-form-label'><?= lang('use_smtp') ?></label>
             </div>
         </div>
         <div class="form-row ltr">
             <div class="form-group col-md-4">
                 <div class="input-group mb-2">
                     <div class="input-group-prepend">
-                        <div class="input-group-text">SMTP HOST</div>
+                        <div class="input-group-text"><?= lang('smtp_host') ?></div>
                     </div>
                     <input id='smtp_host' type='text' class="form-control" name='smtp_host' value="<?php echo $settings['smtp_host']; ?>" <?php echo $disabled ?>>
                 </div>
@@ -89,7 +89,7 @@
             <div class="form-group col-md-2">
                 <div class="input-group mb-2">
                     <div class="input-group-prepend">
-                        <div class="input-group-text">Port</div>
+                        <div class="input-group-text"><?= lang('smtp_port') ?></div>
                     </div>
                     <input id='smtp_port' type='number' class="form-control" name='smtp_port' value="<?php echo $settings['smtp_port']; ?>" <?php echo $disabled ?>>
                 </div>
@@ -97,7 +97,7 @@
             <div class="form-group col-md-3">
                 <div class="input-group mb-2">
                     <div class="input-group-prepend">
-                        <div class="input-group-text">Username</div>
+                        <div class="input-group-text"><?= lang('username') ?></div>
                     </div>
                     <input id='smtp_user' type='text' class="form-control" name='smtp_user' value='<?php echo $settings['smtp_user']; ?>' <?php echo $disabled ?>>
                 </div>
@@ -105,19 +105,19 @@
             <div class="form-group col-md-3">
                 <div class="input-group mb-2">
                     <div class="input-group-prepend">
-                        <div class="input-group-text">Password</div>
+                        <div class="input-group-text"><?= lang('password') ?></div>
                     </div>
                     <input id='smtp_pass' type='password' class="form-control" name='smtp_pass' value='' <?php echo $disabled ?>>
                 </div>
             </div>
         </div>
-        <input type='submit' class='btn btn-info' name='submit' value='שמור'>
+        <input type='submit' class='btn btn-info' name='submit' value='<?= lang('save') ?>'>
         <?php echo form_close(); ?><br />
-        <button class="btn btn-info" onclick="createDB(0)">לייצר בסיס נתונים</button>
-        <a class="btn btn-info" href="/admin/view_log">דוחות מערכת</a>
-        <a class="btn btn-info" href="/admin/view_folders">הצג תיקיות</a>
-        <button class="btn btn-success m-3" onclick="backupDB()">Backup DB</button>
-        <a id="last-db" class="m-5" style="display: none;" href="">Download last DB</a>
+        <button class="btn btn-info" onclick="createDB(0)"><?= lang('create_db') ?></button>
+        <a class="btn btn-info" href="/admin/view_log"><?= lang('sys_log') ?></a>
+        <a class="btn btn-info" href="/admin/view_folders"><?= lang('explorer') ?></a>
+        <button class="btn btn-success m-3" onclick="backupDB()"><?= lang('backup_db') ?></button>
+        <a id="last-db" class="m-5" style="display: none;" href=""><?= lang('download_db') ?></a>
     </div>
 </main>
 

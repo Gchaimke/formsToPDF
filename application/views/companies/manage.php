@@ -2,7 +2,7 @@
 	<div class="jumbotron">
 		<div class="container">
 			<center>
-				<h5>חברות</h5>
+				<h5><?= lang('companies') ?></h5>
 			</center>
 		</div>
 	</div>
@@ -17,10 +17,10 @@
 		<table class="table">
 			<thead class="thead-dark">
 				<tr>
-					<th scope="col">לוגו</th>
-					<th scope="col">שם החברה</th>
-					<th scope="col">ערוך</th>
-					<?php echo ($role == 'Admin') ? '<th scope="col">מחק</th>' : '' ?>
+					<th scope="col"><?= lang('logo') ?></th>
+					<th scope="col"><?= lang('company_name') ?></th>
+					<th scope="col"><?= lang('edit') ?></th>
+					<?php echo ($role == 'Admin') ? '<th scope="col">'.lang('delete').'</th>' : '' ?>
 				</tr>
 			</thead>
 			<tbody>

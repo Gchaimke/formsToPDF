@@ -3,8 +3,8 @@ if (isset($this->session->userdata['logged_in'])) {
 	$user_role = $this->session->userdata['logged_in']['role'];
 }
 if ($user_role == "Admin" || $user_role == "Manager") {
-	$u_button_html = '<a href="/tickets/import_xlsx" class="btn btn-outline-info"><i class="fa fa-file-excel-o"> להעלות קובץ משימות </i></a>';
-	$tb_header_html = '<th scope="col" style="min-width:120px;">טכנאי</th><th scope="col">מחק</th>';
+	$u_button_html = '<a href="/tickets/import_xlsx" class="btn btn-outline-info"><i class="fa fa-file-excel-o"> ' . lang('upload_tickets') . '</i></a>';
+	$tb_header_html = '<th scope="col" style="min-width:120px;">' . lang('technician') . '</th><th scope="col">' . lang('delete') . '</th>';
 	$btn_done = '<span class="done-ticket btn btn-outline-success"><i class="fa fa-check"></i></span>';
 	$btn_revert = '<span class="revert btn btn-outline-secondary"><i class="fa fa-undo"></i></span>';
 } else {
@@ -27,7 +27,7 @@ if ($user_role == "Admin" || $user_role == "Manager") {
 	<div class="jumbotron">
 		<div class="container">
 			<center>
-				<h5>משימות</h5>
+				<h5><?= lang('tickets') ?></h5>
 			</center>
 		</div>
 	</div>
@@ -41,19 +41,19 @@ if ($user_role == "Admin" || $user_role == "Manager") {
 		?>
 		<div id="buttons-section">
 			<div id="show_filters" class='btn btn-outline-info mobile-no-hide'><i class="fa fa-filter"></i></div>
-			<a id="no_filters" href="/tickets" class="btn btn-outline-secondary hidden" onclick=' '>בטל סינון</a>
+			<a id="no_filters" href="/tickets" class="btn btn-outline-secondary hidden" onclick=' '><?= lang('reset_filter') ?></a>
 			<?= $u_button_html ?>
-			<a href="?status=2" class='btn btn-outline-primary'>בוצעו</a>
+			<a href="?status=2" class='btn btn-outline-primary'><?= lang('dones') ?></a>
 		</div>
 		<div class="form-row mobile-hide" id="filters_section">
 			<div class="form-group ml-2">
 				<div class="input-group">
 					<div class="input-group-prepend">
-						<div class="input-group-text">טכנאי</div>
+						<div class="input-group-text"><?= lang('technician') ?></div>
 					</div>
 					<select class="creator_filter">
-						<option value="">-ללא סינון-</option>
-						<option value="0">ללא שיוך</option>
+						<option value=""><?= lang('no_filter') ?></option>
+						<option value="0"><?= lang('unresolved') ?></option>
 						<?php foreach ($users as $user) {
 							echo "<option value='{$user['id']}'>{$user['view_name']}</option>";
 						} ?>
@@ -63,10 +63,10 @@ if ($user_role == "Admin" || $user_role == "Manager") {
 			<div class="form-group ml-2">
 				<div class="input-group">
 					<div class="input-group-prepend">
-						<div class="input-group-text">חברה</div>
+						<div class="input-group-text"><?= lang('company') ?></div>
 					</div>
 					<select class="company_filter" name="company">
-						<option value="">-ללא סינון-</option>
+						<option value=""><?= lang('no_filter') ?></option>
 						<?php foreach ($companies as $company) {
 							echo "<option value='{$company['id']}'>{$company['name']}</option>";
 						} ?>
@@ -76,7 +76,7 @@ if ($user_role == "Admin" || $user_role == "Manager") {
 			<div class="form-group ml-2">
 				<div class="input-group">
 					<div class="input-group-prepend">
-						<div class="input-group-text">עיר</div>
+						<div class="input-group-text"><?= lang('city_column') ?></div>
 					</div>
 					<input type="text" class="city_filter" name="city">
 				</div>
@@ -84,19 +84,19 @@ if ($user_role == "Admin" || $user_role == "Manager") {
 			<div class="form-group ml-2">
 				<div class="input-group">
 					<div class="input-group-prepend">
-						<div class="input-group-text">סטטוס</div>
+						<div class="input-group-text"><?= lang('status') ?></div>
 					</div>
 					<select class="status_filter">
-						<option value="">-ללא סינון-</option>
-						<option value=0>חדש</option>
-						<option value=1>בטיפול</option>
-						<option value=2>בוצע</option>
+						<option value=""><?= lang('no_filter') ?></option>
+						<option value=0><?= lang('new') ?></option>
+						<option value=1><?= lang('working') ?></option>
+						<option value=2><?= lang('done') ?></option>
 					</select>
 				</div>
 			</div>
 			<div class="form-group ml-2">
 				<div class="input-group">
-					<a href="" class="filter_button btn btn-success hidden" style="color: azure;" onclick=' '>סינון</a>
+					<a href="" class="filter_button btn btn-success hidden" style="color: azure;" onclick=' '><?= lang('filter') ?></a>
 				</div>
 			</div>
 		</div>
@@ -104,13 +104,13 @@ if ($user_role == "Admin" || $user_role == "Manager") {
 			<table class="table">
 				<thead class="thead-dark">
 					<tr>
-						<th scope="col" style="min-width:105px;">מספר לקוח</th>
-						<th scope="col" class="mobile-hide">שם לקוח</th>
-						<th scope="col" class="mobile-hide" style="width: 170px;">כתובת לקוח</th>
-						<th scope="col" class="mobile-hide" style="width: 100px;">עיר</th>
-						<th scope="col" class="mobile-hide">משימה למחסן</th>
-						<th scope="col" class="mobile-hide" style="width: 150px;">חברה</th>
-						<th scope="col">סטטוס</th>
+						<th scope="col" style="min-width:105px;"><?= lang('client_num_column') ?></th>
+						<th scope="col" class="mobile-hide"><?= lang('client_name_column') ?></th>
+						<th scope="col" class="mobile-hide" style="width: 170px;"><?= lang('place_column') ?></th>
+						<th scope="col" class="mobile-hide" style="width: 100px;"><?= lang('city_column') ?></th>
+						<th scope="col" class="mobile-hide"><?= lang('warehouse_num') ?></th>
+						<th scope="col" class="mobile-hide" style="width: 150px;"><?= lang('company') ?></th>
+						<th scope="col"><?= lang('status') ?></th>
 						<?= $tb_header_html ?>
 					</tr>
 				</thead>
@@ -139,7 +139,7 @@ if ($user_role == "Admin" || $user_role == "Manager") {
 								<td class="align-middle">
 									<?php
 									if ($ticket['status'] == 0) {
-										echo '<span class="badge badge-primary">חדש ';
+										echo '<span class="badge badge-primary">' . lang('new');
 										echo '<span class="btn btn-outline-secondary">
 									<a href="/production/new_form?company_id=' . $ticket['company_id'] .
 											'&client_num=' . $ticket['client_num'] .
@@ -147,9 +147,9 @@ if ($user_role == "Admin" || $user_role == "Manager") {
 											'&address=' . urlencode($ticket['address']) .
 											'&city=' . urlencode($ticket['city']) . '" style="color:black;"><i class="fa fa-edit"></i></a></span ></span >';
 									} else if ($ticket['status'] == 1) {
-										echo '<span class="badge badge-warning">בטיפול ' . $btn_done . '</span >';
+										echo '<span class="badge badge-warning">' . lang('working') . ' ' . $btn_done . '</span >';
 									} else {
-										echo '<span class="badge badge-success">בוצע ' . $btn_revert . '</span >';
+										echo '<span class="badge badge-success">' . lang('done') . ' ' . $btn_revert . '</span >';
 									}
 									echo '</td>';
 

@@ -2,7 +2,7 @@
 	<div class="jumbotron">
 		<div class="container">
 			<center>
-				<h5>הוסף איש קשר</h5>
+				<h5><?= lang('add_contact') ?></h5>
 			</center>
 		</div>
 	</div>
@@ -23,7 +23,7 @@
 				<div class="form-group col-md-4">
 					<div class="input-group mb-2">
 						<div class="input-group-prepend">
-							<div class="input-group-text">שם</div>
+							<div class="input-group-text"><?= lang('name') ?></div>
 						</div>
 						<input type='text' class="form-control" name='name' value="">
 
@@ -32,7 +32,7 @@
 				<div class="form-group col-md-4">
 					<div class="input-group mb-2">
 						<div class="input-group-prepend">
-							<div class="input-group-text">מייל</div>
+							<div class="input-group-text"><?= lang('email') ?></div>
 						</div>
 						<input type='text' class="form-control" name='email' value="">
 
@@ -41,7 +41,7 @@
 				<div class="form-group col-md-4">
 					<div class="input-group mb-2">
 						<div class="input-group-prepend">
-							<div class="input-group-text">חברה</div>
+							<div class="input-group-text"><?= lang('company') ?></div>
 						</div>
 						<select class='form-control' name='company'>
 							<?php if (isset($companies)) {
@@ -55,7 +55,7 @@
 					</div>
 				</div>
 			</div>
-			<input type='submit' class="btn btn-info btn-block" name='submit' value='הוסף'>
+			<input type='submit' class="btn btn-info btn-block" name='submit' value='<?= lang('save') ?>'>
 			<?php echo form_close(); ?>
 		</center>
 	</div>

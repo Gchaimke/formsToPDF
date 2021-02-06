@@ -32,7 +32,6 @@ if (isset($this->session->userdata['logged_in'])) {
   if ($dir == 'rtl') {
     echo '<link href="' . base_url('assets/css/rtl.css?' . filemtime('assets/css/rtl.css')) . '" rel="stylesheet">';
   }
-
   ?>
   <!-- Custom styles for this template -->
   <?php

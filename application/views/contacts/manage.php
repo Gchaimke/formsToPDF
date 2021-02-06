@@ -2,7 +2,7 @@
 	<div class="jumbotron">
 		<div class="container">
 			<center>
-				<h5>אנשי קשר</h5>
+				<h5><?= lang('menu_contacts') ?></h5>
 			</center>
 		</div>
 	</div>
@@ -18,11 +18,11 @@
 			<table class="table">
 				<thead class="thead-dark">
 					<tr>
-						<th scope="col" style="min-width: 150px;">שם</th>
-						<th scope="col">מאייל</th>
-						<th scope="col" style="min-width: 150px;">קבוצה</th>
-						<th scope="col">ערוך</th>
-						<th scope="col">מחק</th>
+						<th scope="col" style="min-width: 150px;"><?= lang('name') ?></th>
+						<th scope="col"><?= lang('email') ?></th>
+						<th scope="col" style="min-width: 150px;"><?= lang('company') ?></th>
+						<th scope="col"><?= lang('edit') ?></th>
+						<th scope="col"><?= lang('delete') ?></th>
 					</tr>
 				</thead>
 				<tbody>

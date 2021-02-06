@@ -5,7 +5,7 @@
     <div class="jumbotron">
         <div class="container">
             <center>
-                <h5>משימות</h5>
+                <h5><?= lang('tickets') ?></h5>
             </center>
         </div>
     </div>
@@ -25,7 +25,7 @@
                     </div>
                     <button class="btn btn-outline-success col-sm-2" type="button" onclick="document.getElementById('upload').click();">
                         <span id="upload_spinner" class="spinner-border spinner-border-sm" style="display: none;" role="status" aria-hidden="true"></span>
-                        העלה</button>
+                        <?= lang('upload') ?></button>
 
                 </div>
             </div>
@@ -38,13 +38,13 @@
                         <div class='input-group-prepend'>
                         <div class='input-group-text'>$value</div>
                         </div><select name='$key' class='rows_selector form-control'>";
-                        echo "<option value='0'>נא לבחור תור</option>";
+                        echo "<option value='0'>".lang('select_column') ."</option>";
                         foreach ($xlsx_columns as $key => $column) {
                             echo "<option value='$key'>$column</option>";
                         }
                         echo "</select></div>";
                     }
-                    echo "<input type='submit' class='btn btn-success mr-2' value='הצג טבלה'>";
+                    echo "<input type='submit' class='btn btn-success mr-2' value='".lang('show_table') ."'>";
                     echo form_close();
                 } ?>
             </div>

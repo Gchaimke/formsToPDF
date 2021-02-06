@@ -14,7 +14,7 @@
 	<div class="jumbotron">
 		<div class="container">
 			<center>
-				<h5>Edit Company</h5>
+				<h5><?= lang('edit_company') ?></h5>
 			</center>
 		</div>
 	</div>
@@ -51,38 +51,38 @@
 						$cheked ='';
 					}
 
-					$filds_checks .= '<li>' . $fild . '<input class="m-3" type="checkbox" name="view_filds[' . $fild . ']" value="' . $status . '" ' . $cheked . '></li>';
+					$filds_checks .= '<li>' . lang($fild) . '<input class="m-3" type="checkbox" name="view_filds[' . $fild . ']" value="' . $status . '" ' . $cheked . '></li>';
 				}
 				$filds_checks .= '</ul>';
 			}
 			?>
 			<?php echo form_open("companies/edit/$id", 'class=user-create'); ?>
 			<input type='hidden' name='id' value="<?php echo $id ?>">
-			<label>Company</label><input id='company_name' type='text' class="form-control" name='name' value="<?php echo $company ?>" onchange="updateClient(this.value)"></hr>
-			<label>Logo</label>
+			<label><?= lang('company_name') ?></label><input id='company_name' type='text' class="form-control" name='name' value="<?php echo $company ?>" onchange="updateClient(this.value)"></hr>
+			<label><?= lang('logo') ?></label>
 			<div class="input-group mb-3 ltr">
 				<input id="logo_path" type='text' class="form-control" name='logo' value="<?php echo $logo ?>">
 				<div class="input-group-append">
-					<button class="btn btn-outline-secondary" type="button" onclick="document.getElementById('browse').click();">Upload</button>
+					<button class="btn btn-outline-secondary" type="button" onclick="document.getElementById('browse').click();"><?= lang('upload') ?></button>
 				</div>
 			</div>
 
 			<img id="logo_img" class="img-thumbnail" src="<?php echo $logo ?>" onclick="document.getElementById('browse').click();">
 			<input id="browse" style="display:none;" type="file" onchange="snapLogo()"><br><br>
 
-			<div id="view_filds-column" class="form-group"><label>Select filds to <b style="color: red;">DISABLE</b></label><br>
+			<div id="view_filds-column" class="form-group"><label><?= lang('check_feilds') ?></label><br>
 				<?php echo $filds_checks ?></br>
 			</div>
-			<div class="form-group"><label>Form Head</label>
+			<div class="form-group"><label><?= lang('form_header') ?></label>
 				<textarea name="form_header" class="form-control" cols="40" rows="5"><?php echo $form_header ?></textarea>
 			</div>
-			<div class="form-group"><label>Form Extra</label>
+			<div class="form-group"><label><?= lang('form_extra') ?></label>
 				<textarea name="form_extra_filds" class="form-control" cols="40" rows="5"><?php echo $form_extra_filds ?></textarea>
 			</div>
-			<div class="form-group"><label>Form Footer</label>
+			<div class="form-group"><label><?= lang('form_footer') ?></label>
 				<textarea name="form_footer" class="form-control" cols="40" rows="5"><?php echo $form_footer ?></textarea>
 			</div>
-			<input type='submit' class="btn btn-info btn-block" name='submit' value='Update'>
+			<input type='submit' class="btn btn-info btn-block" name='submit' value='<?= lang('update') ?>'>
 			<?php echo form_close(); ?>
 		</center>
 	</div>

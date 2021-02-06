@@ -2,7 +2,7 @@
       <div class="jumbotron">
             <div class="container">
                   <center>
-                        <h5>Add Company</h5>
+                        <h5><?= lang('add_company') ?></h5>
                   </center>
             </div>
       </div>
@@ -19,27 +19,27 @@
                   ?>
 
                   <?php echo form_open('companies/create', 'class=client-create'); ?>
-                  <label>Company Name</label><input id='company_name' type='text' class="form-control" name='name' value="" onchange="updateClient(this.value)">
-                  <label>Logo</label>
+                  <label><?= lang('company_name') ?></label><input id='company_name' type='text' class="form-control" name='name' value="" onchange="updateClient(this.value)">
+                  <label><?= lang('logo') ?></label>
 			<div class="input-group mb-3">
 				<input id="logo_path" type='text' class="form-control" name='logo' value="">
 				<div class="input-group-append">
-					<button class="btn btn-outline-secondary" type="button" onclick="document.getElementById('browse').click();">Upload</button>
+					<button class="btn btn-outline-secondary" type="button" onclick="document.getElementById('browse').click();"><?= lang('upload') ?></button>
 				</div>
 			</div>
 			<img id="logo_img" class="img-thumbnail" src="" onclick="document.getElementById('browse').click();">
                   <input id="browse" style="display:none;" type="file" onchange="snapLogo()" >
 
-                  <label>Document Header</label>
-                  <textarea class="form-control" name='form_header' rows="5" cols="100">Company name in header</textarea>
+                  <label><?= lang('form_header') ?></label>
+                  <textarea class="form-control" name='form_header' rows="5" cols="100"></textarea>
 
-                  <label>Form Filds</label>
-                  <textarea class="form-control" name='form_extra_filds' rows="5" cols="100"> סוג תקלה\התקנה, שם לקוח, מיקום, אחראי, איש קשר, תיאור תקלה\התקנה, תוצאות הבדיקה, סיכום, הערות, המלצות, שעת נסיעה הלוך, שעתנסיעה חזור</textarea>
+                  <label><?= lang('form_extra') ?></label>
+                  <textarea class="form-control" name='form_extra_filds' rows="5" cols="100"></textarea>
 
-                  <label>Document Footer</label>
-                  <textarea class="form-control" name='form_footer' rows="5" cols="100">Company footer</textarea>
+                  <label><?= lang('form_footer') ?></label>
+                  <textarea class="form-control" name='form_footer' rows="5" cols="100"></textarea>
 
-                  <input type='submit' class="btn btn-info btn-block" name='submit' value='Submit'>
+                  <input type='submit' class="btn btn-info btn-block" name='submit' value='<?= lang('save') ?>'>
                   <?php echo form_close(); ?>
             </center>
       </div>

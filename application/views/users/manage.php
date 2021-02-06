@@ -9,7 +9,7 @@ if (isset($this->session->userdata['logged_in']) && ($this->session->userdata['l
     <div class="jumbotron">
         <div class="container">
             <center>
-                <h5>משתמשים</h5>
+                <h5><?= lang('users') ?></h5>
             </center>
         </div>
     </div>
@@ -26,12 +26,12 @@ if (isset($this->session->userdata['logged_in']) && ($this->session->userdata['l
                 <thead class="thead-dark">
                     <tr>
                         <th scope="col" class="mobile-hide">#</th>
-                        <th scope="col" style="min-width: 150px;">שם משתמש</th>
-                        <th scope="col" style="min-width: 110px;">שם יוצג</th>
-                        <th scope="col">תפקיד</th>
-                        <th scope="col">ערוך</th>
+                        <th scope="col" style="min-width: 150px;"><?= lang('username') ?></th>
+                        <th scope="col" style="min-width: 110px;"><?= lang('view_name') ?></th>
+                        <th scope="col"><?= lang('role') ?></th>
+                        <th scope="col"><?= lang('edit') ?></th>
                         <?php if ($role == "Admin") { ?>
-                            <th scope="col">מחק</th>
+                            <th scope="col"><?= lang('delete') ?></th>
                         <?php } ?>
                     </tr>
                 </thead>

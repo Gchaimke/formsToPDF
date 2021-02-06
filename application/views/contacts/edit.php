@@ -25,7 +25,7 @@ if (isset($all_users)) {
 	<div class="jumbotron">
 		<div class="container">
 			<center>
-				<h5>שנה איש קשר</h5>
+				<h5><?= lang('edit_contact') ?></h5>
 			</center>
 		</div>
 	</div>
@@ -54,7 +54,7 @@ if (isset($all_users)) {
 				<div class="form-group col-md-4">
 					<div class="input-group mb-2">
 						<div class="input-group-prepend">
-							<div class="input-group-text">שם</div>
+							<div class="input-group-text"><?= lang('name') ?></div>
 						</div>
 						<input type='text' class="form-control" name='name' value="<?php echo $name ?>">
 
@@ -63,7 +63,7 @@ if (isset($all_users)) {
 				<div class="form-group col-md-4">
 					<div class="input-group mb-2">
 						<div class="input-group-prepend">
-							<div class="input-group-text">מייל</div>
+							<div class="input-group-text"><?= lang('email') ?></div>
 						</div>
 						<input type='text' class="form-control" name='email' value="<?php echo $email ?>">
 
@@ -72,7 +72,7 @@ if (isset($all_users)) {
 				<div class="form-group col-md-4">
 					<div class="input-group mb-2">
 						<div class="input-group-prepend">
-							<div class="input-group-text">חברה</div>
+							<div class="input-group-text"><?= lang('company') ?></div>
 						</div>
 						<select class='form-control' name='company'>
 							<?php if (isset($companies)) {
@@ -91,10 +91,10 @@ if (isset($all_users)) {
 				</div>
 			</div>
 			<div class="form-row">
-				<div class="input-group-text">הצג אצל משתמשים</div>
+				<div class="input-group-text"><?= lang('users_list_view') ?></div>
 				<?= $filds_checks ?>
 			</div>
-			<input type='submit' class="btn btn-info btn-block" name='submit' value='שמור'>
+			<input type='submit' class="btn btn-info btn-block" name='submit' value='<?= lang('save') ?>'>
 			<?php echo form_close(); ?>
 		</center>
 	</div>

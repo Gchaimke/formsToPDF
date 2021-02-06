@@ -23,11 +23,11 @@ class Tickets extends CI_Controller
         }
         $this->file_name = 'Uploads/tmp/' . $this->user['id'] . '/last_uploaded.xlsx';
         $this->fields = array(
-            'client_num' => 'מספר לקוח',
-            'client_name' => 'שם לקוח',
-            'address' => 'כתובת לקוח',
-            'city' => 'עיר',
-            'warehouse_num' => 'משימה למחסן'
+            'client_num' => lang('client_num_column'),
+            'client_name' => lang('client_name_column'),
+            'address' => lang('place_column'),
+            'city' => lang('city_column'),
+            'warehouse_num' => lang('warehouse_num')
         );
     }
 
@@ -65,7 +65,7 @@ class Tickets extends CI_Controller
                 echo SimpleXLSX::parseError();
             }
         } else {
-            $data['message_display'] = 'נא להעלות קובץ XLSX';
+            $data['message_display'] = lang('upload_xlsx');
             $this->load->view('tickets/import_xlsx', $data);
         }
         $this->load->view('footer');
@@ -118,8 +118,7 @@ class Tickets extends CI_Controller
         $i = 0;
         $count = 0;
         if (isset($xlsx)) {
-            $columns = array('מספר לקוח', 'שם לקוח', 'כתובת לקוח', 'עיר', 'משימה למחסן');
-
+            $columns = array(lang('client_num_column'), lang('client_name_column'), lang('place_column'), lang('city_column'), lang('warehouse_num'));
             $html_table .= "<tr id='table_header'>";
             foreach ($columns as $column) {
                 $html_table .= "<th>$column</th>";
@@ -143,7 +142,7 @@ class Tickets extends CI_Controller
                 }
                 $i++;
             }
-            $msg = $count > 0 ? '' : 'פומרט של קובץ לא נכון, נא לבדוק קמות של פריטים בשורה';
+            $msg = $count > 0 ? '' : lang('xlsx_format_error');
             $html_table .= "</tbody></table></div>" . $msg;
         }
         return $html_table;
