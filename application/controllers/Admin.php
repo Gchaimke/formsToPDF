@@ -347,7 +347,7 @@ class Admin extends CI_Controller
 				$html_view .= "<td>{$file['type']}</td>\n";
 				$html_view .= "<td>" . $this->human_filesize($file['size']) . "</td>\n";
 				$html_view .= "<td>" . date('d/m/Y h:i', $file['lastmod']) . "</td>\n";
-				$html_view .= '<td><span id="/' . $file['name'] . '" onclick="delFile(this.id)" class="btn btn-danger delete-photo">delete</span></td>';
+				$html_view .= '<td><span id="' . $file['name'] . '" onclick="delFile(this.id)" class="btn btn-danger delete-photo">delete</span></td>';
 				$html_view .= "</tr>\n";
 			}
 		}
@@ -390,8 +390,8 @@ class Admin extends CI_Controller
 	function delete_file()
 	{
 		$this->form_validation->set_rules('file', 'file', 'trim|xss_clean');
-		if ($this->form_validation->run() == TRUE) {
-			$file = $this->input->post('file');
+		if ($this->form_validation->run() == TRUE && $this->user['role'] == "Admin") {
+			$file = '/' . $this->input->post('file');
 			// Use unlink() function to delete a file  
 			if (!unlink($_SERVER["DOCUMENT_ROOT"] . $file)) {
 				echo ($_SERVER["DOCUMENT_ROOT"] . $file . " cannot be deleted due to an error");

@@ -18,15 +18,17 @@
 					<tr>
 						<th scope="col">Logs</th>
 						<th scope="col">Size</th>
+						<th scope="col"><?= lang('delete') ?></th>
 					</tr>
 				</thead>
 				<tbody>
-					<?php foreach ($results as $file) { ?>
+					<?php foreach ($results as $key => $file) { ?>
 						<tr>
 							<?php
 							$log_name = basename($file['name']);
 							echo "<td class='ltr'><a href='#' onclick=showLogFile('$log_name') >$log_name</a></td>";
 							echo '<td>', human_filesize($file['size']), '</td>';
+							echo "<td><button data-file='{$file['name']}' class='btn btn-danger delete_log'><i class='fa fa-trash'></i></button></td>";
 							?>
 						</tr>
 					<?php } ?>
@@ -58,9 +60,9 @@
 					if (element != '') {
 						if (~element.indexOf("DELETE") || ~element.indexOf("ERROR")) {
 							$("#show-log .list-group").append("<li class='list-group-item list-group-item-danger'>" + element + "</li>");
-						} else if (~element.indexOf("TRASH")){
+						} else if (~element.indexOf("TRASH")) {
 							$("#show-log .list-group").append("<li class='list-group-item list-group-item-warning'>" + element + "</li>");
-						}else{
+						} else {
 							$("#show-log .list-group").append("<li class='list-group-item list-group-item-info'>" + element + "</li>");
 						}
 					}
@@ -69,6 +71,17 @@
 		});
 
 	}
+	$('.delete_log').on('click', function() {
+		var name = $(this).attr('data-file');
+		var r = confirm("Delete log " + name + "?");
+		if (r == true) {
+			$.post("/admin/delete_file", {
+				file: name
+			}).done(function(o) {
+				location.reload();
+			});
+		}
+	});
 </script>
 <?php
 function human_filesize($bytes, $decimals = 2)
