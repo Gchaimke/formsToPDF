@@ -385,7 +385,6 @@ if (isset($this->session->userdata['logged_in'])) {
       $(document).ready(function() {
             //startup scripts here
             form_id = "<?= $form_data['id'] ?>";
-            startTimer();
             if ($("#sign-canvas").length && $("#client_sign").length) {
                   $("#sign-canvas").jqScribble();
                   $("#sign-canvas").data('jqScribble').update({
@@ -405,6 +404,12 @@ if (isset($this->session->userdata['logged_in'])) {
                         sum += elm.value + ',';
                   });
                   $('#sum').val(sum);
+                  $('#save_btn').click();
+            });
+            $('input').change(function() {
+                  $('#save_btn').click();
+            });
+            $('textarea').change(function() {
                   $('#save_btn').click();
             });
       });
@@ -442,12 +447,6 @@ if (isset($this->session->userdata['logged_in'])) {
                   $('#form-messages').removeClass('alert-info').addClass('alert-danger');
                   $('#form-messages').html(o).fadeIn(1000);
             });
-      }
-
-      function startTimer() {
-            timer = setInterval(function() {
-                  $('#save_btn').click();
-            }, 60000);
       }
 
       function showLogFile(id) {
