@@ -129,6 +129,9 @@ class Tickets_model extends CI_Model
 		} else {
 			$this->db->where("status NOT LIKE 2");
 		}
+		$this->db->order_by('city');
+		$this->db->order_by('address');
+		$this->db->order_by('creator_id');
 		$q = $this->db->get();
 		$response = $q->result_array();
 		return $response;
