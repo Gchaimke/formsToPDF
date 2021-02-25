@@ -131,7 +131,7 @@ $lang['add_to_company']        = 'Add to company';
 $lang['add_tickets']        = 'Add tickets';
 $lang['updated']        = 'Updated';
 $lang['added']        = 'Added';
-
+$lang['close_tiket'] = 'Close Ticket';
 /**
  * Companies UI
  */

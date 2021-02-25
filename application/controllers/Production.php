@@ -60,29 +60,6 @@ class Production extends CI_Controller
     {
         $creator_name = $this->Users_model->getUser($this->user['id'])[0]['view_name'];
         $this->form_validation->set_rules('date', 'date', 'trim|required|xss_clean');
-        $this->form_validation->set_rules('company', 'company', 'trim|xss_clean');
-        $this->form_validation->set_rules('client_num', 'client_num', 'trim|xss_clean');
-        $this->form_validation->set_rules('issue_num', 'issue_num', 'trim|xss_clean');
-        $this->form_validation->set_rules('client_name', 'client_name', 'trim|xss_clean');
-        $this->form_validation->set_rules('issue_kind', 'issue_kind', 'trim|xss_clean');
-        $this->form_validation->set_rules('place', 'place', 'trim|xss_clean');
-        $this->form_validation->set_rules('city', 'city', 'trim|xss_clean');
-        $this->form_validation->set_rules('start_time', 'start_time', 'trim|xss_clean');
-        $this->form_validation->set_rules('end_time', 'end_time', 'trim|xss_clean');
-        $this->form_validation->set_rules('manager', 'manager', 'trim|xss_clean');
-        $this->form_validation->set_rules('contact_name', 'contact_name', 'trim|xss_clean');
-        $this->form_validation->set_rules('activity_text', 'activity_text', 'trim|xss_clean');
-        $this->form_validation->set_rules('checking_text', 'checking_text', 'trim|xss_clean');
-        $this->form_validation->set_rules('summary_text', 'summary_text', 'trim|xss_clean');
-        $this->form_validation->set_rules('remarks_text', 'remarks_text', 'trim|xss_clean');
-        $this->form_validation->set_rules('recommendations_text', 'recommendations_text', 'trim|xss_clean');
-        $this->form_validation->set_rules('email_to', 'email_to', 'trim|xss_clean');
-        $this->form_validation->set_rules('attachments', 'attachments', 'trim|xss_clean');
-        $this->form_validation->set_rules('price', 'price', 'trim|xss_clean');
-        $this->form_validation->set_rules('details', 'details', 'trim|xss_clean');
-        $this->form_validation->set_rules('client_sign', 'client_sign', 'trim|xss_clean');
-        $this->form_validation->set_rules('old_serial', 'old_serial', 'trim|xss_clean');
-        $this->form_validation->set_rules('new_serial', 'new_serial', 'trim|xss_clean');
         if (!$this->form_validation->run() == FALSE) {
             $data = array(
                 'date' =>  $this->input->post('date'),
@@ -122,11 +99,7 @@ class Production extends CI_Controller
                 $this->log_data(' יצר דוח ' . $id . ' לחברת ' . $this->input->post('company'), $id, 1);
                 echo $id;
                 if ($this->input->post('client_num') != '') {
-                    $data = array(
-                        'client_num' => $this->input->post('client_num'),
-                        'status' => '1'
-                    );
-                    $this->Tickets_model->update($data);
+                    $this->update_ticket_status($this->input->post('client_num'), 1);
                 }
             } else {
                 echo "דוח לא נשמר";
@@ -142,6 +115,7 @@ class Production extends CI_Controller
         $data['form_data'] = $this->Production_model->getForm($id);
         $data['companies'] = $this->Companies_model->getCompanies();
         $data['contacts'] = $this->Contacts_model->get();
+        $data['opened_tickets'] = $this->Tickets_model->get_working_tickets_by_client_num($data['form_data'][0]['client_num']);
         $current_company = $this->Companies_model->getCompanies('', $data['form_data'][0]['company']);
         if (count($current_company) > 0) {
             $current_company = $current_company[0];
@@ -157,33 +131,6 @@ class Production extends CI_Controller
 
     public function update_form()
     {
-        $this->form_validation->set_rules('id', 'id', 'trim|xss_clean');
-        $this->form_validation->set_rules('creator_id', 'creator_id', 'trim|xss_clean');
-        $this->form_validation->set_rules('creator_name', 'creator_name', 'trim|xss_clean');
-        $this->form_validation->set_rules('company', 'company', 'trim|xss_clean');
-        $this->form_validation->set_rules('date', 'date', 'trim|xss_clean');
-        $this->form_validation->set_rules('client_num', 'client_num', 'trim|xss_clean');
-        $this->form_validation->set_rules('issue_num', 'issue_num', 'trim|xss_clean');
-        $this->form_validation->set_rules('client_name', 'client_name', 'trim|xss_clean');
-        $this->form_validation->set_rules('issue_kind', 'issue_kind', 'trim|xss_clean');
-        $this->form_validation->set_rules('place', 'place', 'trim|xss_clean');
-        $this->form_validation->set_rules('city', 'city', 'trim|xss_clean');
-        $this->form_validation->set_rules('start_time', 'start_time', 'trim|xss_clean');
-        $this->form_validation->set_rules('end_time', 'end_time', 'trim|xss_clean');
-        $this->form_validation->set_rules('manager', 'manager', 'trim|xss_clean');
-        $this->form_validation->set_rules('contact_name', 'contact_name', 'trim|xss_clean');
-        $this->form_validation->set_rules('activity_text', 'activity_text', 'trim|xss_clean');
-        $this->form_validation->set_rules('checking_text', 'checking_text', 'trim|xss_clean');
-        $this->form_validation->set_rules('summary_text', 'summary_text', 'trim|xss_clean');
-        $this->form_validation->set_rules('remarks_text', 'remarks_text', 'trim|xss_clean');
-        $this->form_validation->set_rules('recommendations_text', 'recommendations_text', 'trim|xss_clean');
-        $this->form_validation->set_rules('email_to', 'email_to', 'trim|xss_clean');
-        $this->form_validation->set_rules('attachments', 'attachments', 'trim|xss_clean');
-        $this->form_validation->set_rules('price', 'price', 'trim|xss_clean');
-        $this->form_validation->set_rules('details', 'details', 'trim|xss_clean');
-        $this->form_validation->set_rules('client_sign', 'client_sign', 'trim|xss_clean');
-        $this->form_validation->set_rules('old_serial', 'old_serial', 'trim|xss_clean');
-        $this->form_validation->set_rules('new_serial', 'new_serial', 'trim|xss_clean');
         if (!$this->form_validation->run() == FALSE) {
             $data = array(
                 'id' =>  $this->input->post('id'),
@@ -229,11 +176,7 @@ class Production extends CI_Controller
             if ($response) {
                 echo ' דוח ' .  $this->input->post('id') . ' נשמר בהצלחה! ';
                 if ($this->input->post('client_num') != '') {
-                    $data = array(
-                        'client_num' => $this->input->post('client_num'),
-                        'status' => '1'
-                    );
-                    $this->Tickets_model->update($data);
+                    $this->update_ticket_status($this->input->post('client_num'), 1);
                 }
             } else {
                 $msg = "אין אפשרות לשמור את הדוח! " . $this->input->post('id');
@@ -242,6 +185,32 @@ class Production extends CI_Controller
             }
         } else {
             echo "יש בעיה בפרטים שצריך למאלות!";
+        }
+    }
+
+    private function update_ticket_status($client_num, $status = 1)
+    {
+        $data = array(
+            'client_num' => $client_num,
+            'status' => $status,
+        );
+        $this->Tickets_model->update($data);
+    }
+
+    public function close_ticket()
+    {
+        $client_num = $this->input->post('client_num');
+        if ($client_num != '') {
+            $tickets = $this->Tickets_model->get_working_tickets_by_client_num($client_num);
+            if ($tickets != null && count($tickets) > 0) {
+                foreach ($tickets as $ticket) {
+                    $ticket['status'] = 2;
+                    $this->Tickets_model->update($ticket);
+                }
+                echo count($tickets).' tikets closed.';
+            }else{
+                echo 'no opened tikets for client number '.$client_num;
+            }
         }
     }
 

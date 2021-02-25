@@ -131,6 +131,8 @@ $lang['add_to_company']        = 'הוסף לחברת';
 $lang['add_tickets']        = 'הוסף משימות';
 $lang['updated']        = 'עודכן';
 $lang['added']        = 'הוסף';
+$lang['close_tiket'] = 'סגור משימה';
+
 
 /**
  * Forms UI

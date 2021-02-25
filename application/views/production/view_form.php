@@ -335,7 +335,13 @@ if (isset($this->session->userdata['logged_in'])) {
                               <?php } //end if user admin
                               ?>
                               <hr />
-
+                              <?php
+                              if ($user_role != "User") {
+                                    if (isset($opened_tickets) && count($opened_tickets) > 0) {
+                                          echo "<div id='close_ticket' class='btn btn-info'>" . lang('close_tiket') . "</div>";
+                                    }
+                              }
+                              ?>
                               <div class="form-group row client-sign-form">
                                     <label class="col-sm-2 col-form-label "><?= lang('saved_sign') ?></label>
                                     <div class="col-sm-4">
@@ -425,6 +431,19 @@ if (isset($this->session->userdata['logged_in'])) {
       $('#show_csv').click(function() {
             $('#csv_month').toggle();
       });
+
+      $('#close_ticket').click(function() {
+            var client_num = "<?= $form_data['client_num'] ?>";
+            $.post("/production/close_ticket", {
+                  client_num: client_num
+            }).done(function(o) {
+                  $('#form-messages').removeClass('alert-info').addClass('alert-success');
+                  $('#form-messages').html(o).fadeIn(1000).delay(3000).fadeOut(1000);
+                  setTimeout(function() {
+                        location.reload();
+                  }, 2000);
+            });
+      })
 
       function clearCanvas() {
             $("#sign-canvas").data("jqScribble").clear();

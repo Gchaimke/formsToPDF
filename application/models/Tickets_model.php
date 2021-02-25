@@ -160,6 +160,18 @@ class Tickets_model extends CI_Model
 		}
 	}
 
+	function get_working_tickets_by_client_num($client_num){
+		$response = array();
+		// Select record
+		$this->db->select('*');
+		$this->db->from('tickets');
+		$this->db->where("client_num ='$client_num'");
+		$this->db->where("status = 1 ");
+		$q = $this->db->get();
+		$response = $q->result_array();
+		return $response;
+	}
+
 	public function update($data)
 	{
 		if (isset($data['id'])) {
