@@ -131,6 +131,7 @@ class Production extends CI_Controller
 
     public function update_form()
     {
+        $this->form_validation->set_rules('date', 'date', 'trim|required|xss_clean');
         if (!$this->form_validation->run() == FALSE) {
             $data = array(
                 'id' =>  $this->input->post('id'),
