@@ -133,10 +133,10 @@ class Tickets extends CI_Controller
                     } else {
                         continue;
                     }
-                    $html_table .= "<form class='tickets_row'><tr id='$row[0]' class='column'>";
+                    $html_table .= "<form class='tickets_row'><tr data-id='$row[0]' class='column'>";
                     foreach ($rows as $key => $value) {
                         $html_table .= "<td style='min-width:120px'>
-                            <input type='hidden' name='$key' value='{$row[$value]}'>{$row[$value]}</td>";
+                            <input type='hidden' name='$key' value='{$row[$value]}'><div class='$key'>{$row[$value]}</div></td>";
                     }
                     $html_table .= "</tr></form>";
                     $count++;

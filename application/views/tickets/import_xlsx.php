@@ -25,8 +25,14 @@
                     </div>
                     <button class="btn btn-outline-success col-sm-2" type="button" onclick="document.getElementById('upload').click();">
                         <span id="upload_spinner" class="spinner-border spinner-border-sm" style="display: none;" role="status" aria-hidden="true"></span>
-                        <?= lang('upload') ?></button>
-
+                        <?= lang('upload') ?></button></br>
+                    <?php
+                    if(isset($xlsx_columns)){
+                        echo "Found rows<br>". implode(",",$xlsx_columns);
+                    }else{
+                        echo "file not found";
+                    }
+                    ?>
                 </div>
             </div>
             <div class="form-group col-md-8 mb-3">

@@ -285,6 +285,7 @@ if ($("#upload").length) {
                 }
                 data.context.addClass("error");
             } else {
+                alert("File uploaded");
                 location.reload();
             }
             $('#save_btn').click();
