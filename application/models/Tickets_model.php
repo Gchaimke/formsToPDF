@@ -73,7 +73,7 @@ class Tickets_model extends CI_Model
 		if ($this->db->table_exists('tickets')) {
 			$this->db->select('*');
 			$this->db->from('tickets');
-			$this->db->where("client_num ='{$data['client_num']}'");
+			$this->db->where("client_num ='".$data['client_num']."'");
 			$this->db->limit(1);
 			$query = $this->db->get();
 			if ($query->num_rows() == 0) {
@@ -84,7 +84,7 @@ class Tickets_model extends CI_Model
 				}
 			} else {
 				unset($data['status']);
-				$where = "client_num ={$data['client_num']}";
+				$where = "client_num ='".$data['client_num']."'";
 				$this->db->update('tickets', $data, $where);
 				return false;
 			}
@@ -165,8 +165,8 @@ class Tickets_model extends CI_Model
 		// Select record
 		$this->db->select('*');
 		$this->db->from('tickets');
-		$this->db->where("client_num ='$client_num'");
-		$this->db->where("status = 1 ");
+		$this->db->where("client_num='$client_num'");
+		$this->db->where("status=1");
 		$q = $this->db->get();
 		$response = $q->result_array();
 		return $response;
@@ -175,10 +175,10 @@ class Tickets_model extends CI_Model
 	public function update($data)
 	{
 		if (isset($data['id'])) {
-			$where = "id =" . $data['id'];
+			$where = "id=" . $data['id'];
 			$this->db->update('tickets', $data, $where);
 		} else if (isset($data['client_num'])) {
-			$where = "client_num ='" . $data['client_num'] . "' AND status != 3";
+			$where = "client_num='" . $data['client_num'] . "' AND status != 3";
 			$this->db->update('tickets', $data, $where);
 		}
 
